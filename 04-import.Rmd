@@ -1,0 +1,102 @@
+# Importing Data
+
+## Prerequisites
+
+In this chapter, we focus on the use of the **readr** package that forms a part of the **tidyverse** package. **readr** provides a fast and easy way to parse a file because it uses a sophisticated parser that guesses the data type for each column along with the flexibility to specify what to parse. You will also need  the **here** package, which we use to easily provide relative file paths. 
+
+```{r, message=FALSE}
+library(tidyverse)
+library(lubridate)
+library(here)
+```
+
+In this chapter we will also be using the following datasets. If the following code returns `FALSE`, you should refer to the section [Finding your file] in the [Preface] on where you can download the datasets. 
+
+```{r, eval=FALSE}
+file.exists(here("data", "iris.csv"))
+file.exists(here("data", "building.csv"))
+```
+
+
+## Finding your file
+Before importing data, you need to first let R know where to find the file by providing the file path. You can provide file paths relative to the top-level directory of the current R project with the `here()` function.
+
+```{r}
+here()
+```
+
+To reference a file named `iris.csv` located in the `data` folder that is located in the top-level directory of your project
+
+```{r}
+here("data", "iris.csv")
+```
+
+
+## Parsing a csv file
+
+We will focus on the `read_csv()` function because building data are typically stored in `csv` format. You can find out more about other file formats in [readr's documentation](https://readr.tidyverse.org). 
+
+The easiest way to parse a file is by providing the file path. In most cases, it will just work as expected where `readr` correctly guesses the column specification (that gets printed to the console) and you get a tibble as specified. [`readr_example()`](https://readr.tidyverse.org/reference/readr_example.html) is a function that makes it easy to access example files to demonstrate `readr`'s capabilities.
+
+```{r}
+read_csv(here("data", "iris.csv"))
+```
+
+## Building data
+
+Data from buildings are often messy without a standardized format. Therefore, it is not uncommon if `readr` does not guess correctly. Parsing date/times is particularly important when working with time-series building data.
+
+For example, with the `building.csv` dataset, you can see that there are problems parsing the `timestamp` column. Specifically, column `timestamp` was parsed as a character vector when it actually contains a date/time. The `skip` argument is particularly useful since building data often contains meta-data that you want to exclude. A character vector can also be supplied to specify the column names. 
+
+```{r}
+
+read_csv(
+  here("data", "building.csv"),
+  col_names = c(
+    "datetime",
+    "power"
+  ),
+  skip = 2
+)
+```
+
+You can correct this using the `col_types` argument to specify that column `timestamp` should be parsed as a date/time. You can view the available column specifications by typing `?cols` in your console. Typically specifying the data type would have allowed the data to be parsed correctly. In this particular dataset, there are two problems that caused the parsing to fail. First, the `timestamp` column does not follow [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) but date times are parsed as ISO8601 if no format specification is provided. Second, `col_double()` is strict and does not allow for leading or trailing characters. 
+
+
+<!--In representations for interchange, dates and times are arranged so the largest temporal term (the year) is placed to the left and each successively smaller term is placed to the right of the previous term..-->
+
+
+```{r}
+read_csv(
+  here("data", "building.csv"),
+  col_types = cols(
+    col_datetime(),
+    col_double()
+  ),
+  col_names = c(
+    "datetime",
+    "power"
+  ),
+  skip = 2
+)
+```
+
+To resolve this, you can explicitly provide the date/time format specification that is similar to the function `strptime()`. Type `?strptime()` for the list of character representations. However, do note that the specified format must be a complete match to the entire string. Additionally, `col_number()` is used in place of `col_double()` because it is more flexible and ignores non-numeric characters. In general, it is recommended to be explicit in providing column specifications to mitigate parsing errors.
+
+
+```{r}
+read_csv(
+  here("data", "building.csv"),
+  col_types = cols(
+    col_datetime(format = "%d/%m/%y %H:%M"),
+    col_number()
+  ),
+  col_names = c(
+    "datetime",
+    "power"
+  ),
+  skip = 2
+)
+```
+
+

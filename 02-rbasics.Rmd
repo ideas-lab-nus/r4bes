@@ -1,0 +1,377 @@
+# Basics
+
+## Prerequisites
+
+We introduce the basics in R programming in this chapter. We will review the basic operators and data types in this chapter. We also provide an introduction to the basic R data structures (including tibbles and data tables).
+
+Most of this chapter involves working with R basic operators and data types, which do not require any extra packages. We will also introduce the **tibble** package, which forms part of the tidyverse package in section \@ref(tibbles), and the  **data.table** package in section \@ref(data-table)
+
+```{r, message=FALSE}
+library(tidyverse)
+library(data.table)
+```
+
+## Basic operators
+
+Basic arithmetic operators (`+`, `-`, `*`, `/`, `^`, `%') would work like your calculator
+
+```{r}
+3 + 2 # addition
+3 - 2 # subtraction
+3 * 2 # multiplication
+3 / 2 # division
+3^2 # exponent
+3 %% 2 # mod (remainder of a division)
+```
+
+
+R uses the `<-` operator for assignments. You can read the following code as assigning the outcome of `2 + 3`, `5`, and `3` to the object `value_a`,`value_b`, and `value_c` respectively, which stores it for later use. 
+
+```{r}
+value_a <- 2 + 3
+value_b <- 5
+value_c <- 3
+```
+
+You can `print` what is stored in the object to console with
+
+```{r}
+print(value_a)
+```
+
+You can use relational operators to compare how one object relates to another. 
+
+```{r}
+2 + 3 == 5 # TRUE that 2 + 3 equals 5
+2 + 3 != 5 # FALSE that 2 + 3 not equals to 5
+2 + 3 < 3 # FASLE that 2 + 3 is less than 3
+2 + 3 > 3 # TRUE that 2 + 3 is more than 3
+2 + 3 <= 5 # TRUE that 2 + 3 is less than or equal to 5
+2 + 3 >= 5 # TRUE that 2 + 3 is more than or equal to 5
+```
+
+You can use logical operators to connect two or more expressions. For example, to connect the results of the comparisons made using relational operators. 
+
+```{r}
+(2 + 3 == 5) & (2 + 3 < 3) # AND operator
+(2 + 3 == 5) | (2 + 3 >= 3) # OR operator
+!(2 + 3 == 5) # NOT operator
+```
+
+
+
+## Basic data types 
+
+There are basic data types (also known as atomic data types) in R in order to use them.
+
+Data Type      Examples                   Additional Information         
+-----------    ---------------------      -----------------------------------------------
+Logical        `TRUE`, `FALSE`            Boolean values 
+Numeric        `1`, `999.9`               Default data type for numbers
+Integer        `1L`, `999L`               `L` is used to denote an integer
+Character      `"a"`, `"R for BES"`       Data type for one or more characters
+Complex        `2 + 3i`                   Data type for numbers with a real and imaginary component
+Raw            `charToRaw("R for BES")`   Not commonly used data type used to store raw bytes
+
+
+You can use the function `class()` to find out the class of any object in R.
+
+```{r}
+var_a <- 1
+class(var_a)
+
+var_b <- 1L
+class(var_b)
+
+var_c <- "R for BES"
+class(var_c)
+```
+
+
+## Basic data structures
+
+The basic data structures in R include factors, atomic vectors, lists, matrices, and `data.frame`s 
+
+Factors are used in R to represent categorical variables. Although they appear similar to character vectors they are actually stored as integers. You can use the function `levels()` to output the categorical variables and `nlevels()` to check the number of categorical variables.
+
+```{r create-factors}
+eye_color <- factor(c("brown", "black", "green", "brown", "black", "blue"))
+nlevels(eye_color)
+levels(eye_color)
+```
+
+Atomic vectors or more frequently referred to as vectors are a data structure that is used to store multiple objects of the same data type (logical, numeric, integer, character, complex, or raw). Vectors are one-indexed (i.e., the first element is indexed using `[1]`) and you can get the number of elements in the vector using the function `length()`.
+
+```{r create-vectors}
+vec_num <- c(1, 2, 3, 4)
+class(vec_num)
+
+vec_char <- c("R", "for", "BES")
+class(vec_char)
+
+# coercion if data types are mixed
+vec_mix <- c("R", 4, "BES")
+class(vec_mix)
+
+# you can easily combine vectors using the c function
+c(vec_char, vec_mix)
+
+# vector length
+length(vec_num)
+
+# access first element of vector
+vec_num[1]
+```
+
+
+Lists are an ordered data structure that is used to store multiple R objects of different types. The function `list()` is used to create a list and a list in R can be accessed using a single `[]` or double brackets `[[]]`. Using `[]` returns a list of the selected element while using `[[]]` returns the selected element. Using the function `length()`, you can obtain the number of objects in a list.
+
+```{r}
+my_list <- list(
+  c(1, 2, 3, 4),
+  c("a", "b"),
+  1L,
+  matrix(1:9, ncol = 3)
+)
+
+my_list_a <- my_list[1]
+class(my_list_a)
+
+my_list_b <- my_list[[1]]
+class(my_list_b)
+
+length(my_list)
+```
+
+If you have named the elements in your list, you could also access them by specifying their names in the brackets or using the `$` operator. 
+
+```{r}
+named_list <- list(
+  a = c(1, 2, 3, 4),
+  b = c("a", "b"),
+  c = 1L,
+  d = matrix(1:9, ncol = 3)
+)
+
+class(named_list["a"])
+
+class(named_list[["a"]])
+
+class(named_list$a)
+```
+
+
+A matrix is a two dimensional data structure that is used to store multiple objects. You can use the function `matrix()` to create a matrix using the `ncol` and `nrow` argument to specify the number of columns and rows respectively, and the `byrow` argument to specify how the data in would be ordered. 
+
+```{r}
+matrix(1:12, ncol = 3, byrow = FALSE)
+
+matrix(1:12, nrow = 3, byrow = FALSE)
+
+matrix(1:12, ncol = 3, byrow = TRUE)
+```
+
+Aside from numeric data types, a matrix can also be used to store other data types as long as they are homogeneous. To store heterogeneous data types, you should use a data frame which is introduced next. 
+
+```{r}
+matrix(c("brown", "black", "green", "brown", "black", "blue"), ncol = 2)
+
+matrix(c("TRUE", "TRUE", "FALSE", "FALSE"), ncol = 2)
+
+matrix(c(1L, 2L, 3L, 4L), ncol = 2)
+```
+
+A `data.frame` is a two-dimensional data structures that are used to store heterogeneous data types in R. As a result of it's convenience, data frames are a commonly used data structure in R. You can use the function `data.frame()` to create a data frame. 
+
+```{r}
+df <- data.frame(
+  x = c(1, 2, 3),
+  y = c("red", "green", "blue"),
+  z = c(TRUE, FALSE, TRUE)
+)
+```
+
+
+## Tibbles {#tibbles}
+
+Tibbles are basically a modified version of R's `data.frame`. You can create a tibble using the function `tibble()`. Alternatively, you can coerce a data frame into a tibble using `as_tibble()`
+
+
+```{r}
+tibble(
+  x = c(1, 2, 3),
+  y = c("red", "green", "blue"),
+  z = c(TRUE, FALSE, TRUE)
+)
+
+as_tibble(iris)
+```
+
+A key difference lies in how tibbles are printed. Printing a tibble only results in the first ten rows being displayed with an explicit reporting of each column's data type.
+
+```{r}
+tb <- as_tibble(iris)
+print(tb)
+
+df <- as.data.frame(iris)
+print(df)
+```
+
+Unlike a `data.frame`, tibbles provides clarity on the data structure that it returns. When indexing with tibbles, `[` always return another tibble while `[[` and `$` alway returns a vector. In contrast, single column data frames are often converted into atomic vectors in R unless `drop = FALSE` is specified.
+
+```{r}
+class(tb[, 1])
+
+class(tb[[1]])
+
+class(tb$Sepal.Length)
+
+class(df[, 1])
+
+class(df[, 1, drop = FALSE])
+```
+
+
+Additionally, tibbles do not do partial matching and raises a warning unless the variable specified is an exact match.
+
+```{r}
+tb$Sepal.Length
+
+df$Sepal.Lengt
+```
+
+You can read more about tibbles by typing vignette("tibble") in your console. 
+
+
+## data.table {#data-table}
+
+Like tibbles, `data.table`s are an enhanced version of `data.frame`s. You can create a `data.table` using the function `data.table()`. You can also coerce existing R objects into a `data.table` with `setDT()` for `data.frame`s and lists, and `as.data.table()` for other data structures. Note that `as.data.table()` also works with `data.frame`s and lists. However `setDT()` is more memory efficient because it does not create a copy of the original data frame or list but instead returns a data table by reference. 
+
+```{r}
+dt <- data.table(
+  x = c(1, 2, 3),
+  y = c("red", "green", "blue"),
+  z = c(TRUE, FALSE, TRUE)
+)
+
+class(
+  setDT(
+    data.frame(c(1, 2, 3))
+  )
+)
+```
+
+`data.table`s provide additional functionality through the way it is queried. The general form for working with a data table is `[i, j, by]`, which can be read as subset rows using `i`, operate on `j`, and grouped by `by`. 
+
+Lets see how this work using the `iris` example dataset.
+
+```{r}
+dt <- as.data.table(iris)
+
+print(dt)
+```
+
+You can filter the rows to only contain `Species == "virginica`.
+
+```{r}
+dt[Species == "virginica"]
+```
+
+You can select the columns using the `j` expression. Note the change in the type of data structure when `list()` or `.()` is used.
+
+```{r}
+dt[, Sepal.Length]
+
+class(dt[, Sepal.Length])
+
+class(dt[, list(Sepal.Length)])
+
+class(dt[, .(Sepal.Length)])
+```
+
+You can select multiple columns with `list()` or `.()`.
+
+```{r}
+
+dt[, .(Sepal.Length, Species)]
+```
+
+
+Aside from selecting columns using `j`, you can carry out computations on `j` involving one or more columns and a subset of rows using `i`.
+
+```{r}
+
+dt[, mean(Sepal.Length)]
+
+dt[, .(
+  Sepal.Length.Mean = mean(Sepal.Length),
+  Sepal.With.Mean = mean(Sepal.Width)
+)]
+
+dt[
+  Species == "virginica" & Sepal.Length < 6,
+  .(
+    Sepal.Length.Mean = mean(Sepal.Length),
+    Sepal.With.Mean = mean(Sepal.Width)
+  )
+]
+```
+
+You can then use the `by` expression in data tables to perform computations by groups. 
+
+```{r}
+
+dt[, .(
+  Sepal.Length.Mean = mean(Sepal.Length),
+  Sepal.With.Mean = mean(Sepal.Width)
+),
+by = Species
+]
+```
+
+The `.N` variable that counts the number of instances is particularly useful when combined with `by`.
+
+```{r}
+
+dt[, .N, by = Species]
+```
+
+You can also apply it to multiple columns using the `list()` or `.()` notation. You can read the code below as calculating the mean of `Speal.Length` and the number of instances (given by `.N`) grouped by their `Species` and whether `Sepal.Length < 6`. 
+
+```{r}
+dt[, .(Sepal.Length.Mean = mean(Sepal.Length), .N),
+  by = .(Species, Sepal.Length < 6)
+]
+```
+
+`data.table`s add, update, and delete columns by reference to avoid redundant copies for performance improvements. You can use the `:=` operator to add, update, and delete columns in `j` by reference. There are two forms for using `:=` and they are: `[, LSH := RHS]` and `[, `:=` (LHS = RHS)]`. 
+
+```{r}
+dt <- as.data.table(iris)
+
+dt[, Sepal.Sum := .(Sepal.Length + Sepal.Width)]
+head(dt)
+
+dt[, `:=`(Petal.Sum = Petal.Length + Petal.Width)]
+head(dt)
+```
+
+Note that in the above code, we do not need to make any assignments back to a variable because the modification is done by reference or in place. In other words we are modifying `dt` and not a copy of `dt`. Therefore, you will also see that if you run the entire code chunk above, `dt` will contain both columns `Sepal.Sum` and `Petal.Sum`.
+
+Since `:=` is used in `j`, it can be combined with `i` and `by` as we have seen in the earlier parts of this sub-section. 
+
+```{r}
+
+dt[Species == "versicolor" | Species == "virginica", Sepal.Length := 0]
+head(dt)
+
+dt[, Sepal.Length.Mean := mean(Sepal.Length),
+  by = .(Species)
+]
+head(dt)
+```
+
+
+You can find out more about `data.table`s by typing `vignette(package = "data.table")` into the console. 
+
+

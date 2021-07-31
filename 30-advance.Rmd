@@ -1,0 +1,16 @@
+# (PART) Advanced {-}
+
+# Introduction {#advanced}
+
+# Sensitivity analysis
+
+William of Occam to seek an economical description of natural phenomena and avoid excessive models that are overparameterized. Principal of Parisimony. 
+
+# Optimization
+
+# Calibration
+
+Taking reference to the quotation of statistician George Box that "All models are wrong, but some are useful"
+
+
+

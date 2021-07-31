@@ -1,0 +1,9 @@
+# (PART) Get Started {-}
+
+# Introduction {#get-started}
+
+The goal of this part of the book is to get you started working with EnergyPlus in R as quickly as possible. In this part of the book, you will learn how to get your model into R and run the simulation (Chapter \@ref(parse)). You will then learn how to  extract predifined annual summary reports and manipulate them so that the focus is placed on the important variables and observations (Chapter \@ref(summary)). Finally, we provide a gentle introduction to visualizing the data from the summary reports in R (Chapter \@ref(visualize)).
+
+Understanding the details of EnergyPlus inputs and outputs and how they are structured are an important part of building energy simulation. We will come back to that in the next part of the book once we have gotten you started up with the basics. 
+
+

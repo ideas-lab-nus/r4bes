@@ -1,0 +1,25 @@
+
+# Model Exploration {#explore}
+
+## Prerequisites
+
+
+```{r, message=FALSE}
+library(eplusr)
+library(tidyverse)
+library(ggplot2)
+library(here)
+```
+
+We will be working with the IDF and EPW file that pertains to the U.S. Department of Energy (DOE) Commercial Reference Building and Chicago's TMY3 respectively.
+```{r, message=FALSE}
+path_idf <- here("data", "idf", "RefBldgMediumOfficeNew2004_Chicago.idf")
+model <- read_idf(path_idf)
+
+path_epw <- here("data", "epw", "USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw")
+epw <- read_epw(path_epw)
+```
+
+
+
+

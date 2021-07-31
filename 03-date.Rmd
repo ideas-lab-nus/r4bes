@@ -1,0 +1,71 @@
+
+# Dates and Times
+
+## Prerequisites
+
+In this chapter, we will introduce the **lubridate** package that is designed to make it easier to work with dates and times in R. 
+
+```{r, message=FALSE}
+library(lubridate)
+```
+
+
+## Parsing dates and times
+
+You can easily transform dates and times stored as character vectors to Date or POSIXct (or date-time) objects in R using lubridate. All you need to do is specify the order of the year `y`, month `m`, and the day `d` and lubridate will automatically figure out the format.
+
+```{r}
+dmy("3/12/1985")
+ymd("85/12/03")
+mdy("Dec 3rd 1985")
+ydm("85-3rd-december")
+```
+
+The same functions can also convert numeric vectors.
+
+```{r}
+ymd(19851203)
+dmy(31285)
+```
+
+You can create Date objects with the time component using a POSIXct or date-time object simply by adding an underscore followed by the order of the hour `h`, minute `m` and second `s`. 
+
+```{r}
+ymd_h("1985/12/03 21")
+ymd_hm("1985/12/03 21:05")
+ymd_hms("1985/12/03 21:05:30")
+```
+
+You can also specify the time zone by providing inputs to the argument `tz`. You can find out more about time zones in R by typing `?timezones` into the console. 
+
+```{r}
+ymd_hms("1985/12/03 21:05:30", tz = "Singapore")
+```
+
+Date vs date-time objects that are created using lubridate. By default, dates will be created as Date objects without the time component. You can force the creation of a date-time object by including the timezone `tz` argument. 
+
+```{r}
+class(ymd("1985/12/03"))
+class(ymd("1985/12/03", tz = "Singapore"))
+class(ymd_hms("1985/12/03 21:05:30"))
+```
+
+
+## Extracting components
+
+Lubridate provides simple functions that allows you to easily get different components of a date or date-time object. These functions are especially useful when analyzing time-series data and when you want to group your data by a particular time period. 
+
+```{r}
+
+my_dt <- ymd_hms("1985/12/03 21:05:30")
+year(my_dt)
+month(my_dt)
+day(my_dt)
+hour(my_dt)
+minute(my_dt)
+second(my_dt)
+wday(my_dt, label = TRUE)
+```
+
+
+
