@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 15 Modify model inputs | R for Building Energy Simulation</title>
+  <meta name="description" content="A guide to the building energy simulation with R." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 15 Modify model inputs | R for Building Energy Simulation" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A guide to the building energy simulation with R." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 15 Modify model inputs | R for Building Energy Simulation" />
+  
+  <meta name="twitter:description" content="A guide to the building energy simulation with R." />
+  
+
+<meta name="author" content="Adrian Chong" />
+
+
+<meta name="date" content="2021-07-31" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="input.html"/>
+<link rel="next" href="output.html"/>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
+<script src="libs/str_view-binding-1.4.0/str_view.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R for BES</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#introduction"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#structure-of-this-book"><i class="fa fa-check"></i>Structure of this book</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-and-rstudio"><i class="fa fa-check"></i>R and RStudio</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-packages"><i class="fa fa-check"></i>R Packages</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#energyplus"><i class="fa fa-check"></i>EnergyPlus</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#conventions"><i class="fa fa-check"></i>Conventions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#before-you-begin"><i class="fa fa-check"></i>Before you begin</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-project"><i class="fa fa-check"></i>R Project</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#scripting"><i class="fa fa-check"></i>Scripting</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#example-files"><i class="fa fa-check"></i>Example files</a></li>
+<li class="chapter" data-level="0.0.1" data-path="index.html"><a href="index.html#project-structure"><i class="fa fa-check"></i><b>0.0.1</b> Project structure</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#style-guide"><i class="fa fa-check"></i>Style guide</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>I R Basics</b></span></li>
+<li class="chapter" data-level="1" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>2</b> Basics</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="basics.html"><a href="basics.html#prerequisites-1"><i class="fa fa-check"></i><b>2.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#basic-operators"><i class="fa fa-check"></i><b>2.2</b> Basic operators</a></li>
+<li class="chapter" data-level="2.3" data-path="basics.html"><a href="basics.html#basic-data-types"><i class="fa fa-check"></i><b>2.3</b> Basic data types</a></li>
+<li class="chapter" data-level="2.4" data-path="basics.html"><a href="basics.html#basic-data-structures"><i class="fa fa-check"></i><b>2.4</b> Basic data structures</a></li>
+<li class="chapter" data-level="2.5" data-path="basics.html"><a href="basics.html#tibbles"><i class="fa fa-check"></i><b>2.5</b> Tibbles</a></li>
+<li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#data-table"><i class="fa fa-check"></i><b>2.6</b> data.table</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="dates-and-times.html"><a href="dates-and-times.html"><i class="fa fa-check"></i><b>3</b> Dates and Times</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="dates-and-times.html"><a href="dates-and-times.html#prerequisites-2"><i class="fa fa-check"></i><b>3.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="3.2" data-path="dates-and-times.html"><a href="dates-and-times.html#parsing-dates-and-times"><i class="fa fa-check"></i><b>3.2</b> Parsing dates and times</a></li>
+<li class="chapter" data-level="3.3" data-path="dates-and-times.html"><a href="dates-and-times.html#extracting-components"><i class="fa fa-check"></i><b>3.3</b> Extracting components</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="importing-data.html"><a href="importing-data.html"><i class="fa fa-check"></i><b>4</b> Importing Data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="importing-data.html"><a href="importing-data.html#prerequisites-3"><i class="fa fa-check"></i><b>4.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="4.2" data-path="importing-data.html"><a href="importing-data.html#finding-your-file"><i class="fa fa-check"></i><b>4.2</b> Finding your file</a></li>
+<li class="chapter" data-level="4.3" data-path="importing-data.html"><a href="importing-data.html#parsing-a-csv-file"><i class="fa fa-check"></i><b>4.3</b> Parsing a csv file</a></li>
+<li class="chapter" data-level="4.4" data-path="importing-data.html"><a href="importing-data.html#building-data"><i class="fa fa-check"></i><b>4.4</b> Building data</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="importing-data-1.html"><a href="importing-data-1.html"><i class="fa fa-check"></i><b>5</b> Importing Data</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="importing-data-1.html"><a href="importing-data-1.html#prerequisites-4"><i class="fa fa-check"></i><b>5.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="5.2" data-path="importing-data-1.html"><a href="importing-data-1.html#finding-your-file-1"><i class="fa fa-check"></i><b>5.2</b> Finding your file</a></li>
+<li class="chapter" data-level="5.3" data-path="importing-data-1.html"><a href="importing-data-1.html#parsing-a-csv-file-1"><i class="fa fa-check"></i><b>5.3</b> Parsing a csv file</a></li>
+<li class="chapter" data-level="5.4" data-path="importing-data-1.html"><a href="importing-data-1.html#building-data-1"><i class="fa fa-check"></i><b>5.4</b> Building data</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="regular-expressions.html"><a href="regular-expressions.html"><i class="fa fa-check"></i><b>6</b> Regular expressions</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="regular-expressions.html"><a href="regular-expressions.html#prerequisites-5"><i class="fa fa-check"></i><b>6.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="6.2" data-path="regular-expressions.html"><a href="regular-expressions.html#basic-matches"><i class="fa fa-check"></i><b>6.2</b> Basic matches</a></li>
+<li class="chapter" data-level="6.3" data-path="regular-expressions.html"><a href="regular-expressions.html#character-classes"><i class="fa fa-check"></i><b>6.3</b> Character classes</a></li>
+<li class="chapter" data-level="6.4" data-path="regular-expressions.html"><a href="regular-expressions.html#regex-escape"><i class="fa fa-check"></i><b>6.4</b> Escaping</a></li>
+<li class="chapter" data-level="6.5" data-path="regular-expressions.html"><a href="regular-expressions.html#anchors"><i class="fa fa-check"></i><b>6.5</b> Anchors</a></li>
+<li class="chapter" data-level="6.6" data-path="regular-expressions.html"><a href="regular-expressions.html#quantifies"><i class="fa fa-check"></i><b>6.6</b> Quantifies</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>7</b> Functions</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="functions.html"><a href="functions.html#prerequisites-6"><i class="fa fa-check"></i><b>7.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="7.2" data-path="functions.html"><a href="functions.html#user-defined-function"><i class="fa fa-check"></i><b>7.2</b> User-defined function</a></li>
+<li class="chapter" data-level="7.3" data-path="functions.html"><a href="functions.html#examples"><i class="fa fa-check"></i><b>7.3</b> Examples</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="manipulate.html"><a href="manipulate.html"><i class="fa fa-check"></i><b>8</b> Manipulating Data</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="manipulate.html"><a href="manipulate.html#prerequisites-7"><i class="fa fa-check"></i><b>8.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="8.2" data-path="manipulate.html"><a href="manipulate.html#data-transformation"><i class="fa fa-check"></i><b>8.2</b> Data transformation</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="manipulate.html"><a href="manipulate.html#select"><i class="fa fa-check"></i><b>8.2.1</b> <code>select()</code></a></li>
+<li class="chapter" data-level="8.2.2" data-path="manipulate.html"><a href="manipulate.html#filter"><i class="fa fa-check"></i><b>8.2.2</b> <code>filter()</code></a></li>
+<li class="chapter" data-level="8.2.3" data-path="manipulate.html"><a href="manipulate.html#arrange"><i class="fa fa-check"></i><b>8.2.3</b> <code>arrange()</code></a></li>
+<li class="chapter" data-level="8.2.4" data-path="manipulate.html"><a href="manipulate.html#mutate"><i class="fa fa-check"></i><b>8.2.4</b> <code>mutate()</code></a></li>
+<li class="chapter" data-level="8.2.5" data-path="manipulate.html"><a href="manipulate.html#summarise-and-group_by"><i class="fa fa-check"></i><b>8.2.5</b> <code>summarise()</code> and <code>group_by()</code></a></li>
+<li class="chapter" data-level="8.2.6" data-path="manipulate.html"><a href="manipulate.html#across"><i class="fa fa-check"></i><b>8.2.6</b> <code>across()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="manipulate.html"><a href="manipulate.html#pipes"><i class="fa fa-check"></i><b>8.3</b> Pipes</a></li>
+</ul></li>
+<li class="part"><span><b>II Get Started</b></span></li>
+<li class="chapter" data-level="9" data-path="get-started.html"><a href="get-started.html"><i class="fa fa-check"></i><b>9</b> Introduction</a></li>
+<li class="chapter" data-level="10" data-path="parse.html"><a href="parse.html"><i class="fa fa-check"></i><b>10</b> Parse then simulate</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="parse.html"><a href="parse.html#prerequisites-8"><i class="fa fa-check"></i><b>10.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="10.2" data-path="parse.html"><a href="parse.html#key-energyplus-files"><i class="fa fa-check"></i><b>10.2</b> Key EnergyPlus files</a></li>
+<li class="chapter" data-level="10.3" data-path="parse.html"><a href="parse.html#parsing-the-model"><i class="fa fa-check"></i><b>10.3</b> Parsing the model</a></li>
+<li class="chapter" data-level="10.4" data-path="parse.html"><a href="parse.html#simulating-the-model"><i class="fa fa-check"></i><b>10.4</b> Simulating the model</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>11</b> Summary reports</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="summary.html"><a href="summary.html#prerequisites-9"><i class="fa fa-check"></i><b>11.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="11.2" data-path="summary.html"><a href="summary.html#output-summary-reports"><i class="fa fa-check"></i><b>11.2</b> Output summary reports</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="visualize.html"><a href="visualize.html"><i class="fa fa-check"></i><b>12</b> Visualize</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="visualize.html"><a href="visualize.html#prerequisites-10"><i class="fa fa-check"></i><b>12.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="12.2" data-path="visualize.html"><a href="visualize.html#colors"><i class="fa fa-check"></i><b>12.2</b> Colors</a></li>
+<li class="chapter" data-level="12.3" data-path="visualize.html"><a href="visualize.html#ggplot"><i class="fa fa-check"></i><b>12.3</b> <code>ggplot()</code></a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="visualize.html"><a href="visualize.html#functions-and-components"><i class="fa fa-check"></i><b>12.3.1</b> Functions and Components</a></li>
+<li class="chapter" data-level="12.3.2" data-path="visualize.html"><a href="visualize.html#a-simple-example"><i class="fa fa-check"></i><b>12.3.2</b> A simple example</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>III Inputs and Outputs</b></span></li>
+<li class="chapter" data-level="13" data-path="input-output.html"><a href="input-output.html"><i class="fa fa-check"></i><b>13</b> Introduction</a></li>
+<li class="chapter" data-level="14" data-path="input.html"><a href="input.html"><i class="fa fa-check"></i><b>14</b> Model Input Structure</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="input.html"><a href="input.html#prerequisites-11"><i class="fa fa-check"></i><b>14.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="14.2" data-path="input.html"><a href="input.html#energyplus-documentation"><i class="fa fa-check"></i><b>14.2</b> EnergyPlus Documentation</a></li>
+<li class="chapter" data-level="14.3" data-path="input.html"><a href="input.html#energyplus-input-structure"><i class="fa fa-check"></i><b>14.3</b> EnergyPlus input structure</a></li>
+<li class="chapter" data-level="14.4" data-path="input.html"><a href="input.html#class-vs-object"><i class="fa fa-check"></i><b>14.4</b> Class vs Object</a></li>
+<li class="chapter" data-level="14.5" data-path="input.html"><a href="input.html#model-query"><i class="fa fa-check"></i><b>14.5</b> Model Query</a>
+<ul>
+<li class="chapter" data-level="14.5.1" data-path="input.html"><a href="input.html#idf-class-methods"><i class="fa fa-check"></i><b>14.5.1</b> <code>Idf</code> class methods</a></li>
+<li class="chapter" data-level="14.5.2" data-path="input.html"><a href="input.html#operator"><i class="fa fa-check"></i><b>14.5.2</b> <code>$</code> operator</a></li>
+</ul></li>
+<li class="chapter" data-level="14.6" data-path="input.html"><a href="input.html#object-interdependencies"><i class="fa fa-check"></i><b>14.6</b> Object interdependencies</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="modify.html"><a href="modify.html"><i class="fa fa-check"></i><b>15</b> Modify model inputs</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="modify.html"><a href="modify.html#prerequisites-12"><i class="fa fa-check"></i><b>15.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="15.2" data-path="modify.html"><a href="modify.html#extract-and-modify"><i class="fa fa-check"></i><b>15.2</b> Extract and Modify</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="modify.html"><a href="modify.html#single-object"><i class="fa fa-check"></i><b>15.2.1</b> Single object</a></li>
+<li class="chapter" data-level="15.2.2" data-path="modify.html"><a href="modify.html#multiple-objects"><i class="fa fa-check"></i><b>15.2.2</b> Multiple objects</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="modify.html"><a href="modify.html#create-new-objects"><i class="fa fa-check"></i><b>15.3</b> Create new objects</a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="modify.html"><a href="modify.html#add"><i class="fa fa-check"></i><b>15.3.1</b> add</a></li>
+<li class="chapter" data-level="15.3.2" data-path="modify.html"><a href="modify.html#duplicate"><i class="fa fa-check"></i><b>15.3.2</b> duplicate</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="output.html"><a href="output.html"><i class="fa fa-check"></i><b>16</b> Detailed output</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="output.html"><a href="output.html#prerequisites-13"><i class="fa fa-check"></i><b>16.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="16.2" data-path="output.html"><a href="output.html#meters"><i class="fa fa-check"></i><b>16.2</b> Meters</a></li>
+<li class="chapter" data-level="16.3" data-path="output.html"><a href="output.html#variables"><i class="fa fa-check"></i><b>16.3</b> Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="explore.html"><a href="explore.html"><i class="fa fa-check"></i><b>17</b> Model Exploration</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="explore.html"><a href="explore.html#prerequisites-14"><i class="fa fa-check"></i><b>17.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="part"><span><b>IV Program</b></span></li>
+<li class="chapter" data-level="18" data-path="program.html"><a href="program.html"><i class="fa fa-check"></i><b>18</b> Introduction</a></li>
+<li class="chapter" data-level="19" data-path="energy-efficient-measures.html"><a href="energy-efficient-measures.html"><i class="fa fa-check"></i><b>19</b> Energy Efficient Measures</a></li>
+<li class="chapter" data-level="20" data-path="parametric-simulations.html"><a href="parametric-simulations.html"><i class="fa fa-check"></i><b>20</b> Parametric simulations</a></li>
+<li class="part"><span><b>V Advanced</b></span></li>
+<li class="chapter" data-level="21" data-path="advanced.html"><a href="advanced.html"><i class="fa fa-check"></i><b>21</b> Introduction</a></li>
+<li class="chapter" data-level="22" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html"><i class="fa fa-check"></i><b>22</b> Sensitivity analysis</a></li>
+<li class="chapter" data-level="23" data-path="optimization.html"><a href="optimization.html"><i class="fa fa-check"></i><b>23</b> Optimization</a></li>
+<li class="chapter" data-level="24" data-path="calibration.html"><a href="calibration.html"><i class="fa fa-check"></i><b>24</b> Calibration</a></li>
+<li class="part"><span><b>VI Reproduce</b></span></li>
+<li class="chapter" data-level="25" data-path="reproduce.html"><a href="reproduce.html"><i class="fa fa-check"></i><b>25</b> Introduction</a></li>
+<li class="chapter" data-level="26" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>26</b> R Markdown</a></li>
+<li class="chapter" data-level="27" data-path="containers.html"><a href="containers.html"><i class="fa fa-check"></i><b>27</b> Containers</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R for Building Energy Simulation</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="modify" class="section level1" number="15">
+<h1><span class="header-section-number">Chapter 15</span> Modify model inputs</h1>
+<p>In this chapter, you will learn how modify the model inputs.</p>
+<div id="prerequisites-12" class="section level2" number="15.1">
+<h2><span class="header-section-number">15.1</span> Prerequisites</h2>
+<p>In this chapter, we will use the <strong>eplusr</strong> package to query and modify various inputs in an EnergyPlus model. We will also combine what you have learned about data manipulation (with the <strong>tidyverse</strong> package) to make it easier to work with the simulation inputs.</p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="modify.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(eplusr)</span>
+<span id="cb146-2"><a href="modify.html#cb146-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb146-3"><a href="modify.html#cb146-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code></pre></div>
+<p>We will be working with the IDF and EPW file that pertains to the U.S. Department of Energy (DOE) Commercial Reference Building and Chicago’s TMY3 respectively.</p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="modify.html#cb147-1" aria-hidden="true" tabindex="-1"></a>path_idf <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;idf&quot;</span>, <span class="st">&quot;RefBldgMediumOfficeNew2004_Chicago.idf&quot;</span>)</span>
+<span id="cb147-2"><a href="modify.html#cb147-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">read_idf</span>(path_idf)</span>
+<span id="cb147-3"><a href="modify.html#cb147-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb147-4"><a href="modify.html#cb147-4" aria-hidden="true" tabindex="-1"></a>path_epw <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;epw&quot;</span>, <span class="st">&quot;USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw&quot;</span>)</span>
+<span id="cb147-5"><a href="modify.html#cb147-5" aria-hidden="true" tabindex="-1"></a>epw <span class="ot">&lt;-</span> <span class="fu">read_epw</span>(path_epw)</span></code></pre></div>
+</div>
+<div id="extract-and-modify" class="section level2" number="15.2">
+<h2><span class="header-section-number">15.2</span> Extract and Modify</h2>
+<p>Changing the values of the existing objects in the model is an important functionality in the application of data exploration and data science to EnergyPlus. There are many approaches to extract and modify an EnergyPlus model using eplusr. In this chapter we focus on</p>
+<ul>
+<li><p>Directly extracting and modifying the field values of a single object using the <code>[[</code> or <code>$</code> operator.</p></li>
+<li><p>Extracting and modifying multiple objects using the methods in the <code>Idf</code> class. Type <code>?Idf</code> in your console to see the <code>Idf</code> class methods.</p></li>
+</ul>
+<div id="single-object" class="section level3" number="15.2.1">
+<h3><span class="header-section-number">15.2.1</span> Single object</h3>
+<p>Like how you can access the field values of the model using the <code>$</code> operator, you can likewise modify them simply by accessing and then replace the current value by assigning a different value. For instance, you can change the <code>Thermal Resistance</code> field value of the <code>CP02 CARPET PAD</code> object to <code>0.5</code> using the <code>&lt;-</code> operator to assign <code>0.5</code> to the field <code>Thermal Resistance</code>.</p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="modify.html#cb148-1" aria-hidden="true" tabindex="-1"></a>model<span class="sc">$</span><span class="st">`</span><span class="at">Material:NoMass</span><span class="st">`</span><span class="sc">$</span><span class="st">`</span><span class="at">CP02 CARPET PAD</span><span class="st">`</span><span class="sc">$</span><span class="st">`</span><span class="at">Thermal Resistance</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb148-2"><a href="modify.html#cb148-2" aria-hidden="true" tabindex="-1"></a>model<span class="sc">$</span><span class="st">`</span><span class="at">Material:NoMass</span><span class="st">`</span><span class="sc">$</span><span class="st">`</span><span class="at">CP02 CARPET PAD</span><span class="st">`</span></span>
+<span id="cb148-3"><a href="modify.html#cb148-3" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;IdfObject: &#39;Material:NoMass&#39;&gt; [ID:56] `CP02 CARPET PAD`</span></span>
+<span id="cb148-4"><a href="modify.html#cb148-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Class: &lt;Material:NoMass&gt;</span></span>
+<span id="cb148-5"><a href="modify.html#cb148-5" aria-hidden="true" tabindex="-1"></a><span class="do">## ├─ 1*: &quot;CP02 CARPET PAD&quot;, !- Name</span></span>
+<span id="cb148-6"><a href="modify.html#cb148-6" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 2*: &quot;VeryRough&quot;,       !- Roughness</span></span>
+<span id="cb148-7"><a href="modify.html#cb148-7" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 3*: 0.5,               !- Thermal Resistance {m2-K/W}</span></span>
+<span id="cb148-8"><a href="modify.html#cb148-8" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 4 : 0.9,               !- Thermal Absorptance</span></span>
+<span id="cb148-9"><a href="modify.html#cb148-9" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 5 : 0.7,               !- Solar Absorptance</span></span>
+<span id="cb148-10"><a href="modify.html#cb148-10" aria-hidden="true" tabindex="-1"></a><span class="do">## └─ 6 : 0.8;               !- Visible Absorptance</span></span></code></pre></div>
+<p>Another example showing how you can modify the lighting power density (field name: <code>Watts_per_Zone_Floor_Area</code>) of a particular zone (object name: Perimeter_bot_ZN_1_Lights) from <code>10.76</code> (current value) to <code>15</code> (new value).</p>
+<p>Existing field values of the object <code>Perimeter_bot_ZN_1_Lights</code>, an instance of the <code>Lights</code> class.</p>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="modify.html#cb149-1" aria-hidden="true" tabindex="-1"></a>model<span class="sc">$</span>Lights<span class="sc">$</span>Perimeter_bot_ZN_1_Lights</span>
+<span id="cb149-2"><a href="modify.html#cb149-2" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;IdfObject: &#39;Lights&#39;&gt; [ID:240] `Perimeter_bot_ZN_1_Lights`</span></span>
+<span id="cb149-3"><a href="modify.html#cb149-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Class: &lt;Lights&gt;</span></span>
+<span id="cb149-4"><a href="modify.html#cb149-4" aria-hidden="true" tabindex="-1"></a><span class="do">## ├─ 01*: &quot;Perimeter_bot_ZN_1_Lights&quot;,  !- Name</span></span>
+<span id="cb149-5"><a href="modify.html#cb149-5" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 02*: &quot;Perimeter_bot_ZN_1&quot;,  !- Zone or ZoneList Name</span></span>
+<span id="cb149-6"><a href="modify.html#cb149-6" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 03*: &quot;BLDG_LIGHT_SCH&quot;,   !- Schedule Name</span></span>
+<span id="cb149-7"><a href="modify.html#cb149-7" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 04 : &quot;Watts/Area&quot;,       !- Design Level Calculation Method</span></span>
+<span id="cb149-8"><a href="modify.html#cb149-8" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 05 : &lt;Blank&gt;,            !- Lighting Level {W}</span></span>
+<span id="cb149-9"><a href="modify.html#cb149-9" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 06 : 10.76,              !- Watts per Zone Floor Area {W/m2}</span></span>
+<span id="cb149-10"><a href="modify.html#cb149-10" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 07 : &lt;Blank&gt;,            !- Watts per Person {W/person}</span></span>
+<span id="cb149-11"><a href="modify.html#cb149-11" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 08 : 0.4,                !- Return Air Fraction</span></span>
+<span id="cb149-12"><a href="modify.html#cb149-12" aria-hidden="true" tabindex="-1"></a>....</span></code></pre></div>
+<p>Changing the value of the field <code>Watts_per_Zone_Floor_Area</code> from it’s existing value of <code>10.76</code> to <code>15</code>.</p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="modify.html#cb150-1" aria-hidden="true" tabindex="-1"></a>model<span class="sc">$</span>Lights<span class="sc">$</span>Perimeter_bot_ZN_1_Lights<span class="sc">$</span>Watts_per_Zone_Floor_Area <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb150-2"><a href="modify.html#cb150-2" aria-hidden="true" tabindex="-1"></a>model<span class="sc">$</span>Lights<span class="sc">$</span>Perimeter_bot_ZN_1_Lights</span>
+<span id="cb150-3"><a href="modify.html#cb150-3" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;IdfObject: &#39;Lights&#39;&gt; [ID:240] `Perimeter_bot_ZN_1_Lights`</span></span>
+<span id="cb150-4"><a href="modify.html#cb150-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Class: &lt;Lights&gt;</span></span>
+<span id="cb150-5"><a href="modify.html#cb150-5" aria-hidden="true" tabindex="-1"></a><span class="do">## ├─ 01*: &quot;Perimeter_bot_ZN_1_Lights&quot;,  !- Name</span></span>
+<span id="cb150-6"><a href="modify.html#cb150-6" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 02*: &quot;Perimeter_bot_ZN_1&quot;,  !- Zone or ZoneList Name</span></span>
+<span id="cb150-7"><a href="modify.html#cb150-7" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 03*: &quot;BLDG_LIGHT_SCH&quot;,   !- Schedule Name</span></span>
+<span id="cb150-8"><a href="modify.html#cb150-8" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 04 : &quot;Watts/Area&quot;,       !- Design Level Calculation Method</span></span>
+<span id="cb150-9"><a href="modify.html#cb150-9" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 05 : &lt;Blank&gt;,            !- Lighting Level {W}</span></span>
+<span id="cb150-10"><a href="modify.html#cb150-10" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 06 : 15,                 !- Watts per Zone Floor Area {W/m2}</span></span>
+<span id="cb150-11"><a href="modify.html#cb150-11" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 07 : &lt;Blank&gt;,            !- Watts per Person {W/person}</span></span>
+<span id="cb150-12"><a href="modify.html#cb150-12" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 08 : 0.4,                !- Return Air Fraction</span></span>
+<span id="cb150-13"><a href="modify.html#cb150-13" aria-hidden="true" tabindex="-1"></a>....</span></code></pre></div>
+</div>
+<div id="multiple-objects" class="section level3" number="15.2.2">
+<h3><span class="header-section-number">15.2.2</span> Multiple objects</h3>
+<p>Methods to extract data:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Methods</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>$to_table()</code></td>
+<td align="left">Extract specified objects of the model to data.frames</td>
+</tr>
+<tr class="even">
+<td align="left"><code>$to_string()</code></td>
+<td align="left">Extract specified objects of the model to strings</td>
+</tr>
+</tbody>
+</table>
+<p>You can extract the EnergyPlus objects of interest into a R data frame using the <code>$to_table</code> method in the <code>Idf</code> class. If no arguments are provided to the method, the entire EnergyPlus model is converted to a data frame.</p>
+<p>The data frame consists of the following six columns.</p>
+<ul>
+<li>id (integer): Integer identifiers of the EnergyPlus objects.</li>
+<li>name (character): Names of the EnergyPlus objects.</li>
+<li>class (character): The class that the EnergyPlus object belongs to.</li>
+<li>index (integer): Row index for the field of a particular EnergyPlus object.</li>
+<li>field (character): The name of the column within a table that the observation belongs to.</li>
+<li>value (character): The value of the field.</li>
+</ul>
+<p>Take a minute now to open the EnergyPlus IDF file (<code>"RefBldgMediumOfficeNew2004_Chicago.idf"</code>). Compare the text file with the data frame below, and identify where the values for the columns <code>class</code>, <code>name</code>, and <code>field</code> would correspond to in the IDF text file. You will also notice that some of the EnergyPlus classes such as <code>Version</code> and <code>SimulationControl</code> do not have a <code>name</code> field, which explains why it is stored as <code>NA</code> in the data frame.</p>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="modify.html#cb151-1" aria-hidden="true" tabindex="-1"></a>model<span class="sc">$</span><span class="fu">to_table</span>()</span>
+<span id="cb151-2"><a href="modify.html#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="do">##        id name             class index</span></span>
+<span id="cb151-3"><a href="modify.html#cb151-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    1:   1 &lt;NA&gt;           Version     1</span></span>
+<span id="cb151-4"><a href="modify.html#cb151-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    2:   2 &lt;NA&gt; SimulationControl     1</span></span>
+<span id="cb151-5"><a href="modify.html#cb151-5" aria-hidden="true" tabindex="-1"></a><span class="do">##    3:   2 &lt;NA&gt; SimulationControl     2</span></span>
+<span id="cb151-6"><a href="modify.html#cb151-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    4:   2 &lt;NA&gt; SimulationControl     3</span></span>
+<span id="cb151-7"><a href="modify.html#cb151-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    5:   2 &lt;NA&gt; SimulationControl     4</span></span>
+<span id="cb151-8"><a href="modify.html#cb151-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   ---                                 </span></span>
+<span id="cb151-9"><a href="modify.html#cb151-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 7839: 681 &lt;NA&gt;       FuelFactors    32</span></span>
+<span id="cb151-10"><a href="modify.html#cb151-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 7840: 681 &lt;NA&gt;       FuelFactors    33</span></span>
+<span id="cb151-11"><a href="modify.html#cb151-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 7841: 681 &lt;NA&gt;       FuelFactors    34</span></span>
+<span id="cb151-12"><a href="modify.html#cb151-12" aria-hidden="true" tabindex="-1"></a>....</span></code></pre></div>
+<ul>
+<li>Subset by Class</li>
+</ul>
+<p>Working with the entire model can be difficult due to the large number of rows. You can extract all the objects belonging to a class by supplying a character vector of class names that are of interest to the argument <code>class</code>.</p>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="modify.html#cb152-1" aria-hidden="true" tabindex="-1"></a>model<span class="sc">$</span><span class="fu">to_table</span>(<span class="at">class =</span> <span class="fu">c</span>(<span class="st">&quot;Construction&quot;</span>, <span class="st">&quot;Lights&quot;</span>))</span>
+<span id="cb152-2"><a href="modify.html#cb152-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       id                         name        class index</span></span>
+<span id="cb152-3"><a href="modify.html#cb152-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   1:  37 Steel Frame Non-res Ext Wall Construction     1</span></span>
+<span id="cb152-4"><a href="modify.html#cb152-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   2:  37 Steel Frame Non-res Ext Wall Construction     2</span></span>
+<span id="cb152-5"><a href="modify.html#cb152-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   3:  37 Steel Frame Non-res Ext Wall Construction     3</span></span>
+<span id="cb152-6"><a href="modify.html#cb152-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   4:  37 Steel Frame Non-res Ext Wall Construction     4</span></span>
+<span id="cb152-7"><a href="modify.html#cb152-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   5:  39            IEAD Non-res Roof Construction     1</span></span>
+<span id="cb152-8"><a href="modify.html#cb152-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  ---                                                    </span></span>
+<span id="cb152-9"><a href="modify.html#cb152-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 217: 251    Perimeter_top_ZN_4_Lights       Lights     9</span></span>
+<span id="cb152-10"><a href="modify.html#cb152-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 218: 251    Perimeter_top_ZN_4_Lights       Lights    10</span></span>
+<span id="cb152-11"><a href="modify.html#cb152-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 219: 251    Perimeter_top_ZN_4_Lights       Lights    11</span></span>
+<span id="cb152-12"><a href="modify.html#cb152-12" aria-hidden="true" tabindex="-1"></a>....</span></code></pre></div>
+<p>You can also extract particular objects from different classes by supplying a character vector of object names to the argument <code>which</code>.</p>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="modify.html#cb153-1" aria-hidden="true" tabindex="-1"></a>model<span class="sc">$</span><span class="fu">to_table</span>(<span class="at">which =</span> <span class="fu">c</span>(<span class="st">&quot;Wood Siding&quot;</span>, </span>
+<span id="cb153-2"><a href="modify.html#cb153-2" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;Steel Frame NonRes Wall Insulation&quot;</span>, </span>
+<span id="cb153-3"><a href="modify.html#cb153-3" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;1/2IN Gypsum&quot;</span>))</span>
+<span id="cb153-4"><a href="modify.html#cb153-4" aria-hidden="true" tabindex="-1"></a><span class="do">##     id                               name    class index               field</span></span>
+<span id="cb153-5"><a href="modify.html#cb153-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  1: 50                        Wood Siding Material     1                Name</span></span>
+<span id="cb153-6"><a href="modify.html#cb153-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  2: 50                        Wood Siding Material     2           Roughness</span></span>
+<span id="cb153-7"><a href="modify.html#cb153-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  3: 50                        Wood Siding Material     3           Thickness</span></span>
+<span id="cb153-8"><a href="modify.html#cb153-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  4: 50                        Wood Siding Material     4        Conductivity</span></span>
+<span id="cb153-9"><a href="modify.html#cb153-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  5: 50                        Wood Siding Material     5             Density</span></span>
+<span id="cb153-10"><a href="modify.html#cb153-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  6: 50                        Wood Siding Material     6       Specific Heat</span></span>
+<span id="cb153-11"><a href="modify.html#cb153-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  7: 50                        Wood Siding Material     7 Thermal Absorptance</span></span>
+<span id="cb153-12"><a href="modify.html#cb153-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  8: 50                        Wood Siding Material     8   Solar Absorptance</span></span>
+<span id="cb153-13"><a href="modify.html#cb153-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  9: 50                        Wood Siding Material     9 Visible Absorptance</span></span>
+<span id="cb153-14"><a href="modify.html#cb153-14" aria-hidden="true" tabindex="-1"></a>....</span>
+<span id="cb153-15"><a href="modify.html#cb153-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb153-16"><a href="modify.html#cb153-16" aria-hidden="true" tabindex="-1"></a>model<span class="sc">$</span><span class="fu">to_table</span>(<span class="at">which =</span> <span class="fu">c</span>(<span class="st">&quot;Perimeter_bot_ZN_1_Lights&quot;</span>))</span>
+<span id="cb153-17"><a href="modify.html#cb153-17" aria-hidden="true" tabindex="-1"></a><span class="do">##      id                      name  class index</span></span>
+<span id="cb153-18"><a href="modify.html#cb153-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  1: 240 Perimeter_bot_ZN_1_Lights Lights     1</span></span>
+<span id="cb153-19"><a href="modify.html#cb153-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  2: 240 Perimeter_bot_ZN_1_Lights Lights     2</span></span>
+<span id="cb153-20"><a href="modify.html#cb153-20" aria-hidden="true" tabindex="-1"></a><span class="do">##  3: 240 Perimeter_bot_ZN_1_Lights Lights     3</span></span>
+<span id="cb153-21"><a href="modify.html#cb153-21" aria-hidden="true" tabindex="-1"></a><span class="do">##  4: 240 Perimeter_bot_ZN_1_Lights Lights     4</span></span>
+<span id="cb153-22"><a href="modify.html#cb153-22" aria-hidden="true" tabindex="-1"></a><span class="do">##  5: 240 Perimeter_bot_ZN_1_Lights Lights     5</span></span>
+<span id="cb153-23"><a href="modify.html#cb153-23" aria-hidden="true" tabindex="-1"></a><span class="do">##  6: 240 Perimeter_bot_ZN_1_Lights Lights     6</span></span>
+<span id="cb153-24"><a href="modify.html#cb153-24" aria-hidden="true" tabindex="-1"></a><span class="do">##  7: 240 Perimeter_bot_ZN_1_Lights Lights     7</span></span>
+<span id="cb153-25"><a href="modify.html#cb153-25" aria-hidden="true" tabindex="-1"></a><span class="do">##  8: 240 Perimeter_bot_ZN_1_Lights Lights     8</span></span>
+<span id="cb153-26"><a href="modify.html#cb153-26" aria-hidden="true" tabindex="-1"></a><span class="do">##  9: 240 Perimeter_bot_ZN_1_Lights Lights     9</span></span>
+<span id="cb153-27"><a href="modify.html#cb153-27" aria-hidden="true" tabindex="-1"></a>....</span></code></pre></div>
+<p>Once the EnergyPlus objects are in a <code>data.frame</code> format, you can take advantage of the <code>tidyverse</code> library to easily manipulate and modify their values. For example, you can use the <code>filter()</code> function to subset the data frame to retain rows of interest and the <code>dplyr::mutate()</code> function to modify values within columns.</p>
+<p>In the example below, we first extract all objects in the <code>Lights</code> class from the EnergyPlus model. We then filter the data frame to contain only the field <code>"Watts per Zone Floor Area"</code>, which is used to specify the lighting power density in <span class="math inline">\(W/m^2\)</span> in EnergyPlus. Lastly, we change the lighting power density of all the objects in the <code>Lights</code> class from <span class="math inline">\(10.76 W/m^2\)</span> to <span class="math inline">\(15 W/m^2\)</span>.</p>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="modify.html#cb154-1" aria-hidden="true" tabindex="-1"></a>lights_df <span class="ot">&lt;-</span> model<span class="sc">$</span><span class="fu">to_table</span>(<span class="at">class =</span> <span class="fu">c</span>(<span class="st">&quot;Lights&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb154-2"><a href="modify.html#cb154-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">value =</span> <span class="fu">if_else</span>(field <span class="sc">==</span> <span class="st">&quot;Watts per Zone Floor Area&quot;</span>, <span class="co"># condition</span></span>
+<span id="cb154-3"><a href="modify.html#cb154-3" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;15&quot;</span>, <span class="co"># value if TRUE</span></span>
+<span id="cb154-4"><a href="modify.html#cb154-4" aria-hidden="true" tabindex="-1"></a>                         value) <span class="co"># value if FALSE</span></span>
+<span id="cb154-5"><a href="modify.html#cb154-5" aria-hidden="true" tabindex="-1"></a>         )</span>
+<span id="cb154-6"><a href="modify.html#cb154-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-7"><a href="modify.html#cb154-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-8"><a href="modify.html#cb154-8" aria-hidden="true" tabindex="-1"></a>lights_df</span>
+<span id="cb154-9"><a href="modify.html#cb154-9" aria-hidden="true" tabindex="-1"></a><span class="do">##       id                      name  class index</span></span>
+<span id="cb154-10"><a href="modify.html#cb154-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   1: 237        Core_bottom_Lights Lights     1</span></span>
+<span id="cb154-11"><a href="modify.html#cb154-11" aria-hidden="true" tabindex="-1"></a><span class="do">##   2: 237        Core_bottom_Lights Lights     2</span></span>
+<span id="cb154-12"><a href="modify.html#cb154-12" aria-hidden="true" tabindex="-1"></a><span class="do">##   3: 237        Core_bottom_Lights Lights     3</span></span>
+<span id="cb154-13"><a href="modify.html#cb154-13" aria-hidden="true" tabindex="-1"></a><span class="do">##   4: 237        Core_bottom_Lights Lights     4</span></span>
+<span id="cb154-14"><a href="modify.html#cb154-14" aria-hidden="true" tabindex="-1"></a><span class="do">##   5: 237        Core_bottom_Lights Lights     5</span></span>
+<span id="cb154-15"><a href="modify.html#cb154-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  ---                                           </span></span>
+<span id="cb154-16"><a href="modify.html#cb154-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 191: 251 Perimeter_top_ZN_4_Lights Lights     9</span></span>
+<span id="cb154-17"><a href="modify.html#cb154-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 192: 251 Perimeter_top_ZN_4_Lights Lights    10</span></span>
+<span id="cb154-18"><a href="modify.html#cb154-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 193: 251 Perimeter_top_ZN_4_Lights Lights    11</span></span>
+<span id="cb154-19"><a href="modify.html#cb154-19" aria-hidden="true" tabindex="-1"></a>....</span></code></pre></div>
+<p>However, notice that you are not modifying the model just by changing the values of the data frame. This is not surprising since the extracted data frame is a copy of the model and not the model itself.</p>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="modify.html#cb155-1" aria-hidden="true" tabindex="-1"></a>model<span class="sc">$</span><span class="st">`</span><span class="at">Lights</span><span class="st">`</span></span>
+<span id="cb155-2"><a href="modify.html#cb155-2" aria-hidden="true" tabindex="-1"></a><span class="do">## $Core_bottom_Lights</span></span>
+<span id="cb155-3"><a href="modify.html#cb155-3" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;IdfObject: &#39;Lights&#39;&gt; [ID:237] `Core_bottom_Lights`</span></span>
+<span id="cb155-4"><a href="modify.html#cb155-4" aria-hidden="true" tabindex="-1"></a><span class="do">## ── COMMENTS ────────────────────────────────────────────────────────────────────</span></span>
+<span id="cb155-5"><a href="modify.html#cb155-5" aria-hidden="true" tabindex="-1"></a><span class="do">## ! ***LIGHTS***</span></span>
+<span id="cb155-6"><a href="modify.html#cb155-6" aria-hidden="true" tabindex="-1"></a><span class="do">## ── VALUES ──────────────────────────────────────────────────────────────────────</span></span>
+<span id="cb155-7"><a href="modify.html#cb155-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Class: &lt;Lights&gt;</span></span>
+<span id="cb155-8"><a href="modify.html#cb155-8" aria-hidden="true" tabindex="-1"></a><span class="do">## ├─ 01*: &quot;Core_bottom_Lights&quot;,  !- Name</span></span>
+<span id="cb155-9"><a href="modify.html#cb155-9" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 02*: &quot;Core_bottom&quot;,      !- Zone or ZoneList Name</span></span>
+<span id="cb155-10"><a href="modify.html#cb155-10" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 03*: &quot;BLDG_LIGHT_SCH&quot;,   !- Schedule Name</span></span>
+<span id="cb155-11"><a href="modify.html#cb155-11" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 04 : &quot;Watts/Area&quot;,       !- Design Level Calculation Method</span></span>
+<span id="cb155-12"><a href="modify.html#cb155-12" aria-hidden="true" tabindex="-1"></a>....</span></code></pre></div>
+<p>To modify the model, you need to use the <code>$update()</code> method in the <code>Idf</code> class, which can take the modified data frame as an argument.</p>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="modify.html#cb156-1" aria-hidden="true" tabindex="-1"></a>model<span class="sc">$</span><span class="fu">update</span>(lights_df)</span>
+<span id="cb156-2"><a href="modify.html#cb156-2" aria-hidden="true" tabindex="-1"></a><span class="do">## $Core_bottom_Lights</span></span>
+<span id="cb156-3"><a href="modify.html#cb156-3" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;IdfObject: &#39;Lights&#39;&gt; [ID:237] `Core_bottom_Lights`</span></span>
+<span id="cb156-4"><a href="modify.html#cb156-4" aria-hidden="true" tabindex="-1"></a><span class="do">## ── COMMENTS ────────────────────────────────────────────────────────────────────</span></span>
+<span id="cb156-5"><a href="modify.html#cb156-5" aria-hidden="true" tabindex="-1"></a><span class="do">## ! ***LIGHTS***</span></span>
+<span id="cb156-6"><a href="modify.html#cb156-6" aria-hidden="true" tabindex="-1"></a><span class="do">## ── VALUES ──────────────────────────────────────────────────────────────────────</span></span>
+<span id="cb156-7"><a href="modify.html#cb156-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Class: &lt;Lights&gt;</span></span>
+<span id="cb156-8"><a href="modify.html#cb156-8" aria-hidden="true" tabindex="-1"></a><span class="do">## ├─ 01*: &quot;Core_bottom_Lights&quot;,  !- Name</span></span>
+<span id="cb156-9"><a href="modify.html#cb156-9" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 02*: &quot;Core_bottom&quot;,      !- Zone or ZoneList Name</span></span>
+<span id="cb156-10"><a href="modify.html#cb156-10" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 03*: &quot;BLDG_LIGHT_SCH&quot;,   !- Schedule Name</span></span>
+<span id="cb156-11"><a href="modify.html#cb156-11" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 04 : &quot;Watts/Area&quot;,       !- Design Level Calculation Method</span></span>
+<span id="cb156-12"><a href="modify.html#cb156-12" aria-hidden="true" tabindex="-1"></a>....</span>
+<span id="cb156-13"><a href="modify.html#cb156-13" aria-hidden="true" tabindex="-1"></a>model<span class="sc">$</span><span class="st">`</span><span class="at">Lights</span><span class="st">`</span></span>
+<span id="cb156-14"><a href="modify.html#cb156-14" aria-hidden="true" tabindex="-1"></a><span class="do">## $Core_bottom_Lights</span></span>
+<span id="cb156-15"><a href="modify.html#cb156-15" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;IdfObject: &#39;Lights&#39;&gt; [ID:237] `Core_bottom_Lights`</span></span>
+<span id="cb156-16"><a href="modify.html#cb156-16" aria-hidden="true" tabindex="-1"></a><span class="do">## ── COMMENTS ────────────────────────────────────────────────────────────────────</span></span>
+<span id="cb156-17"><a href="modify.html#cb156-17" aria-hidden="true" tabindex="-1"></a><span class="do">## ! ***LIGHTS***</span></span>
+<span id="cb156-18"><a href="modify.html#cb156-18" aria-hidden="true" tabindex="-1"></a><span class="do">## ── VALUES ──────────────────────────────────────────────────────────────────────</span></span>
+<span id="cb156-19"><a href="modify.html#cb156-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Class: &lt;Lights&gt;</span></span>
+<span id="cb156-20"><a href="modify.html#cb156-20" aria-hidden="true" tabindex="-1"></a><span class="do">## ├─ 01*: &quot;Core_bottom_Lights&quot;,  !- Name</span></span>
+<span id="cb156-21"><a href="modify.html#cb156-21" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 02*: &quot;Core_bottom&quot;,      !- Zone or ZoneList Name</span></span>
+<span id="cb156-22"><a href="modify.html#cb156-22" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 03*: &quot;BLDG_LIGHT_SCH&quot;,   !- Schedule Name</span></span>
+<span id="cb156-23"><a href="modify.html#cb156-23" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 04 : &quot;Watts/Area&quot;,       !- Design Level Calculation Method</span></span>
+<span id="cb156-24"><a href="modify.html#cb156-24" aria-hidden="true" tabindex="-1"></a>....</span></code></pre></div>
+<ul>
+<li>Subset by Objects</li>
+</ul>
+<p>You can also extract data from the EnergyPlus model based on the object names by supplying the object names to the argument <code>which</code> of the <code>$to_table()</code> method. In the example that follows, we will show you how to do this by changing the thermal properties of the external wall construction.</p>
+<p>First, you can find out which <code>Construction</code> objects make up the external wall by scanning objects from the <code>BuildingSurface:Detailed</code> class, which describes all the surfaces of the model. In general, the external wall surfaces would be those that are of <code>Surface Type == Wall</code> and <code>Outside Boundary Conditions == Outdoors</code> (i.e., the surface is exposed to outside temperature conditions). In this model, the external wall is made up of the <code>Steel Frame Non-res Ext Wall</code> object of the <code>Construction</code> class.</p>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="modify.html#cb157-1" aria-hidden="true" tabindex="-1"></a>ext_wall_surf <span class="ot">&lt;-</span> model<span class="sc">$</span><span class="fu">to_table</span>(<span class="at">class =</span> <span class="fu">c</span>(<span class="st">&quot;BuildingSurface:Detailed&quot;</span>), <span class="at">wide =</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb157-2"><a href="modify.html#cb157-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Surface Type</span><span class="st">`</span> <span class="sc">==</span> <span class="st">&quot;Wall&quot;</span>, <span class="st">`</span><span class="at">Outside Boundary Condition</span><span class="st">`</span> <span class="sc">==</span> <span class="st">&quot;Outdoors&quot;</span>)</span>
+<span id="cb157-3"><a href="modify.html#cb157-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb157-4"><a href="modify.html#cb157-4" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(ext_wall_surf<span class="sc">$</span><span class="st">`</span><span class="at">Construction Name</span><span class="st">`</span>)</span>
+<span id="cb157-5"><a href="modify.html#cb157-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Steel Frame Non-res Ext Wall&quot;</span></span></code></pre></div>
+<p>The object <code>Steel Frame Non-res Ext Wall</code> comprises of three materials (<code>Wood Siding</code>, <code>Steel Frame NonRes Wall Insulation</code>, and <code>1/2IN Gypsum</code>) that are modeled using the class <code>Material</code>. To modify the thermal properties of the external wall, you would need to modify the inputs of either of these three materials.</p>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="modify.html#cb158-1" aria-hidden="true" tabindex="-1"></a>model<span class="sc">$</span><span class="fu">object_relation</span>(<span class="st">&quot;Steel Frame Non-res Ext Wall&quot;</span>)</span>
+<span id="cb158-2"><a href="modify.html#cb158-2" aria-hidden="true" tabindex="-1"></a><span class="do">## ── Refer to Others ─────────────────────────────────────────────────────────────</span></span>
+<span id="cb158-3"><a href="modify.html#cb158-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  Class: &lt;Construction&gt;</span></span>
+<span id="cb158-4"><a href="modify.html#cb158-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  └─ Object [ID:37] &lt;Steel Frame Non-res Ext Wall&gt;</span></span>
+<span id="cb158-5"><a href="modify.html#cb158-5" aria-hidden="true" tabindex="-1"></a><span class="do">##     ├─ 2: &quot;Wood Siding&quot;, !- Outside Layer</span></span>
+<span id="cb158-6"><a href="modify.html#cb158-6" aria-hidden="true" tabindex="-1"></a><span class="do">##     │  v~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb158-7"><a href="modify.html#cb158-7" aria-hidden="true" tabindex="-1"></a><span class="do">##     │  └─ Class: &lt;Material&gt;</span></span>
+<span id="cb158-8"><a href="modify.html#cb158-8" aria-hidden="true" tabindex="-1"></a><span class="do">##     │     └─ Object [ID:50] &lt;Wood Siding&gt;</span></span>
+<span id="cb158-9"><a href="modify.html#cb158-9" aria-hidden="true" tabindex="-1"></a><span class="do">##     │        └─ 1: &quot;Wood Siding&quot;; !- Name</span></span>
+<span id="cb158-10"><a href="modify.html#cb158-10" aria-hidden="true" tabindex="-1"></a><span class="do">##     │  </span></span>
+<span id="cb158-11"><a href="modify.html#cb158-11" aria-hidden="true" tabindex="-1"></a><span class="do">##     ├─ 3: &quot;Steel Frame NonRes Wall Insulation&quot;,  !- Layer 2</span></span>
+<span id="cb158-12"><a href="modify.html#cb158-12" aria-hidden="true" tabindex="-1"></a>....</span></code></pre></div>
+<p>We first extract these three materials from the model.</p>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="modify.html#cb159-1" aria-hidden="true" tabindex="-1"></a>ext_wall_mat <span class="ot">&lt;-</span> model<span class="sc">$</span><span class="fu">to_table</span>(<span class="at">which =</span> <span class="fu">c</span>(<span class="st">&quot;Wood Siding&quot;</span>,</span>
+<span id="cb159-2"><a href="modify.html#cb159-2" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">&quot;Steel Frame NonRes Wall Insulation&quot;</span>,</span>
+<span id="cb159-3"><a href="modify.html#cb159-3" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">&quot;1/2IN Gypsum&quot;</span>))</span>
+<span id="cb159-4"><a href="modify.html#cb159-4" aria-hidden="true" tabindex="-1"></a>ext_wall_mat</span>
+<span id="cb159-5"><a href="modify.html#cb159-5" aria-hidden="true" tabindex="-1"></a><span class="do">##     id                               name    class index               field</span></span>
+<span id="cb159-6"><a href="modify.html#cb159-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  1: 50                        Wood Siding Material     1                Name</span></span>
+<span id="cb159-7"><a href="modify.html#cb159-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  2: 50                        Wood Siding Material     2           Roughness</span></span>
+<span id="cb159-8"><a href="modify.html#cb159-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  3: 50                        Wood Siding Material     3           Thickness</span></span>
+<span id="cb159-9"><a href="modify.html#cb159-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  4: 50                        Wood Siding Material     4        Conductivity</span></span>
+<span id="cb159-10"><a href="modify.html#cb159-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  5: 50                        Wood Siding Material     5             Density</span></span>
+<span id="cb159-11"><a href="modify.html#cb159-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  6: 50                        Wood Siding Material     6       Specific Heat</span></span>
+<span id="cb159-12"><a href="modify.html#cb159-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  7: 50                        Wood Siding Material     7 Thermal Absorptance</span></span>
+<span id="cb159-13"><a href="modify.html#cb159-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  8: 50                        Wood Siding Material     8   Solar Absorptance</span></span>
+<span id="cb159-14"><a href="modify.html#cb159-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  9: 50                        Wood Siding Material     9 Visible Absorptance</span></span>
+<span id="cb159-15"><a href="modify.html#cb159-15" aria-hidden="true" tabindex="-1"></a>....</span></code></pre></div>
+<p>You can then modify the extracted information in the <code>data.frame</code>. Here, we increase the <code>Conductivity</code> of the <code>1/2IN Gypsum</code> from <code>0.16</code> to <code>0.20</code>, and double the <code>Thickness</code> of the wall insultion (<code>Steel Frame NonRes Wall Insulation</code>).</p>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="modify.html#cb160-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb160-2"><a href="modify.html#cb160-2" aria-hidden="true" tabindex="-1"></a>ext_wall_mat[name <span class="sc">==</span> <span class="st">&quot;1/2IN Gypsum&quot;</span> <span class="sc">&amp;</span> field <span class="sc">==</span> <span class="st">&quot;Conductivity&quot;</span>]<span class="sc">$</span>value <span class="ot">&lt;-</span> <span class="st">&quot;0.20&quot;</span></span>
+<span id="cb160-3"><a href="modify.html#cb160-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb160-4"><a href="modify.html#cb160-4" aria-hidden="true" tabindex="-1"></a>ext_wall_mat[name <span class="sc">==</span> <span class="st">&quot;Steel Frame NonRes Wall Insulation&quot;</span> <span class="sc">&amp;</span> </span>
+<span id="cb160-5"><a href="modify.html#cb160-5" aria-hidden="true" tabindex="-1"></a>               field <span class="sc">==</span> <span class="st">&quot;Thickness&quot;</span>]<span class="sc">$</span>value <span class="ot">&lt;-</span> <span class="st">&quot;0.174&quot;</span></span></code></pre></div>
+<p>Subsequently, you can update the model using the modified <code>data.frame</code> with the <code>$update()</code> method in the <code>Idf</code> class.</p>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="modify.html#cb161-1" aria-hidden="true" tabindex="-1"></a>model<span class="sc">$</span><span class="fu">update</span>(ext_wall_mat)</span>
+<span id="cb161-2"><a href="modify.html#cb161-2" aria-hidden="true" tabindex="-1"></a><span class="do">## $`Wood Siding`</span></span>
+<span id="cb161-3"><a href="modify.html#cb161-3" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;IdfObject: &#39;Material&#39;&gt; [ID:50] `Wood Siding`</span></span>
+<span id="cb161-4"><a href="modify.html#cb161-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Class: &lt;Material&gt;</span></span>
+<span id="cb161-5"><a href="modify.html#cb161-5" aria-hidden="true" tabindex="-1"></a><span class="do">## ├─ 1*: &quot;Wood Siding&quot;,  !- Name</span></span>
+<span id="cb161-6"><a href="modify.html#cb161-6" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 2*: &quot;MediumSmooth&quot;, !- Roughness</span></span>
+<span id="cb161-7"><a href="modify.html#cb161-7" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 3*: 0.01,           !- Thickness {m}</span></span>
+<span id="cb161-8"><a href="modify.html#cb161-8" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 4*: 0.11,           !- Conductivity {W/m-K}</span></span>
+<span id="cb161-9"><a href="modify.html#cb161-9" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 5*: 544.62,         !- Density {kg/m3}</span></span>
+<span id="cb161-10"><a href="modify.html#cb161-10" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 6*: 1210,           !- Specific Heat {J/kg-K}</span></span>
+<span id="cb161-11"><a href="modify.html#cb161-11" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 7 : 0.9,            !- Thermal Absorptance</span></span>
+<span id="cb161-12"><a href="modify.html#cb161-12" aria-hidden="true" tabindex="-1"></a>....</span>
+<span id="cb161-13"><a href="modify.html#cb161-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb161-14"><a href="modify.html#cb161-14" aria-hidden="true" tabindex="-1"></a>model<span class="sc">$</span>Material<span class="sc">$</span><span class="st">`</span><span class="at">1/2IN Gypsum</span><span class="st">`</span></span>
+<span id="cb161-15"><a href="modify.html#cb161-15" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;IdfObject: &#39;Material&#39;&gt; [ID:51] `1/2IN Gypsum`</span></span>
+<span id="cb161-16"><a href="modify.html#cb161-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Class: &lt;Material&gt;</span></span>
+<span id="cb161-17"><a href="modify.html#cb161-17" aria-hidden="true" tabindex="-1"></a><span class="do">## ├─ 1*: &quot;1/2IN Gypsum&quot;, !- Name</span></span>
+<span id="cb161-18"><a href="modify.html#cb161-18" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 2*: &quot;Smooth&quot;,       !- Roughness</span></span>
+<span id="cb161-19"><a href="modify.html#cb161-19" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 3*: 0.0127,         !- Thickness {m}</span></span>
+<span id="cb161-20"><a href="modify.html#cb161-20" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 4*: 0.2,            !- Conductivity {W/m-K}</span></span>
+<span id="cb161-21"><a href="modify.html#cb161-21" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 5*: 784.9,          !- Density {kg/m3}</span></span>
+<span id="cb161-22"><a href="modify.html#cb161-22" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 6*: 830,            !- Specific Heat {J/kg-K}</span></span>
+<span id="cb161-23"><a href="modify.html#cb161-23" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 7 : 0.9,            !- Thermal Absorptance</span></span>
+<span id="cb161-24"><a href="modify.html#cb161-24" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 8 : 0.92,           !- Solar Absorptance</span></span>
+<span id="cb161-25"><a href="modify.html#cb161-25" aria-hidden="true" tabindex="-1"></a>....</span>
+<span id="cb161-26"><a href="modify.html#cb161-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb161-27"><a href="modify.html#cb161-27" aria-hidden="true" tabindex="-1"></a>model<span class="sc">$</span>Material<span class="sc">$</span><span class="st">`</span><span class="at">Steel Frame NonRes Wall Insulation</span><span class="st">`</span></span>
+<span id="cb161-28"><a href="modify.html#cb161-28" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;IdfObject: &#39;Material&#39;&gt; [ID:38] `Steel Frame NonRes Wall Insulation`</span></span>
+<span id="cb161-29"><a href="modify.html#cb161-29" aria-hidden="true" tabindex="-1"></a><span class="do">## Class: &lt;Material&gt;</span></span>
+<span id="cb161-30"><a href="modify.html#cb161-30" aria-hidden="true" tabindex="-1"></a><span class="do">## ├─ 1*: &quot;Steel Frame NonRes Wall Insulation&quot;,  !- Name</span></span>
+<span id="cb161-31"><a href="modify.html#cb161-31" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 2*: &quot;MediumRough&quot;,      !- Roughness</span></span>
+<span id="cb161-32"><a href="modify.html#cb161-32" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 3*: 0.174,              !- Thickness {m}</span></span>
+<span id="cb161-33"><a href="modify.html#cb161-33" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 4*: 0.049,              !- Conductivity {W/m-K}</span></span>
+<span id="cb161-34"><a href="modify.html#cb161-34" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 5*: 265,                !- Density {kg/m3}</span></span>
+<span id="cb161-35"><a href="modify.html#cb161-35" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 6*: 836.8,              !- Specific Heat {J/kg-K}</span></span>
+<span id="cb161-36"><a href="modify.html#cb161-36" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 7 : 0.9,                !- Thermal Absorptance</span></span>
+<span id="cb161-37"><a href="modify.html#cb161-37" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 8 : 0.7,                !- Solar Absorptance</span></span>
+<span id="cb161-38"><a href="modify.html#cb161-38" aria-hidden="true" tabindex="-1"></a>....</span></code></pre></div>
+</div>
+</div>
+<div id="create-new-objects" class="section level2" number="15.3">
+<h2><span class="header-section-number">15.3</span> Create new objects</h2>
+<div id="add" class="section level3" number="15.3.1">
+<h3><span class="header-section-number">15.3.1</span> add</h3>
+<p>You can add new objects to the model using the <code>$add()</code> method in the <code>Idf</code> class. The <code>$add()</code> method takes as it’s first argument is a nested named list of the form. Note that <code>&lt;CLASS NAME&gt;</code> is case-sensitive while <code>&lt;FIELD NAME&gt;</code> is not.</p>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="modify.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">list(&lt;CLASS NAME&gt; = list(&lt;FIELD NAME&gt; = &lt;FIELD VALUE&gt;))</span><span class="st">`</span></span></code></pre></div>
+<p>Suppose you want to add a new material to your model, which you can define using EnergyPlus’s <code>Material</code> class. Figure <a href="modify.html#fig:idd-material">15.1</a> can be translated to tell us that the <code>Material</code> class consists of the following fields</p>
+<ul>
+<li><code>Name</code> is a required field of type <code>alpha</code> (i.e., a string)</li>
+<li><code>Roughness</code> is a required field of type <code>choice</code> and the possible choices are <code>VeryRough</code>, <code>Rough</code>, <code>MediumRou.gh</code>, <code>MediumSmooth</code>, <code>Smooth</code>, and <code>VerySmooth</code>.</li>
+<li><code>Thickness</code> is a required field with unit of measurement meters. It is a <code>real</code> number and must be <span class="math inline">\(&gt;=0\)</span></li>
+<li><code>Conductivity</code> is a required field with unit of measurement <span class="math inline">\(W/m.K\)</span>. It is a <code>real</code> number and must be <span class="math inline">\(&gt;=0\)</span></li>
+<li><code>Density</code> is a required field with unit of measurement <span class="math inline">\(kg/m^3\)</span>. It is a <code>real</code> number and must be <span class="math inline">\(&gt;=0\)</span></li>
+<li><code>Specific Heat</code> is a required field with unit of measurement <span class="math inline">\(J/kg.K\)</span>. It is a <code>real</code> number and must be <span class="math inline">\(&gt;=100\)</span></li>
+<li><code>Thermal Absorptance</code> is <em>not</em> a required field. It is a <code>real</code> number, has a default value of 0.9 if not specified, and must be between 0 and 0.99999.</li>
+<li><code>Solar Absorptance</code> is <em>not</em> a required field. It is a <code>real</code> number, has a default value of 0.7 if not specified, and must be between 0 and 0.99999.</li>
+<li><code>Visible Absorptance</code> is <em>not</em> a required field. It is a <code>real</code> number, has a default value of 0.7 if not specified, and must be between 0 and 0.99999.</li>
+</ul>
+<div class="figure" style="text-align: center"><span id="fig:idd-material"></span>
+<img src="figures/idd_material.png" alt="Definition of EnergyPlus Material class based on the IDD." width="70%" />
+<p class="caption">
+Figure 15.1: Definition of EnergyPlus Material class based on the IDD.
+</p>
+</div>
+<p>Based on the definitions provided in the IDD, you can define and add a new 100mm brick object. By default, all empty fields will be filled with default values specified in the IDD. As mentioned earlier, note that the class name (<code>Material</code> in this example) is case-sensitive, while the field names (<code>Name</code>, <code>Roughness</code>, <code>Thickness</code>, etc.) are case-insensitive.</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="modify.html#cb163-1" aria-hidden="true" tabindex="-1"></a>new_mat <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb163-2"><a href="modify.html#cb163-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Material =</span> <span class="fu">list</span>(</span>
+<span id="cb163-3"><a href="modify.html#cb163-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Name =</span> <span class="st">&quot;100mm brick&quot;</span>,</span>
+<span id="cb163-4"><a href="modify.html#cb163-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ROUGHness =</span> <span class="st">&quot;Rough&quot;</span>,</span>
+<span id="cb163-5"><a href="modify.html#cb163-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">thickness =</span> <span class="fl">0.10</span>,</span>
+<span id="cb163-6"><a href="modify.html#cb163-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">conducTIVITY =</span> <span class="fl">0.89</span>,</span>
+<span id="cb163-7"><a href="modify.html#cb163-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">density =</span> <span class="dv">1920</span>,</span>
+<span id="cb163-8"><a href="modify.html#cb163-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Specific Heat</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">790</span></span>
+<span id="cb163-9"><a href="modify.html#cb163-9" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb163-10"><a href="modify.html#cb163-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">Material =</span> <span class="fu">list</span>(</span>
+<span id="cb163-11"><a href="modify.html#cb163-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;spandrel glass&quot;</span>,</span>
+<span id="cb163-12"><a href="modify.html#cb163-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">roughness =</span> <span class="st">&quot;smooth&quot;</span>,</span>
+<span id="cb163-13"><a href="modify.html#cb163-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">thickness =</span> <span class="fl">0.006</span>,</span>
+<span id="cb163-14"><a href="modify.html#cb163-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">conductivity =</span> <span class="fl">0.99</span>,</span>
+<span id="cb163-15"><a href="modify.html#cb163-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">density =</span> <span class="dv">2528</span>,</span>
+<span id="cb163-16"><a href="modify.html#cb163-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Specific Heat</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">880</span></span>
+<span id="cb163-17"><a href="modify.html#cb163-17" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb163-18"><a href="modify.html#cb163-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-19"><a href="modify.html#cb163-19" aria-hidden="true" tabindex="-1"></a>model<span class="sc">$</span><span class="fu">add</span>(new_mat)</span>
+<span id="cb163-20"><a href="modify.html#cb163-20" aria-hidden="true" tabindex="-1"></a><span class="do">## $`100mm brick`</span></span>
+<span id="cb163-21"><a href="modify.html#cb163-21" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;IdfObject: &#39;Material&#39;&gt; [ID:682] `100mm brick`</span></span>
+<span id="cb163-22"><a href="modify.html#cb163-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Class: &lt;Material&gt;</span></span>
+<span id="cb163-23"><a href="modify.html#cb163-23" aria-hidden="true" tabindex="-1"></a><span class="do">## ├─ 1*: &quot;100mm brick&quot;, !- Name</span></span>
+<span id="cb163-24"><a href="modify.html#cb163-24" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 2*: &quot;Rough&quot;,       !- Roughness</span></span>
+<span id="cb163-25"><a href="modify.html#cb163-25" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 3*: 0.1,           !- Thickness {m}</span></span>
+<span id="cb163-26"><a href="modify.html#cb163-26" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 4*: 0.89,          !- Conductivity {W/m-K}</span></span>
+<span id="cb163-27"><a href="modify.html#cb163-27" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 5*: 1920,          !- Density {kg/m3}</span></span>
+<span id="cb163-28"><a href="modify.html#cb163-28" aria-hidden="true" tabindex="-1"></a><span class="do">## └─ 6*: 790;           !- Specific Heat {J/kg-K}</span></span>
+<span id="cb163-29"><a href="modify.html#cb163-29" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb163-30"><a href="modify.html#cb163-30" aria-hidden="true" tabindex="-1"></a>....</span>
+<span id="cb163-31"><a href="modify.html#cb163-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-32"><a href="modify.html#cb163-32" aria-hidden="true" tabindex="-1"></a>model<span class="sc">$</span><span class="fu">objects</span>(<span class="fu">c</span>(<span class="st">&quot;100mm brick&quot;</span>, <span class="st">&quot;spandrel glass&quot;</span>))</span>
+<span id="cb163-33"><a href="modify.html#cb163-33" aria-hidden="true" tabindex="-1"></a><span class="do">## $`100mm brick`</span></span>
+<span id="cb163-34"><a href="modify.html#cb163-34" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;IdfObject: &#39;Material&#39;&gt; [ID:682] `100mm brick`</span></span>
+<span id="cb163-35"><a href="modify.html#cb163-35" aria-hidden="true" tabindex="-1"></a><span class="do">## Class: &lt;Material&gt;</span></span>
+<span id="cb163-36"><a href="modify.html#cb163-36" aria-hidden="true" tabindex="-1"></a><span class="do">## ├─ 1*: &quot;100mm brick&quot;, !- Name</span></span>
+<span id="cb163-37"><a href="modify.html#cb163-37" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 2*: &quot;Rough&quot;,       !- Roughness</span></span>
+<span id="cb163-38"><a href="modify.html#cb163-38" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 3*: 0.1,           !- Thickness {m}</span></span>
+<span id="cb163-39"><a href="modify.html#cb163-39" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 4*: 0.89,          !- Conductivity {W/m-K}</span></span>
+<span id="cb163-40"><a href="modify.html#cb163-40" aria-hidden="true" tabindex="-1"></a><span class="do">## │─ 5*: 1920,          !- Density {kg/m3}</span></span>
+<span id="cb163-41"><a href="modify.html#cb163-41" aria-hidden="true" tabindex="-1"></a><span class="do">## └─ 6*: 790;           !- Specific Heat {J/kg-K}</span></span>
+<span id="cb163-42"><a href="modify.html#cb163-42" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb163-43"><a href="modify.html#cb163-43" aria-hidden="true" tabindex="-1"></a>....</span></code></pre></div>
+<p>By default, all empty fields will be filled with default values specified in the IDD and the object would be defined using only the minimum number of fields. You change change this by setting with <code>.default = FALSE</code> (no default values used) and <code>.all = TRUE</code> (all fields are added).</p>
+</div>
+<div id="duplicate" class="section level3" number="15.3.2">
+<h3><span class="header-section-number">15.3.2</span> duplicate</h3>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="input.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="output.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["r4bes.pdf", "r4bes.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
