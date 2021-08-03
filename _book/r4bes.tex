@@ -117,7 +117,7 @@
 
 \title{R for Building Energy Simulation}
 \author{Adrian Chong}
-\date{2021-07-31}
+\date{2021-08-04}
 
 \begin{document}
 \maketitle
@@ -135,6 +135,8 @@
 \addcontentsline{toc}{section}{Introduction}
 
 This is the book for the module \textbf{PF4213--Building Energy Analysis and Simulation} at the Department of the Built Environment, National University of Singapore. This book will introduce you to building energy simulation and how to perform data analytics with energy models using R. You will learn how to get your model into R, simulate it, transform the inputs and outputs, and visualize and explore them. This book is designed to be interactive and for you to \textbf{learn by doing}. It is highly recommended that you do not copy and paste all the code in this book but instead type them out. Copying and pasting snippets of code isn't the best way to learn because more often than not you are just reading the code at an abstract level without understanding what it does. In contrast, typing the code forces you to try to understand what the code is doing.
+
+The online version of this book is free to use, and is licensed under the \href{https://creativecommons.org/licenses/by-nc-sa/4.0/}{Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License}.
 
 \emph{Note that this book is still work in progress and some chapters in the book are currently just placeholders that will be completed over time.}
 
@@ -1130,7 +1132,7 @@ In this chapter, we focus on the use of the \textbf{readr} package that forms a 
 \end{Highlighting}
 \end{Shaded}
 
-In this chapter we will also be using the following datasets. If the following code returns \texttt{FALSE}, you should refer to the section \protect\hyperlink{finding-your-file-1}{Finding your file} in the \protect\hyperlink{preface}{Preface} on where you can download the datasets.
+In this chapter we will also be using the following datasets. If the following code returns \texttt{FALSE}, you should refer to the section \protect\hyperlink{finding-your-file}{Finding your file} in the \protect\hyperlink{preface}{Preface} on where you can download the datasets.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1300,199 +1302,13 @@ To resolve this, you can explicitly provide the date/time format specification t
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{importing-data-1}{%
-\chapter{Importing Data}\label{importing-data-1}}
-
-\hypertarget{prerequisites-4}{%
-\section{Prerequisites}\label{prerequisites-4}}
-
-In this chapter, we focus on the use of the \textbf{readr} package that forms a part of the \textbf{tidyverse} package. \textbf{readr} provides a fast and easy way to parse a file because it uses a sophisticated parser that guesses the data type for each column along with the flexibility to specify what to parse. You will also need the \textbf{here} package, which we use to easily provide relative file paths.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(tidyverse)}
-\FunctionTok{library}\NormalTok{(lubridate)}
-\FunctionTok{library}\NormalTok{(here)}
-\end{Highlighting}
-\end{Shaded}
-
-In this chapter we will also be using the following datasets. If the following code returns \texttt{FALSE}, you should refer to the section \protect\hyperlink{finding-your-file-1}{Finding your file} in the \protect\hyperlink{preface}{Preface} on where you can download the datasets.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{file.exists}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"iris.csv"}\NormalTok{))}
-\FunctionTok{file.exists}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"building.csv"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{finding-your-file-1}{%
-\section{Finding your file}\label{finding-your-file-1}}
-
-Before importing data, you need to first let R know where to find the file by providing the file path. You can provide file paths relative to the top-level directory of the current R project with the \texttt{here()} function.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{here}\NormalTok{()}
-\DocumentationTok{\#\# [1] "/Users/adrianchong/Documents/GitHub/r4bes"}
-\end{Highlighting}
-\end{Shaded}
-
-To reference a file named \texttt{iris.csv} located in the \texttt{data} folder that is located in the top-level directory of your project
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"iris.csv"}\NormalTok{)}
-\DocumentationTok{\#\# [1] "/Users/adrianchong/Documents/GitHub/r4bes/data/iris.csv"}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{parsing-a-csv-file-1}{%
-\section{Parsing a csv file}\label{parsing-a-csv-file-1}}
-
-We will focus on the \texttt{read\_csv()} function because building data are typically stored in \texttt{csv} format. You can find out more about other file formats in \href{https://readr.tidyverse.org}{readr's documentation}.
-
-The easiest way to parse a file is by providing the file path. In most cases, it will just work as expected where \texttt{readr} correctly guesses the column specification (that gets printed to the console) and you get a tibble as specified. \href{https://readr.tidyverse.org/reference/readr_example.html}{\texttt{readr\_example()}} is a function that makes it easy to access example files to demonstrate \texttt{readr}'s capabilities.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{read\_csv}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"iris.csv"}\NormalTok{))}
-\DocumentationTok{\#\# }
-\DocumentationTok{\#\# {-}{-} Column specification {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-\DocumentationTok{\#\# cols(}
-\DocumentationTok{\#\#   Sepal.Length = col\_double(),}
-\DocumentationTok{\#\#   Sepal.Width = col\_double(),}
-\DocumentationTok{\#\#   Petal.Length = col\_double(),}
-\DocumentationTok{\#\#   Petal.Width = col\_double(),}
-\DocumentationTok{\#\#   Species = col\_character()}
-\DocumentationTok{\#\# )}
-\DocumentationTok{\#\# \# A tibble: 150 x 5}
-\DocumentationTok{\#\#    Sepal.Length Sepal.Width Petal.Length Petal.Width Species}
-\DocumentationTok{\#\#           \textless{}dbl\textgreater{}       \textless{}dbl\textgreater{}        \textless{}dbl\textgreater{}       \textless{}dbl\textgreater{} \textless{}chr\textgreater{}  }
-\DocumentationTok{\#\#  1          5.1         3.5          1.4         0.2 setosa }
-\DocumentationTok{\#\#  2          4.9         3            1.4         0.2 setosa }
-\DocumentationTok{\#\#  3          4.7         3.2          1.3         0.2 setosa }
-\DocumentationTok{\#\#  4          4.6         3.1          1.5         0.2 setosa }
-\DocumentationTok{\#\#  5          5           3.6          1.4         0.2 setosa }
-\DocumentationTok{\#\#  6          5.4         3.9          1.7         0.4 setosa }
-\DocumentationTok{\#\#  7          4.6         3.4          1.4         0.3 setosa }
-\NormalTok{....}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{building-data-1}{%
-\section{Building data}\label{building-data-1}}
-
-Data from buildings are often messy without a standardized format. Therefore, it is not uncommon if \texttt{readr} does not guess correctly. Parsing date/times is particularly important when working with time-series building data.
-
-For example, with the \texttt{building.csv} dataset, you can see that there are problems parsing the \texttt{timestamp} column. Specifically, column \texttt{timestamp} was parsed as a character vector when it actually contains a date/time. The \texttt{skip} argument is particularly useful since building data often contains meta-data that you want to exclude. A character vector can also be supplied to specify the column names.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-
-\FunctionTok{read\_csv}\NormalTok{(}
-  \FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"building.csv"}\NormalTok{),}
-  \AttributeTok{col\_names =} \FunctionTok{c}\NormalTok{(}
-    \StringTok{"datetime"}\NormalTok{,}
-    \StringTok{"power"}
-\NormalTok{  ),}
-  \AttributeTok{skip =} \DecValTok{2}
-\NormalTok{)}
-\DocumentationTok{\#\# }
-\DocumentationTok{\#\# {-}{-} Column specification {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-\DocumentationTok{\#\# cols(}
-\DocumentationTok{\#\#   datetime = col\_character(),}
-\DocumentationTok{\#\#   power = col\_number()}
-\DocumentationTok{\#\# )}
-\DocumentationTok{\#\# \# A tibble: 1,324 x 2}
-\DocumentationTok{\#\#    datetime       power}
-\DocumentationTok{\#\#    \textless{}chr\textgreater{}          \textless{}dbl\textgreater{}}
-\DocumentationTok{\#\#  1 1/9/19 0:00 2210185.}
-\DocumentationTok{\#\#  2 1/9/19 0:30 2210196.}
-\DocumentationTok{\#\#  3 1/9/19 1:00 2210208.}
-\DocumentationTok{\#\#  4 1/9/19 1:30 2210219 }
-\DocumentationTok{\#\#  5 1/9/19 2:00 2210231 }
-\DocumentationTok{\#\#  6 1/9/19 2:30 2210242.}
-\DocumentationTok{\#\#  7 1/9/19 3:00 2210254.}
-\NormalTok{....}
-\end{Highlighting}
-\end{Shaded}
-
-You can correct this using the \texttt{col\_types} argument to specify that column \texttt{timestamp} should be parsed as a date/time. You can view the available column specifications by typing \texttt{?cols} in your console. Typically specifying the data type would have allowed the data to be parsed correctly. In this particular dataset, there are two problems that caused the parsing to fail. First, the \texttt{timestamp} column does not follow \href{https://en.wikipedia.org/wiki/ISO_8601}{ISO8601} but date times are parsed as ISO8601 if no format specification is provided. Second, \texttt{col\_double()} is strict and does not allow for leading or trailing characters.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{read\_csv}\NormalTok{(}
-  \FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"building.csv"}\NormalTok{),}
-  \AttributeTok{col\_types =} \FunctionTok{cols}\NormalTok{(}
-    \FunctionTok{col\_datetime}\NormalTok{(),}
-    \FunctionTok{col\_double}\NormalTok{()}
-\NormalTok{  ),}
-  \AttributeTok{col\_names =} \FunctionTok{c}\NormalTok{(}
-    \StringTok{"datetime"}\NormalTok{,}
-    \StringTok{"power"}
-\NormalTok{  ),}
-  \AttributeTok{skip =} \DecValTok{2}
-\NormalTok{)}
-\DocumentationTok{\#\# Warning: 2648 parsing failures.}
-\DocumentationTok{\#\# row      col               expected       actual                                                          file}
-\DocumentationTok{\#\#   1 datetime date like              1/9/19 0:00  \textquotesingle{}/Users/adrianchong/Documents/GitHub/r4bes/data/building.csv\textquotesingle{}}
-\DocumentationTok{\#\#   1 power    no trailing characters 2,210,184.75 \textquotesingle{}/Users/adrianchong/Documents/GitHub/r4bes/data/building.csv\textquotesingle{}}
-\DocumentationTok{\#\#   2 datetime date like              1/9/19 0:30  \textquotesingle{}/Users/adrianchong/Documents/GitHub/r4bes/data/building.csv\textquotesingle{}}
-\DocumentationTok{\#\#   2 power    no trailing characters 2,210,195.75 \textquotesingle{}/Users/adrianchong/Documents/GitHub/r4bes/data/building.csv\textquotesingle{}}
-\DocumentationTok{\#\#   3 datetime date like              1/9/19 1:00  \textquotesingle{}/Users/adrianchong/Documents/GitHub/r4bes/data/building.csv\textquotesingle{}}
-\DocumentationTok{\#\# ... ........ ...................... ............ .............................................................}
-\DocumentationTok{\#\# See problems(...) for more details.}
-\DocumentationTok{\#\# \# A tibble: 1,324 x 2}
-\DocumentationTok{\#\#    datetime            power}
-\DocumentationTok{\#\#    \textless{}dttm\textgreater{}              \textless{}dbl\textgreater{}}
-\DocumentationTok{\#\#  1 NA                     NA}
-\DocumentationTok{\#\#  2 NA                     NA}
-\DocumentationTok{\#\#  3 NA                     NA}
-\DocumentationTok{\#\#  4 NA                     NA}
-\DocumentationTok{\#\#  5 NA                     NA}
-\DocumentationTok{\#\#  6 NA                     NA}
-\DocumentationTok{\#\#  7 NA                     NA}
-\NormalTok{....}
-\end{Highlighting}
-\end{Shaded}
-
-To resolve this, you can explicitly provide the date/time format specification that is similar to the function \texttt{strptime()}. Type \texttt{?strptime()} for the list of character representations. However, do note that the specified format must be a complete match to the entire string. Additionally, \texttt{col\_number()} is used in place of \texttt{col\_double()} because it is more flexible and ignores non-numeric characters. In general, it is recommended to be explicit in providing column specifications to mitigate parsing errors.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{read\_csv}\NormalTok{(}
-  \FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"building.csv"}\NormalTok{),}
-  \AttributeTok{col\_types =} \FunctionTok{cols}\NormalTok{(}
-    \FunctionTok{col\_datetime}\NormalTok{(}\AttributeTok{format =} \StringTok{"\%d/\%m/\%y \%H:\%M"}\NormalTok{),}
-    \FunctionTok{col\_number}\NormalTok{()}
-\NormalTok{  ),}
-  \AttributeTok{col\_names =} \FunctionTok{c}\NormalTok{(}
-    \StringTok{"datetime"}\NormalTok{,}
-    \StringTok{"power"}
-\NormalTok{  ),}
-  \AttributeTok{skip =} \DecValTok{2}
-\NormalTok{)}
-\DocumentationTok{\#\# \# A tibble: 1,324 x 2}
-\DocumentationTok{\#\#    datetime               power}
-\DocumentationTok{\#\#    \textless{}dttm\textgreater{}                 \textless{}dbl\textgreater{}}
-\DocumentationTok{\#\#  1 2019{-}09{-}01 00:00:00 2210185.}
-\DocumentationTok{\#\#  2 2019{-}09{-}01 00:30:00 2210196.}
-\DocumentationTok{\#\#  3 2019{-}09{-}01 01:00:00 2210208.}
-\DocumentationTok{\#\#  4 2019{-}09{-}01 01:30:00 2210219 }
-\DocumentationTok{\#\#  5 2019{-}09{-}01 02:00:00 2210231 }
-\DocumentationTok{\#\#  6 2019{-}09{-}01 02:30:00 2210242.}
-\DocumentationTok{\#\#  7 2019{-}09{-}01 03:00:00 2210254.}
-\NormalTok{....}
-\end{Highlighting}
-\end{Shaded}
-
 \hypertarget{regular-expressions}{%
 \chapter{Regular expressions}\label{regular-expressions}}
 
 \emph{Regular expressions} are patterns that are used to match combinations of characters in a string. Before we begin, just a cautionary note that if your regular expressions are becoming too complex, perhaps it is time to step back and think about whether it is necessary and if they can be represented multiple expressions that are easier to understand.
 
-\hypertarget{prerequisites-5}{%
-\section{Prerequisites}\label{prerequisites-5}}
+\hypertarget{prerequisites-4}{%
+\section{Prerequisites}\label{prerequisites-4}}
 
 The functions \texttt{str\_view()} and \texttt{str\_view\_all()} from the \textbf{stringr} package (part of tidyverse) will be used to learn regular expressions interactively. \texttt{str\_view()} shows the first match while \texttt{str\_view\_all()} shows all the matches.
 
@@ -1689,8 +1505,8 @@ Writing functions is a simple way to automate commonly used code in a more gener
 
 Additionally, using functions helps you to avoid making mistakes that happen all too often when copying and pasting code. Additionally, as your requirements change, you only need to update the code in one place (i.e., within the function) instead of searching and updating pieces of code, which is again error-prone.
 
-\hypertarget{prerequisites-6}{%
-\section{Prerequisites}\label{prerequisites-6}}
+\hypertarget{prerequisites-5}{%
+\section{Prerequisites}\label{prerequisites-5}}
 
 We will use base R code to illustrate creating user-defined functions. Therefore, no additional packages are required.
 
@@ -1762,8 +1578,8 @@ You can use a function to compute NMBE as follows:
 
 Data-preprocessing is an important step in any data science process. Rarely will you receive data that is in the exact form that you need. More often than not, you would need to pre-process the data by transforming and manipulating them so that they are easier to work with. This will be the focus in this chapter.
 
-\hypertarget{prerequisites-7}{%
-\section{Prerequisites}\label{prerequisites-7}}
+\hypertarget{prerequisites-6}{%
+\section{Prerequisites}\label{prerequisites-6}}
 
 In this chapter we focus on the use of the \textbf{dplyr} package that forms a core part of the \textbf{tidyverse} package. \textbf{dplyr} provides function that alleviates the challenges of data manipulation.
 
@@ -1775,7 +1591,7 @@ In this chapter we focus on the use of the \textbf{dplyr} package that forms a c
 \end{Highlighting}
 \end{Shaded}
 
-To explore the basic data manipulation capabilities of dplyr package, we will use the \texttt{building\_meter} dataset. If the following code returns \texttt{FALSE}, you should refer to the section \protect\hyperlink{finding-your-file-1}{Finding your file} in the \protect\hyperlink{preface}{Preface} on where you can download the datasets.
+To explore the basic data manipulation capabilities of dplyr package, we will use the \texttt{building\_meter} dataset. If the following code returns \texttt{FALSE}, you should refer to the section \protect\hyperlink{finding-your-file}{Finding your file} in the \protect\hyperlink{preface}{Preface} on where you can download the datasets.
 
 that can be downloaded from XXX. This dataset contains 8,760 time-series observations of typical building meter measurements that is simulated using the Department of Energy's (DOE) reference building energy model for medium sized offices \citep{deru_us_2011}.
 
@@ -2515,8 +2331,8 @@ Understanding the details of EnergyPlus inputs and outputs and how they are stru
 \hypertarget{parse}{%
 \chapter{Parse then simulate}\label{parse}}
 
-\hypertarget{prerequisites-8}{%
-\section{Prerequisites}\label{prerequisites-8}}
+\hypertarget{prerequisites-7}{%
+\section{Prerequisites}\label{prerequisites-7}}
 
 In this chapter we will introduce the \textbf{eplusr} package that was designed to interface with EnergyPlus and ease the application of data driven analytics. If you like to learn more about the underlying theory of how data is structured under the hood, you might enjoy the \emph{eplusr} paper published in the Journal Energy and Buildings \citep{jia_eplusr_2021}.
 
@@ -2611,7 +2427,7 @@ If you do not want to save the simulation results locally, you can first save th
 \NormalTok{model}\SpecialCharTok{$}\FunctionTok{save}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(}\FunctionTok{tempdir}\NormalTok{(), }\StringTok{"model.idf"}\NormalTok{))}
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(epw)}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.07.31 22:43}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.08.04 01:17}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2627,8 +2443,8 @@ If you do not want to save the simulation results locally, you can first save th
 \hypertarget{summary}{%
 \chapter{Summary reports}\label{summary}}
 
-\hypertarget{prerequisites-9}{%
-\section{Prerequisites}\label{prerequisites-9}}
+\hypertarget{prerequisites-8}{%
+\section{Prerequisites}\label{prerequisites-8}}
 
 In this chapter we will focus on how to set and get EnergyPlus simulation outputs using the eplusr package. We will illustrate the manipulation of simulation data using tidyverse, and use ggplot2 to visualize the simulation data
 
@@ -2663,7 +2479,7 @@ To output the summary reports from EnergyPlus, you need to first run the simulat
 \begin{Highlighting}[]
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.07.31 22:44}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.08.04 01:18}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2802,8 +2618,8 @@ You can refer to the section \emph{``Output:Table:SummaryReports''} in EnergyPlu
 \hypertarget{visualize}{%
 \chapter{Visualize}\label{visualize}}
 
-\hypertarget{prerequisites-10}{%
-\section{Prerequisites}\label{prerequisites-10}}
+\hypertarget{prerequisites-9}{%
+\section{Prerequisites}\label{prerequisites-9}}
 
 In this chapter, you will use the \textbf{eplusr} package to interface with EnergyPlus via R, the \textbf{tidyverse} package to manipulate the simulation results, and the \textbf{here} package to specify relative file paths.
 
@@ -2842,7 +2658,7 @@ Choosing the right color scheme is an important aspect of data visualization bec
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-118-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-110-1.pdf}
 In general, there are three types of color palettes: sequential, diverging, and qualitative.
 
 When representing gradients (such as temperature data), you want to use \emph{sequential} color palletes that are perceptually uniform as the color progresses from low to high.
@@ -2853,7 +2669,7 @@ When representing gradients (such as temperature data), you want to use \emph{se
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-119-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-111-1.pdf}
 
 You will want to use \emph{diverging} color palletes that uses a neutral mid-point that diverges at perceptually equal steps to both ends of the data. An example is using the \texttt{RdBu} color pallette to represent temperature data that diverges between cold and hot.
 
@@ -2863,7 +2679,7 @@ You will want to use \emph{diverging} color palletes that uses a neutral mid-poi
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-120-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-112-1.pdf}
 
 You will want to map categorical variables to \emph{qualitative} color palettes that are perceptually uniform and not have any variables standing out perceptually due to it's color. For instance, when visualizing the energy usage intensity of different buildings, you would want the colors used to represent each building to be easily distinguishable but at the same time not have one stand out from another even though they are numerically equivalent.
 
@@ -2873,7 +2689,7 @@ You will want to map categorical variables to \emph{qualitative} color palettes 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-121-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-113-1.pdf}
 
 \hypertarget{ggplot}{%
 \section{\texorpdfstring{\texttt{ggplot()}}{ggplot()}}\label{ggplot}}
@@ -2947,7 +2763,7 @@ You can create bar graphs by adding \texttt{geom\_bar()}. By default, \texttt{st
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-125-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-117-1.pdf}
 
 By default, the bar charts would be stacked. In this scenario, we only have two groups of fuel, electricity and natural gas. However, when there are many groups, stacked bar charts can be difficult to visualize. You can place them side by side instead using \texttt{position\ =\ position\_dodge()}.
 
@@ -2958,7 +2774,7 @@ By default, the bar charts would be stacked. In this scenario, we only have two 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-126-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-118-1.pdf}
 
 You can use scale to change the fill of the bar chart. The \texttt{scale\_*\_brewer()} functions provides an easy way to specify palettes from the rcolorbrewer package in ggplot.
 
@@ -2970,7 +2786,7 @@ You can use scale to change the fill of the bar chart. The \texttt{scale\_*\_bre
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-127-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-119-1.pdf}
 
 You can flip how the data coordinates maps to plot to get horizontal bar plots with \texttt{coord\_filp()}.
 
@@ -2983,7 +2799,7 @@ You can flip how the data coordinates maps to plot to get horizontal bar plots w
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-128-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-120-1.pdf}
 
 You can divide the plot into various \emph{facet}s by subsetting the plot based onone or more discrete variables. In this example, we divide the plot row wise based on fuel type using \texttt{facet\_grid()}.
 
@@ -2996,7 +2812,7 @@ You can divide the plot into various \emph{facet}s by subsetting the plot based 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-129-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-121-1.pdf}
 
 As you probably have noticed. The x-axis labels are not legible due to overlapping when plotting the data as vertical bar charts.
 
@@ -3011,7 +2827,7 @@ You can use \texttt{theme()} and \texttt{element\_text()} to change how the x-ax
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-130-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-122-1.pdf}
 
 You can also use \texttt{theme()} together with various \texttt{element\_*} functions to control elements of the plot title, legend, axis labels, borders, background, etc. You can find out more about the possible arguments to each \texttt{element\_function()} by typing \texttt{?margin} into your console. \texttt{element\_*} functions are used with \texttt{theme()} to specify the non-data components of the plot. There are four element functions and they are:
 
@@ -3045,7 +2861,7 @@ You can also use \texttt{theme()} together with various \texttt{element\_*} func
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-131-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-123-1.pdf}
 
 \hypertarget{part-inputs-and-outputs}{%
 \part{Inputs and Outputs}\label{part-inputs-and-outputs}}
@@ -3060,8 +2876,8 @@ Subsequently, you will learn how to extract the more detailed output files (Chap
 \hypertarget{input}{%
 \chapter{Model Input Structure}\label{input}}
 
-\hypertarget{prerequisites-11}{%
-\section{Prerequisites}\label{prerequisites-11}}
+\hypertarget{prerequisites-10}{%
+\section{Prerequisites}\label{prerequisites-10}}
 
 In this chapter, we will use the \textbf{eplusr} package to extract various inputs in an EnergyPlus model, and through this, learn how the inputs in EnergyPlus are structured.
 
@@ -3364,8 +3180,8 @@ In EnergyPlus, each object may be referenced by other
 
 In this chapter, you will learn how modify the model inputs.
 
-\hypertarget{prerequisites-12}{%
-\section{Prerequisites}\label{prerequisites-12}}
+\hypertarget{prerequisites-11}{%
+\section{Prerequisites}\label{prerequisites-11}}
 
 In this chapter, we will use the \textbf{eplusr} package to query and modify various inputs in an EnergyPlus model. We will also combine what you have learned about data manipulation (with the \textbf{tidyverse} package) to make it easier to work with the simulation inputs.
 
@@ -3876,8 +3692,8 @@ By default, all empty fields will be filled with default values specified in the
 \hypertarget{output}{%
 \chapter{Detailed output}\label{output}}
 
-\hypertarget{prerequisites-13}{%
-\section{Prerequisites}\label{prerequisites-13}}
+\hypertarget{prerequisites-12}{%
+\section{Prerequisites}\label{prerequisites-12}}
 
 In this chapter we will focus on how to set and get EnergyPlus simulation outputs using the eplusr package. We will illustrate the manipulation of simulation data using tidyverse, and use ggplot2 to visualize the simulation data
 
@@ -3913,7 +3729,7 @@ EnergyPlus allows you to specify meters to retrieve the simulation outputs. Howe
 \NormalTok{mdd}
 \DocumentationTok{\#\# == EnergyPlus Meter Data Dictionary File =======================================}
 \DocumentationTok{\#\#   * EnergyPlus version: 9.4.0 (998c4b761e)}
-\DocumentationTok{\#\#   * Simulation started: 2021{-}07{-}31 22:44:00}
+\DocumentationTok{\#\#   * Simulation started: 2021{-}08{-}04 01:18:00}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# {-}{-} Details {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 \DocumentationTok{\#\#      index reported\_time\_step report\_type}
@@ -4004,8 +3820,8 @@ After
 \hypertarget{explore}{%
 \chapter{Model Exploration}\label{explore}}
 
-\hypertarget{prerequisites-14}{%
-\section{Prerequisites}\label{prerequisites-14}}
+\hypertarget{prerequisites-13}{%
+\section{Prerequisites}\label{prerequisites-13}}
 
 \begin{Shaded}
 \begin{Highlighting}[]

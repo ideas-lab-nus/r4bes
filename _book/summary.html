@@ -1,381 +1,124 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="en">
 <head>
-
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 11 Summary reports | R for Building Energy Simulation</title>
-  <meta name="description" content="A guide to the building energy simulation with R." />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
-
-  <meta property="og:title" content="Chapter 11 Summary reports | R for Building Energy Simulation" />
-  <meta property="og:type" content="book" />
-  
-  
-  <meta property="og:description" content="A guide to the building energy simulation with R." />
-  
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 11 Summary reports | R for Building Energy Simulation" />
-  
-  <meta name="twitter:description" content="A guide to the building energy simulation with R." />
-  
-
-<meta name="author" content="Adrian Chong" />
-
-
-<meta name="date" content="2021-07-31" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  
-  
-<link rel="prev" href="parse.html"/>
-<link rel="next" href="visualize.html"/>
-<script src="libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
-
-
-
-
-
-
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
-<link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.4.0/str_view.js"></script>
-
-
-<style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
-
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
-
-<link rel="stylesheet" href="style.css" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 10 Summary reports | R for Building Energy Simulation</title>
+<meta name="author" content="Adrian Chong">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.7/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet">
+<script src="libs/str_view-binding-1.4.0/str_view.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS -->
 </head>
+<body data-spy="scroll" data-target="#toc">
 
-<body>
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
-
-
-  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
-
-    <div class="book-summary">
-      <nav role="navigation">
-
-<ul class="summary">
-<li><a href="./">R for BES</a></li>
-
-<li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
-<ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#introduction"><i class="fa fa-check"></i>Introduction</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#structure-of-this-book"><i class="fa fa-check"></i>Structure of this book</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a>
-<ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-and-rstudio"><i class="fa fa-check"></i>R and RStudio</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-packages"><i class="fa fa-check"></i>R Packages</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#energyplus"><i class="fa fa-check"></i>EnergyPlus</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#conventions"><i class="fa fa-check"></i>Conventions</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#before-you-begin"><i class="fa fa-check"></i>Before you begin</a>
-<ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-project"><i class="fa fa-check"></i>R Project</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#scripting"><i class="fa fa-check"></i>Scripting</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#example-files"><i class="fa fa-check"></i>Example files</a></li>
-<li class="chapter" data-level="0.0.1" data-path="index.html"><a href="index.html#project-structure"><i class="fa fa-check"></i><b>0.0.1</b> Project structure</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#style-guide"><i class="fa fa-check"></i>Style guide</a></li>
-</ul></li>
-</ul></li>
-<li class="part"><span><b>I R Basics</b></span></li>
-<li class="chapter" data-level="1" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
-<li class="chapter" data-level="2" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>2</b> Basics</a>
-<ul>
-<li class="chapter" data-level="2.1" data-path="basics.html"><a href="basics.html#prerequisites-1"><i class="fa fa-check"></i><b>2.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#basic-operators"><i class="fa fa-check"></i><b>2.2</b> Basic operators</a></li>
-<li class="chapter" data-level="2.3" data-path="basics.html"><a href="basics.html#basic-data-types"><i class="fa fa-check"></i><b>2.3</b> Basic data types</a></li>
-<li class="chapter" data-level="2.4" data-path="basics.html"><a href="basics.html#basic-data-structures"><i class="fa fa-check"></i><b>2.4</b> Basic data structures</a></li>
-<li class="chapter" data-level="2.5" data-path="basics.html"><a href="basics.html#tibbles"><i class="fa fa-check"></i><b>2.5</b> Tibbles</a></li>
-<li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#data-table"><i class="fa fa-check"></i><b>2.6</b> data.table</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="dates-and-times.html"><a href="dates-and-times.html"><i class="fa fa-check"></i><b>3</b> Dates and Times</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="dates-and-times.html"><a href="dates-and-times.html#prerequisites-2"><i class="fa fa-check"></i><b>3.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="3.2" data-path="dates-and-times.html"><a href="dates-and-times.html#parsing-dates-and-times"><i class="fa fa-check"></i><b>3.2</b> Parsing dates and times</a></li>
-<li class="chapter" data-level="3.3" data-path="dates-and-times.html"><a href="dates-and-times.html#extracting-components"><i class="fa fa-check"></i><b>3.3</b> Extracting components</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="importing-data.html"><a href="importing-data.html"><i class="fa fa-check"></i><b>4</b> Importing Data</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="importing-data.html"><a href="importing-data.html#prerequisites-3"><i class="fa fa-check"></i><b>4.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="4.2" data-path="importing-data.html"><a href="importing-data.html#finding-your-file"><i class="fa fa-check"></i><b>4.2</b> Finding your file</a></li>
-<li class="chapter" data-level="4.3" data-path="importing-data.html"><a href="importing-data.html#parsing-a-csv-file"><i class="fa fa-check"></i><b>4.3</b> Parsing a csv file</a></li>
-<li class="chapter" data-level="4.4" data-path="importing-data.html"><a href="importing-data.html#building-data"><i class="fa fa-check"></i><b>4.4</b> Building data</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="importing-data-1.html"><a href="importing-data-1.html"><i class="fa fa-check"></i><b>5</b> Importing Data</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="importing-data-1.html"><a href="importing-data-1.html#prerequisites-4"><i class="fa fa-check"></i><b>5.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="5.2" data-path="importing-data-1.html"><a href="importing-data-1.html#finding-your-file-1"><i class="fa fa-check"></i><b>5.2</b> Finding your file</a></li>
-<li class="chapter" data-level="5.3" data-path="importing-data-1.html"><a href="importing-data-1.html#parsing-a-csv-file-1"><i class="fa fa-check"></i><b>5.3</b> Parsing a csv file</a></li>
-<li class="chapter" data-level="5.4" data-path="importing-data-1.html"><a href="importing-data-1.html#building-data-1"><i class="fa fa-check"></i><b>5.4</b> Building data</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="regular-expressions.html"><a href="regular-expressions.html"><i class="fa fa-check"></i><b>6</b> Regular expressions</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="regular-expressions.html"><a href="regular-expressions.html#prerequisites-5"><i class="fa fa-check"></i><b>6.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="6.2" data-path="regular-expressions.html"><a href="regular-expressions.html#basic-matches"><i class="fa fa-check"></i><b>6.2</b> Basic matches</a></li>
-<li class="chapter" data-level="6.3" data-path="regular-expressions.html"><a href="regular-expressions.html#character-classes"><i class="fa fa-check"></i><b>6.3</b> Character classes</a></li>
-<li class="chapter" data-level="6.4" data-path="regular-expressions.html"><a href="regular-expressions.html#regex-escape"><i class="fa fa-check"></i><b>6.4</b> Escaping</a></li>
-<li class="chapter" data-level="6.5" data-path="regular-expressions.html"><a href="regular-expressions.html#anchors"><i class="fa fa-check"></i><b>6.5</b> Anchors</a></li>
-<li class="chapter" data-level="6.6" data-path="regular-expressions.html"><a href="regular-expressions.html#quantifies"><i class="fa fa-check"></i><b>6.6</b> Quantifies</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>7</b> Functions</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="functions.html"><a href="functions.html#prerequisites-6"><i class="fa fa-check"></i><b>7.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="7.2" data-path="functions.html"><a href="functions.html#user-defined-function"><i class="fa fa-check"></i><b>7.2</b> User-defined function</a></li>
-<li class="chapter" data-level="7.3" data-path="functions.html"><a href="functions.html#examples"><i class="fa fa-check"></i><b>7.3</b> Examples</a></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="manipulate.html"><a href="manipulate.html"><i class="fa fa-check"></i><b>8</b> Manipulating Data</a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="manipulate.html"><a href="manipulate.html#prerequisites-7"><i class="fa fa-check"></i><b>8.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="8.2" data-path="manipulate.html"><a href="manipulate.html#data-transformation"><i class="fa fa-check"></i><b>8.2</b> Data transformation</a>
-<ul>
-<li class="chapter" data-level="8.2.1" data-path="manipulate.html"><a href="manipulate.html#select"><i class="fa fa-check"></i><b>8.2.1</b> <code>select()</code></a></li>
-<li class="chapter" data-level="8.2.2" data-path="manipulate.html"><a href="manipulate.html#filter"><i class="fa fa-check"></i><b>8.2.2</b> <code>filter()</code></a></li>
-<li class="chapter" data-level="8.2.3" data-path="manipulate.html"><a href="manipulate.html#arrange"><i class="fa fa-check"></i><b>8.2.3</b> <code>arrange()</code></a></li>
-<li class="chapter" data-level="8.2.4" data-path="manipulate.html"><a href="manipulate.html#mutate"><i class="fa fa-check"></i><b>8.2.4</b> <code>mutate()</code></a></li>
-<li class="chapter" data-level="8.2.5" data-path="manipulate.html"><a href="manipulate.html#summarise-and-group_by"><i class="fa fa-check"></i><b>8.2.5</b> <code>summarise()</code> and <code>group_by()</code></a></li>
-<li class="chapter" data-level="8.2.6" data-path="manipulate.html"><a href="manipulate.html#across"><i class="fa fa-check"></i><b>8.2.6</b> <code>across()</code></a></li>
-</ul></li>
-<li class="chapter" data-level="8.3" data-path="manipulate.html"><a href="manipulate.html#pipes"><i class="fa fa-check"></i><b>8.3</b> Pipes</a></li>
-</ul></li>
-<li class="part"><span><b>II Get Started</b></span></li>
-<li class="chapter" data-level="9" data-path="get-started.html"><a href="get-started.html"><i class="fa fa-check"></i><b>9</b> Introduction</a></li>
-<li class="chapter" data-level="10" data-path="parse.html"><a href="parse.html"><i class="fa fa-check"></i><b>10</b> Parse then simulate</a>
-<ul>
-<li class="chapter" data-level="10.1" data-path="parse.html"><a href="parse.html#prerequisites-8"><i class="fa fa-check"></i><b>10.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="10.2" data-path="parse.html"><a href="parse.html#key-energyplus-files"><i class="fa fa-check"></i><b>10.2</b> Key EnergyPlus files</a></li>
-<li class="chapter" data-level="10.3" data-path="parse.html"><a href="parse.html#parsing-the-model"><i class="fa fa-check"></i><b>10.3</b> Parsing the model</a></li>
-<li class="chapter" data-level="10.4" data-path="parse.html"><a href="parse.html#simulating-the-model"><i class="fa fa-check"></i><b>10.4</b> Simulating the model</a></li>
-</ul></li>
-<li class="chapter" data-level="11" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>11</b> Summary reports</a>
-<ul>
-<li class="chapter" data-level="11.1" data-path="summary.html"><a href="summary.html#prerequisites-9"><i class="fa fa-check"></i><b>11.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="11.2" data-path="summary.html"><a href="summary.html#output-summary-reports"><i class="fa fa-check"></i><b>11.2</b> Output summary reports</a></li>
-</ul></li>
-<li class="chapter" data-level="12" data-path="visualize.html"><a href="visualize.html"><i class="fa fa-check"></i><b>12</b> Visualize</a>
-<ul>
-<li class="chapter" data-level="12.1" data-path="visualize.html"><a href="visualize.html#prerequisites-10"><i class="fa fa-check"></i><b>12.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="12.2" data-path="visualize.html"><a href="visualize.html#colors"><i class="fa fa-check"></i><b>12.2</b> Colors</a></li>
-<li class="chapter" data-level="12.3" data-path="visualize.html"><a href="visualize.html#ggplot"><i class="fa fa-check"></i><b>12.3</b> <code>ggplot()</code></a>
-<ul>
-<li class="chapter" data-level="12.3.1" data-path="visualize.html"><a href="visualize.html#functions-and-components"><i class="fa fa-check"></i><b>12.3.1</b> Functions and Components</a></li>
-<li class="chapter" data-level="12.3.2" data-path="visualize.html"><a href="visualize.html#a-simple-example"><i class="fa fa-check"></i><b>12.3.2</b> A simple example</a></li>
-</ul></li>
-</ul></li>
-<li class="part"><span><b>III Inputs and Outputs</b></span></li>
-<li class="chapter" data-level="13" data-path="input-output.html"><a href="input-output.html"><i class="fa fa-check"></i><b>13</b> Introduction</a></li>
-<li class="chapter" data-level="14" data-path="input.html"><a href="input.html"><i class="fa fa-check"></i><b>14</b> Model Input Structure</a>
-<ul>
-<li class="chapter" data-level="14.1" data-path="input.html"><a href="input.html#prerequisites-11"><i class="fa fa-check"></i><b>14.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="14.2" data-path="input.html"><a href="input.html#energyplus-documentation"><i class="fa fa-check"></i><b>14.2</b> EnergyPlus Documentation</a></li>
-<li class="chapter" data-level="14.3" data-path="input.html"><a href="input.html#energyplus-input-structure"><i class="fa fa-check"></i><b>14.3</b> EnergyPlus input structure</a></li>
-<li class="chapter" data-level="14.4" data-path="input.html"><a href="input.html#class-vs-object"><i class="fa fa-check"></i><b>14.4</b> Class vs Object</a></li>
-<li class="chapter" data-level="14.5" data-path="input.html"><a href="input.html#model-query"><i class="fa fa-check"></i><b>14.5</b> Model Query</a>
-<ul>
-<li class="chapter" data-level="14.5.1" data-path="input.html"><a href="input.html#idf-class-methods"><i class="fa fa-check"></i><b>14.5.1</b> <code>Idf</code> class methods</a></li>
-<li class="chapter" data-level="14.5.2" data-path="input.html"><a href="input.html#operator"><i class="fa fa-check"></i><b>14.5.2</b> <code>$</code> operator</a></li>
-</ul></li>
-<li class="chapter" data-level="14.6" data-path="input.html"><a href="input.html#object-interdependencies"><i class="fa fa-check"></i><b>14.6</b> Object interdependencies</a></li>
-</ul></li>
-<li class="chapter" data-level="15" data-path="modify.html"><a href="modify.html"><i class="fa fa-check"></i><b>15</b> Modify model inputs</a>
-<ul>
-<li class="chapter" data-level="15.1" data-path="modify.html"><a href="modify.html#prerequisites-12"><i class="fa fa-check"></i><b>15.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="15.2" data-path="modify.html"><a href="modify.html#extract-and-modify"><i class="fa fa-check"></i><b>15.2</b> Extract and Modify</a>
-<ul>
-<li class="chapter" data-level="15.2.1" data-path="modify.html"><a href="modify.html#single-object"><i class="fa fa-check"></i><b>15.2.1</b> Single object</a></li>
-<li class="chapter" data-level="15.2.2" data-path="modify.html"><a href="modify.html#multiple-objects"><i class="fa fa-check"></i><b>15.2.2</b> Multiple objects</a></li>
-</ul></li>
-<li class="chapter" data-level="15.3" data-path="modify.html"><a href="modify.html#create-new-objects"><i class="fa fa-check"></i><b>15.3</b> Create new objects</a>
-<ul>
-<li class="chapter" data-level="15.3.1" data-path="modify.html"><a href="modify.html#add"><i class="fa fa-check"></i><b>15.3.1</b> add</a></li>
-<li class="chapter" data-level="15.3.2" data-path="modify.html"><a href="modify.html#duplicate"><i class="fa fa-check"></i><b>15.3.2</b> duplicate</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="16" data-path="output.html"><a href="output.html"><i class="fa fa-check"></i><b>16</b> Detailed output</a>
-<ul>
-<li class="chapter" data-level="16.1" data-path="output.html"><a href="output.html#prerequisites-13"><i class="fa fa-check"></i><b>16.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="16.2" data-path="output.html"><a href="output.html#meters"><i class="fa fa-check"></i><b>16.2</b> Meters</a></li>
-<li class="chapter" data-level="16.3" data-path="output.html"><a href="output.html#variables"><i class="fa fa-check"></i><b>16.3</b> Variables</a></li>
-</ul></li>
-<li class="chapter" data-level="17" data-path="explore.html"><a href="explore.html"><i class="fa fa-check"></i><b>17</b> Model Exploration</a>
-<ul>
-<li class="chapter" data-level="17.1" data-path="explore.html"><a href="explore.html#prerequisites-14"><i class="fa fa-check"></i><b>17.1</b> Prerequisites</a></li>
-</ul></li>
-<li class="part"><span><b>IV Program</b></span></li>
-<li class="chapter" data-level="18" data-path="program.html"><a href="program.html"><i class="fa fa-check"></i><b>18</b> Introduction</a></li>
-<li class="chapter" data-level="19" data-path="energy-efficient-measures.html"><a href="energy-efficient-measures.html"><i class="fa fa-check"></i><b>19</b> Energy Efficient Measures</a></li>
-<li class="chapter" data-level="20" data-path="parametric-simulations.html"><a href="parametric-simulations.html"><i class="fa fa-check"></i><b>20</b> Parametric simulations</a></li>
-<li class="part"><span><b>V Advanced</b></span></li>
-<li class="chapter" data-level="21" data-path="advanced.html"><a href="advanced.html"><i class="fa fa-check"></i><b>21</b> Introduction</a></li>
-<li class="chapter" data-level="22" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html"><i class="fa fa-check"></i><b>22</b> Sensitivity analysis</a></li>
-<li class="chapter" data-level="23" data-path="optimization.html"><a href="optimization.html"><i class="fa fa-check"></i><b>23</b> Optimization</a></li>
-<li class="chapter" data-level="24" data-path="calibration.html"><a href="calibration.html"><i class="fa fa-check"></i><b>24</b> Calibration</a></li>
-<li class="part"><span><b>VI Reproduce</b></span></li>
-<li class="chapter" data-level="25" data-path="reproduce.html"><a href="reproduce.html"><i class="fa fa-check"></i><b>25</b> Introduction</a></li>
-<li class="chapter" data-level="26" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>26</b> R Markdown</a></li>
-<li class="chapter" data-level="27" data-path="containers.html"><a href="containers.html"><i class="fa fa-check"></i><b>27</b> Containers</a></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
-</ul>
-
-      </nav>
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R for Building Energy Simulation</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
 
-    <div class="book-body">
-      <div class="body-inner">
-        <div class="book-header" role="navigation">
-          <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R for Building Energy Simulation</a>
-          </h1>
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Preface</a></li>
+<li class="book-part">R Basics</li>
+<li><a class="" href="r-basics.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="" href="basics.html"><span class="header-section-number">2</span> Basics</a></li>
+<li><a class="" href="dates-and-times.html"><span class="header-section-number">3</span> Dates and Times</a></li>
+<li><a class="" href="importing-data.html"><span class="header-section-number">4</span> Importing Data</a></li>
+<li><a class="" href="regular-expressions.html"><span class="header-section-number">5</span> Regular expressions</a></li>
+<li><a class="" href="functions.html"><span class="header-section-number">6</span> Functions</a></li>
+<li><a class="" href="manipulate.html"><span class="header-section-number">7</span> Manipulating Data</a></li>
+<li class="book-part">Get Started</li>
+<li><a class="" href="get-started.html"><span class="header-section-number">8</span> Introduction</a></li>
+<li><a class="" href="parse.html"><span class="header-section-number">9</span> Parse then simulate</a></li>
+<li><a class="active" href="summary.html"><span class="header-section-number">10</span> Summary reports</a></li>
+<li><a class="" href="visualize.html"><span class="header-section-number">11</span> Visualize</a></li>
+<li class="book-part">Inputs and Outputs</li>
+<li><a class="" href="input-output.html"><span class="header-section-number">12</span> Introduction</a></li>
+<li><a class="" href="input.html"><span class="header-section-number">13</span> Model Input Structure</a></li>
+<li><a class="" href="modify.html"><span class="header-section-number">14</span> Modify model inputs</a></li>
+<li><a class="" href="output.html"><span class="header-section-number">15</span> Detailed output</a></li>
+<li><a class="" href="explore.html"><span class="header-section-number">16</span> Model Exploration</a></li>
+<li class="book-part">Program</li>
+<li><a class="" href="program.html"><span class="header-section-number">17</span> Introduction</a></li>
+<li><a class="" href="energy-efficient-measures.html"><span class="header-section-number">18</span> Energy Efficient Measures</a></li>
+<li><a class="" href="parametric-simulations.html"><span class="header-section-number">19</span> Parametric simulations</a></li>
+<li class="book-part">Advanced</li>
+<li><a class="" href="advanced.html"><span class="header-section-number">20</span> Introduction</a></li>
+<li><a class="" href="sensitivity-analysis.html"><span class="header-section-number">21</span> Sensitivity analysis</a></li>
+<li><a class="" href="optimization.html"><span class="header-section-number">22</span> Optimization</a></li>
+<li><a class="" href="calibration.html"><span class="header-section-number">23</span> Calibration</a></li>
+<li class="book-part">Reproduce</li>
+<li><a class="" href="reproduce.html"><span class="header-section-number">24</span> Introduction</a></li>
+<li><a class="" href="r-markdown.html"><span class="header-section-number">25</span> R Markdown</a></li>
+<li><a class="" href="containers.html"><span class="header-section-number">26</span> Containers</a></li>
+</ul>
+
+        <div class="book-extra">
+          
         </div>
-
-        <div class="page-wrapper" tabindex="-1" role="main">
-          <div class="page-inner">
-
-            <section class="normal" id="section-">
-<div id="summary" class="section level1" number="11">
-<h1><span class="header-section-number">Chapter 11</span> Summary reports</h1>
-<div id="prerequisites-9" class="section level2" number="11.1">
-<h2><span class="header-section-number">11.1</span> Prerequisites</h2>
-<p>In this chapter we will focus on how to set and get EnergyPlus simulation outputs using the eplusr package. We will illustrate the manipulation of simulation data using tidyverse, and use ggplot2 to visualize the simulation data</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="summary.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(eplusr)</span>
-<span id="cb108-2"><a href="summary.html#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb108-3"><a href="summary.html#cb108-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb108-4"><a href="summary.html#cb108-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
-<span id="cb108-5"><a href="summary.html#cb108-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code></pre></div>
-<p>We will be working with the IDF and EPW file that pertains to the U.S. Department of Energy (DOE) Commercial Reference Building and Chicago’s TMY3 respectively.</p>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="summary.html#cb109-1" aria-hidden="true" tabindex="-1"></a>path_idf <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;idf&quot;</span>, <span class="st">&quot;RefBldgMediumOfficeNew2004_Chicago.idf&quot;</span>)</span>
-<span id="cb109-2"><a href="summary.html#cb109-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">read_idf</span>(path_idf)</span>
-<span id="cb109-3"><a href="summary.html#cb109-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb109-4"><a href="summary.html#cb109-4" aria-hidden="true" tabindex="-1"></a>path_epw <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;epw&quot;</span>, <span class="st">&quot;USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw&quot;</span>)</span>
-<span id="cb109-5"><a href="summary.html#cb109-5" aria-hidden="true" tabindex="-1"></a>epw <span class="ot">&lt;-</span> <span class="fu">read_epw</span>(path_epw)</span></code></pre></div>
+      </nav>
 </div>
-<div id="output-summary-reports" class="section level2" number="11.2">
-<h2><span class="header-section-number">11.2</span> Output summary reports</h2>
-<p>To output the summary reports from EnergyPlus, you need to first run the simulation. The object <code>job</code> in the code below belongs to the <code>EplusJob</code> class. If you set <code>dir = NULL</code>, the simulation results will not be saved into a temporary directory but instead in the folder containing the IDF file. Do that and you will find the summary report in a html file as illustrated in Figure <a href="summary.html#fig:tabular-data">11.1</a>.</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="summary.html#cb110-1" aria-hidden="true" tabindex="-1"></a>job <span class="ot">&lt;-</span> model<span class="sc">$</span><span class="fu">run</span>(epw, <span class="at">dir =</span> <span class="fu">tempdir</span>())</span>
-<span id="cb110-2"><a href="summary.html#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="do">## EnergyPlus Starting</span></span>
-<span id="cb110-3"><a href="summary.html#cb110-3" aria-hidden="true" tabindex="-1"></a><span class="do">## EnergyPlus, Version 9.4.0-998c4b761e, YMD=2021.07.31 22:42</span></span>
-<span id="cb110-4"><a href="summary.html#cb110-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb110-5"><a href="summary.html#cb110-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Could not find platform independent libraries &lt;prefix&gt;</span></span>
-<span id="cb110-6"><a href="summary.html#cb110-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Could not find platform dependent libraries &lt;exec_prefix&gt;</span></span>
-<span id="cb110-7"><a href="summary.html#cb110-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Consider setting $PYTHONHOME to &lt;prefix&gt;[:&lt;exec_prefix&gt;]</span></span>
-<span id="cb110-8"><a href="summary.html#cb110-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Initializing Response Factors</span></span>
-<span id="cb110-9"><a href="summary.html#cb110-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Calculating CTFs for &quot;STEEL FRAME NON-RES EXT WALL&quot;</span></span>
-<span id="cb110-10"><a href="summary.html#cb110-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Calculating CTFs for &quot;IEAD NON-RES ROOF&quot;</span></span>
-<span id="cb110-11"><a href="summary.html#cb110-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Calculating CTFs for &quot;EXT-SLAB&quot;</span></span>
-<span id="cb110-12"><a href="summary.html#cb110-12" aria-hidden="true" tabindex="-1"></a>....</span>
-<span id="cb110-13"><a href="summary.html#cb110-13" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(job)</span>
-<span id="cb110-14"><a href="summary.html#cb110-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;EplusJob&quot; &quot;R6&quot;</span></span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:tabular-data"></span>
-<img src="figures/tabular_data.png" alt="Report summary html file output from EnergyPlus" width="80%" />
-<p class="caption">
-Figure 11.1: Report summary html file output from EnergyPlus
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="summary" class="section level1" number="10">
+<h1>
+<span class="header-section-number">10</span> Summary reports<a class="anchor" aria-label="anchor" href="#summary"><i class="fas fa-link"></i></a>
+</h1>
+<div id="prerequisites-8" class="section level2" number="10.1">
+<h2>
+<span class="header-section-number">10.1</span> Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites-8"><i class="fas fa-link"></i></a>
+</h2>
+<p>In this chapter we will focus on how to set and get EnergyPlus simulation outputs using the eplusr package. We will illustrate the manipulation of simulation data using tidyverse, and use ggplot2 to visualize the simulation data</p>
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://hongyuanjia.github.io/eplusr/">eplusr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">RColorBrewer</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span></code></pre></div>
+<p>We will be working with the IDF and EPW file that pertains to the U.S. Department of Energy (DOE) Commercial Reference Building and Chicago’s TMY3 respectively.</p>
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">path_idf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"idf"</span>, <span class="st">"RefBldgMediumOfficeNew2004_Chicago.idf"</span><span class="op">)</span>
+<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://hongyuanjia.github.io/eplusr/reference/read_idf.html">read_idf</a></span><span class="op">(</span><span class="va">path_idf</span><span class="op">)</span>
+
+<span class="va">path_epw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"epw"</span>, <span class="st">"USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw"</span><span class="op">)</span>
+<span class="va">epw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://hongyuanjia.github.io/eplusr/reference/read_epw.html">read_epw</a></span><span class="op">(</span><span class="va">path_epw</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="output-summary-reports" class="section level2" number="10.2">
+<h2>
+<span class="header-section-number">10.2</span> Output summary reports<a class="anchor" aria-label="anchor" href="#output-summary-reports"><i class="fas fa-link"></i></a>
+</h2>
+<p>To output the summary reports from EnergyPlus, you need to first run the simulation. The object <code>job</code> in the code below belongs to the <code>EplusJob</code> class. If you set <code>dir = NULL</code>, the simulation results will not be saved into a temporary directory but instead in the folder containing the IDF file. Do that and you will find the summary report in a html file as illustrated in Figure <a href="summary.html#fig:tabular-data">10.1</a>.</p>
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">job</span> <span class="op">&lt;-</span> <span class="va">model</span><span class="op">$</span><span class="fu">run</span><span class="op">(</span><span class="va">epw</span>, dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="co">## EnergyPlus Starting</span>
+<span class="co">## EnergyPlus, Version 9.4.0-998c4b761e, YMD=2021.08.04 01:20</span>
+<span class="co">## </span>
+<span class="co">## Could not find platform independent libraries &lt;prefix&gt;</span>
+<span class="co">## Could not find platform dependent libraries &lt;exec_prefix&gt;</span>
+<span class="co">## Consider setting $PYTHONHOME to &lt;prefix&gt;[:&lt;exec_prefix&gt;]</span>
+<span class="co">## Initializing Response Factors</span>
+<span class="co">## Calculating CTFs for "STEEL FRAME NON-RES EXT WALL"</span>
+<span class="co">## Calculating CTFs for "IEAD NON-RES ROOF"</span>
+<span class="co">## Calculating CTFs for "EXT-SLAB"</span>
+<span class="va">....</span>
+<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">job</span><span class="op">)</span>
+<span class="co">## [1] "EplusJob" "R6"</span></code></pre></div>
+<div class="figure" style="text-align: center">
+<span id="fig:tabular-data"></span>
+<img src="figures/tabular_data.png" alt="Report summary html file output from EnergyPlus" width="80%"><p class="caption">
+Figure 10.1: Report summary html file output from EnergyPlus
 </p>
 </div>
 <p>In eplusr, the <code>EplusJob</code> class provides different methods to extract simulation results. To bring the summary reports into R, you can use the <code>tabular_data()</code> method, which extracts all the EnergyPlus summary reports into a R <code>data.table</code>.</p>
@@ -391,116 +134,97 @@ Figure 11.1: Report summary html file output from EnergyPlus
 <li>units: The unit of the observation.</li>
 <li>value: The value of the observation. Note that by default, this is stored as a character vector.</li>
 </ul>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="summary.html#cb111-1" aria-hidden="true" tabindex="-1"></a>report <span class="ot">&lt;-</span> job<span class="sc">$</span><span class="fu">tabular_data</span>()</span>
-<span id="cb111-2"><a href="summary.html#cb111-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(report)</span>
-<span id="cb111-3"><a href="summary.html#cb111-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;case&quot;        &quot;index&quot;       &quot;report_name&quot; &quot;report_for&quot;  &quot;table_name&quot; </span></span>
-<span id="cb111-4"><a href="summary.html#cb111-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [6] &quot;column_name&quot; &quot;row_name&quot;    &quot;units&quot;       &quot;value&quot;</span></span></code></pre></div>
-<p>To illustrate, refer back to Figure <a href="summary.html#fig:tabular-data">11.1</a> on what the arguments <code>report_name</code>, <code>table_name</code>, <code>column_name</code>, <code>row_name</code>, <code>units</code>, and <code>value</code> would correspond to in the html summary report. You can easily retrieve the <code>Total Site Energy</code> in <code>Energy Per Total Building Area</code> from the <code>Site and Source Energy</code> table in the <code>AnnualBuildingUtilityPerformanceSummary</code> report. Note that there are no whitespaces when specifying the <code>report_name</code>.</p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="summary.html#cb112-1" aria-hidden="true" tabindex="-1"></a>report_example <span class="ot">&lt;-</span> report <span class="sc">%&gt;%</span></span>
-<span id="cb112-2"><a href="summary.html#cb112-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(report_name <span class="sc">==</span> <span class="st">&quot;AnnualBuildingUtilityPerformanceSummary&quot;</span>, </span>
-<span id="cb112-3"><a href="summary.html#cb112-3" aria-hidden="true" tabindex="-1"></a>           table_name <span class="sc">==</span> <span class="st">&quot;Site and Source Energy&quot;</span>,</span>
-<span id="cb112-4"><a href="summary.html#cb112-4" aria-hidden="true" tabindex="-1"></a>           column_name <span class="sc">==</span> <span class="st">&quot;Energy Per Total Building Area&quot;</span>,</span>
-<span id="cb112-5"><a href="summary.html#cb112-5" aria-hidden="true" tabindex="-1"></a>           row_name <span class="sc">==</span> <span class="st">&quot;Total Site Energy&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">report</span> <span class="op">&lt;-</span> <span class="va">job</span><span class="op">$</span><span class="fu">tabular_data</span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">report</span><span class="op">)</span>
+<span class="co">## [1] "case"        "index"       "report_name" "report_for"  "table_name" </span>
+<span class="co">## [6] "column_name" "row_name"    "units"       "value"</span></code></pre></div>
+<p>To illustrate, refer back to Figure <a href="summary.html#fig:tabular-data">10.1</a> on what the arguments <code>report_name</code>, <code>table_name</code>, <code>column_name</code>, <code>row_name</code>, <code>units</code>, and <code>value</code> would correspond to in the html summary report. You can easily retrieve the <code>Total Site Energy</code> in <code>Energy Per Total Building Area</code> from the <code>Site and Source Energy</code> table in the <code>AnnualBuildingUtilityPerformanceSummary</code> report. Note that there are no whitespaces when specifying the <code>report_name</code>.</p>
+<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">report_example</span> <span class="op">&lt;-</span> <span class="va">report</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">report_name</span> <span class="op">==</span> <span class="st">"AnnualBuildingUtilityPerformanceSummary"</span>, 
+           <span class="va">table_name</span> <span class="op">==</span> <span class="st">"Site and Source Energy"</span>,
+           <span class="va">column_name</span> <span class="op">==</span> <span class="st">"Energy Per Total Building Area"</span>,
+           <span class="va">row_name</span> <span class="op">==</span> <span class="st">"Total Site Energy"</span><span class="op">)</span></code></pre></div>
 <p>Other examples as follows.</p>
 <p>You can retrieve end use energy consumption data and arrange them in descending value.</p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="summary.html#cb113-1" aria-hidden="true" tabindex="-1"></a>report_end_use <span class="ot">&lt;-</span> report <span class="sc">%&gt;%</span></span>
-<span id="cb113-2"><a href="summary.html#cb113-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(table_name <span class="sc">==</span> <span class="st">&quot;End Uses&quot;</span>, </span>
-<span id="cb113-3"><a href="summary.html#cb113-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">grepl</span>(<span class="st">&quot;Electricity|Natural Gas&quot;</span>, column_name, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb113-4"><a href="summary.html#cb113-4" aria-hidden="true" tabindex="-1"></a>           <span class="sc">!</span><span class="fu">grepl</span>(<span class="st">&quot;total&quot;</span>, row_name, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb113-5"><a href="summary.html#cb113-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">value =</span> <span class="fu">as.numeric</span>(value)<span class="sc">*</span><span class="fl">277.778</span>,</span>
-<span id="cb113-6"><a href="summary.html#cb113-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">units =</span> <span class="st">&quot;kWh&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb113-7"><a href="summary.html#cb113-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(row_name, column_name, units, value) <span class="sc">%&gt;%</span></span>
-<span id="cb113-8"><a href="summary.html#cb113-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">category =</span> row_name, <span class="at">fuel =</span> column_name) <span class="sc">%&gt;%</span></span>
-<span id="cb113-9"><a href="summary.html#cb113-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(value)) <span class="sc">%&gt;%</span></span>
-<span id="cb113-10"><a href="summary.html#cb113-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">report_end_use</span> <span class="op">&lt;-</span> <span class="va">report</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">table_name</span> <span class="op">==</span> <span class="st">"End Uses"</span>, 
+           <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"Electricity|Natural Gas"</span>, <span class="va">column_name</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
+           <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"total"</span>, <span class="va">row_name</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">mutate</span><span class="op">(</span>value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">*</span><span class="fl">277.778</span>,
+           units <span class="op">=</span> <span class="st">"kWh"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">select</span><span class="op">(</span><span class="va">row_name</span>, <span class="va">column_name</span>, <span class="va">units</span>, <span class="va">value</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">rename</span><span class="op">(</span>category <span class="op">=</span> <span class="va">row_name</span>, fuel <span class="op">=</span> <span class="va">column_name</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">drop_na</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>You can retrieve normalized metrics and group them by their fuel type.</p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="summary.html#cb114-1" aria-hidden="true" tabindex="-1"></a>report_norm <span class="ot">&lt;-</span> report <span class="sc">%&gt;%</span></span>
-<span id="cb114-2"><a href="summary.html#cb114-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(table_name <span class="sc">==</span> <span class="st">&quot;Utility Use Per Conditioned Floor Area&quot;</span>,</span>
-<span id="cb114-3"><a href="summary.html#cb114-3" aria-hidden="true" tabindex="-1"></a>           row_name <span class="sc">!=</span> <span class="st">&quot;Total&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb114-4"><a href="summary.html#cb114-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">value =</span> <span class="fu">as.numeric</span>(value) <span class="sc">*</span> <span class="fl">0.2777777777777778</span>,</span>
-<span id="cb114-5"><a href="summary.html#cb114-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">units =</span> <span class="st">&quot;kWh/m2&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb114-6"><a href="summary.html#cb114-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(value <span class="sc">&gt;</span> <span class="fl">0.0</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb114-7"><a href="summary.html#cb114-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="at">category =</span> row_name, <span class="at">fuel =</span> column_name, units, value) <span class="sc">%&gt;%</span></span>
-<span id="cb114-8"><a href="summary.html#cb114-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(category) <span class="sc">%&gt;%</span></span>
-<span id="cb114-9"><a href="summary.html#cb114-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">total =</span> <span class="fu">sum</span>(value))</span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">report_norm</span> <span class="op">&lt;-</span> <span class="va">report</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">table_name</span> <span class="op">==</span> <span class="st">"Utility Use Per Conditioned Floor Area"</span>,
+           <span class="va">row_name</span> <span class="op">!=</span> <span class="st">"Total"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">mutate</span><span class="op">(</span>value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.2777777777777778</span>,
+           units <span class="op">=</span> <span class="st">"kWh/m2"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">value</span> <span class="op">&gt;</span> <span class="fl">0.0</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">select</span><span class="op">(</span>category <span class="op">=</span> <span class="va">row_name</span>, fuel <span class="op">=</span> <span class="va">column_name</span>, <span class="va">units</span>, <span class="va">value</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">group_by</span><span class="op">(</span><span class="va">category</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">summarise</span><span class="op">(</span>total <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>You can also retrieve details of the model inputs from the summary reports.</p>
 <p>Opaque exterior of the building envelope.</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="summary.html#cb115-1" aria-hidden="true" tabindex="-1"></a>report_op_ext <span class="ot">&lt;-</span> report <span class="sc">%&gt;%</span></span>
-<span id="cb115-2"><a href="summary.html#cb115-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(table_name <span class="sc">==</span> <span class="st">&quot;Opaque Exterior&quot;</span>,</span>
-<span id="cb115-3"><a href="summary.html#cb115-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">grepl</span>(<span class="st">&quot;Azimuth|U-Factor with Film&quot;</span>, column_name)) <span class="sc">%&gt;%</span></span>
-<span id="cb115-4"><a href="summary.html#cb115-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">value =</span> <span class="fu">as.numeric</span>(value)) <span class="sc">%&gt;%</span></span>
-<span id="cb115-5"><a href="summary.html#cb115-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(row_name, column_name, units, value) </span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">report_op_ext</span> <span class="op">&lt;-</span> <span class="va">report</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">table_name</span> <span class="op">==</span> <span class="st">"Opaque Exterior"</span>,
+           <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"Azimuth|U-Factor with Film"</span>, <span class="va">column_name</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">mutate</span><span class="op">(</span>value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">select</span><span class="op">(</span><span class="va">row_name</span>, <span class="va">column_name</span>, <span class="va">units</span>, <span class="va">value</span><span class="op">)</span> </code></pre></div>
 <p>Exterior fenestration of the building envelope.</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="summary.html#cb116-1" aria-hidden="true" tabindex="-1"></a>report_ext_fenestration <span class="ot">&lt;-</span> report <span class="sc">%&gt;%</span></span>
-<span id="cb116-2"><a href="summary.html#cb116-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(table_name <span class="sc">==</span> <span class="st">&quot;Exterior Fenestration&quot;</span>,</span>
-<span id="cb116-3"><a href="summary.html#cb116-3" aria-hidden="true" tabindex="-1"></a>           <span class="sc">!</span><span class="fu">grepl</span>(<span class="st">&quot;total&quot;</span>, row_name, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb116-4"><a href="summary.html#cb116-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">value =</span> <span class="fu">as.numeric</span>(value)) <span class="sc">%&gt;%</span></span>
-<span id="cb116-5"><a href="summary.html#cb116-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(value <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb116-6"><a href="summary.html#cb116-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(row_name, column_name, units, value)</span>
-<span id="cb116-7"><a href="summary.html#cb116-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion</span></span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">report_ext_fenestration</span> <span class="op">&lt;-</span> <span class="va">report</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">table_name</span> <span class="op">==</span> <span class="st">"Exterior Fenestration"</span>,
+           <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"total"</span>, <span class="va">row_name</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">mutate</span><span class="op">(</span>value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">value</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">select</span><span class="op">(</span><span class="va">row_name</span>, <span class="va">column_name</span>, <span class="va">units</span>, <span class="va">value</span><span class="op">)</span>
+<span class="co">## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion</span></code></pre></div>
 <p>You can refer to the section <em>“Output:Table:SummaryReports”</em> in EnergyPlus’s <em>“Output Details and Examples”</em> documentation for the list of available reports.</p>
 
 </div>
 </div>
-            </section>
+  <div class="chapter-nav">
+<div class="prev"><a href="parse.html"><span class="header-section-number">9</span> Parse then simulate</a></div>
+<div class="next"><a href="visualize.html"><span class="header-section-number">11</span> Visualize</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#summary"><span class="header-section-number">10</span> Summary reports</a></li>
+<li><a class="nav-link" href="#prerequisites-8"><span class="header-section-number">10.1</span> Prerequisites</a></li>
+<li><a class="nav-link" href="#output-summary-reports"><span class="header-section-number">10.2</span> Output summary reports</a></li>
+</ul>
 
-          </div>
-        </div>
-      </div>
-<a href="parse.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="visualize.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
-    </div>
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-08-04.</p>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
-<script>
-gitbook.require(["gitbook"], function(gitbook) {
-gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["r4bes.pdf", "r4bes.epub"],
-"toc": {
-"collapse": "section"
-}
-});
-});
-</script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
@@ -514,5 +238,4 @@ gitbook.start({
   })();
 </script>
 </body>
-
 </html>

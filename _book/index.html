@@ -1,363 +1,100 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="en">
 <head>
-
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>R for Building Energy Simulation</title>
-  <meta name="description" content="A guide to the building energy simulation with R." />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
-
-  <meta property="og:title" content="R for Building Energy Simulation" />
-  <meta property="og:type" content="book" />
-  
-  
-  <meta property="og:description" content="A guide to the building energy simulation with R." />
-  
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="R for Building Energy Simulation" />
-  
-  <meta name="twitter:description" content="A guide to the building energy simulation with R." />
-  
-
-<meta name="author" content="Adrian Chong" />
-
-
-<meta name="date" content="2021-07-31" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  
-  
-
-<link rel="next" href="r-basics.html"/>
-<script src="libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
-
-
-
-
-
-
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
-
-
-<style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
-
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
-
-<link rel="stylesheet" href="style.css" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Preface | R for Building Energy Simulation</title>
+<meta name="author" content="Adrian Chong">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.7/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet">
+<script src="libs/str_view-binding-1.4.0/str_view.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS -->
 </head>
+<body data-spy="scroll" data-target="#toc">
 
-<body>
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
-
-
-  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
-
-    <div class="book-summary">
-      <nav role="navigation">
-
-<ul class="summary">
-<li><a href="./">R for BES</a></li>
-
-<li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
-<ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#introduction"><i class="fa fa-check"></i>Introduction</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#structure-of-this-book"><i class="fa fa-check"></i>Structure of this book</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a>
-<ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-and-rstudio"><i class="fa fa-check"></i>R and RStudio</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-packages"><i class="fa fa-check"></i>R Packages</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#energyplus"><i class="fa fa-check"></i>EnergyPlus</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#conventions"><i class="fa fa-check"></i>Conventions</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#before-you-begin"><i class="fa fa-check"></i>Before you begin</a>
-<ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-project"><i class="fa fa-check"></i>R Project</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#scripting"><i class="fa fa-check"></i>Scripting</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#example-files"><i class="fa fa-check"></i>Example files</a></li>
-<li class="chapter" data-level="0.0.1" data-path="index.html"><a href="index.html#project-structure"><i class="fa fa-check"></i><b>0.0.1</b> Project structure</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#style-guide"><i class="fa fa-check"></i>Style guide</a></li>
-</ul></li>
-</ul></li>
-<li class="part"><span><b>I R Basics</b></span></li>
-<li class="chapter" data-level="1" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
-<li class="chapter" data-level="2" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>2</b> Basics</a>
-<ul>
-<li class="chapter" data-level="2.1" data-path="basics.html"><a href="basics.html#prerequisites-1"><i class="fa fa-check"></i><b>2.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#basic-operators"><i class="fa fa-check"></i><b>2.2</b> Basic operators</a></li>
-<li class="chapter" data-level="2.3" data-path="basics.html"><a href="basics.html#basic-data-types"><i class="fa fa-check"></i><b>2.3</b> Basic data types</a></li>
-<li class="chapter" data-level="2.4" data-path="basics.html"><a href="basics.html#basic-data-structures"><i class="fa fa-check"></i><b>2.4</b> Basic data structures</a></li>
-<li class="chapter" data-level="2.5" data-path="basics.html"><a href="basics.html#tibbles"><i class="fa fa-check"></i><b>2.5</b> Tibbles</a></li>
-<li class="chapter" data-level="2.6" data-path="basics.html"><a href="basics.html#data-table"><i class="fa fa-check"></i><b>2.6</b> data.table</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="dates-and-times.html"><a href="dates-and-times.html"><i class="fa fa-check"></i><b>3</b> Dates and Times</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="dates-and-times.html"><a href="dates-and-times.html#prerequisites-2"><i class="fa fa-check"></i><b>3.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="3.2" data-path="dates-and-times.html"><a href="dates-and-times.html#parsing-dates-and-times"><i class="fa fa-check"></i><b>3.2</b> Parsing dates and times</a></li>
-<li class="chapter" data-level="3.3" data-path="dates-and-times.html"><a href="dates-and-times.html#extracting-components"><i class="fa fa-check"></i><b>3.3</b> Extracting components</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="importing-data.html"><a href="importing-data.html"><i class="fa fa-check"></i><b>4</b> Importing Data</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="importing-data.html"><a href="importing-data.html#prerequisites-3"><i class="fa fa-check"></i><b>4.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="4.2" data-path="importing-data.html"><a href="importing-data.html#finding-your-file"><i class="fa fa-check"></i><b>4.2</b> Finding your file</a></li>
-<li class="chapter" data-level="4.3" data-path="importing-data.html"><a href="importing-data.html#parsing-a-csv-file"><i class="fa fa-check"></i><b>4.3</b> Parsing a csv file</a></li>
-<li class="chapter" data-level="4.4" data-path="importing-data.html"><a href="importing-data.html#building-data"><i class="fa fa-check"></i><b>4.4</b> Building data</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="importing-data-1.html"><a href="importing-data-1.html"><i class="fa fa-check"></i><b>5</b> Importing Data</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="importing-data-1.html"><a href="importing-data-1.html#prerequisites-4"><i class="fa fa-check"></i><b>5.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="5.2" data-path="importing-data-1.html"><a href="importing-data-1.html#finding-your-file-1"><i class="fa fa-check"></i><b>5.2</b> Finding your file</a></li>
-<li class="chapter" data-level="5.3" data-path="importing-data-1.html"><a href="importing-data-1.html#parsing-a-csv-file-1"><i class="fa fa-check"></i><b>5.3</b> Parsing a csv file</a></li>
-<li class="chapter" data-level="5.4" data-path="importing-data-1.html"><a href="importing-data-1.html#building-data-1"><i class="fa fa-check"></i><b>5.4</b> Building data</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="regular-expressions.html"><a href="regular-expressions.html"><i class="fa fa-check"></i><b>6</b> Regular expressions</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="regular-expressions.html"><a href="regular-expressions.html#prerequisites-5"><i class="fa fa-check"></i><b>6.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="6.2" data-path="regular-expressions.html"><a href="regular-expressions.html#basic-matches"><i class="fa fa-check"></i><b>6.2</b> Basic matches</a></li>
-<li class="chapter" data-level="6.3" data-path="regular-expressions.html"><a href="regular-expressions.html#character-classes"><i class="fa fa-check"></i><b>6.3</b> Character classes</a></li>
-<li class="chapter" data-level="6.4" data-path="regular-expressions.html"><a href="regular-expressions.html#regex-escape"><i class="fa fa-check"></i><b>6.4</b> Escaping</a></li>
-<li class="chapter" data-level="6.5" data-path="regular-expressions.html"><a href="regular-expressions.html#anchors"><i class="fa fa-check"></i><b>6.5</b> Anchors</a></li>
-<li class="chapter" data-level="6.6" data-path="regular-expressions.html"><a href="regular-expressions.html#quantifies"><i class="fa fa-check"></i><b>6.6</b> Quantifies</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>7</b> Functions</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="functions.html"><a href="functions.html#prerequisites-6"><i class="fa fa-check"></i><b>7.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="7.2" data-path="functions.html"><a href="functions.html#user-defined-function"><i class="fa fa-check"></i><b>7.2</b> User-defined function</a></li>
-<li class="chapter" data-level="7.3" data-path="functions.html"><a href="functions.html#examples"><i class="fa fa-check"></i><b>7.3</b> Examples</a></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="manipulate.html"><a href="manipulate.html"><i class="fa fa-check"></i><b>8</b> Manipulating Data</a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="manipulate.html"><a href="manipulate.html#prerequisites-7"><i class="fa fa-check"></i><b>8.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="8.2" data-path="manipulate.html"><a href="manipulate.html#data-transformation"><i class="fa fa-check"></i><b>8.2</b> Data transformation</a>
-<ul>
-<li class="chapter" data-level="8.2.1" data-path="manipulate.html"><a href="manipulate.html#select"><i class="fa fa-check"></i><b>8.2.1</b> <code>select()</code></a></li>
-<li class="chapter" data-level="8.2.2" data-path="manipulate.html"><a href="manipulate.html#filter"><i class="fa fa-check"></i><b>8.2.2</b> <code>filter()</code></a></li>
-<li class="chapter" data-level="8.2.3" data-path="manipulate.html"><a href="manipulate.html#arrange"><i class="fa fa-check"></i><b>8.2.3</b> <code>arrange()</code></a></li>
-<li class="chapter" data-level="8.2.4" data-path="manipulate.html"><a href="manipulate.html#mutate"><i class="fa fa-check"></i><b>8.2.4</b> <code>mutate()</code></a></li>
-<li class="chapter" data-level="8.2.5" data-path="manipulate.html"><a href="manipulate.html#summarise-and-group_by"><i class="fa fa-check"></i><b>8.2.5</b> <code>summarise()</code> and <code>group_by()</code></a></li>
-<li class="chapter" data-level="8.2.6" data-path="manipulate.html"><a href="manipulate.html#across"><i class="fa fa-check"></i><b>8.2.6</b> <code>across()</code></a></li>
-</ul></li>
-<li class="chapter" data-level="8.3" data-path="manipulate.html"><a href="manipulate.html#pipes"><i class="fa fa-check"></i><b>8.3</b> Pipes</a></li>
-</ul></li>
-<li class="part"><span><b>II Get Started</b></span></li>
-<li class="chapter" data-level="9" data-path="get-started.html"><a href="get-started.html"><i class="fa fa-check"></i><b>9</b> Introduction</a></li>
-<li class="chapter" data-level="10" data-path="parse.html"><a href="parse.html"><i class="fa fa-check"></i><b>10</b> Parse then simulate</a>
-<ul>
-<li class="chapter" data-level="10.1" data-path="parse.html"><a href="parse.html#prerequisites-8"><i class="fa fa-check"></i><b>10.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="10.2" data-path="parse.html"><a href="parse.html#key-energyplus-files"><i class="fa fa-check"></i><b>10.2</b> Key EnergyPlus files</a></li>
-<li class="chapter" data-level="10.3" data-path="parse.html"><a href="parse.html#parsing-the-model"><i class="fa fa-check"></i><b>10.3</b> Parsing the model</a></li>
-<li class="chapter" data-level="10.4" data-path="parse.html"><a href="parse.html#simulating-the-model"><i class="fa fa-check"></i><b>10.4</b> Simulating the model</a></li>
-</ul></li>
-<li class="chapter" data-level="11" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>11</b> Summary reports</a>
-<ul>
-<li class="chapter" data-level="11.1" data-path="summary.html"><a href="summary.html#prerequisites-9"><i class="fa fa-check"></i><b>11.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="11.2" data-path="summary.html"><a href="summary.html#output-summary-reports"><i class="fa fa-check"></i><b>11.2</b> Output summary reports</a></li>
-</ul></li>
-<li class="chapter" data-level="12" data-path="visualize.html"><a href="visualize.html"><i class="fa fa-check"></i><b>12</b> Visualize</a>
-<ul>
-<li class="chapter" data-level="12.1" data-path="visualize.html"><a href="visualize.html#prerequisites-10"><i class="fa fa-check"></i><b>12.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="12.2" data-path="visualize.html"><a href="visualize.html#colors"><i class="fa fa-check"></i><b>12.2</b> Colors</a></li>
-<li class="chapter" data-level="12.3" data-path="visualize.html"><a href="visualize.html#ggplot"><i class="fa fa-check"></i><b>12.3</b> <code>ggplot()</code></a>
-<ul>
-<li class="chapter" data-level="12.3.1" data-path="visualize.html"><a href="visualize.html#functions-and-components"><i class="fa fa-check"></i><b>12.3.1</b> Functions and Components</a></li>
-<li class="chapter" data-level="12.3.2" data-path="visualize.html"><a href="visualize.html#a-simple-example"><i class="fa fa-check"></i><b>12.3.2</b> A simple example</a></li>
-</ul></li>
-</ul></li>
-<li class="part"><span><b>III Inputs and Outputs</b></span></li>
-<li class="chapter" data-level="13" data-path="input-output.html"><a href="input-output.html"><i class="fa fa-check"></i><b>13</b> Introduction</a></li>
-<li class="chapter" data-level="14" data-path="input.html"><a href="input.html"><i class="fa fa-check"></i><b>14</b> Model Input Structure</a>
-<ul>
-<li class="chapter" data-level="14.1" data-path="input.html"><a href="input.html#prerequisites-11"><i class="fa fa-check"></i><b>14.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="14.2" data-path="input.html"><a href="input.html#energyplus-documentation"><i class="fa fa-check"></i><b>14.2</b> EnergyPlus Documentation</a></li>
-<li class="chapter" data-level="14.3" data-path="input.html"><a href="input.html#energyplus-input-structure"><i class="fa fa-check"></i><b>14.3</b> EnergyPlus input structure</a></li>
-<li class="chapter" data-level="14.4" data-path="input.html"><a href="input.html#class-vs-object"><i class="fa fa-check"></i><b>14.4</b> Class vs Object</a></li>
-<li class="chapter" data-level="14.5" data-path="input.html"><a href="input.html#model-query"><i class="fa fa-check"></i><b>14.5</b> Model Query</a>
-<ul>
-<li class="chapter" data-level="14.5.1" data-path="input.html"><a href="input.html#idf-class-methods"><i class="fa fa-check"></i><b>14.5.1</b> <code>Idf</code> class methods</a></li>
-<li class="chapter" data-level="14.5.2" data-path="input.html"><a href="input.html#operator"><i class="fa fa-check"></i><b>14.5.2</b> <code>$</code> operator</a></li>
-</ul></li>
-<li class="chapter" data-level="14.6" data-path="input.html"><a href="input.html#object-interdependencies"><i class="fa fa-check"></i><b>14.6</b> Object interdependencies</a></li>
-</ul></li>
-<li class="chapter" data-level="15" data-path="modify.html"><a href="modify.html"><i class="fa fa-check"></i><b>15</b> Modify model inputs</a>
-<ul>
-<li class="chapter" data-level="15.1" data-path="modify.html"><a href="modify.html#prerequisites-12"><i class="fa fa-check"></i><b>15.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="15.2" data-path="modify.html"><a href="modify.html#extract-and-modify"><i class="fa fa-check"></i><b>15.2</b> Extract and Modify</a>
-<ul>
-<li class="chapter" data-level="15.2.1" data-path="modify.html"><a href="modify.html#single-object"><i class="fa fa-check"></i><b>15.2.1</b> Single object</a></li>
-<li class="chapter" data-level="15.2.2" data-path="modify.html"><a href="modify.html#multiple-objects"><i class="fa fa-check"></i><b>15.2.2</b> Multiple objects</a></li>
-</ul></li>
-<li class="chapter" data-level="15.3" data-path="modify.html"><a href="modify.html#create-new-objects"><i class="fa fa-check"></i><b>15.3</b> Create new objects</a>
-<ul>
-<li class="chapter" data-level="15.3.1" data-path="modify.html"><a href="modify.html#add"><i class="fa fa-check"></i><b>15.3.1</b> add</a></li>
-<li class="chapter" data-level="15.3.2" data-path="modify.html"><a href="modify.html#duplicate"><i class="fa fa-check"></i><b>15.3.2</b> duplicate</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="16" data-path="output.html"><a href="output.html"><i class="fa fa-check"></i><b>16</b> Detailed output</a>
-<ul>
-<li class="chapter" data-level="16.1" data-path="output.html"><a href="output.html#prerequisites-13"><i class="fa fa-check"></i><b>16.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="16.2" data-path="output.html"><a href="output.html#meters"><i class="fa fa-check"></i><b>16.2</b> Meters</a></li>
-<li class="chapter" data-level="16.3" data-path="output.html"><a href="output.html#variables"><i class="fa fa-check"></i><b>16.3</b> Variables</a></li>
-</ul></li>
-<li class="chapter" data-level="17" data-path="explore.html"><a href="explore.html"><i class="fa fa-check"></i><b>17</b> Model Exploration</a>
-<ul>
-<li class="chapter" data-level="17.1" data-path="explore.html"><a href="explore.html#prerequisites-14"><i class="fa fa-check"></i><b>17.1</b> Prerequisites</a></li>
-</ul></li>
-<li class="part"><span><b>IV Program</b></span></li>
-<li class="chapter" data-level="18" data-path="program.html"><a href="program.html"><i class="fa fa-check"></i><b>18</b> Introduction</a></li>
-<li class="chapter" data-level="19" data-path="energy-efficient-measures.html"><a href="energy-efficient-measures.html"><i class="fa fa-check"></i><b>19</b> Energy Efficient Measures</a></li>
-<li class="chapter" data-level="20" data-path="parametric-simulations.html"><a href="parametric-simulations.html"><i class="fa fa-check"></i><b>20</b> Parametric simulations</a></li>
-<li class="part"><span><b>V Advanced</b></span></li>
-<li class="chapter" data-level="21" data-path="advanced.html"><a href="advanced.html"><i class="fa fa-check"></i><b>21</b> Introduction</a></li>
-<li class="chapter" data-level="22" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html"><i class="fa fa-check"></i><b>22</b> Sensitivity analysis</a></li>
-<li class="chapter" data-level="23" data-path="optimization.html"><a href="optimization.html"><i class="fa fa-check"></i><b>23</b> Optimization</a></li>
-<li class="chapter" data-level="24" data-path="calibration.html"><a href="calibration.html"><i class="fa fa-check"></i><b>24</b> Calibration</a></li>
-<li class="part"><span><b>VI Reproduce</b></span></li>
-<li class="chapter" data-level="25" data-path="reproduce.html"><a href="reproduce.html"><i class="fa fa-check"></i><b>25</b> Introduction</a></li>
-<li class="chapter" data-level="26" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>26</b> R Markdown</a></li>
-<li class="chapter" data-level="27" data-path="containers.html"><a href="containers.html"><i class="fa fa-check"></i><b>27</b> Containers</a></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
-</ul>
-
-      </nav>
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R for Building Energy Simulation</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
 
-    <div class="book-body">
-      <div class="body-inner">
-        <div class="book-header" role="navigation">
-          <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R for Building Energy Simulation</a>
-          </h1>
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="active" href="index.html">Preface</a></li>
+<li class="book-part">R Basics</li>
+<li><a class="" href="r-basics.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="" href="basics.html"><span class="header-section-number">2</span> Basics</a></li>
+<li><a class="" href="dates-and-times.html"><span class="header-section-number">3</span> Dates and Times</a></li>
+<li><a class="" href="importing-data.html"><span class="header-section-number">4</span> Importing Data</a></li>
+<li><a class="" href="regular-expressions.html"><span class="header-section-number">5</span> Regular expressions</a></li>
+<li><a class="" href="functions.html"><span class="header-section-number">6</span> Functions</a></li>
+<li><a class="" href="manipulate.html"><span class="header-section-number">7</span> Manipulating Data</a></li>
+<li class="book-part">Get Started</li>
+<li><a class="" href="get-started.html"><span class="header-section-number">8</span> Introduction</a></li>
+<li><a class="" href="parse.html"><span class="header-section-number">9</span> Parse then simulate</a></li>
+<li><a class="" href="summary.html"><span class="header-section-number">10</span> Summary reports</a></li>
+<li><a class="" href="visualize.html"><span class="header-section-number">11</span> Visualize</a></li>
+<li class="book-part">Inputs and Outputs</li>
+<li><a class="" href="input-output.html"><span class="header-section-number">12</span> Introduction</a></li>
+<li><a class="" href="input.html"><span class="header-section-number">13</span> Model Input Structure</a></li>
+<li><a class="" href="modify.html"><span class="header-section-number">14</span> Modify model inputs</a></li>
+<li><a class="" href="output.html"><span class="header-section-number">15</span> Detailed output</a></li>
+<li><a class="" href="explore.html"><span class="header-section-number">16</span> Model Exploration</a></li>
+<li class="book-part">Program</li>
+<li><a class="" href="program.html"><span class="header-section-number">17</span> Introduction</a></li>
+<li><a class="" href="energy-efficient-measures.html"><span class="header-section-number">18</span> Energy Efficient Measures</a></li>
+<li><a class="" href="parametric-simulations.html"><span class="header-section-number">19</span> Parametric simulations</a></li>
+<li class="book-part">Advanced</li>
+<li><a class="" href="advanced.html"><span class="header-section-number">20</span> Introduction</a></li>
+<li><a class="" href="sensitivity-analysis.html"><span class="header-section-number">21</span> Sensitivity analysis</a></li>
+<li><a class="" href="optimization.html"><span class="header-section-number">22</span> Optimization</a></li>
+<li><a class="" href="calibration.html"><span class="header-section-number">23</span> Calibration</a></li>
+<li class="book-part">Reproduce</li>
+<li><a class="" href="reproduce.html"><span class="header-section-number">24</span> Introduction</a></li>
+<li><a class="" href="r-markdown.html"><span class="header-section-number">25</span> R Markdown</a></li>
+<li><a class="" href="containers.html"><span class="header-section-number">26</span> Containers</a></li>
+</ul>
+
+        <div class="book-extra">
+          
         </div>
-
-        <div class="page-wrapper" tabindex="-1" role="main">
-          <div class="page-inner">
-
-            <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">R for Building Energy Simulation</h1>
-<p class="author"><em>Adrian Chong</em></p>
-<p class="date" style="margin-top: 1.5em;"><em>2021-07-31</em></p>
+      </nav>
 </div>
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><!--bookdown:title:end--><!--bookdown:title:start--><div id="preface" class="section level1 unnumbered">
+<h1>Preface<a class="anchor" aria-label="anchor" href="#preface"><i class="fas fa-link"></i></a>
+</h1>
 <div id="introduction" class="section level2 unnumbered">
-<h2>Introduction</h2>
+<h2>Introduction<a class="anchor" aria-label="anchor" href="#introduction"><i class="fas fa-link"></i></a>
+</h2>
 <p>This is the book for the module <strong>PF4213–Building Energy Analysis and Simulation</strong> at the Department of the Built Environment, National University of Singapore. This book will introduce you to building energy simulation and how to perform data analytics with energy models using R. You will learn how to get your model into R, simulate it, transform the inputs and outputs, and visualize and explore them. This book is designed to be interactive and for you to <strong>learn by doing</strong>. It is highly recommended that you do not copy and paste all the code in this book but instead type them out. Copying and pasting snippets of code isn’t the best way to learn because more often than not you are just reading the code at an abstract level without understanding what it does. In contrast, typing the code forces you to try to understand what the code is doing.</p>
 <p>The online version of this book is free to use, and is licensed under the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</p>
 <p><em>Note that this book is still work in progress and some chapters in the book are currently just placeholders that will be completed over time.</em></p>
 </div>
 <div id="structure-of-this-book" class="section level2 unnumbered">
-<h2>Structure of this book</h2>
+<h2>Structure of this book<a class="anchor" aria-label="anchor" href="#structure-of-this-book"><i class="fas fa-link"></i></a>
+</h2>
 <p>The book is divided into six parts. The code in each chapter is self-containing. Each chapter will contain all the packages and objects needed to run the code and objects created in previous chapters need not be carried over for them to work.</p>
 <p><a href="r-basics.html#r-basics">Part I</a> introduces R’s basic syntax, which should be sufficient to get most readers started on the subsequent parts of the book. <a href="get-started.html#get-started">Part II</a> introduces the basic usage and will show you how to get your EnergyPlus model into R, run the simulation, extract the predefined reports and visuaize them. <a href="input-output.html#input-output">Part III</a> provide details on extracting and modifying various model inputs/outputs, and provide examples of data exploration that can be applied to the model inputs/outputs. <a href="program.html#program">Part IV</a> shows how to programmatically define energy efficient measures using functions and demonstrates the process of performing parametric simulation and it’s analysis. <a href="advanced.html#advanced">Part V</a> shows example application of advanced techniques such as sensitivity analysis, optimization, and Bayesian calibration to building energy simulation. <a href="reproduce.html#reproduce">Part VI</a> introduces workflows and tools for reproducing building energy simulation using R.</p>
 </div>
 <div id="prerequisites" class="section level2 unnumbered">
-<h2>Prerequisites</h2>
+<h2>Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites"><i class="fas fa-link"></i></a>
+</h2>
 <p>This book assumes some theoretical knowledge of building physics and building energy simulation. Some programming experience is preferred but not necessary. To run the code in this book, you will need to install <strong>EnergyPlus</strong>, <strong>R</strong>, <strong>RStudio</strong>, and a handful of R packages that we will introduce as we go along in this book.</p>
 <div id="r-and-rstudio" class="section level3 unnumbered">
-<h3>R and RStudio</h3>
+<h3>R and RStudio<a class="anchor" aria-label="anchor" href="#r-and-rstudio"><i class="fas fa-link"></i></a>
+</h3>
 <p>To download and install the most recent version of R, I would recommend the precompiled binary distribution of the base system and contributed packages that you will find at the top of R’s project webpage at <a href="https://cloud.r-project.org" class="uri">https://cloud.r-project.org</a>. R Studio is an Integrated Development Environment (IDE) for R.</p>
 <p>R Studio increases your productivity when working with the R programming language by combining different features such as syntax highlighting and auto-completion into a single application. You can download and install RStudio from <a href="https://www.rstudio.com/products/rstudio/download" class="uri">https://www.rstudio.com/products/rstudio/download</a>.</p>
 <p>Once you have downloaded and installed RStudio, you will see a similar window to that shown in image below that comprises of:</p>
@@ -366,94 +103,114 @@ div.csl-indent {
 <li><p>Workspace window: The <em>Environment</em> tab in this window is where all the objects that you have created will show.</p></li>
 <li><p>Results window: This window is typically used for visualizing graphs (<em>Plots</em> tab) and for getting help by accessing the documentation pages for R (<em>Help</em> tab).</p></li>
 </ul>
-<p><img src="figures/rstudio_console.png" width="100%" style="display: block; margin: auto;" /></p>
+<div class="inline-figure"><img src="figures/rstudio_console.png" width="100%" style="display: block; margin: auto;"></div>
 </div>
 <div id="r-packages" class="section level3 unnumbered">
-<h3>R Packages</h3>
+<h3>R Packages<a class="anchor" aria-label="anchor" href="#r-packages"><i class="fas fa-link"></i></a>
+</h3>
 <p>R has thousands of packages hosted on the <strong>C</strong>omprehensive <strong>R</strong> <strong>A</strong>rchieve <strong>N</strong>etwork (CRAN). These packages contains functions developed and shared by the community. In this book we will be using several R packages. The main packages include the <strong>tidyverse</strong> and <strong>eplusr</strong> package. We will introduce the other packages used in this book as we go along.</p>
 <p>To install any R package, open R Studio and type</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;&lt;package name&gt;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"&lt;package name&gt;"</span><span class="op">)</span></code></pre></div>
 <p>For example, to install the tidyverse package</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="index.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span></code></pre></div>
-<p>Note that you will not be able to use the R package until you load it into your environment using the <code>library()</code> function. To load both the tidyverse package, type</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="index.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</span>
-<span id="cb3-2"><a href="index.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;eplusr&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span></code></pre></div>
+<p>Note that you will not be able to use the R package until you load it into your environment using the <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> function. To load both the tidyverse package, type</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://hongyuanjia.github.io/eplusr/">"eplusr"</a></span><span class="op">)</span></code></pre></div>
 </div>
 <div id="energyplus" class="section level3 unnumbered">
-<h3>EnergyPlus</h3>
-<p>EnergyPlus is an open-source whole-building energy simulation engine that is widely used by the research community and industry practitioners. EnergyPlus is also the simulation engine supporting many energy simulation applications <span class="citation">[<a href="#ref-noauthor_best_nodate" role="doc-biblioref">1</a>]</span>, and it has been and continues to be supported by the U.S. Department of Energy (DOE) <span class="citation">[<a href="#ref-noauthor_energyplus_nodate" role="doc-biblioref">2</a>]</span>.</p>
+<h3>EnergyPlus<a class="anchor" aria-label="anchor" href="#energyplus"><i class="fas fa-link"></i></a>
+</h3>
+<p>EnergyPlus is an open-source whole-building energy simulation engine that is widely used by the research community and industry practitioners. EnergyPlus is also the simulation engine supporting many energy simulation applications <span class="citation">[<a href="containers.html#ref-noauthor_best_nodate" role="doc-biblioref">1</a>]</span>, and it has been and continues to be supported by the U.S. Department of Energy (DOE) <span class="citation">[<a href="containers.html#ref-noauthor_energyplus_nodate" role="doc-biblioref">2</a>]</span>.</p>
 <p>Different releases of EnergyPlus for different platforms (Windows, Linus, or Mac) can be downloaded from <a href="https://energyplus.net/downloads" class="uri">https://energyplus.net/downloads</a>. In this book, we will be using EnergyPlus version 9.4.0.</p>
 <p>You can also install EnergyPlus via RStudio using the eplusr package. First, install eplusr</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="index.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;eplusr&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"eplusr"</span><span class="op">)</span></code></pre></div>
 <p>Then load the library onto RStudio</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="index.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(eplusr)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://hongyuanjia.github.io/eplusr/">eplusr</a></span><span class="op">)</span></code></pre></div>
 <p>You can then install EnergyPlus version 9.4.0 by typing</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="index.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install_eplus</span>(<span class="at">ver =</span> <span class="fl">9.4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://hongyuanjia.github.io/eplusr/reference/install_eplus.html">install_eplus</a></span><span class="op">(</span>ver <span class="op">=</span> <span class="fl">9.4</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
 <div id="conventions" class="section level2 unnumbered">
-<h2>Conventions</h2>
+<h2>Conventions<a class="anchor" aria-label="anchor" href="#conventions"><i class="fas fa-link"></i></a>
+</h2>
 <p>In this book, code that you can type and run directly in R will appear within grey boxes <code>like this</code> or in the form of code blocks like this:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="index.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb7-2"><a href="index.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span></code></pre></div>
-<p>When presenting R code, prompts <code>&gt;</code> will not be added and the output from running the code will be commented out with <code>##</code> as shown in the example above. This is for your convenience so that it is easy to type or copy the code so that you can run it yourself.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fl">1</span> <span class="op">+</span> <span class="fl">1</span>
+<span class="co">## [1] 2</span></code></pre></div>
+<p>When presenting R code, prompts <code><a href="https://rdrr.io/r/base/Comparison.html">&gt;</a></code> will not be added and the output from running the code will be commented out with <code>##</code> as shown in the example above. This is for your convenience so that it is easy to type or copy the code so that you can run it yourself.</p>
 </div>
 <div id="before-you-begin" class="section level2 unnumbered">
-<h2>Before you begin</h2>
+<h2>Before you begin<a class="anchor" aria-label="anchor" href="#before-you-begin"><i class="fas fa-link"></i></a>
+</h2>
 <div id="r-project" class="section level3 unnumbered">
-<h3>R Project</h3>
+<h3>R Project<a class="anchor" aria-label="anchor" href="#r-project"><i class="fas fa-link"></i></a>
+</h3>
 <p>The Figure below shows the steps to create a project called <code>r4bes</code> that you will be using for this book. To create a project, select <code>File &gt; New Project</code> from RStudio’s menu bar. This launches a window that provides you with options for creating a project. Select the <code>New Directory</code> option followed by <code>New Project</code>. You can then specify the <code>Directory name</code> for your new project and the directory where it will reside. Notice the file with <code>.Rproj</code> extension that was created along with the project. This is the project file that you double-click to open a project. When you open a project, the current working directory is automatically set to the project directory.</p>
 <p>Try it now! Quite RStuido and then navigate to and open the <code>r4bes.Rproj</code> file.</p>
-<p><img src="figures/create_project.png" width="100%" style="display: block; margin: auto;" /></p>
+<div class="inline-figure"><img src="figures/create_project.png" width="100%" style="display: block; margin: auto;"></div>
 </div>
 <div id="scripting" class="section level3 unnumbered">
-<h3>Scripting</h3>
+<h3>Scripting<a class="anchor" aria-label="anchor" href="#scripting"><i class="fas fa-link"></i></a>
+</h3>
 <p>Once the project folder is set up, you can create a new R Script with <code>File &gt; New File &gt; R Script</code>. An R Script is basically a text file with a <code>.R</code> extension that allows you to keep track and save your <code>R</code> code.</p>
-<p><img src="figures/script.png" width="100%" style="display: block; margin: auto;" /></p>
+<div class="inline-figure"><img src="figures/script.png" width="100%" style="display: block; margin: auto;"></div>
 </div>
 <div id="example-files" class="section level3 unnumbered">
-<h3>Example files</h3>
+<h3>Example files<a class="anchor" aria-label="anchor" href="#example-files"><i class="fas fa-link"></i></a>
+</h3>
 <p>To ensure the reproducibility of the examples in this book, you will download the data folder from the GitHub repository XXX and place it in the project folder you have just created.</p>
 <p><code>iris.csv</code> is a popular machine learning dataset about the Iris flower. The dataset consists of 50 observations and 5 variables.</p>
 <p><code>building.csv</code> is a timeseries dataset from an actual building consisting of 1324 observations and 2 variables (date/time and building electricity consumption). The dataset has a temporal resolution of 30 minutes.</p>
-<p><code>RefBldgMediumOfficeNew2004_Chicago.idf</code> is a building energy model developed by the U.S. Department of Energy (DOE) to act as a Commercial Reference Building for medium offices <span class="citation">[<a href="#ref-deru_us_2011" role="doc-biblioref">3</a>]</span>. We use the DOE reference building because it is well established and widely used. More importantly, it is publicly available and comes distributed with EnergyPlus as example files, making the examples and code in this book easier to follow and reproduce.</p>
+<p><code>RefBldgMediumOfficeNew2004_Chicago.idf</code> is a building energy model developed by the U.S. Department of Energy (DOE) to act as a Commercial Reference Building for medium offices <span class="citation">[<a href="containers.html#ref-deru_us_2011" role="doc-biblioref">3</a>]</span>. We use the DOE reference building because it is well established and widely used. More importantly, it is publicly available and comes distributed with EnergyPlus as example files, making the examples and code in this book easier to follow and reproduce.</p>
 <p><code>USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw</code> is the latest Typical Meteorological Year weather dataset for the Chicago Ohare International Airport.</p>
 <p><code>building_meter.csv</code> is an example energy meter output file from the the U.S. DOE medium office energy model (i.e., <code>RefBldgMediumOfficeNew2004_Chicago.idf</code>). The dataset has a temporal resolution of 1 hour and comprises of 10 variables (the Date/Time and 9 other energy meters) and 8760 observations.</p>
 <p>Copy the following code chunk and enter it into your console. All of it should return <code>TRUE</code> if you have downloaded the <code>data</code> folder into the correct directory.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="index.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;here&quot;</span>)</span>
-<span id="cb8-2"><a href="index.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="do">## here() starts at /Users/adrianchong/Documents/GitHub/r4bes</span></span>
-<span id="cb8-3"><a href="index.html#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="index.html#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">file.exists</span>(<span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;iris.csv&quot;</span>))</span>
-<span id="cb8-5"><a href="index.html#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
-<span id="cb8-6"><a href="index.html#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">file.exists</span>(<span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;building.csv&quot;</span>))</span>
-<span id="cb8-7"><a href="index.html#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
-<span id="cb8-8"><a href="index.html#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">file.exists</span>(<span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;building_meter.csv&quot;</span>))</span>
-<span id="cb8-9"><a href="index.html#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
-<span id="cb8-10"><a href="index.html#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">file.exists</span>(<span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;idf&quot;</span>, <span class="st">&quot;RefBldgMediumOfficeNew2004_Chicago.idf&quot;</span>))</span>
-<span id="cb8-11"><a href="index.html#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
-<span id="cb8-12"><a href="index.html#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">file.exists</span>(<span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;epw&quot;</span>, <span class="st">&quot;USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw&quot;</span>))</span>
-<span id="cb8-13"><a href="index.html#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://here.r-lib.org/">"here"</a></span><span class="op">)</span>
+<span class="co">## here() starts at /Users/adrianchong/Documents/GitHub/r4bes</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/files.html">file.exists</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"iris.csv"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">## [1] TRUE</span>
+<span class="fu"><a href="https://rdrr.io/r/base/files.html">file.exists</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"building.csv"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">## [1] TRUE</span>
+<span class="fu"><a href="https://rdrr.io/r/base/files.html">file.exists</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"building_meter.csv"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">## [1] TRUE</span>
+<span class="fu"><a href="https://rdrr.io/r/base/files.html">file.exists</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"idf"</span>, <span class="st">"RefBldgMediumOfficeNew2004_Chicago.idf"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">## [1] TRUE</span>
+<span class="fu"><a href="https://rdrr.io/r/base/files.html">file.exists</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"epw"</span>, <span class="st">"USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">## [1] TRUE</span></code></pre></div>
 </div>
 <div id="project-structure" class="section level3" number="0.0.1">
-<h3><span class="header-section-number">0.0.1</span> Project structure</h3>
+<h3>
+<span class="header-section-number">0.0.1</span> Project structure<a class="anchor" aria-label="anchor" href="#project-structure"><i class="fas fa-link"></i></a>
+</h3>
 <p>You should also create a new folder called <code>R</code> in the newly created R project. This folder will be used to house all <code>R</code> code. You can create a new folder in RStudio by navigating to the RStudio’s results window, select the <code>Files</code> tab and click on <code>New Folder</code> and enter <code>R</code>.</p>
 <p>Your project folder should now look like this.</p>
-<p><img src="figures/file_structure.png" width="30%" style="display: block; margin: auto;" /></p>
+<div class="inline-figure"><img src="figures/file_structure.png" width="30%" style="display: block; margin: auto;"></div>
 </div>
 <div id="style-guide" class="section level3 unnumbered">
-<h3>Style guide</h3>
+<h3>Style guide<a class="anchor" aria-label="anchor" href="#style-guide"><i class="fas fa-link"></i></a>
+</h3>
 <p>We recommend using the <a href="https://style.tidyverse.org/index.html">Tidyverse Style Guide</a> by Hadley Wickham. To summarize we recommend the following</p>
 <ul>
-<li>R File names should be meaningful and end in <code>.R</code>. Avoid using special characters when naming files and use only <code>lowercase</code>, hyphens <code>-</code>, and underscores <code>_</code>.</li>
-<li><code>snake_case</code> (only lowercase letters, numbers, and <code>_</code>) for all object and function names. Function names should also reflect what it does.</li>
+<li>R File names should be meaningful and end in <code>.R</code>. Avoid using special characters when naming files and use only <code>lowercase</code>, hyphens <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code>, and underscores <code>_</code>.</li>
+<li>
+<code>snake_case</code> (only lowercase letters, numbers, and <code>_</code>) for all object and function names. Function names should also reflect what it does.</li>
 <li>Use two white spaces when indenting your code</li>
 </ul>
-<p><img src="figures/indent_space.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="inline-figure"><img src="figures/indent_space.png" width="70%" style="display: block; margin: auto;"></div>
 <ul>
 <li>Line length should not exceed 80 characters</li>
 </ul>
-<p><img src="figures/line_length.png" width="70%" style="display: block; margin: auto;" />
-<!-- This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports, e.g., a math equation $a^2 + b^2 = c^2$. --></p>
+<div class="inline-figure">
+<img src="figures/line_length.png" width="70%" style="display: block; margin: auto;"><!-- This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports, e.g., a math equation $a^2 + b^2 = c^2$. -->
+</div>
 <!-- The **bookdown** package can be installed from CRAN or Github: -->
 <!-- ```{r eval=FALSE} -->
 <!-- install.packages("bookdown") -->
@@ -469,75 +226,68 @@ div.csl-indent {
 
 
 
-<h3> Containers</h3>
-<div id="refs" class="references csl-bib-body">
-<div id="ref-noauthor_best_nodate" class="csl-entry">
-<div class="csl-left-margin">[1] </div><div class="csl-right-inline">Best <span>Directory</span> <span><span></span></span> <span>Building</span> <span>Energy</span> <span>Software</span> <span>Tools</span>, (n.d.). <a href="https://www.buildingenergysoftwaretools.com/">https://www.buildingenergysoftwaretools.com/</a> (accessed May 11, 2021).</div>
-</div>
-<div id="ref-noauthor_energyplus_nodate" class="csl-entry">
-<div class="csl-left-margin">[2] </div><div class="csl-right-inline"><span>EnergyPlus</span>, Energy.gov. (n.d.). <a href="https://www.energy.gov/eere/buildings/downloads/energyplus-0">https://www.energy.gov/eere/buildings/downloads/energyplus-0</a> (accessed May 11, 2021).</div>
-</div>
-<div id="ref-deru_us_2011" class="csl-entry">
-<div class="csl-left-margin">[3] </div><div class="csl-right-inline">M. Deru, K. Field, D. Studer, K. Benne, B. Griffith, P. Torcellini, B. Liu, M. Halverson, D. Winiarski, M. Rosenberg, <span>US</span> <span>Department</span> of <span>Energy</span> commercial reference building models of the national building stock, (2011).</div>
-</div>
-</div>
-            </section>
+  <div class="chapter-nav">
+<div class="empty"></div>
+<div class="next"><a href="r-basics.html"><span class="header-section-number">1</span> Introduction</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#preface">Preface</a></li>
+<li><a class="nav-link" href="#introduction">Introduction</a></li>
+<li><a class="nav-link" href="#structure-of-this-book">Structure of this book</a></li>
+<li>
+<a class="nav-link" href="#prerequisites">Prerequisites</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#r-and-rstudio">R and RStudio</a></li>
+<li><a class="nav-link" href="#r-packages">R Packages</a></li>
+<li><a class="nav-link" href="#energyplus">EnergyPlus</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#conventions">Conventions</a></li>
+<li>
+<a class="nav-link" href="#before-you-begin">Before you begin</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#r-project">R Project</a></li>
+<li><a class="nav-link" href="#scripting">Scripting</a></li>
+<li><a class="nav-link" href="#example-files">Example files</a></li>
+<li><a class="nav-link" href="#project-structure"><span class="header-section-number">0.0.1</span> Project structure</a></li>
+<li><a class="nav-link" href="#style-guide">Style guide</a></li>
+</ul>
+</li>
+</ul>
 
-          </div>
-        </div>
-      </div>
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
 
-<a href="r-basics.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
-    </div>
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-08-04.</p>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
-<script>
-gitbook.require(["gitbook"], function(gitbook) {
-gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["r4bes.pdf", "r4bes.epub"],
-"toc": {
-"collapse": "section"
-}
-});
-});
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
 </script>
-
 </body>
-
 </html>

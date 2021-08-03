@@ -5,8 +5,6 @@ bookdown::gitbook:
       collapse: section
       before: |
         <li><a href="./">R for BES</a></li>
-      after: |
-        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
     download: ["pdf", "epub"]
     
 bookdown::pdf_book:
