@@ -117,7 +117,7 @@
 
 \title{R for Building Energy Simulation}
 \author{Adrian Chong}
-\date{2021-08-04}
+\date{2021-08-07}
 
 \begin{document}
 \maketitle
@@ -263,9 +263,9 @@ When presenting R code, prompts \texttt{\textgreater{}} will not be added and th
 
 The Figure below shows the steps to create a project called \texttt{r4bes} that you will be using for this book. To create a project, select \texttt{File\ \textgreater{}\ New\ Project} from RStudio's menu bar. This launches a window that provides you with options for creating a project. Select the \texttt{New\ Directory} option followed by \texttt{New\ Project}. You can then specify the \texttt{Directory\ name} for your new project and the directory where it will reside. Notice the file with \texttt{.Rproj} extension that was created along with the project. This is the project file that you double-click to open a project. When you open a project, the current working directory is automatically set to the project directory.
 
-Try it now! Quite RStuido and then navigate to and open the \texttt{r4bes.Rproj} file.
-
 \begin{center}\includegraphics[width=1\linewidth]{figures/create_project} \end{center}
+
+Try it now! Quite RStuido and then navigate to and open the \texttt{r4bes.Rproj} file.
 
 \hypertarget{scripting}{%
 \subsection*{Scripting}\label{scripting}}
@@ -279,19 +279,36 @@ Once the project folder is set up, you can create a new R Script with \texttt{Fi
 \subsection*{Example files}\label{example-files}}
 \addcontentsline{toc}{subsection}{Example files}
 
-To ensure the reproducibility of the examples in this book, you will download the data folder from the GitHub repository XXX and place it in the project folder you have just created.
+To ensure the reproducibility of the examples in this book, you will download the data folder from \href{https://nusu.sharepoint.com/sites/RforBuildingEnergySimulation/Shared\%20Documents/General/data.zip}{this link} and place it in the project folder you have just created.
 
-\texttt{iris.csv} is a popular machine learning dataset about the Iris flower. The dataset consists of 50 observations and 5 variables.
+Your project folder should now have the following file structure.
 
-\texttt{building.csv} is a timeseries dataset from an actual building consisting of 1324 observations and 2 variables (date/time and building electricity consumption). The dataset has a temporal resolution of 30 minutes.
-
-\texttt{RefBldgMediumOfficeNew2004\_Chicago.idf} is a building energy model developed by the U.S. Department of Energy (DOE) to act as a Commercial Reference Building for medium offices \citep{deru_us_2011}. We use the DOE reference building because it is well established and widely used. More importantly, it is publicly available and comes distributed with EnergyPlus as example files, making the examples and code in this book easier to follow and reproduce.
-
-\texttt{USA\_IL\_Chicago-OHare.Intl.AP.725300\_TMY3.epw} is the latest Typical Meteorological Year weather dataset for the Chicago Ohare International Airport.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{.}\SpecialCharTok{/}\NormalTok{r4bes}\SpecialCharTok{/}
+  \SpecialCharTok{+{-}{-}}\NormalTok{ r4bes.Rproj}
+  \SpecialCharTok{+{-}{-}}\NormalTok{ data}\SpecialCharTok{/}
+      \SpecialCharTok{+{-}{-}}\NormalTok{ building\_meter.csv}
+      \SpecialCharTok{+{-}{-}}\NormalTok{ building.csv}
+      \SpecialCharTok{+{-}{-}}\NormalTok{ epw}
+          \SpecialCharTok{+{-}{-}}\NormalTok{ USA\_IL\_Chicago}\SpecialCharTok{{-}}\NormalTok{OHare.Intl.AP}\FloatTok{.725300}\NormalTok{\_TMY3.epw}
+      \SpecialCharTok{+{-}{-}}\NormalTok{ idf}
+          \SpecialCharTok{+{-}{-}}\NormalTok{ RefBldgMediumOfficeNew2004\_Chicago.idf}
+      \SpecialCharTok{+{-}{-}}\NormalTok{ iris.csv}
+\end{Highlighting}
+\end{Shaded}
 
 \texttt{building\_meter.csv} is an example energy meter output file from the the U.S. DOE medium office energy model (i.e., \texttt{RefBldgMediumOfficeNew2004\_Chicago.idf}). The dataset has a temporal resolution of 1 hour and comprises of 10 variables (the Date/Time and 9 other energy meters) and 8760 observations.
 
-Copy the following code chunk and enter it into your console. All of it should return \texttt{TRUE} if you have downloaded the \texttt{data} folder into the correct directory.
+\texttt{building.csv} is a timeseries dataset from an actual building consisting of 1324 observations and 2 variables (date/time and building electricity consumption). The dataset has a temporal resolution of 30 minutes.
+
+\texttt{USA\_IL\_Chicago-OHare.Intl.AP.725300\_TMY3.epw} is the latest Typical Meteorological Year weather dataset for the Chicago Ohare International Airport.
+
+\texttt{RefBldgMediumOfficeNew2004\_Chicago.idf} is a building energy model developed by the U.S. Department of Energy (DOE) to act as a Commercial Reference Building for medium offices \citep{deru_us_2011}. We use the DOE reference building because it is well established and widely used. More importantly, it is publicly available and comes distributed with EnergyPlus as example files, making the examples and code in this book easier to follow and reproduce.
+
+\texttt{iris.csv} is a popular machine learning dataset about the Iris flower. The dataset consists of 50 observations and 5 variables.
+
+Once you have downloaded the \texttt{data} folder into your R project directure, the following code should all return \texttt{TRUE}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -312,9 +329,10 @@ Copy the following code chunk and enter it into your console. All of it should r
 \end{Shaded}
 
 \hypertarget{project-structure}{%
-\subsection{Project structure}\label{project-structure}}
+\subsection*{Project structure}\label{project-structure}}
+\addcontentsline{toc}{subsection}{Project structure}
 
-You should also create a new folder called \texttt{R} in the newly created R project. This folder will be used to house all \texttt{R} code. You can create a new folder in RStudio by navigating to the RStudio's results window, select the \texttt{Files} tab and click on \texttt{New\ Folder} and enter \texttt{R}.
+You should also create a new folder called \texttt{R} in the newly created R project. This folder will be used to house all \texttt{R} code that you will write as you go through this book. You can create a new folder in RStudio by navigating to the RStudio's results window, select the \texttt{Files} tab and click on \texttt{New\ Folder} and enter \texttt{R}.
 
 Your project folder should now look like this.
 
@@ -2355,6 +2373,15 @@ Before starting to work with EnergyPlus, there are three main EnergyPlus files t
 \hypertarget{parsing-the-model}{%
 \section{Parsing the model}\label{parsing-the-model}}
 
+Before starting, you need to first tell R where EnergyPlus is located.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{use\_eplus}\NormalTok{(}\StringTok{"/Applications/EnergyPlus{-}9{-}4{-}0"}\NormalTok{)}
+\DocumentationTok{\#\# Configure data of EnergyPlus v9.4.0 located at \textquotesingle{}/Applications/EnergyPlus{-}9{-}4{-}0\textquotesingle{} already exists. No Updating performed.}
+\end{Highlighting}
+\end{Shaded}
+
 To get started, you need to first be familiar with the three basic classes (\texttt{Idf}, \texttt{Epw}, and the \texttt{EplusJob}) of the eplusr package.
 
 The \texttt{Idf} class is used to represent the EnergyPlus model. It contains methods that allows you to easily query and modify the model. You can use the \texttt{read\_idf()} function to parse the EnergyPlus model into R by providing the file path to the EnergyPlus IDF file. You can use the function \texttt{here()} to easily reference the file path relative to the project root folder.
@@ -2427,7 +2454,7 @@ If you do not want to save the simulation results locally, you can first save th
 \NormalTok{model}\SpecialCharTok{$}\FunctionTok{save}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(}\FunctionTok{tempdir}\NormalTok{(), }\StringTok{"model.idf"}\NormalTok{))}
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(epw)}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.08.04 01:17}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.08.07 12:25}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2479,7 +2506,7 @@ To output the summary reports from EnergyPlus, you need to first run the simulat
 \begin{Highlighting}[]
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.08.04 01:18}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.08.07 12:25}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2658,7 +2685,7 @@ Choosing the right color scheme is an important aspect of data visualization bec
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-110-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-112-1.pdf}
 In general, there are three types of color palettes: sequential, diverging, and qualitative.
 
 When representing gradients (such as temperature data), you want to use \emph{sequential} color palletes that are perceptually uniform as the color progresses from low to high.
@@ -2669,7 +2696,7 @@ When representing gradients (such as temperature data), you want to use \emph{se
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-111-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-113-1.pdf}
 
 You will want to use \emph{diverging} color palletes that uses a neutral mid-point that diverges at perceptually equal steps to both ends of the data. An example is using the \texttt{RdBu} color pallette to represent temperature data that diverges between cold and hot.
 
@@ -2679,7 +2706,7 @@ You will want to use \emph{diverging} color palletes that uses a neutral mid-poi
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-112-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-114-1.pdf}
 
 You will want to map categorical variables to \emph{qualitative} color palettes that are perceptually uniform and not have any variables standing out perceptually due to it's color. For instance, when visualizing the energy usage intensity of different buildings, you would want the colors used to represent each building to be easily distinguishable but at the same time not have one stand out from another even though they are numerically equivalent.
 
@@ -2689,7 +2716,7 @@ You will want to map categorical variables to \emph{qualitative} color palettes 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-113-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-115-1.pdf}
 
 \hypertarget{ggplot}{%
 \section{\texorpdfstring{\texttt{ggplot()}}{ggplot()}}\label{ggplot}}
@@ -2763,7 +2790,7 @@ You can create bar graphs by adding \texttt{geom\_bar()}. By default, \texttt{st
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-117-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-119-1.pdf}
 
 By default, the bar charts would be stacked. In this scenario, we only have two groups of fuel, electricity and natural gas. However, when there are many groups, stacked bar charts can be difficult to visualize. You can place them side by side instead using \texttt{position\ =\ position\_dodge()}.
 
@@ -2774,7 +2801,7 @@ By default, the bar charts would be stacked. In this scenario, we only have two 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-118-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-120-1.pdf}
 
 You can use scale to change the fill of the bar chart. The \texttt{scale\_*\_brewer()} functions provides an easy way to specify palettes from the rcolorbrewer package in ggplot.
 
@@ -2786,7 +2813,7 @@ You can use scale to change the fill of the bar chart. The \texttt{scale\_*\_bre
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-119-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-121-1.pdf}
 
 You can flip how the data coordinates maps to plot to get horizontal bar plots with \texttt{coord\_filp()}.
 
@@ -2799,7 +2826,7 @@ You can flip how the data coordinates maps to plot to get horizontal bar plots w
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-120-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-122-1.pdf}
 
 You can divide the plot into various \emph{facet}s by subsetting the plot based onone or more discrete variables. In this example, we divide the plot row wise based on fuel type using \texttt{facet\_grid()}.
 
@@ -2812,7 +2839,7 @@ You can divide the plot into various \emph{facet}s by subsetting the plot based 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-121-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-123-1.pdf}
 
 As you probably have noticed. The x-axis labels are not legible due to overlapping when plotting the data as vertical bar charts.
 
@@ -2827,7 +2854,7 @@ You can use \texttt{theme()} and \texttt{element\_text()} to change how the x-ax
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-122-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-124-1.pdf}
 
 You can also use \texttt{theme()} together with various \texttt{element\_*} functions to control elements of the plot title, legend, axis labels, borders, background, etc. You can find out more about the possible arguments to each \texttt{element\_function()} by typing \texttt{?margin} into your console. \texttt{element\_*} functions are used with \texttt{theme()} to specify the non-data components of the plot. There are four element functions and they are:
 
@@ -2861,7 +2888,7 @@ You can also use \texttt{theme()} together with various \texttt{element\_*} func
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-123-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-125-1.pdf}
 
 \hypertarget{part-inputs-and-outputs}{%
 \part{Inputs and Outputs}\label{part-inputs-and-outputs}}
@@ -3729,7 +3756,7 @@ EnergyPlus allows you to specify meters to retrieve the simulation outputs. Howe
 \NormalTok{mdd}
 \DocumentationTok{\#\# == EnergyPlus Meter Data Dictionary File =======================================}
 \DocumentationTok{\#\#   * EnergyPlus version: 9.4.0 (998c4b761e)}
-\DocumentationTok{\#\#   * Simulation started: 2021{-}08{-}04 01:18:00}
+\DocumentationTok{\#\#   * Simulation started: 2021{-}08{-}07 12:25:00}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# {-}{-} Details {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 \DocumentationTok{\#\#      index reported\_time\_step report\_type}

@@ -9,7 +9,6 @@ fig:input-structure
 fig:class-object
 fig:idd-nomass
 fig:idd-material
-project-structure
 r-basics
 basics
 prerequisites-1

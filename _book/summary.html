@@ -81,14 +81,14 @@
 <span class="header-section-number">10.1</span> Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites-8"><i class="fas fa-link"></i></a>
 </h2>
 <p>In this chapter we will focus on how to set and get EnergyPlus simulation outputs using the eplusr package. We will illustrate the manipulation of simulation data using tidyverse, and use ggplot2 to visualize the simulation data</p>
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://hongyuanjia.github.io/eplusr/">eplusr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">RColorBrewer</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span></code></pre></div>
 <p>We will be working with the IDF and EPW file that pertains to the U.S. Department of Energy (DOE) Commercial Reference Building and Chicago’s TMY3 respectively.</p>
-<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">path_idf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"idf"</span>, <span class="st">"RefBldgMediumOfficeNew2004_Chicago.idf"</span><span class="op">)</span>
 <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://hongyuanjia.github.io/eplusr/reference/read_idf.html">read_idf</a></span><span class="op">(</span><span class="va">path_idf</span><span class="op">)</span>
 
@@ -100,10 +100,10 @@
 <span class="header-section-number">10.2</span> Output summary reports<a class="anchor" aria-label="anchor" href="#output-summary-reports"><i class="fas fa-link"></i></a>
 </h2>
 <p>To output the summary reports from EnergyPlus, you need to first run the simulation. The object <code>job</code> in the code below belongs to the <code>EplusJob</code> class. If you set <code>dir = NULL</code>, the simulation results will not be saved into a temporary directory but instead in the folder containing the IDF file. Do that and you will find the summary report in a html file as illustrated in Figure <a href="summary.html#fig:tabular-data">10.1</a>.</p>
-<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">job</span> <span class="op">&lt;-</span> <span class="va">model</span><span class="op">$</span><span class="fu">run</span><span class="op">(</span><span class="va">epw</span>, dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## EnergyPlus Starting</span>
-<span class="co">## EnergyPlus, Version 9.4.0-998c4b761e, YMD=2021.08.04 01:20</span>
+<span class="co">## EnergyPlus, Version 9.4.0-998c4b761e, YMD=2021.08.07 12:27</span>
 <span class="co">## </span>
 <span class="co">## Could not find platform independent libraries &lt;prefix&gt;</span>
 <span class="co">## Could not find platform dependent libraries &lt;exec_prefix&gt;</span>
@@ -134,13 +134,13 @@ Figure 10.1: Report summary html file output from EnergyPlus
 <li>units: The unit of the observation.</li>
 <li>value: The value of the observation. Note that by default, this is stored as a character vector.</li>
 </ul>
-<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">report</span> <span class="op">&lt;-</span> <span class="va">job</span><span class="op">$</span><span class="fu">tabular_data</span><span class="op">(</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">report</span><span class="op">)</span>
 <span class="co">## [1] "case"        "index"       "report_name" "report_for"  "table_name" </span>
 <span class="co">## [6] "column_name" "row_name"    "units"       "value"</span></code></pre></div>
 <p>To illustrate, refer back to Figure <a href="summary.html#fig:tabular-data">10.1</a> on what the arguments <code>report_name</code>, <code>table_name</code>, <code>column_name</code>, <code>row_name</code>, <code>units</code>, and <code>value</code> would correspond to in the html summary report. You can easily retrieve the <code>Total Site Energy</code> in <code>Energy Per Total Building Area</code> from the <code>Site and Source Energy</code> table in the <code>AnnualBuildingUtilityPerformanceSummary</code> report. Note that there are no whitespaces when specifying the <code>report_name</code>.</p>
-<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">report_example</span> <span class="op">&lt;-</span> <span class="va">report</span> <span class="op">%&gt;%</span>
     <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">report_name</span> <span class="op">==</span> <span class="st">"AnnualBuildingUtilityPerformanceSummary"</span>, 
            <span class="va">table_name</span> <span class="op">==</span> <span class="st">"Site and Source Energy"</span>,
@@ -148,7 +148,7 @@ Figure 10.1: Report summary html file output from EnergyPlus
            <span class="va">row_name</span> <span class="op">==</span> <span class="st">"Total Site Energy"</span><span class="op">)</span></code></pre></div>
 <p>Other examples as follows.</p>
 <p>You can retrieve end use energy consumption data and arrange them in descending value.</p>
-<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">report_end_use</span> <span class="op">&lt;-</span> <span class="va">report</span> <span class="op">%&gt;%</span>
     <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">table_name</span> <span class="op">==</span> <span class="st">"End Uses"</span>, 
            <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"Electricity|Natural Gas"</span>, <span class="va">column_name</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
@@ -160,7 +160,7 @@ Figure 10.1: Report summary html file output from EnergyPlus
     <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
     <span class="fu">drop_na</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>You can retrieve normalized metrics and group them by their fuel type.</p>
-<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">report_norm</span> <span class="op">&lt;-</span> <span class="va">report</span> <span class="op">%&gt;%</span>
     <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">table_name</span> <span class="op">==</span> <span class="st">"Utility Use Per Conditioned Floor Area"</span>,
            <span class="va">row_name</span> <span class="op">!=</span> <span class="st">"Total"</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -172,14 +172,14 @@ Figure 10.1: Report summary html file output from EnergyPlus
     <span class="fu">summarise</span><span class="op">(</span>total <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>You can also retrieve details of the model inputs from the summary reports.</p>
 <p>Opaque exterior of the building envelope.</p>
-<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">report_op_ext</span> <span class="op">&lt;-</span> <span class="va">report</span> <span class="op">%&gt;%</span>
     <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">table_name</span> <span class="op">==</span> <span class="st">"Opaque Exterior"</span>,
            <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"Azimuth|U-Factor with Film"</span>, <span class="va">column_name</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
     <span class="fu">mutate</span><span class="op">(</span>value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
     <span class="fu">select</span><span class="op">(</span><span class="va">row_name</span>, <span class="va">column_name</span>, <span class="va">units</span>, <span class="va">value</span><span class="op">)</span> </code></pre></div>
 <p>Exterior fenestration of the building envelope.</p>
-<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">report_ext_fenestration</span> <span class="op">&lt;-</span> <span class="va">report</span> <span class="op">%&gt;%</span>
     <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">table_name</span> <span class="op">==</span> <span class="st">"Exterior Fenestration"</span>,
            <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"total"</span>, <span class="va">row_name</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -216,7 +216,7 @@ Figure 10.1: Report summary html file output from EnergyPlus
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-08-04.</p>
+    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-08-07.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

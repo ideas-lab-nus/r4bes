@@ -21,6 +21,13 @@ Before starting to work with EnergyPlus, there are three main EnergyPlus files t
 
 ## Parsing the model
 
+Before starting, you need to first tell R where EnergyPlus is located.
+
+```{r}
+use_eplus("/Applications/EnergyPlus-9-4-0")
+```
+
+
 To get started, you need to first be familiar with the three basic classes (`Idf`, `Epw`, and the `EplusJob`) of the eplusr package. 
 
 The `Idf` class is used to represent the EnergyPlus model. It contains methods that allows you to easily query and modify the model. You can use the `read_idf()` function to parse the EnergyPlus model into R by providing the file path to the EnergyPlus IDF file. You can use the function `here()` to easily reference the file path relative to the project root folder. 
