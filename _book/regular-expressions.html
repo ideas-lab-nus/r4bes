@@ -82,7 +82,7 @@
 <span class="header-section-number">5.1</span> Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites-4"><i class="fas fa-link"></i></a>
 </h2>
 <p>The functions <code>str_view()</code> and <code>str_view_all()</code> from the <strong>stringr</strong> package (part of tidyverse) will be used to learn regular expressions interactively. <code>str_view()</code> shows the first match while <code>str_view_all()</code> shows all the matches.</p>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></code></pre></div>
 </div>
 <div id="basic-matches" class="section level2" number="5.2">
@@ -90,18 +90,18 @@
 <span class="header-section-number">5.2</span> Basic matches<a class="anchor" aria-label="anchor" href="#basic-matches"><i class="fas fa-link"></i></a>
 </h2>
 <p>The most basic form of matching is to match exact strings</p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"abc ABC\n123. !?\\(){}"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/writeLines.html">writeLines</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co">## abc ABC</span>
 <span class="co">## 123. !?\(){}</span>
 
 <span class="fu">str_view</span><span class="op">(</span><span class="va">x</span>, <span class="st">"abc"</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-27584ae0e5ff5f55c941" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-27584ae0e5ff5f55c941">{"x":{"html":"<ul>\n  <li><span class='match'>abc<\/span> ABC\n123. !?\\(){}<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-2d0b4f48c179e4a21dce" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2d0b4f48c179e4a21dce">{"x":{"html":"<ul>\n  <li><span class='match'>abc<\/span> ABC\n123. !?\\(){}<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 str_view(x, "123")
-<div id="htmlwidget-e77b7c895444e7d1827d" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e77b7c895444e7d1827d">{"x":{"html":"<ul>\n  <li>abc ABC\n<span class='match'>123<\/span>. !?\\(){}<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-26f42b45577870c9d0b9" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-26f42b45577870c9d0b9">{"x":{"html":"<ul>\n  <li>abc ABC\n<span class='match'>123<\/span>. !?\\(){}<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="character-classes" class="section level2" number="5.3">
 <h2>
@@ -109,16 +109,16 @@ str_view(x, "123")
 </h2>
 <p>Character classes allows you to specify a list of characters for matching.</p>
 <p>A bracket <code>[...]</code> can be used to specify a list of character. Therefore, it will match any characters that was specified within the brackets. If a caret <code><a href="https://rdrr.io/r/base/Arithmetic.html">^</a></code> is added to the start of the list of characters, it will match any characters that are NOT in the list. You can also specify a range expression using a hyphen <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> between two characters.</p>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">str_view_all</span><span class="op">(</span><span class="va">x</span>, <span class="st">"[bcde]"</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-71261ef26232639bb94c" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-71261ef26232639bb94c">{"x":{"html":"<ul>\n  <li>a<span class='match'>b<\/span><span class='match'>c<\/span> ABC\n123. !?\\(){}<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-12b4a040a41586bdb9ed" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-12b4a040a41586bdb9ed">{"x":{"html":"<ul>\n  <li>a<span class='match'>b<\/span><span class='match'>c<\/span> ABC\n123. !?\\(){}<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 str_view_all(x, "[^bcde]")
-<div id="htmlwidget-ba225f51beba09438600" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ba225f51beba09438600">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span>bc<span class='match'> <\/span><span class='match'>A<\/span><span class='match'>B<\/span><span class='match'>C<\/span><span class='match'>\n<\/span><span class='match'>1<\/span><span class='match'>2<\/span><span class='match'>3<\/span><span class='match'>.<\/span><span class='match'> <\/span><span class='match'>!<\/span><span class='match'>?<\/span><span class='match'>\\<\/span><span class='match'>(<\/span><span class='match'>)<\/span><span class='match'>{<\/span><span class='match'>}<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-810245d6af627111f2cd" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-810245d6af627111f2cd">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span>bc<span class='match'> <\/span><span class='match'>A<\/span><span class='match'>B<\/span><span class='match'>C<\/span><span class='match'>\n<\/span><span class='match'>1<\/span><span class='match'>2<\/span><span class='match'>3<\/span><span class='match'>.<\/span><span class='match'> <\/span><span class='match'>!<\/span><span class='match'>?<\/span><span class='match'>\\<\/span><span class='match'>(<\/span><span class='match'>)<\/span><span class='match'>{<\/span><span class='match'>}<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 str_view_all(x, "[a-zA-Z]")
-<div id="htmlwidget-2f50889b8a32ceeb25a7" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2f50889b8a32ceeb25a7">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span><span class='match'>b<\/span><span class='match'>c<\/span> <span class='match'>A<\/span><span class='match'>B<\/span><span class='match'>C<\/span>\n123. !?\\(){}<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script><p>You can also specify character classes using pre-defined names of these classes with a bracket expression.</p>
+<div id="htmlwidget-c637e9dc87288f311807" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c637e9dc87288f311807">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span><span class='match'>b<\/span><span class='match'>c<\/span> <span class='match'>A<\/span><span class='match'>B<\/span><span class='match'>C<\/span>\n123. !?\\(){}<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script><p>You can also specify character classes using pre-defined names of these classes with a bracket expression.</p>
 <div class="inline-table"><table class="table table-sm">
 <thead><tr class="header">
 <th align="center">Regex</th>
@@ -156,13 +156,13 @@ str_view_all(x, "[a-zA-Z]")
 </tbody>
 </table></div>
 <p>Try out the other named classes using the function <code>str_view_all()</code></p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">str_view_all</span><span class="op">(</span><span class="va">x</span>, <span class="st">"[:alnum:]"</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-08704deda5334c33ac50" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-08704deda5334c33ac50">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span><span class='match'>b<\/span><span class='match'>c<\/span> <span class='match'>A<\/span><span class='match'>B<\/span><span class='match'>C<\/span>\n<span class='match'>1<\/span><span class='match'>2<\/span><span class='match'>3<\/span>. !?\\(){}<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-3a6fcbdfb320ca3e038a" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3a6fcbdfb320ca3e038a">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span><span class='match'>b<\/span><span class='match'>c<\/span> <span class='match'>A<\/span><span class='match'>B<\/span><span class='match'>C<\/span>\n<span class='match'>1<\/span><span class='match'>2<\/span><span class='match'>3<\/span>. !?\\(){}<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 str_view_all(x, "[:punct:]")
-<div id="htmlwidget-d3ec0079b5ca53a3c5bb" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d3ec0079b5ca53a3c5bb">{"x":{"html":"<ul>\n  <li>abc ABC\n123<span class='match'>.<\/span> <span class='match'>!<\/span><span class='match'>?<\/span><span class='match'>\\<\/span><span class='match'>(<\/span><span class='match'>)<\/span><span class='match'>{<\/span><span class='match'>}<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script><p>There are also special metacharacters you can use to match entire classes of characters.</p>
+<div id="htmlwidget-b1da6a5da468e7d82785" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b1da6a5da468e7d82785">{"x":{"html":"<ul>\n  <li>abc ABC\n123<span class='match'>.<\/span> <span class='match'>!<\/span><span class='match'>?<\/span><span class='match'>\\<\/span><span class='match'>(<\/span><span class='match'>)<\/span><span class='match'>{<\/span><span class='match'>}<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script><p>There are also special metacharacters you can use to match entire classes of characters.</p>
 <div class="inline-table"><table class="table table-sm">
 <thead><tr class="header">
 <th align="center">Regex</th>
@@ -209,42 +209,42 @@ str_view_all(x, "[:punct:]")
 </tbody>
 </table></div>
 <p>Note that to include a <code>\</code> in a regular expression, you need to escape it using <code>\\</code>. This is explained in the next subsection on escaping .</p>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">str_view_all</span><span class="op">(</span><span class="va">x</span>, <span class="st">"."</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-d92e30107da8c53a6cfa" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d92e30107da8c53a6cfa">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span><span class='match'>b<\/span><span class='match'>c<\/span><span class='match'> <\/span><span class='match'>A<\/span><span class='match'>B<\/span><span class='match'>C<\/span>\n<span class='match'>1<\/span><span class='match'>2<\/span><span class='match'>3<\/span><span class='match'>.<\/span><span class='match'> <\/span><span class='match'>!<\/span><span class='match'>?<\/span><span class='match'>\\<\/span><span class='match'>(<\/span><span class='match'>)<\/span><span class='match'>{<\/span><span class='match'>}<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f7a0d49a6f995bb71482" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f7a0d49a6f995bb71482">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span><span class='match'>b<\/span><span class='match'>c<\/span><span class='match'> <\/span><span class='match'>A<\/span><span class='match'>B<\/span><span class='match'>C<\/span>\n<span class='match'>1<\/span><span class='match'>2<\/span><span class='match'>3<\/span><span class='match'>.<\/span><span class='match'> <\/span><span class='match'>!<\/span><span class='match'>?<\/span><span class='match'>\\<\/span><span class='match'>(<\/span><span class='match'>)<\/span><span class='match'>{<\/span><span class='match'>}<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 
 str_view_all(x, "\\d")
-<div id="htmlwidget-248e8371be8e0d941a88" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-248e8371be8e0d941a88">{"x":{"html":"<ul>\n  <li>abc ABC\n<span class='match'>1<\/span><span class='match'>2<\/span><span class='match'>3<\/span>. !?\\(){}<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-ab621e724b978ed79a8b" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ab621e724b978ed79a8b">{"x":{"html":"<ul>\n  <li>abc ABC\n<span class='match'>1<\/span><span class='match'>2<\/span><span class='match'>3<\/span>. !?\\(){}<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 
 str_view_all(x, "\\D")
-<div id="htmlwidget-c037bd805b156695fec6" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c037bd805b156695fec6">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span><span class='match'>b<\/span><span class='match'>c<\/span><span class='match'> <\/span><span class='match'>A<\/span><span class='match'>B<\/span><span class='match'>C<\/span><span class='match'>\n<\/span>123<span class='match'>.<\/span><span class='match'> <\/span><span class='match'>!<\/span><span class='match'>?<\/span><span class='match'>\\<\/span><span class='match'>(<\/span><span class='match'>)<\/span><span class='match'>{<\/span><span class='match'>}<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-7611b431ba15810e4fa5" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7611b431ba15810e4fa5">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span><span class='match'>b<\/span><span class='match'>c<\/span><span class='match'> <\/span><span class='match'>A<\/span><span class='match'>B<\/span><span class='match'>C<\/span><span class='match'>\n<\/span>123<span class='match'>.<\/span><span class='match'> <\/span><span class='match'>!<\/span><span class='match'>?<\/span><span class='match'>\\<\/span><span class='match'>(<\/span><span class='match'>)<\/span><span class='match'>{<\/span><span class='match'>}<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="regex-escape" class="section level2" number="5.4">
 <h2>
 <span class="header-section-number">5.4</span> Escaping<a class="anchor" aria-label="anchor" href="#regex-escape"><i class="fas fa-link"></i></a>
 </h2>
 <p>In regular expressions, the backslash <code>\</code> is used as an <em>escape</em> character and is used to “escape” any special characters that comes after the backslash. However, in R, the same backslashes <code>\</code> are also used as an <em>escape</em> character in strings. For example, the string <code>"abc ABC 123.\n!?\\(){}"</code> is used to represent the characters <code>abc ABC 123.\n!?\(){}</code>. You will see that there is any additional backslash <code>\</code> in the string representation. This is because <code>\</code> is a special character for strings in R. Therefore, to represent a backslash <code>\</code> in a string, another backslash needs to be added to escape the special representation of a <code>\</code> in strings. This means that to create a string containing "", you need to write <code>"\\"</code>.</p>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"abc ABC\n123. !?\\(){}"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/writeLines.html">writeLines</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co">## abc ABC</span>
 <span class="co">## 123. !?\(){}</span></code></pre></div>
 <p>Therefore, to create any regular expressions that contains a backslash, you would need to use a string that contains another backslash <code>\</code> to escape the backslash <code>\</code> that forms a part of the regular expression.</p>
 <p>For example, how would you create a regular expression to match the character <code>"."</code> if it is defined to match any character except newline. You would need to escape it with <code>\.</code>. However, the backslash is a special character in a string. Therefore you need the string <code>"\\."</code> to represent the regular expression <code>\.</code>. The same logic is applied when representing metacharacters such as <code>\d</code>, <code>\D</code>, <code>\w</code>, <code>\W</code>, etc. You need to use “\” to represent <code>\</code> in regular expressions.</p>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">str_view_all</span><span class="op">(</span><span class="va">x</span>, <span class="st">"."</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-ac14ddf0b9c03e4202db" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ac14ddf0b9c03e4202db">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span><span class='match'>b<\/span><span class='match'>c<\/span><span class='match'> <\/span><span class='match'>A<\/span><span class='match'>B<\/span><span class='match'>C<\/span>\n<span class='match'>1<\/span><span class='match'>2<\/span><span class='match'>3<\/span><span class='match'>.<\/span><span class='match'> <\/span><span class='match'>!<\/span><span class='match'>?<\/span><span class='match'>\\<\/span><span class='match'>(<\/span><span class='match'>)<\/span><span class='match'>{<\/span><span class='match'>}<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-7fd3a37b958d114ae1be" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7fd3a37b958d114ae1be">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span><span class='match'>b<\/span><span class='match'>c<\/span><span class='match'> <\/span><span class='match'>A<\/span><span class='match'>B<\/span><span class='match'>C<\/span>\n<span class='match'>1<\/span><span class='match'>2<\/span><span class='match'>3<\/span><span class='match'>.<\/span><span class='match'> <\/span><span class='match'>!<\/span><span class='match'>?<\/span><span class='match'>\\<\/span><span class='match'>(<\/span><span class='match'>)<\/span><span class='match'>{<\/span><span class='match'>}<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 str_view_all(x, "\\.")
-<div id="htmlwidget-39f75bc13369ba12b8b8" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-39f75bc13369ba12b8b8">{"x":{"html":"<ul>\n  <li>abc ABC\n123<span class='match'>.<\/span> !?\\(){}<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script><p>To represent a backslash <code>\</code> as a regular expression, two levels of escape would be required!</p>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div id="htmlwidget-bedf1dda06f0a66e1acc" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-bedf1dda06f0a66e1acc">{"x":{"html":"<ul>\n  <li>abc ABC\n123<span class='match'>.<\/span> !?\\(){}<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script><p>To represent a backslash <code>\</code> as a regular expression, two levels of escape would be required!</p>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">str_view</span><span class="op">(</span><span class="va">x</span>, <span class="st">"\\\\"</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-c51b4a5861b7d99ef5c2" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c51b4a5861b7d99ef5c2">{"x":{"html":"<ul>\n  <li>abc ABC\n123. !?<span class='match'>\\<\/span>(){}<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-0568a65e62ac662c2412" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0568a65e62ac662c2412">{"x":{"html":"<ul>\n  <li>abc ABC\n123. !?<span class='match'>\\<\/span>(){}<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="anchors" class="section level2" number="5.5">
 <h2>
@@ -276,35 +276,35 @@ str_view_all(x, "\\.")
 </tbody>
 </table></div>
 <p>You can use <code><a href="https://rdrr.io/r/base/Arithmetic.html">^</a></code> to match the start of a string and <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> to match the end of a string. For a complete match, you could anchor a regular expression with <code>^...$</code>.</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">str_view_all</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"apple"</span>, <span class="st">"apple pie"</span>, <span class="st">"juicy apple"</span><span class="op">)</span>, <span class="st">"apple"</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-6a9ef7a587530bd70b75" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-6a9ef7a587530bd70b75">{"x":{"html":"<ul>\n  <li><span class='match'>apple<\/span><\/li>\n  <li><span class='match'>apple<\/span> pie<\/li>\n  <li>juicy <span class='match'>apple<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-7125c6062409f7ba6521" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7125c6062409f7ba6521">{"x":{"html":"<ul>\n  <li><span class='match'>apple<\/span><\/li>\n  <li><span class='match'>apple<\/span> pie<\/li>\n  <li>juicy <span class='match'>apple<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 str_view_all(c("apple", "apple pie", "juicy apple"), "^apple")
-<div id="htmlwidget-2d5ec016e2567e03d641" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2d5ec016e2567e03d641">{"x":{"html":"<ul>\n  <li><span class='match'>apple<\/span><\/li>\n  <li><span class='match'>apple<\/span> pie<\/li>\n  <li>juicy apple<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-574f2b574b3cf57865e3" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-574f2b574b3cf57865e3">{"x":{"html":"<ul>\n  <li><span class='match'>apple<\/span><\/li>\n  <li><span class='match'>apple<\/span> pie<\/li>\n  <li>juicy apple<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 str_view_all(c("apple", "apple pie", "juicy apple"), "apple$")
-<div id="htmlwidget-e5f36c1425279d4b9107" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e5f36c1425279d4b9107">{"x":{"html":"<ul>\n  <li><span class='match'>apple<\/span><\/li>\n  <li>apple pie<\/li>\n  <li>juicy <span class='match'>apple<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-71633c2565a270bcf6dc" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-71633c2565a270bcf6dc">{"x":{"html":"<ul>\n  <li><span class='match'>apple<\/span><\/li>\n  <li>apple pie<\/li>\n  <li>juicy <span class='match'>apple<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 str_view_all(c("apple", "apple pie", "juicy apple"), "^apple$")
-<div id="htmlwidget-5ab3c0ae1a7a7eb79dc7" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5ab3c0ae1a7a7eb79dc7">{"x":{"html":"<ul>\n  <li><span class='match'>apple<\/span><\/li>\n  <li>apple pie<\/li>\n  <li>juicy apple<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script><p><code>\b</code> is used to match a position known as word boundary. You can use <code>\b</code> to match the start or end of a word. You can think of <code>\B</code> as the inverse of <code>\b</code> and basically it matches any position that <code>\b</code> does not.</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div id="htmlwidget-c07e998bb21b73592ca1" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c07e998bb21b73592ca1">{"x":{"html":"<ul>\n  <li><span class='match'>apple<\/span><\/li>\n  <li>apple pie<\/li>\n  <li>juicy apple<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script><p><code>\b</code> is used to match a position known as word boundary. You can use <code>\b</code> to match the start or end of a word. You can think of <code>\B</code> as the inverse of <code>\b</code> and basically it matches any position that <code>\b</code> does not.</p>
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">str_view_all</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"apple"</span>, <span class="st">"pineapple"</span>, <span class="st">"juicy apple"</span><span class="op">)</span>, <span class="st">"\\bapple\\b"</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-5ca6c21c71e2b770ca69" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5ca6c21c71e2b770ca69">{"x":{"html":"<ul>\n  <li><span class='match'>apple<\/span><\/li>\n  <li>pineapple<\/li>\n  <li>juicy <span class='match'>apple<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-649c2331b95d290ac273" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-649c2331b95d290ac273">{"x":{"html":"<ul>\n  <li><span class='match'>apple<\/span><\/li>\n  <li>pineapple<\/li>\n  <li>juicy <span class='match'>apple<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 
 str_view_all(c("apple", "pineapple", "juicy apple"), "apple\\b")
-<div id="htmlwidget-020369ea0fdafa2efb65" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-020369ea0fdafa2efb65">{"x":{"html":"<ul>\n  <li><span class='match'>apple<\/span><\/li>\n  <li>pine<span class='match'>apple<\/span><\/li>\n  <li>juicy <span class='match'>apple<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-0380ac66aabc7781483e" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0380ac66aabc7781483e">{"x":{"html":"<ul>\n  <li><span class='match'>apple<\/span><\/li>\n  <li>pine<span class='match'>apple<\/span><\/li>\n  <li>juicy <span class='match'>apple<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 
 str_view_all(c("apple", "pineapple", "juicy apple"), "\\Bapple\\B")
-<div id="htmlwidget-65d14670a09d219754d4" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-65d14670a09d219754d4">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>pineapple<\/li>\n  <li>juicy apple<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-4f55b1e4ed03d1e08c93" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4f55b1e4ed03d1e08c93">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>pineapple<\/li>\n  <li>juicy apple<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 
 str_view_all(c("apple", "pineapple", "juicy apple"), "\\Bapple")
-<div id="htmlwidget-48074a5bad1a27747692" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-48074a5bad1a27747692">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>pine<span class='match'>apple<\/span><\/li>\n  <li>juicy apple<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-16599b4b03626140ab76" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-16599b4b03626140ab76">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>pine<span class='match'>apple<\/span><\/li>\n  <li>juicy apple<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="quantifies" class="section level2" number="5.6">
 <h2>
@@ -344,32 +344,32 @@ str_view_all(c("apple", "pineapple", "juicy apple"), "\\Bapple")
 </tr>
 </tbody>
 </table></div>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">str_view</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"abb"</span>, <span class="st">"abbb"</span><span class="op">)</span>, <span class="st">"ab+"</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-7be29e10c96706a72c42" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7be29e10c96706a72c42">{"x":{"html":"<ul>\n  <li>a<\/li>\n  <li><span class='match'>abb<\/span><\/li>\n  <li><span class='match'>abbb<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-682f26b459c6eb4c5c46" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-682f26b459c6eb4c5c46">{"x":{"html":"<ul>\n  <li>a<\/li>\n  <li><span class='match'>abb<\/span><\/li>\n  <li><span class='match'>abbb<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 str_view(c("a", "abb", "abbb"), "ab*")
-<div id="htmlwidget-006656936706558e0ae6" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-006656936706558e0ae6">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span><\/li>\n  <li><span class='match'>abb<\/span><\/li>\n  <li><span class='match'>abbb<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-ba0a8b210fda61585a3c" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ba0a8b210fda61585a3c">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span><\/li>\n  <li><span class='match'>abb<\/span><\/li>\n  <li><span class='match'>abbb<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 str_view(c("a", "abb", "abbb"), "ab?")
-<div id="htmlwidget-3d455743df5f15c34754" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3d455743df5f15c34754">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span><\/li>\n  <li><span class='match'>ab<\/span>b<\/li>\n  <li><span class='match'>ab<\/span>bb<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b40aab2bfb2531492a12" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b40aab2bfb2531492a12">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span><\/li>\n  <li><span class='match'>ab<\/span>b<\/li>\n  <li><span class='match'>ab<\/span>bb<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 str_view(c("a", "abb", "abbb"), "ab{1}")
-<div id="htmlwidget-48b7e770f96ba67d16a4" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-48b7e770f96ba67d16a4">{"x":{"html":"<ul>\n  <li>a<\/li>\n  <li><span class='match'>ab<\/span>b<\/li>\n  <li><span class='match'>ab<\/span>bb<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-38c77f20e76437a68ea8" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-38c77f20e76437a68ea8">{"x":{"html":"<ul>\n  <li>a<\/li>\n  <li><span class='match'>ab<\/span>b<\/li>\n  <li><span class='match'>ab<\/span>bb<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 str_view(c("a", "abb", "abbb"), "ab{1,}")
-<div id="htmlwidget-3b6cedd3065f239f8a43" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3b6cedd3065f239f8a43">{"x":{"html":"<ul>\n  <li>a<\/li>\n  <li><span class='match'>abb<\/span><\/li>\n  <li><span class='match'>abbb<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-a62bdade4cf218396698" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a62bdade4cf218396698">{"x":{"html":"<ul>\n  <li>a<\/li>\n  <li><span class='match'>abb<\/span><\/li>\n  <li><span class='match'>abbb<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 str_view(c("a", "abb", "abbb"), "ab{1,2}")
-<div id="htmlwidget-ffc2cc8fc4798f54f146" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ffc2cc8fc4798f54f146">{"x":{"html":"<ul>\n  <li>a<\/li>\n  <li><span class='match'>abb<\/span><\/li>\n  <li><span class='match'>abb<\/span>b<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script><p>By default, quantifies are applied to a single character. You can use <code>(...)</code> to apply quantifies to more than one character.</p>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div id="htmlwidget-8b3a1150b807fd4f9c6a" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8b3a1150b807fd4f9c6a">{"x":{"html":"<ul>\n  <li>a<\/li>\n  <li><span class='match'>abb<\/span><\/li>\n  <li><span class='match'>abb<\/span>b<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script><p>By default, quantifies are applied to a single character. You can use <code>(...)</code> to apply quantifies to more than one character.</p>
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">str_view</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ab"</span>, <span class="st">"abab"</span>, <span class="st">"ababab"</span><span class="op">)</span>, <span class="st">"ab+"</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-f5b8c6fd00177f70dbc0" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f5b8c6fd00177f70dbc0">{"x":{"html":"<ul>\n  <li><span class='match'>ab<\/span><\/li>\n  <li><span class='match'>ab<\/span>ab<\/li>\n  <li><span class='match'>ab<\/span>abab<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-5260fc2f16f4d84056b7" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5260fc2f16f4d84056b7">{"x":{"html":"<ul>\n  <li><span class='match'>ab<\/span><\/li>\n  <li><span class='match'>ab<\/span>ab<\/li>\n  <li><span class='match'>ab<\/span>abab<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 str_view(c("ab", "abab", "ababab"), "(ab)+")
-<div id="htmlwidget-e95c7b720fd1021cbf96" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e95c7b720fd1021cbf96">{"x":{"html":"<ul>\n  <li><span class='match'>ab<\/span><\/li>\n  <li><span class='match'>abab<\/span><\/li>\n  <li><span class='match'>ababab<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script><!--## Applications TODO
+<div id="htmlwidget-66ee7cc6635647e04870" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-66ee7cc6635647e04870">{"x":{"html":"<ul>\n  <li><span class='match'>ab<\/span><\/li>\n  <li><span class='match'>abab<\/span><\/li>\n  <li><span class='match'>ababab<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script><!--## Applications TODO
 
 Combining what you have learned about regular expressions with data transformation skills picked up in the previous chapter can bring about many useful applications. 
 
@@ -408,7 +408,7 @@ For example, the format of the outputs from building energy simulation models ar
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-08-07.</p>
+    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-08-21.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

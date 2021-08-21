@@ -117,7 +117,7 @@
 
 \title{R for Building Energy Simulation}
 \author{Adrian Chong}
-\date{2021-08-07}
+\date{2021-08-21}
 
 \begin{document}
 \maketitle
@@ -406,6 +406,8 @@ Basic arithmetic operators (\texttt{+}, \texttt{-}, \texttt{*}, \texttt{/}, \tex
 \DocumentationTok{\#\# [1] 1.5}
 \DecValTok{3}\SpecialCharTok{\^{}}\DecValTok{2} \CommentTok{\# exponent}
 \DocumentationTok{\#\# [1] 9}
+\DecValTok{3} \SpecialCharTok{\%/\%} \DecValTok{2} \CommentTok{\# integer division}
+\DocumentationTok{\#\# [1] 1}
 \DecValTok{3} \SpecialCharTok{\%\%} \DecValTok{2} \CommentTok{\# mod (remainder of a division)}
 \DocumentationTok{\#\# [1] 1}
 \end{Highlighting}
@@ -453,12 +455,36 @@ You can use logical operators to connect two or more expressions. For example, t
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{(}\DecValTok{2} \SpecialCharTok{+} \DecValTok{3} \SpecialCharTok{==} \DecValTok{5}\NormalTok{) }\SpecialCharTok{\&}\NormalTok{ (}\DecValTok{2} \SpecialCharTok{+} \DecValTok{3} \SpecialCharTok{\textless{}} \DecValTok{3}\NormalTok{) }\CommentTok{\# AND operator}
+\NormalTok{(}\DecValTok{2} \SpecialCharTok{+} \DecValTok{3} \SpecialCharTok{==} \DecValTok{5}\NormalTok{) }\SpecialCharTok{\&\&}\NormalTok{ (}\DecValTok{2} \SpecialCharTok{+} \DecValTok{3} \SpecialCharTok{\textless{}} \DecValTok{3}\NormalTok{) }\CommentTok{\# logical AND operator}
 \DocumentationTok{\#\# [1] FALSE}
-\NormalTok{(}\DecValTok{2} \SpecialCharTok{+} \DecValTok{3} \SpecialCharTok{==} \DecValTok{5}\NormalTok{) }\SpecialCharTok{|}\NormalTok{ (}\DecValTok{2} \SpecialCharTok{+} \DecValTok{3} \SpecialCharTok{\textgreater{}=} \DecValTok{3}\NormalTok{) }\CommentTok{\# OR operator}
+\NormalTok{(}\DecValTok{2} \SpecialCharTok{+} \DecValTok{3} \SpecialCharTok{==} \DecValTok{5}\NormalTok{) }\SpecialCharTok{||}\NormalTok{ (}\DecValTok{2} \SpecialCharTok{+} \DecValTok{3} \SpecialCharTok{\textgreater{}=} \DecValTok{3}\NormalTok{) }\CommentTok{\# logical OR operator}
 \DocumentationTok{\#\# [1] TRUE}
-\SpecialCharTok{!}\NormalTok{(}\DecValTok{2} \SpecialCharTok{+} \DecValTok{3} \SpecialCharTok{==} \DecValTok{5}\NormalTok{) }\CommentTok{\# NOT operator}
+\end{Highlighting}
+\end{Shaded}
+
+Note that the logical \texttt{\&\&} and \texttt{\textbar{}\textbar{}} only examines the first element of a vector.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\ConstantTok{TRUE}\NormalTok{, }\ConstantTok{TRUE}\NormalTok{, }\ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\ConstantTok{FALSE}\NormalTok{, }\ConstantTok{TRUE}\NormalTok{, }\ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{x }\SpecialCharTok{\&\&}\NormalTok{ y}
 \DocumentationTok{\#\# [1] FALSE}
+\NormalTok{x }\SpecialCharTok{||}\NormalTok{ y}
+\DocumentationTok{\#\# [1] TRUE}
+\end{Highlighting}
+\end{Shaded}
+
+To perform element-wise logical operations, use \texttt{\&} and \texttt{\textbar{}} instead
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\SpecialCharTok{\&}\NormalTok{ y}
+\DocumentationTok{\#\# [1] FALSE  TRUE FALSE}
+\NormalTok{x }\SpecialCharTok{|}\NormalTok{ y}
+\DocumentationTok{\#\# [1]  TRUE  TRUE FALSE}
+\SpecialCharTok{!}\NormalTok{y}
+\DocumentationTok{\#\# [1]  TRUE FALSE  TRUE}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2454,7 +2480,7 @@ If you do not want to save the simulation results locally, you can first save th
 \NormalTok{model}\SpecialCharTok{$}\FunctionTok{save}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(}\FunctionTok{tempdir}\NormalTok{(), }\StringTok{"model.idf"}\NormalTok{))}
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(epw)}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.08.07 12:25}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.08.21 11:28}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2506,7 +2532,7 @@ To output the summary reports from EnergyPlus, you need to first run the simulat
 \begin{Highlighting}[]
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.08.07 12:25}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.08.21 11:28}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2685,7 +2711,7 @@ Choosing the right color scheme is an important aspect of data visualization bec
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-112-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-114-1.pdf}
 In general, there are three types of color palettes: sequential, diverging, and qualitative.
 
 When representing gradients (such as temperature data), you want to use \emph{sequential} color palletes that are perceptually uniform as the color progresses from low to high.
@@ -2696,7 +2722,7 @@ When representing gradients (such as temperature data), you want to use \emph{se
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-113-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-115-1.pdf}
 
 You will want to use \emph{diverging} color palletes that uses a neutral mid-point that diverges at perceptually equal steps to both ends of the data. An example is using the \texttt{RdBu} color pallette to represent temperature data that diverges between cold and hot.
 
@@ -2706,7 +2732,7 @@ You will want to use \emph{diverging} color palletes that uses a neutral mid-poi
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-114-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-116-1.pdf}
 
 You will want to map categorical variables to \emph{qualitative} color palettes that are perceptually uniform and not have any variables standing out perceptually due to it's color. For instance, when visualizing the energy usage intensity of different buildings, you would want the colors used to represent each building to be easily distinguishable but at the same time not have one stand out from another even though they are numerically equivalent.
 
@@ -2716,7 +2742,7 @@ You will want to map categorical variables to \emph{qualitative} color palettes 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-115-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-117-1.pdf}
 
 \hypertarget{ggplot}{%
 \section{\texorpdfstring{\texttt{ggplot()}}{ggplot()}}\label{ggplot}}
@@ -2790,7 +2816,7 @@ You can create bar graphs by adding \texttt{geom\_bar()}. By default, \texttt{st
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-119-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-121-1.pdf}
 
 By default, the bar charts would be stacked. In this scenario, we only have two groups of fuel, electricity and natural gas. However, when there are many groups, stacked bar charts can be difficult to visualize. You can place them side by side instead using \texttt{position\ =\ position\_dodge()}.
 
@@ -2801,7 +2827,7 @@ By default, the bar charts would be stacked. In this scenario, we only have two 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-120-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-122-1.pdf}
 
 You can use scale to change the fill of the bar chart. The \texttt{scale\_*\_brewer()} functions provides an easy way to specify palettes from the rcolorbrewer package in ggplot.
 
@@ -2813,7 +2839,7 @@ You can use scale to change the fill of the bar chart. The \texttt{scale\_*\_bre
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-121-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-123-1.pdf}
 
 You can flip how the data coordinates maps to plot to get horizontal bar plots with \texttt{coord\_filp()}.
 
@@ -2826,7 +2852,7 @@ You can flip how the data coordinates maps to plot to get horizontal bar plots w
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-122-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-124-1.pdf}
 
 You can divide the plot into various \emph{facet}s by subsetting the plot based onone or more discrete variables. In this example, we divide the plot row wise based on fuel type using \texttt{facet\_grid()}.
 
@@ -2839,7 +2865,7 @@ You can divide the plot into various \emph{facet}s by subsetting the plot based 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-123-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-125-1.pdf}
 
 As you probably have noticed. The x-axis labels are not legible due to overlapping when plotting the data as vertical bar charts.
 
@@ -2854,7 +2880,7 @@ You can use \texttt{theme()} and \texttt{element\_text()} to change how the x-ax
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-124-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-126-1.pdf}
 
 You can also use \texttt{theme()} together with various \texttt{element\_*} functions to control elements of the plot title, legend, axis labels, borders, background, etc. You can find out more about the possible arguments to each \texttt{element\_function()} by typing \texttt{?margin} into your console. \texttt{element\_*} functions are used with \texttt{theme()} to specify the non-data components of the plot. There are four element functions and they are:
 
@@ -2888,7 +2914,7 @@ You can also use \texttt{theme()} together with various \texttt{element\_*} func
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-125-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-127-1.pdf}
 
 \hypertarget{part-inputs-and-outputs}{%
 \part{Inputs and Outputs}\label{part-inputs-and-outputs}}
@@ -3756,7 +3782,7 @@ EnergyPlus allows you to specify meters to retrieve the simulation outputs. Howe
 \NormalTok{mdd}
 \DocumentationTok{\#\# == EnergyPlus Meter Data Dictionary File =======================================}
 \DocumentationTok{\#\#   * EnergyPlus version: 9.4.0 (998c4b761e)}
-\DocumentationTok{\#\#   * Simulation started: 2021{-}08{-}07 12:25:00}
+\DocumentationTok{\#\#   * Simulation started: 2021{-}08{-}21 11:28:00}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# {-}{-} Details {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 \DocumentationTok{\#\#      index reported\_time\_step report\_type}

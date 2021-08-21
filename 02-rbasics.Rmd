@@ -21,6 +21,7 @@ Basic arithmetic operators (`+`, `-`, `*`, `/`, `^`, `%') would work like your c
 3 * 2 # multiplication
 3 / 2 # division
 3^2 # exponent
+3 %/% 2 # integer division
 3 %% 2 # mod (remainder of a division)
 ```
 
@@ -53,11 +54,26 @@ You can use relational operators to compare how one object relates to another.
 You can use logical operators to connect two or more expressions. For example, to connect the results of the comparisons made using relational operators. 
 
 ```{r}
-(2 + 3 == 5) & (2 + 3 < 3) # AND operator
-(2 + 3 == 5) | (2 + 3 >= 3) # OR operator
-!(2 + 3 == 5) # NOT operator
+(2 + 3 == 5) && (2 + 3 < 3) # logical AND operator
+(2 + 3 == 5) || (2 + 3 >= 3) # logical OR operator
 ```
 
+Note that the logical `&&` and `||` only examines the first element of a vector.
+
+```{r}
+x <- c(TRUE, TRUE, FALSE)
+y <- c(FALSE, TRUE, FALSE)
+x && y
+x || y
+```
+
+To perform element-wise logical operations, use `&` and `|` instead
+
+```{r}
+x & y
+x | y
+!y
+```
 
 
 ## Basic data types 
