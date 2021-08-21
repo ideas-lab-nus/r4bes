@@ -90,20 +90,6 @@ Complex        `2 + 3i`                   Data type for numbers with a real and 
 Raw            `charToRaw("R for BES")`   Not commonly used data type used to store raw bytes
 
 
-You can use the function `class()` to find out the class of any object in R.
-
-```{r}
-var_a <- 1
-class(var_a)
-
-var_b <- 1L
-class(var_b)
-
-var_c <- "R for BES"
-class(var_c)
-```
-
-
 ## Basic data structures
 
 The basic data structures in R include factors, atomic vectors, lists, matrices, and `data.frame`s 
@@ -116,7 +102,7 @@ nlevels(eye_color)
 levels(eye_color)
 ```
 
-Atomic vectors or more frequently referred to as vectors are a data structure that is used to store multiple objects of the same data type (logical, numeric, integer, character, complex, or raw). Vectors are one-indexed (i.e., the first element is indexed using `[1]`) and you can get the number of elements in the vector using the function `length()`.
+Atomic vectors or more frequently referred to as vectors are a data structure that is used to store multiple objects of the same data type (logical, numeric, integer, character, complex, or raw). Vectors are one-indexed (i.e., the first element is indexed using `[1]`) and you can get the number of elements in the vector using the function `length()`. The function `class()` can be used to reveal the class of any object in R.
 
 ```{r create-vectors}
 vec_num <- c(1, 2, 3, 4)
@@ -251,7 +237,7 @@ class(df[, 1, drop = FALSE])
 Additionally, tibbles do not do partial matching and raises a warning unless the variable specified is an exact match.
 
 ```{r}
-tb$Sepal.Length
+tb$Sepal.Lengt
 
 df$Sepal.Lengt
 ```

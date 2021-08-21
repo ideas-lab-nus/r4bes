@@ -16,7 +16,7 @@ library(ggplot2)
 library(RColorBrewer)
 ```
 
-In this chapter, you will also be working with the U.S. Department of Energy (DOE) Commercial Reference Building for medium office energy model [@deru_us_2011] and the third and latest typical meteorological (TMY3) weather data for Chicago. You will first parse the IDf and EPW. 
+In this chapter, you will also be working with the U.S. Department of Energy (DOE) Commercial Reference Building for medium office energy model [@deru_us_2011] and the third and latest typical meteorological (TMY3) weather data for Chicago. You will first parse the IDf and EPW to R and run the simulation to extract the simulation results.
 
 ```{r, message=FALSE}
 path_idf <- here("data", "idf", "RefBldgMediumOfficeNew2004_Chicago.idf")
@@ -24,6 +24,8 @@ model <- read_idf(path_idf)
 
 path_epw <- here("data", "epw", "USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw")
 epw <- read_epw(path_epw)
+
+job <- model$run(weather = epw)
 ```
 
 ## Colors
@@ -43,14 +45,14 @@ display.brewer.all(type="seq", colorblindFriendly=TRUE)
 
 You will want to use *diverging* color palletes that uses a neutral mid-point that diverges at perceptually equal steps to both ends of the data. An example is using the `RdBu` color pallette to represent temperature data that diverges between cold and hot. 
 
-```{r}
+```{r, , out.height = "40%"}
 display.brewer.all(type="div", colorblindFriendly=TRUE)
 ```
 
 
 You will want to map categorical variables to *qualitative* color palettes that are perceptually uniform and not have any variables standing out perceptually due to it's color. For instance, when visualizing the energy usage intensity of different buildings, you would want the colors used to represent each building to be easily distinguishable but at the same time not have one stand out from another even though they are numerically equivalent. 
 
-```{r}
+```{r, out.height = "20%"}
 display.brewer.all(type="qual", colorblindFriendly=TRUE) 
 ```
 
@@ -78,7 +80,7 @@ ggplot(data = <DATA>, mapping = aes(<x, y, ...>)) +
     <GEOM_FUNCTION>(stat = <STAT>, position = <POSITION>) +
     <COORD_FUNCTION>(...) +
     <SCALE_FUNCTION>(...) +
-    <FACET_FUNCTION)(...) +
+    <FACET_FUNCTION>(...) +
     <THEME_FUNCTION>(...)
 ```
 
@@ -89,6 +91,8 @@ You will see the use of `ggplot()` and the above mentioned components more concr
 Bar graphs are a common way to visualize building simulation end use data. In this section, we will illustrate the use of ggplot and its various components using using the `report_end_use` data frame that was created in the preceding section.
 
 ```{r}
+report <- job$tabular_data()
+
 report_end_use <- report %>%
     filter(table_name == "End Uses", 
            grepl("Electricity|Natural Gas", column_name, ignore.case = TRUE),
