@@ -4,7 +4,7 @@
  output file:/Users/adrianchong/Documents/GitHub/r4bes/data/idf/RefBldgMediumOfficeNew2004_Chicago.csv
  getting all vars from:/Users/adrianchong/Documents/GitHub/r4bes/data/idf/RefBldgMediumOfficeNew2004_Chicago.eso
   number variables requested for output=          78
- ReadVars Run Time=00hr 00min  3.64sec
+ ReadVars Run Time=00hr 00min  3.30sec
  ReadVarsESO program completed successfully.
  ReadVarsESO
  processing:/Users/adrianchong/Documents/GitHub/r4bes/data/idf/RefBldgMediumOfficeNew2004_Chicago.mvi
@@ -12,5 +12,5 @@
  output file:/Users/adrianchong/Documents/GitHub/r4bes/data/idf/RefBldgMediumOfficeNew2004_ChicagoMeter.csv
  getting all vars from:/Users/adrianchong/Documents/GitHub/r4bes/data/idf/RefBldgMediumOfficeNew2004_Chicago.mtr
   number variables requested for output=          28
- ReadVars Run Time=00hr 00min  0.32sec
+ ReadVars Run Time=00hr 00min  0.31sec
  ReadVarsESO program completed successfully.

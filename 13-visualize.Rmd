@@ -14,6 +14,7 @@ library(tidyverse)
 library(here)
 library(ggplot2)
 library(RColorBrewer)
+library(viridis)
 ```
 
 In this chapter, you will also be working with the U.S. Department of Energy (DOE) Commercial Reference Building for medium office energy model [@deru_us_2011] and the third and latest typical meteorological (TMY3) weather data for Chicago. You will first parse the IDf and EPW to R and run the simulation to extract the simulation results.
@@ -30,30 +31,43 @@ job <- model$run(weather = epw)
 
 ## Colors
 
-Choosing the right color scheme is an important aspect of data visualization because of the effects they might have on our relative visual perception of luminance. Fortunately, R has pre-defined color pallettes that make all this super easy. All you have to do is to select the appropriates ones. In this chapter, we will be using the pre-defined color palletes in the RColorBrewer package. In general, you will want to use palettes that are colorblind friendly. 
+Choosing the right color scheme is an important aspect of data visualization because of the effects they might have on our relative visual perception of luminance. To find out more, I recommend reading [Chapter 1 of Data Visualization: A practical introduction](https://socviz.co/lookatdata.html#lookatdata) by Kieran Healy [@healy_data_2018] that discusses aspects of perception and interpretation when creating graphics.
 
-```{r}
+Fortunately, R has many pre-defined color palettes where careful thought has been put into their perception and aesthetic qualities. Specifically, the RColorBrewer package contains color palettes that have been carefully designed for discrete data. 
+
+The RColorBrewer package provide three types of color palettes: sequential, diverging, and qualitative. You can view those palettes that are colorblind friendly. 
+
+```{r, fig.height=10}
 display.brewer.all(colorblindFriendly = TRUE)
 ```
-In general, there are three types of color palettes: sequential, diverging, and qualitative. 
+
 
 When representing gradients (such as temperature data), you want to use *sequential* color palletes that are perceptually uniform as the color progresses from low to high. 
 
-```{r}
+```{r, fig.height=7}
 display.brewer.all(type="seq", colorblindFriendly=TRUE)
 ```
 
+
 You will want to use *diverging* color palletes that uses a neutral mid-point that diverges at perceptually equal steps to both ends of the data. An example is using the `RdBu` color pallette to represent temperature data that diverges between cold and hot. 
 
-```{r, , out.height = "40%"}
+```{r, fig.height=4}
 display.brewer.all(type="div", colorblindFriendly=TRUE)
 ```
 
 
 You will want to map categorical variables to *qualitative* color palettes that are perceptually uniform and not have any variables standing out perceptually due to it's color. For instance, when visualizing the energy usage intensity of different buildings, you would want the colors used to represent each building to be easily distinguishable but at the same time not have one stand out from another even though they are numerically equivalent. 
 
-```{r, out.height = "20%"}
+```{r, fig.height=3}
 display.brewer.all(type="qual", colorblindFriendly=TRUE) 
+```
+
+
+Visualizing building related data such as electricity consumption often involves mapping continuous data onto the color or fill of the graphic you want to create. Although the brewer palettes can be extended to continuous data through interpololation, I have found the color scales in the viridis package to be more robust because they are designed to be perceptually uniform while maintaining a large range. The viridis package contains eight different color scales with the viridis scale forming the default or primary color map.
+
+
+```{r viridis, echo=FALSE, eval=TRUE, out.height = "70%", fig.align='center'}
+knitr::include_graphics("figures/viridis.png")
 ```
 
 
@@ -121,13 +135,25 @@ ggplot(data = report_end_use, aes(x = category, y = value, fill = fuel)) +
 ```
 
 
-You can use scale to change the fill of the bar chart. The `scale_*_brewer()` functions provides an easy way to specify palettes from the rcolorbrewer package in ggplot. 
+You can use scale to change the fill and colors of the bar chart. The `scale_*_brewer()` and `scale_*_viridis()` functions provides an easy way to specify palettes from the RColorBrewer and the viridis package respectively. Particularly, `scale_fill_brewer()` and `scale_fill_viridis()` provides mapping to ggplot's fill aesthetics while `scale_color_brewer()` and `scale_color_viridis()` provides mapping to ggplot's color aesthetics. 
+
 
 ```{r}
 ggplot(data = report_end_use, aes(x = category, y = value, fill = fuel)) +
     geom_bar(stat="identity") + 
+    # use palette argument to indicate the brewer palette to use
     scale_fill_brewer(palette = "Set2") 
 ```
+
+
+```{r}
+ggplot(data = report_end_use, aes(x = category, y = value, fill = fuel)) +
+    geom_bar(stat="identity") + 
+    # use option argument to indicate the color scale to use
+    scale_fill_viridis(option = "cividis",
+                       discrete = TRUE) 
+```
+
 
 You can flip how the data coordinates maps to plot to get horizontal bar plots with `coord_filp()`.
 
@@ -138,7 +164,7 @@ ggplot(data = report_end_use, aes(x = category, y = value, fill = fuel)) +
     coord_flip()
 ```
 
-You can divide the plot into various *facet*s by subsetting the plot based onone or more discrete variables. In this example, we divide the plot row wise based on fuel type using `facet_grid()`.
+You can divide the plot into various *facet*s by subsetting the plot based one or more discrete variables. In this example, we divide the plot row wise based on fuel type using `facet_grid()`.
 
 ```{r}
 ggplot(data = report_end_use, aes(x = category, y = value)) +
@@ -186,6 +212,12 @@ ggplot(data = report_end_use, aes(x = category, y = value, fill = fuel)) +
 ```
 
 
+You can use the `ggsave()` function to save the plot. By default, it saves the last plot that was displayed. You can specify the size of the graphic using the units ("in", "cm", "mm", or "px"), width and height argument. 
+
+```{r, eval=FALSE}
+ggsave("my_plot.pdf", width = 20, height = 16, units = "cm")
+ggsave("my_plot.png", width = 8, height = 6, units = "in")
+```
 
 
 

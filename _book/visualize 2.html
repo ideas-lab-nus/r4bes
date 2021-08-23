@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 11 Visualize | R for Building Energy Simulation</title>
+<meta name="author" content="Adrian Chong">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.7/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet">
+<script src="libs/str_view-binding-1.4.0/str_view.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS -->
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R for Building Energy Simulation</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Preface</a></li>
+<li class="book-part">R Basics</li>
+<li><a class="" href="r-basics.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="" href="basics.html"><span class="header-section-number">2</span> Basics</a></li>
+<li><a class="" href="dates-and-times.html"><span class="header-section-number">3</span> Dates and Times</a></li>
+<li><a class="" href="importing-data.html"><span class="header-section-number">4</span> Importing Data</a></li>
+<li><a class="" href="regular-expressions.html"><span class="header-section-number">5</span> Regular expressions</a></li>
+<li><a class="" href="functions.html"><span class="header-section-number">6</span> Functions</a></li>
+<li><a class="" href="manipulate.html"><span class="header-section-number">7</span> Manipulating Data</a></li>
+<li class="book-part">Get Started</li>
+<li><a class="" href="get-started.html"><span class="header-section-number">8</span> Introduction</a></li>
+<li><a class="" href="parse.html"><span class="header-section-number">9</span> Parse then simulate</a></li>
+<li><a class="" href="summary.html"><span class="header-section-number">10</span> Summary reports</a></li>
+<li><a class="active" href="visualize.html"><span class="header-section-number">11</span> Visualize</a></li>
+<li class="book-part">Inputs and Outputs</li>
+<li><a class="" href="input-output.html"><span class="header-section-number">12</span> Introduction</a></li>
+<li><a class="" href="input.html"><span class="header-section-number">13</span> Model Input Structure</a></li>
+<li><a class="" href="modify.html"><span class="header-section-number">14</span> Modify model inputs</a></li>
+<li><a class="" href="output.html"><span class="header-section-number">15</span> Detailed output</a></li>
+<li><a class="" href="explore.html"><span class="header-section-number">16</span> Model Exploration</a></li>
+<li class="book-part">Program</li>
+<li><a class="" href="program.html"><span class="header-section-number">17</span> Introduction</a></li>
+<li><a class="" href="energy-efficient-measures.html"><span class="header-section-number">18</span> Energy Efficient Measures</a></li>
+<li><a class="" href="parametric-simulations.html"><span class="header-section-number">19</span> Parametric simulations</a></li>
+<li class="book-part">Advanced</li>
+<li><a class="" href="advanced.html"><span class="header-section-number">20</span> Introduction</a></li>
+<li><a class="" href="sensitivity-analysis.html"><span class="header-section-number">21</span> Sensitivity analysis</a></li>
+<li><a class="" href="optimization.html"><span class="header-section-number">22</span> Optimization</a></li>
+<li><a class="" href="calibration.html"><span class="header-section-number">23</span> Calibration</a></li>
+<li class="book-part">Reproduce</li>
+<li><a class="" href="reproduce.html"><span class="header-section-number">24</span> Introduction</a></li>
+<li><a class="" href="r-markdown.html"><span class="header-section-number">25</span> R Markdown</a></li>
+<li><a class="" href="containers.html"><span class="header-section-number">26</span> Containers</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="visualize" class="section level1" number="11">
+<h1>
+<span class="header-section-number">11</span> Visualize<a class="anchor" aria-label="anchor" href="#visualize"><i class="fas fa-link"></i></a>
+</h1>
+<div id="prerequisites-9" class="section level2" number="11.1">
+<h2>
+<span class="header-section-number">11.1</span> Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites-9"><i class="fas fa-link"></i></a>
+</h2>
+<p>In this chapter, you will use the <strong>eplusr</strong> package to interface with EnergyPlus via R, the <strong>tidyverse</strong> package to manipulate the simulation results, and the <strong>here</strong> package to specify relative file paths.</p>
+<p>Additionally, we will introduce <strong>ggplot2</strong>, an input-tidy visualization package that is based on the the grammar of graphics <span class="citation">[<a href="containers.html#ref-wilkinson_grammar_2012" role="doc-biblioref">8</a>]</span>. We will also introduce <strong>RColorBrewer</strong> package that contains predefined color palettes that make it easy to pick the right one when creating graphics in R.</p>
+<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://hongyuanjia.github.io/eplusr/">eplusr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">RColorBrewer</span><span class="op">)</span></code></pre></div>
+<p>In this chapter, you will also be working with the U.S. Department of Energy (DOE) Commercial Reference Building for medium office energy model <span class="citation">[<a href="containers.html#ref-deru_us_2011" role="doc-biblioref">3</a>]</span> and the third and latest typical meteorological (TMY3) weather data for Chicago. You will first parse the IDf and EPW to R and run the simulation to extract the simulation results.</p>
+<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">path_idf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"idf"</span>, <span class="st">"RefBldgMediumOfficeNew2004_Chicago.idf"</span><span class="op">)</span>
+<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://hongyuanjia.github.io/eplusr/reference/read_idf.html">read_idf</a></span><span class="op">(</span><span class="va">path_idf</span><span class="op">)</span>
+
+<span class="va">path_epw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"epw"</span>, <span class="st">"USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw"</span><span class="op">)</span>
+<span class="va">epw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://hongyuanjia.github.io/eplusr/reference/read_epw.html">read_epw</a></span><span class="op">(</span><span class="va">path_epw</span><span class="op">)</span>
+
+<span class="va">job</span> <span class="op">&lt;-</span> <span class="va">model</span><span class="op">$</span><span class="fu">run</span><span class="op">(</span>weather <span class="op">=</span> <span class="va">epw</span><span class="op">)</span>
+<span class="co">## EnergyPlus Starting</span>
+<span class="co">## EnergyPlus, Version 9.4.0-998c4b761e, YMD=2021.08.21 15:23</span>
+<span class="co">## </span>
+<span class="co">## Could not find platform independent libraries &lt;prefix&gt;</span>
+<span class="co">## Could not find platform dependent libraries &lt;exec_prefix&gt;</span>
+<span class="co">## Consider setting $PYTHONHOME to &lt;prefix&gt;[:&lt;exec_prefix&gt;]</span>
+<span class="co">## Initializing Response Factors</span>
+<span class="co">## Calculating CTFs for "STEEL FRAME NON-RES EXT WALL"</span>
+<span class="co">## Calculating CTFs for "IEAD NON-RES ROOF"</span>
+<span class="co">## Calculating CTFs for "EXT-SLAB"</span>
+<span class="va">....</span></code></pre></div>
+</div>
+<div id="colors" class="section level2" number="11.2">
+<h2>
+<span class="header-section-number">11.2</span> Colors<a class="anchor" aria-label="anchor" href="#colors"><i class="fas fa-link"></i></a>
+</h2>
+<p>Choosing the right color scheme is an important aspect of data visualization because of the effects they might have on our relative visual perception of luminance. Fortunately, R has pre-defined color pallettes that make all this super easy. All you have to do is to select the appropriates ones. In this chapter, we will be using the pre-defined color palletes in the RColorBrewer package. In general, you will want to use palettes that are colorblind friendly.</p>
+<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html">display.brewer.all</a></span><span class="op">(</span>colorblindFriendly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure">
+<img src="r4bes_files/figure-html/unnamed-chunk-113-1.png" width="672">
+In general, there are three types of color palettes: sequential, diverging, and qualitative.</div>
+<p>When representing gradients (such as temperature data), you want to use <em>sequential</em> color palletes that are perceptually uniform as the color progresses from low to high.</p>
+<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html">display.brewer.all</a></span><span class="op">(</span>type<span class="op">=</span><span class="st">"seq"</span>, colorblindFriendly<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="r4bes_files/figure-html/unnamed-chunk-114-1.png" width="672"></div>
+<p>You will want to use <em>diverging</em> color palletes that uses a neutral mid-point that diverges at perceptually equal steps to both ends of the data. An example is using the <code>RdBu</code> color pallette to represent temperature data that diverges between cold and hot.</p>
+<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html">display.brewer.all</a></span><span class="op">(</span>type<span class="op">=</span><span class="st">"div"</span>, colorblindFriendly<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="r4bes_files/figure-html/unnamed-chunk-115-1.png" width="672" height="40%"></div>
+<p>You will want to map categorical variables to <em>qualitative</em> color palettes that are perceptually uniform and not have any variables standing out perceptually due to it’s color. For instance, when visualizing the energy usage intensity of different buildings, you would want the colors used to represent each building to be easily distinguishable but at the same time not have one stand out from another even though they are numerically equivalent.</p>
+<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html">display.brewer.all</a></span><span class="op">(</span>type<span class="op">=</span><span class="st">"qual"</span>, colorblindFriendly<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> </code></pre></div>
+<div class="inline-figure"><img src="r4bes_files/figure-html/unnamed-chunk-116-1.png" width="672" height="20%"></div>
+</div>
+<div id="ggplot" class="section level2" number="11.3">
+<h2>
+<span class="header-section-number">11.3</span> <code>ggplot()</code><a class="anchor" aria-label="anchor" href="#ggplot"><i class="fas fa-link"></i></a>
+</h2>
+<div id="functions-and-components" class="section level3" number="11.3.1">
+<h3>
+<span class="header-section-number">11.3.1</span> Functions and Components<a class="anchor" aria-label="anchor" href="#functions-and-components"><i class="fas fa-link"></i></a>
+</h3>
+<p>All plots created by ggplot2 begins with a <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> function that initializes a ggplot plot object that can be used to specify how variables in the data are mapped to the “aesthetics” of the visualization. The function has two key arguements. The first argument <code>data</code> is the data frame that will be used for the plot. The second argument <code>mapping</code> is used to specify how variables in the data are mapped to the “aesthetics” of the visualization. The function <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> is a quoting function (i.e., the inputs are evaluated in the context of the data). This means that you can name the variables of the data frame directly within the <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> function.</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="visualize.html#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="sc">&lt;</span>DATA<span class="sc">&gt;</span>, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="sc">&lt;</span>x, y, ...<span class="sc">&gt;</span>))</span></code></pre></div>
+<p>You can then specify the graph by adding one or more of the following components with <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code></p>
+<ul>
+<li>A layer that comprises of geometric objects or <em>geom</em>, statistical transformation or <em>stat</em>, and <em>position</em> adjustments. Typically, a layer will be created using a <code>geom_&lt;function&gt;()</code>
+</li>
+<li>
+<em>scale</em>s that map data values to visual properties such as color, fill, shape, and size.</li>
+<li>A <em>coord</em>inate system that specifies how the coordinates of the data maps to the plot. Typically, Cartesian coordinates are used. However, other coordinate systems includes polar coordinates and map projections.</li>
+<li>
+<em>facet</em>s that divides the data into subsets based on one or more discrete variables. These subsets of data are then displayed as subplots on the plot.</li>
+<li>A <em>theme</em> that can be used to customize the non-data components of the plot such as titles, labels, fonts, background, gridlines, and legends.</li>
+</ul>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="visualize.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="sc">&lt;</span>DATA<span class="sc">&gt;</span>, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="sc">&lt;</span>x, y, ...<span class="sc">&gt;</span>)) <span class="sc">+</span></span>
+<span id="cb119-2"><a href="visualize.html#cb119-2" aria-hidden="true" tabindex="-1"></a>    <span class="er">&lt;</span>GEOM_FUNCTION<span class="sc">&gt;</span>(<span class="at">stat =</span> <span class="sc">&lt;</span>STAT<span class="sc">&gt;</span>, <span class="at">position =</span> <span class="sc">&lt;</span>POSITION<span class="sc">&gt;</span>) <span class="sc">+</span></span>
+<span id="cb119-3"><a href="visualize.html#cb119-3" aria-hidden="true" tabindex="-1"></a>    <span class="er">&lt;</span>COORD_FUNCTION<span class="sc">&gt;</span>(...) <span class="sc">+</span></span>
+<span id="cb119-4"><a href="visualize.html#cb119-4" aria-hidden="true" tabindex="-1"></a>    <span class="er">&lt;</span>SCALE_FUNCTION<span class="sc">&gt;</span>(...) <span class="sc">+</span></span>
+<span id="cb119-5"><a href="visualize.html#cb119-5" aria-hidden="true" tabindex="-1"></a>    <span class="er">&lt;</span>FACET_FUNCTION<span class="sc">&gt;</span>(...) <span class="sc">+</span></span>
+<span id="cb119-6"><a href="visualize.html#cb119-6" aria-hidden="true" tabindex="-1"></a>    <span class="er">&lt;</span>THEME_FUNCTION<span class="sc">&gt;</span>(...)</span></code></pre></div>
+<p>You will see the use of <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> and the above mentioned components more concretely as we go through the visualization recipes in the subsequent sections.</p>
+</div>
+<div id="a-simple-example" class="section level3" number="11.3.2">
+<h3>
+<span class="header-section-number">11.3.2</span> A simple example<a class="anchor" aria-label="anchor" href="#a-simple-example"><i class="fas fa-link"></i></a>
+</h3>
+<p>Bar graphs are a common way to visualize building simulation end use data. In this section, we will illustrate the use of ggplot and its various components using using the <code>report_end_use</code> data frame that was created in the preceding section.</p>
+<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">report</span> <span class="op">&lt;-</span> <span class="va">job</span><span class="op">$</span><span class="fu">tabular_data</span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">report_end_use</span> <span class="op">&lt;-</span> <span class="va">report</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">table_name</span> <span class="op">==</span> <span class="st">"End Uses"</span>, 
+           <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"Electricity|Natural Gas"</span>, <span class="va">column_name</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
+           <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"total"</span>, <span class="va">row_name</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">mutate</span><span class="op">(</span>value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">*</span><span class="fl">277.778</span>,
+           units <span class="op">=</span> <span class="st">"kWh"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">select</span><span class="op">(</span><span class="va">row_name</span>, <span class="va">column_name</span>, <span class="va">units</span>, <span class="va">value</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">rename</span><span class="op">(</span>category <span class="op">=</span> <span class="va">row_name</span>, fuel <span class="op">=</span> <span class="va">column_name</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">drop_na</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p>You can create bar graphs by adding <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code>. By default, <code>stat = bin</code> in <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code> which gives the count in each <code>x</code>. However, when the data contains <code>y</code> values, you would want to use <code>stat = "identity"</code>.</p>
+<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">report_end_use</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">category</span>, y <span class="op">=</span> <span class="va">value</span>, fill <span class="op">=</span> <span class="va">fuel</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat<span class="op">=</span><span class="st">"identity"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="r4bes_files/figure-html/unnamed-chunk-120-1.png" width="672"></div>
+<p>By default, the bar charts would be stacked. In this scenario, we only have two groups of fuel, electricity and natural gas. However, when there are many groups, stacked bar charts can be difficult to visualize. You can place them side by side instead using <code>position = position_dodge()</code>.</p>
+<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">report_end_use</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">category</span>, y <span class="op">=</span> <span class="va">value</span>, fill <span class="op">=</span> <span class="va">fuel</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat<span class="op">=</span><span class="st">"identity"</span>, position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_dodge.html">position_dodge</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="r4bes_files/figure-html/unnamed-chunk-121-1.png" width="672"></div>
+<p>You can use scale to change the fill of the bar chart. The <code>scale_*_brewer()</code> functions provides an easy way to specify palettes from the rcolorbrewer package in ggplot.</p>
+<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">report_end_use</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">category</span>, y <span class="op">=</span> <span class="va">value</span>, fill <span class="op">=</span> <span class="va">fuel</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat<span class="op">=</span><span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set2"</span><span class="op">)</span> </code></pre></div>
+<div class="inline-figure"><img src="r4bes_files/figure-html/unnamed-chunk-122-1.png" width="672"></div>
+<p>You can flip how the data coordinates maps to plot to get horizontal bar plots with <code>coord_filp()</code>.</p>
+<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">report_end_use</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">category</span>, y <span class="op">=</span> <span class="va">value</span>, fill <span class="op">=</span> <span class="va">fuel</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat<span class="op">=</span><span class="st">"identity"</span>, position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_dodge.html">position_dodge</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set2"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="r4bes_files/figure-html/unnamed-chunk-123-1.png" width="672"></div>
+<p>You can divide the plot into various <em>facet</em>s by subsetting the plot based onone or more discrete variables. In this example, we divide the plot row wise based on fuel type using <code><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid()</a></code>.</p>
+<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">report_end_use</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">category</span>, y <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat<span class="op">=</span><span class="st">"identity"</span>, position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_dodge.html">position_dodge</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span>rows <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">fuel</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="r4bes_files/figure-html/unnamed-chunk-124-1.png" width="672"></div>
+<p>As you probably have noticed. The x-axis labels are not legible due to overlapping when plotting the data as vertical bar charts.</p>
+<p>You can use <code><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme()</a></code> and <code><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text()</a></code> to change how the x-axis labels appear. In this case we are rotating it counter-clockwise by 90 degrees (<code>angle = 90</code>), vertically center justify the text (<code>vjust = 0.5</code>), and horizontally right justify the text (<code>hjust = 1</code>). For <code>vjust</code> and <code>hjust</code>, 0 and 1 refers to left and right justify respectively.</p>
+<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">report_end_use</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">category</span>, y <span class="op">=</span> <span class="va">value</span>, fill <span class="op">=</span> <span class="va">fuel</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat<span class="op">=</span><span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set2"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span>, vjust <span class="op">=</span> <span class="fl">0.5</span>, hjust<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="r4bes_files/figure-html/unnamed-chunk-125-1.png" width="672"></div>
+<p>You can also use <code><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme()</a></code> together with various <code>element_*</code> functions to control elements of the plot title, legend, axis labels, borders, background, etc. You can find out more about the possible arguments to each <code>element_function()</code> by typing <code><a href="https://ggplot2.tidyverse.org/reference/element.html">?margin</a></code> into your console. <code>element_*</code> functions are used with <code><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme()</a></code> to specify the non-data components of the plot. There are four element functions and they are:</p>
+<ul>
+<li>
+<code><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank()</a></code>: to assign a blank</li>
+<li>
+<code><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect()</a></code>: for specifying borders and background</li>
+<li>
+<code><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line()</a></code>: for specifying lines</li>
+<li>
+<code><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text()</a></code>: for specifying text</li>
+</ul>
+<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">report_end_use</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">category</span>, y <span class="op">=</span> <span class="va">value</span>, fill <span class="op">=</span> <span class="va">fuel</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat<span class="op">=</span><span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set2"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"End Use"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span>, vjust <span class="op">=</span> <span class="fl">0.5</span>, hjust<span class="op">=</span><span class="fl">1</span><span class="op">)</span>,
+          axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>face <span class="op">=</span> <span class="st">"bold"</span>, 
+                                    colour <span class="op">=</span> <span class="st">"red"</span>,
+                                    size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>,
+          axis.line <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>linetype <span class="op">=</span> <span class="st">"dashed"</span>, 
+                                   arrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/arrow.html">arrow</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,
+          plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span>,
+          legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># remove legend title</span>
+          <span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="r4bes_files/figure-html/unnamed-chunk-126-1.png" width="672"></div>
+
+</div>
+</div>
+</div>
+
+
+
+  <div class="chapter-nav">
+<div class="prev"><a href="summary.html"><span class="header-section-number">10</span> Summary reports</a></div>
+<div class="next"><a href="input-output.html"><span class="header-section-number">12</span> Introduction</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#visualize"><span class="header-section-number">11</span> Visualize</a></li>
+<li><a class="nav-link" href="#prerequisites-9"><span class="header-section-number">11.1</span> Prerequisites</a></li>
+<li><a class="nav-link" href="#colors"><span class="header-section-number">11.2</span> Colors</a></li>
+<li>
+<a class="nav-link" href="#ggplot"><span class="header-section-number">11.3</span> ggplot()</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#functions-and-components"><span class="header-section-number">11.3.1</span> Functions and Components</a></li>
+<li><a class="nav-link" href="#a-simple-example"><span class="header-section-number">11.3.2</span> A simple example</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-08-21.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+</html>

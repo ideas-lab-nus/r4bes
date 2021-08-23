@@ -154,7 +154,7 @@ knitr::include_graphics("figures/script.png")
 
 ### Example files {-}
 
-To ensure the reproducibility of the examples in this book, you will download the data folder from [this link](https://nusu.sharepoint.com/sites/RforBuildingEnergySimulation/Shared%20Documents/General/data.zip) and place it in the project folder you have just created. 
+To ensure the reproducibility of the examples in this book, you will download the data folder from [this link](https://www.dropbox.com/s/az2xh92pedhrzmk/data.zip?dl=0) and place it in the project folder you have just created. 
 
 Your project folder should now have the following file structure.
 

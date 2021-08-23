@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.4.12)  21 AUG 2021 15:20
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.4.12)  23 AUG 2021 22:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1052,7 +1052,7 @@ Underfull \hbox (badness 1342) in paragraph at lines 2534--2535
 [76] [77] [78]
 Chapter 11.
 
-Overfull \vbox (1.30296pt too high) detected at line 2689
+Overfull \vbox (1.35297pt too high) detected at line 2690
  []
 
 [79
@@ -1061,119 +1061,130 @@ Overfull \vbox (1.30296pt too high) detected at line 2689
 File: r4bes_files/figure-latex/unnamed-chunk-113-1.pdf Graphic file (type pdf)
 <use r4bes_files/figure-latex/unnamed-chunk-113-1.pdf>
 
-Underfull \hbox (badness 10000) in paragraph at lines 2702--2704
-[][]
- []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
+[80]
 File: r4bes_files/figure-latex/unnamed-chunk-114-1.pdf Graphic file (type pdf)
 <use r4bes_files/figure-latex/unnamed-chunk-114-1.pdf>
 
-Underfull \vbox (badness 4454) has occurred while \output is active []
-
-[80]
-File: r4bes_files/figure-latex/unnamed-chunk-115-1.pdf Graphic file (type pdf)
-<use r4bes_files/figure-latex/unnamed-chunk-115-1.pdf>
-File: r4bes_files/figure-latex/unnamed-chunk-116-1.pdf Graphic file (type pdf)
-<use r4bes_files/figure-latex/unnamed-chunk-116-1.pdf>
-
-Underfull \vbox (badness 5245) has occurred while \output is active []
+Underfull \vbox (badness 7522) has occurred while \output is active []
 
 [81]
-LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <14.4> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 2736.
-
-Underfull \vbox (badness 1132) has occurred while \output is active []
-
+File: r4bes_files/figure-latex/unnamed-chunk-115-1.pdf Graphic file (type pdf)
+<use r4bes_files/figure-latex/unnamed-chunk-115-1.pdf>
 [82]
-File: r4bes_files/figure-latex/unnamed-chunk-120-1.pdf Graphic file (type pdf)
-<use r4bes_files/figure-latex/unnamed-chunk-120-1.pdf>
+File: r4bes_files/figure-latex/unnamed-chunk-116-1.pdf Graphic file (type pdf)
+<use r4bes_files/figure-latex/unnamed-chunk-116-1.pdf>
+File: figures/viridis.png Graphic file (type bmp)
+<figures/viridis.png>
+
+Overfull \hbox (39.1562pt too wide) in paragraph at lines 2741--2741
+ [] 
+ []
+
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [83]
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <14.4> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 2744.
+[84] [85]
+File: r4bes_files/figure-latex/unnamed-chunk-120-1.pdf Graphic file (type pdf)
+<use r4bes_files/figure-latex/unnamed-chunk-120-1.pdf>
 File: r4bes_files/figure-latex/unnamed-chunk-121-1.pdf Graphic file (type pdf)
 <use r4bes_files/figure-latex/unnamed-chunk-121-1.pdf>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[84]
+[86]
+Underfull \hbox (badness 2334) in paragraph at lines 2830--2831
+\TU/lmr/m/n/10 tively. Particularly, \TU/lmtt/m/n/10 scale_fill_brewer() \TU/lm
+r/m/n/10 and \TU/lmtt/m/n/10 scale_fill_viridis()
+ []
+
 File: r4bes_files/figure-latex/unnamed-chunk-122-1.pdf Graphic file (type pdf)
 <use r4bes_files/figure-latex/unnamed-chunk-122-1.pdf>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[85]
+[87]
 File: r4bes_files/figure-latex/unnamed-chunk-123-1.pdf Graphic file (type pdf)
 <use r4bes_files/figure-latex/unnamed-chunk-123-1.pdf>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[86]
+[88]
 File: r4bes_files/figure-latex/unnamed-chunk-124-1.pdf Graphic file (type pdf)
 <use r4bes_files/figure-latex/unnamed-chunk-124-1.pdf>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[87]
+[89]
 File: r4bes_files/figure-latex/unnamed-chunk-125-1.pdf Graphic file (type pdf)
 <use r4bes_files/figure-latex/unnamed-chunk-125-1.pdf>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[88]
+[90]
 File: r4bes_files/figure-latex/unnamed-chunk-126-1.pdf Graphic file (type pdf)
 <use r4bes_files/figure-latex/unnamed-chunk-126-1.pdf>
 
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[91]
+File: r4bes_files/figure-latex/unnamed-chunk-127-1.pdf Graphic file (type pdf)
+<use r4bes_files/figure-latex/unnamed-chunk-127-1.pdf>
+
 Underfull \vbox (badness 4832) has occurred while \output is active []
 
-[89] [90] [91
+[92] [93] [94
 
-] [92]
+] [95] [96]
 Chapter 12.
-[93
+[97
 
-] [94
+] [98
 
 ]
 Chapter 13.
 
-Underfull \hbox (badness 1360) in paragraph at lines 2949--2950
+Underfull \hbox (badness 1360) in paragraph at lines 2979--2980
 \TU/lmr/m/n/10 installation of EnergyPlus. You will find these documents within
  En-
  []
 
 
-Underfull \hbox (badness 1142) in paragraph at lines 2949--2950
+Underfull \hbox (badness 1142) in paragraph at lines 2979--2980
 \TU/lmr/m/n/10 ergyPlus’s installation folder.By default, EnergyPlus will be in
 stalled in
  []
 
 
-Underfull \hbox (badness 2913) in paragraph at lines 2951--2952
+Underfull \hbox (badness 2913) in paragraph at lines 2981--2982
 []\TU/lmr/m/n/10 I would highly recommend referring to the EnergyPlus input out
 put
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2951--2952
+Underfull \hbox (badness 10000) in paragraph at lines 2981--2982
 \TU/lmr/m/n/10 reference (\TU/lmtt/m/n/10 [EnergyPlus installation folder] > Do
 cumentation >
  []
 
 
-Underfull \hbox (badness 2503) in paragraph at lines 2951--2952
+Underfull \hbox (badness 2503) in paragraph at lines 2981--2982
 \TU/lmtt/m/n/10 InputOutputReference.pdf\TU/lmr/m/n/10 ), which provides a thor
 ough description of
  []
 
-[95]
-Underfull \hbox (badness 1655) in paragraph at lines 2953--2954
+[99]
+Underfull \hbox (badness 1655) in paragraph at lines 2983--2984
 \TU/lmr/m/n/10 inquisitive mind, I would recommend reading the EnergyPlus engin
 eer-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2953--2954
+Underfull \hbox (badness 10000) in paragraph at lines 2983--2984
 \TU/lmr/m/n/10 ing reference (\TU/lmtt/m/n/10 [EnergyPlus installation folder] 
 > Documentation >
  []
@@ -1181,32 +1192,32 @@ Underfull \hbox (badness 10000) in paragraph at lines 2953--2954
 File: figures/group_class_field.png Graphic file (type bmp)
 <figures/group_class_field.png>
 
-Underfull \hbox (badness 2573) in paragraph at lines 2969--2970
+Underfull \hbox (badness 2573) in paragraph at lines 2999--3000
 \TU/lmtt/m/n/10 Elements \TU/lmr/m/n/10 in EnergyPlus. The \TU/lmtt/m/n/10 Surf
 ace Construction Elements \TU/lmr/m/n/10 class
  []
 
 
-Underfull \hbox (badness 4205) in paragraph at lines 2969--2970
+Underfull \hbox (badness 4205) in paragraph at lines 2999--3000
 \TU/lmr/m/n/10 groups consists of several classes that include the \TU/lmtt/m/n
 /10 Material:NoMass\TU/lmr/m/n/10 ,
  []
 
 
-Underfull \hbox (badness 2818) in paragraph at lines 2969--2970
+Underfull \hbox (badness 2818) in paragraph at lines 2999--3000
 \TU/lmtt/m/n/10 Material:AirGap\TU/lmr/m/n/10 , and the \TU/lmtt/m/n/10 WindowM
 aterial:SimpleGalzingSystem \TU/lmr/m/n/10 class
  []
 
 File: figures/input_structure.png Graphic file (type bmp)
 <figures/input_structure.png>
-[96]
+[100]
 File: figures/class_object.png Graphic file (type bmp)
 <figures/class_object.png>
 
 Overfull \vbox (165.39102pt too high) has occurred while \output is active []
 
-[97] [98]
+[101] [102]
 Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
@@ -1225,7 +1236,7 @@ Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no └ (U+2514) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-[99]
+[103]
 Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
@@ -1238,11 +1249,11 @@ Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no └ (U+2514) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-[100]
+[104]
 File: figures/idd_nomass.png Graphic file (type bmp)
 <figures/idd_nomass.png>
 
-Overfull \hbox (342.64435pt too wide) in paragraph at lines 3171--3172
+Overfull \hbox (342.64435pt too wide) in paragraph at lines 3201--3202
  [][] 
  []
 
@@ -1263,7 +1274,7 @@ Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-[101] [102]
+[105] [106]
 Missing character: There is no └ (U+2514) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no └ (U+2514) in font [lmmonolt10-boldoblique]:!
@@ -1274,11 +1285,11 @@ Missing character: There is no └ (U+2514) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no └ (U+2514) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-[103] [104
+[107] [108
 
 ]
 Chapter 14.
-[105]
+[109]
 Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
@@ -1300,54 +1311,6 @@ Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-[106]
-Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-
-Overfull \hbox (93.33891pt too wide) in paragraph at lines 3359--3360
-[]\TU/lmr/m/n/10 Take a minute now to open the EnergyPlus IDF file (\TU/lmtt/m/
-n/10 "RefBldgMediumOfficeNew2004_Chicago.idf"\TU/lmr/m/n/10 ).
- []
-
-[107] [108] [109]
-Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
@@ -1356,6 +1319,54 @@ Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 [110]
+Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+
+Overfull \hbox (93.33891pt too wide) in paragraph at lines 3389--3390
+[]\TU/lmr/m/n/10 Take a minute now to open the EnergyPlus IDF file (\TU/lmtt/m/
+n/10 "RefBldgMediumOfficeNew2004_Chicago.idf"\TU/lmr/m/n/10 ).
+ []
+
+[111] [112] [113]
+Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+[114]
 Missing character: There is no └ (U+2514) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
@@ -1373,7 +1384,7 @@ Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-[111]
+[115]
 Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
@@ -1421,16 +1432,16 @@ Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 
-Underfull \vbox (badness 1540) detected at line 3631
+Underfull \vbox (badness 1540) detected at line 3661
  []
 
 
 Underfull \vbox (badness 1490) has occurred while \output is active []
 
-[112]
+[116]
 File: figures/idd_material.png Graphic file (type bmp)
 <figures/idd_material.png>
-[113] [114]
+[117] [118]
 Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
@@ -1458,74 +1469,74 @@ Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[115] [116]
+[119] [120]
 Chapter 15.
-[117
+[121
 
-] [118] [119] [120
+] [122] [123] [124
 
 ]
 Chapter 16.
-[121] [122
+[125] [126
 
-] [123] [124]
+] [127] [128]
 Chapter 17.
-[125
+[129
 
-] [126
+] [130
 
 ]
 Chapter 18.
-[127] [128
+[131] [132
 
 ]
 Chapter 19.
-[129] [130
+[133] [134
 
-] [131] [132]
+] [135] [136]
 Chapter 20.
-[133
+[137
 
-] [134
+] [138
 
 ]
 Chapter 21.
-[135] [136
+[139] [140
 
 ]
 Chapter 22.
-[137] [138
+[141] [142
 
 ]
 Chapter 23.
-[139] [140
+[143] [144
 
-] [141] [142]
+] [145] [146]
 Chapter 24.
-[143
+[147
 
-] [144
+] [148
 
 ]
 Chapter 25.
-[145] [146
+[149] [150
 
 ]
 Chapter 26.
-(./r4bes.bbl [147] [148
+(./r4bes.bbl [151] [152
 
-]) [149] (./r4bes.aux)
+]) [153] (./r4bes.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 18786 strings out of 476919
- 334428 string characters out of 5821840
- 828298 words of memory out of 5000000
- 38455 multiletter control sequences out of 15000+600000
+ 18804 strings out of 476919
+ 334907 string characters out of 5821840
+ 828330 words of memory out of 5000000
+ 38471 multiletter control sequences out of 15000+600000
  409937 words of font info for 87 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 98i,6n,122p,1185b,506s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 98i,6n,122p,1185b,508s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on r4bes.pdf (149 pages).
+Output written on r4bes.pdf (153 pages).

@@ -1,4 +1,4 @@
-Program Version,EnergyPlus, Version 9.4.0-998c4b761e, YMD=2021.08.21 15:23,
+Program Version,EnergyPlus, Version 9.4.0-998c4b761e, YMD=2021.08.23 22:06,
    ************* Beginning Zone Sizing Calculations
    ************* Beginning System Sizing Calculations
    ************* Beginning Plant Sizing Calculations
@@ -48,4 +48,4 @@ Program Version,EnergyPlus, Version 9.4.0-998c4b761e, YMD=2021.08.21 15:23,
    *************
    ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 0 Severe Errors.
    ************* EnergyPlus Sizing Error Summary. During Sizing: 0 Warning; 0 Severe Errors.
-   ************* EnergyPlus Completed Successfully-- 7 Warning; 0 Severe Errors; Elapsed Time=00hr 00min 27.29sec
+   ************* EnergyPlus Completed Successfully-- 7 Warning; 0 Severe Errors; Elapsed Time=00hr 00min 25.06sec
