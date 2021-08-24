@@ -81,13 +81,13 @@
 <span class="header-section-number">15.1</span> Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites-12"><i class="fas fa-link"></i></a>
 </h2>
 <p>In this chapter we will focus on how to set and get EnergyPlus simulation outputs using the eplusr package. We will illustrate the manipulation of simulation data using tidyverse, and use ggplot2 to visualize the simulation data</p>
-<div class="sourceCode" id="cb161"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://hongyuanjia.github.io/eplusr/">eplusr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span></code></pre></div>
 <p>We will be working with the IDF and EPW file that pertains to the U.S. Department of Energy (DOE) Commercial Reference Building and Chicago’s TMY3 respectively.</p>
-<div class="sourceCode" id="cb162"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb170"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">path_idf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"idf"</span>, <span class="st">"RefBldgMediumOfficeNew2004_Chicago.idf"</span><span class="op">)</span>
 <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://hongyuanjia.github.io/eplusr/reference/read_idf.html">read_idf</a></span><span class="op">(</span><span class="va">path_idf</span><span class="op">)</span>
 
@@ -99,12 +99,12 @@
 <span class="header-section-number">15.2</span> Meters<a class="anchor" aria-label="anchor" href="#meters"><i class="fas fa-link"></i></a>
 </h2>
 <p>EnergyPlus allows you to specify meters to retrieve the simulation outputs. However, to know what meters are available (for output) in your model, you must first run the simulation. You can then retrieve the list of available meters with the function <code><a href="https://hongyuanjia.github.io/eplusr/reference/rdd.html">read_mdd()</a></code>, which returns a five column <code>data.table</code>.</p>
-<div class="sourceCode" id="cb163"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb171"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mdd</span> <span class="op">&lt;-</span> <span class="va">job</span><span class="op">$</span><span class="fu">read_mdd</span><span class="op">(</span><span class="op">)</span>
 <span class="va">mdd</span>
 <span class="co">## ══ EnergyPlus Meter Data Dictionary File ═══════════════════════════════════════</span>
 <span class="co">##   * EnergyPlus version: 9.4.0 (998c4b761e)</span>
-<span class="co">##   * Simulation started: 2021-08-23 22:06:00</span>
+<span class="co">##   * Simulation started: 2021-08-25 00:12:00</span>
 <span class="co">## </span>
 <span class="co">## ── Details ─────────────────────────────────────────────────────────────────────</span>
 <span class="co">##      index reported_time_step report_type</span>
@@ -119,7 +119,7 @@
 <h2>
 <span class="header-section-number">15.3</span> Variables<a class="anchor" aria-label="anchor" href="#variables"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb164"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">preprocess_idf</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">idf</span>, <span class="va">meters</span>, <span class="va">variables</span><span class="op">)</span> <span class="op">{</span>
     <span class="co"># make sure weather file input is respected</span>
     <span class="va">idf</span><span class="op">$</span><span class="va">SimulationControl</span><span class="op">$</span><span class="va">Run_Simulation_for_Weather_File_Run_Periods</span> <span class="op">&lt;-</span> <span class="st">"Yes"</span>
@@ -154,7 +154,7 @@
     <span class="co"># make sure the modified model is returned</span>
     <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">idf</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
-<div class="sourceCode" id="cb165"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb173"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">meters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
     key_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
         <span class="st">"Cooling:Electricity"</span>,
@@ -211,7 +211,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-08-23.</p>
+    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-08-25.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

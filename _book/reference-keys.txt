@@ -61,7 +61,9 @@ prerequisites-9
 colors
 ggplot
 functions-and-components
-a-simple-example
+visualize-end-use
+visualize-weather-data
+saving-plots
 input-output
 input
 prerequisites-10

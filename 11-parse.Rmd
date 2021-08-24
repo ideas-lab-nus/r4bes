@@ -74,11 +74,10 @@ job <- model$run(weather = epw,
 ```
 
 
-If you do not want to save the simulation results locally, you can first save the model to a temporary directory using the function `tempdir()` before running the simulation.
+If you do not want to save the simulation results locally, you can save the simulation output files to a temporary directory by specifying `dir = tempdir()`.
 
 ```{r}
-model$save(file.path(tempdir(), "model.idf"))
-job <- model$run(epw)
+job <- model$run(epw, dir = tempdir())
 ```
 
 

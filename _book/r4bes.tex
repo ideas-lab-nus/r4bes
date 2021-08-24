@@ -117,7 +117,7 @@
 
 \title{R for Building Energy Simulation}
 \author{Adrian Chong}
-\date{2021-08-23}
+\date{2021-08-25}
 
 \begin{document}
 \maketitle
@@ -2448,14 +2448,13 @@ You can use the \texttt{run()} method of the Idf class to run the simulation usi
 \end{Highlighting}
 \end{Shaded}
 
-If you do not want to save the simulation results locally, you can first save the model to a temporary directory using the function \texttt{tempdir()} before running the simulation.
+If you do not want to save the simulation results locally, you can save the simulation output files to a temporary directory by specifying \texttt{dir\ =\ tempdir()}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{model}\SpecialCharTok{$}\FunctionTok{save}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(}\FunctionTok{tempdir}\NormalTok{(), }\StringTok{"model.idf"}\NormalTok{))}
-\NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(epw)}
+\NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.08.23 22:02}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.08.25 00:08}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2506,8 +2505,9 @@ To output the summary reports from EnergyPlus, you need to first run the simulat
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
+\DocumentationTok{\#\# Replace the existing IDF located at /private/var/folders/6l/8dz74knn0yd02c\_bt8fl1pk80000gn/T/RtmpD3uJVZ/RefBldgMediumOfficeNew2004\_Chicago.idf.}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.08.23 22:02}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.08.25 00:08}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2659,6 +2659,7 @@ Additionally, we will introduce \textbf{ggplot2}, an input-tidy visualization pa
 \FunctionTok{library}\NormalTok{(tidyverse)}
 \FunctionTok{library}\NormalTok{(here)}
 \FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(lubridate)}
 \FunctionTok{library}\NormalTok{(RColorBrewer)}
 \FunctionTok{library}\NormalTok{(viridis)}
 \end{Highlighting}
@@ -2674,9 +2675,9 @@ In this chapter, you will also be working with the U.S. Department of Energy (DO
 \NormalTok{path\_epw }\OtherTok{\textless{}{-}} \FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"epw"}\NormalTok{, }\StringTok{"USA\_IL\_Chicago{-}OHare.Intl.AP.725300\_TMY3.epw"}\NormalTok{)}
 \NormalTok{epw }\OtherTok{\textless{}{-}} \FunctionTok{read\_epw}\NormalTok{(path\_epw)}
 
-\NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(}\AttributeTok{weather =}\NormalTok{ epw)}
+\NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(}\AttributeTok{weather =}\NormalTok{ epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.08.23 22:03}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.08.25 00:09}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2716,7 +2717,7 @@ When representing gradients (such as temperature data), you want to use \emph{se
 
 \includegraphics{r4bes_files/figure-latex/unnamed-chunk-114-1.pdf}
 
-You will want to use \emph{diverging} color palletes that uses a neutral mid-point that diverges at perceptually equal steps to both ends of the data. An example is using the \texttt{RdBu} color pallette to represent temperature data that diverges between cold and hot.
+You will want to use \emph{diverging} color palettes that uses a neutral mid-point that diverges at perceptually equal steps to both ends of the data. An example is using the \texttt{RdBu} color pallette to represent temperature data that diverges between cold and hot.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2735,6 +2736,25 @@ You will want to map categorical variables to \emph{qualitative} color palettes 
 \end{Shaded}
 
 \includegraphics{r4bes_files/figure-latex/unnamed-chunk-116-1.pdf}
+
+You can use the function \texttt{display.brewer.pal()} to visualize a single brewer palette and use the \texttt{brewer.pal()} function to obtain the hexadecimade color code of the palette.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# display the 5 colors from the "Set2" color palette}
+\FunctionTok{display.brewer.pal}\NormalTok{(}\DecValTok{5}\NormalTok{, }\StringTok{"Set2"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.5\linewidth,height=0.3\textheight]{figures/brewer_set2} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# return the hexadecimal code for 5 olors of the "Set2" palette}
+\FunctionTok{brewer.pal}\NormalTok{(}\DecValTok{5}\NormalTok{, }\StringTok{"Set2"}\NormalTok{)}
+\DocumentationTok{\#\# [1] "\#66C2A5" "\#FC8D62" "\#8DA0CB" "\#E78AC3" "\#A6D854"}
+\end{Highlighting}
+\end{Shaded}
 
 Visualizing building related data such as electricity consumption often involves mapping continuous data onto the color or fill of the graphic you want to create. Although the brewer palettes can be extended to continuous data through interpololation, I have found the color scales in the viridis package to be more robust because they are designed to be perceptually uniform while maintaining a large range. The viridis package contains eight different color scales with the viridis scale forming the default or primary color map.
 
@@ -2783,8 +2803,8 @@ You can then specify the graph by adding one or more of the following components
 
 You will see the use of \texttt{ggplot()} and the above mentioned components more concretely as we go through the visualization recipes in the subsequent sections.
 
-\hypertarget{a-simple-example}{%
-\subsection{A simple example}\label{a-simple-example}}
+\hypertarget{visualize-end-use}{%
+\subsection{Visualize end use}\label{visualize-end-use}}
 
 Bar graphs are a common way to visualize building simulation end use data. In this section, we will illustrate the use of ggplot and its various components using using the \texttt{report\_end\_use} data frame that was created in the preceding section.
 
@@ -2814,7 +2834,7 @@ You can create bar graphs by adding \texttt{geom\_bar()}. By default, \texttt{st
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-120-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-122-1.pdf}
 
 By default, the bar charts would be stacked. In this scenario, we only have two groups of fuel, electricity and natural gas. However, when there are many groups, stacked bar charts can be difficult to visualize. You can place them side by side instead using \texttt{position\ =\ position\_dodge()}.
 
@@ -2825,7 +2845,7 @@ By default, the bar charts would be stacked. In this scenario, we only have two 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-121-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-123-1.pdf}
 
 You can use scale to change the fill and colors of the bar chart. The \texttt{scale\_*\_brewer()} and \texttt{scale\_*\_viridis()} functions provides an easy way to specify palettes from the RColorBrewer and the viridis package respectively. Particularly, \texttt{scale\_fill\_brewer()} and \texttt{scale\_fill\_viridis()} provides mapping to ggplot's fill aesthetics while \texttt{scale\_color\_brewer()} and \texttt{scale\_color\_viridis()} provides mapping to ggplot's color aesthetics.
 
@@ -2838,7 +2858,7 @@ You can use scale to change the fill and colors of the bar chart. The \texttt{sc
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-122-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-124-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2850,7 +2870,7 @@ You can use scale to change the fill and colors of the bar chart. The \texttt{sc
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-123-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-125-1.pdf}
 
 You can flip how the data coordinates maps to plot to get horizontal bar plots with \texttt{coord\_filp()}.
 
@@ -2863,7 +2883,7 @@ You can flip how the data coordinates maps to plot to get horizontal bar plots w
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-124-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-126-1.pdf}
 
 You can divide the plot into various \emph{facet}s by subsetting the plot based one or more discrete variables. In this example, we divide the plot row wise based on fuel type using \texttt{facet\_grid()}.
 
@@ -2876,7 +2896,7 @@ You can divide the plot into various \emph{facet}s by subsetting the plot based 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-125-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-127-1.pdf}
 
 As you probably have noticed. The x-axis labels are not legible due to overlapping when plotting the data as vertical bar charts.
 
@@ -2891,7 +2911,7 @@ You can use \texttt{theme()} and \texttt{element\_text()} to change how the x-ax
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-126-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-128-1.pdf}
 
 You can also use \texttt{theme()} together with various \texttt{element\_*} functions to control elements of the plot title, legend, axis labels, borders, background, etc. You can find out more about the possible arguments to each \texttt{element\_function()} by typing \texttt{?margin} into your console. \texttt{element\_*} functions are used with \texttt{theme()} to specify the non-data components of the plot. There are four element functions and they are:
 
@@ -2925,14 +2945,115 @@ You can also use \texttt{theme()} together with various \texttt{element\_*} func
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-127-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-129-1.pdf}
+
+\hypertarget{visualize-weather-data}{%
+\subsection{Visualize weather data}\label{visualize-weather-data}}
+
+Weather is a critical input to building energy simulation because it form the boundary conditions of the simulation. Weather for an EnergyPlus simulation comes in an \textbf{E}nergy\textbf{P}lus \textbf{W}eather (EPW) format and often contains 8760 hours (or 8784 hours for a leap year) of weather data. Therefore, being able to visualize weather data is an important component when exploring building energy simulation data.
+
+Here, we demonstrate three useful graphics for visualizing weather data using outdoor dry bulb temperature as an example.
+
+Before creating the graphics using ggplot, we need to first extract the weather data, which we can easily carry out using the \texttt{\$data()} method since we have earlier parsed the EPW file into RStudio as an \texttt{Epw} object.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{class}\NormalTok{(epw}\SpecialCharTok{$}\FunctionTok{data}\NormalTok{())}
+\DocumentationTok{\#\# [1] "data.table" "data.frame"}
+\FunctionTok{head}\NormalTok{(epw}\SpecialCharTok{$}\FunctionTok{data}\NormalTok{())}
+\DocumentationTok{\#\#               datetime year month day hour minute}
+\DocumentationTok{\#\# 1: 2017{-}01{-}01 01:00:00 1986     1   1    1      0}
+\DocumentationTok{\#\# 2: 2017{-}01{-}01 02:00:00 1986     1   1    2      0}
+\DocumentationTok{\#\# 3: 2017{-}01{-}01 03:00:00 1986     1   1    3      0}
+\DocumentationTok{\#\# 4: 2017{-}01{-}01 04:00:00 1986     1   1    4      0}
+\DocumentationTok{\#\# 5: 2017{-}01{-}01 05:00:00 1986     1   1    5      0}
+\DocumentationTok{\#\# 6: 2017{-}01{-}01 06:00:00 1986     1   1    6      0}
+\DocumentationTok{\#\#                                           data\_source dry\_bulb\_temperature}
+\DocumentationTok{\#\# 1: ?9?9?9?9E0?9?9?9?9?9?9?9?9?9?9?9?9?9?9*\_*9*9*9*9*9                {-}12.2}
+\DocumentationTok{\#\# 2: ?9?9?9?9E0?9?9?9?9?9?9?9?9?9?9?9?9?9?9*\_*9*9*9*9*9                {-}11.7}
+\NormalTok{....}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{weather\_data }\OtherTok{\textless{}{-}}\NormalTok{ epw}\SpecialCharTok{$}\FunctionTok{data}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{select}\NormalTok{(datetime, dry\_bulb\_temperature) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{month =} \FunctionTok{month}\NormalTok{(datetime, }\AttributeTok{label =} \ConstantTok{TRUE}\NormalTok{),}
+           \AttributeTok{day =} \FunctionTok{day}\NormalTok{(datetime),}
+           \AttributeTok{wday =} \FunctionTok{wday}\NormalTok{(datetime, }\AttributeTok{label =} \ConstantTok{TRUE}\NormalTok{),}
+           \AttributeTok{hour =} \FunctionTok{hour}\NormalTok{(datetime))}
+\end{Highlighting}
+\end{Shaded}
+
+In the subsequent graphics, we will be using various colors from the \texttt{Reds} color palette from RColorBrewer.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# return the hexadecimal code for 5 olors of the "Set2" palette}
+\FunctionTok{brewer.pal}\NormalTok{(}\DecValTok{8}\NormalTok{, }\StringTok{"Reds"}\NormalTok{)}
+\DocumentationTok{\#\# [1] "\#FFF5F0" "\#FEE0D2" "\#FCBBA1" "\#FC9272" "\#FB6A4A" "\#EF3B2C" "\#CB181D"}
+\DocumentationTok{\#\# [8] "\#99000D"}
+\FunctionTok{display.brewer.pal}\NormalTok{(}\DecValTok{8}\NormalTok{, }\StringTok{"Reds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-132-1.pdf}
+
+You can visualize the weather data (dry bulb temperature in this example) as a single time series plot. Here, \texttt{geom\_line()} is used to connect the observations sequentially over time. \texttt{expression()} is used to express the degree symbol in the y-axis label.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(weather\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ datetime, }\AttributeTok{y =}\NormalTok{ dry\_bulb\_temperature)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{color =} \StringTok{"\#FB6A4A"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{xlab}\NormalTok{(}\StringTok{"Time (Hours)"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{ylab}\NormalTok{(}\FunctionTok{expression}\NormalTok{(}\StringTok{"Dry bulb temperature "}\NormalTok{ ( degree}\SpecialCharTok{*}\NormalTok{C)))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-133-1.pdf}
+
+You can also visualize the data by the hour of the day using scatterplots. To avoid overplotting, a typical problem with scatterplots, you can subset the data by their month using \texttt{facet\_grid()}. To further aid the ability to visually identify patterns in the presence of overplotting, you can use \texttt{geom\_smooth()} to add a smoothed line on top of the scatterplot.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(weather\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{ hour, }\AttributeTok{y =}\NormalTok{ dry\_bulb\_temperature)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{color =} \StringTok{"\#FCBBA1"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{color =} \StringTok{"\#EF3B2C"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{facet\_grid}\NormalTok{(}\AttributeTok{cols =} \FunctionTok{vars}\NormalTok{(month)) }\SpecialCharTok{+}
+    \FunctionTok{xlab}\NormalTok{(}\StringTok{"Hour of the day"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{ylab}\NormalTok{(}\FunctionTok{expression}\NormalTok{(}\StringTok{"Dry bulb temperature "}\NormalTok{ ( degree}\SpecialCharTok{*}\NormalTok{C)))}
+\DocumentationTok{\#\# \textasciigrave{}geom\_smooth()\textasciigrave{} using method = \textquotesingle{}loess\textquotesingle{} and formula \textquotesingle{}y \textasciitilde{} x\textquotesingle{}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-134-1.pdf}
+
+Last but not least, you can create heatmaps using the function \texttt{geom\_tile()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(weather\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ hour, }\AttributeTok{y =}\NormalTok{ wday, }\AttributeTok{fill =}\NormalTok{ dry\_bulb\_temperature)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_tile}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{scale\_fill\_viridis}\NormalTok{(}\AttributeTok{name =} \FunctionTok{expression}\NormalTok{(degree}\SpecialCharTok{*}\NormalTok{C),}
+                       \AttributeTok{option =} \StringTok{"plasma"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{facet\_grid}\NormalTok{(}\AttributeTok{rows =} \FunctionTok{vars}\NormalTok{(month)) }\SpecialCharTok{+}
+    \FunctionTok{xlab}\NormalTok{(}\StringTok{"Hour of the day"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{ylab}\NormalTok{(}\StringTok{"Day of the week"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-135-1.pdf}
+
+\hypertarget{saving-plots}{%
+\subsection{Saving Plots}\label{saving-plots}}
 
 You can use the \texttt{ggsave()} function to save the plot. By default, it saves the last plot that was displayed. You can specify the size of the graphic using the units (``in'', ``cm'', ``mm'', or ``px''), width and height argument.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{ggsave}\NormalTok{(}\StringTok{"my\_plot.pdf"}\NormalTok{, }\AttributeTok{width =} \DecValTok{20}\NormalTok{, }\AttributeTok{height =} \DecValTok{16}\NormalTok{, }\AttributeTok{units =} \StringTok{"cm"}\NormalTok{)}
-\FunctionTok{ggsave}\NormalTok{(}\StringTok{"my\_plot.png"}\NormalTok{, }\AttributeTok{width =} \DecValTok{8}\NormalTok{, }\AttributeTok{height =} \DecValTok{6}\NormalTok{, }\AttributeTok{units =} \StringTok{"in"}\NormalTok{)}
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{"my\_plot.pdf"}\NormalTok{, }\AttributeTok{width =} \DecValTok{16}\NormalTok{, }\AttributeTok{height =} \DecValTok{24}\NormalTok{, }\AttributeTok{units =} \StringTok{"cm"}\NormalTok{)}
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{"my\_plot.png"}\NormalTok{, }\AttributeTok{width =} \DecValTok{6}\NormalTok{, }\AttributeTok{height =} \DecValTok{9}\NormalTok{, }\AttributeTok{units =} \StringTok{"in"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3802,7 +3923,7 @@ EnergyPlus allows you to specify meters to retrieve the simulation outputs. Howe
 \NormalTok{mdd}
 \DocumentationTok{\#\# == EnergyPlus Meter Data Dictionary File =======================================}
 \DocumentationTok{\#\#   * EnergyPlus version: 9.4.0 (998c4b761e)}
-\DocumentationTok{\#\#   * Simulation started: 2021{-}08{-}23 22:03:00}
+\DocumentationTok{\#\#   * Simulation started: 2021{-}08{-}25 00:09:00}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# {-}{-} Details {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 \DocumentationTok{\#\#      index reported\_time\_step report\_type}

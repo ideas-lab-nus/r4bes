@@ -13,6 +13,7 @@ library(eplusr)
 library(tidyverse)
 library(here)
 library(ggplot2)
+library(lubridate)
 library(RColorBrewer)
 library(viridis)
 ```
@@ -26,7 +27,7 @@ model <- read_idf(path_idf)
 path_epw <- here("data", "epw", "USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw")
 epw <- read_epw(path_epw)
 
-job <- model$run(weather = epw)
+job <- model$run(weather = epw, dir = tempdir())
 ```
 
 ## Colors
@@ -49,7 +50,7 @@ display.brewer.all(type="seq", colorblindFriendly=TRUE)
 ```
 
 
-You will want to use *diverging* color palletes that uses a neutral mid-point that diverges at perceptually equal steps to both ends of the data. An example is using the `RdBu` color pallette to represent temperature data that diverges between cold and hot. 
+You will want to use *diverging* color palettes that uses a neutral mid-point that diverges at perceptually equal steps to both ends of the data. An example is using the `RdBu` color pallette to represent temperature data that diverges between cold and hot. 
 
 ```{r, fig.height=4}
 display.brewer.all(type="div", colorblindFriendly=TRUE)
@@ -60,6 +61,23 @@ You will want to map categorical variables to *qualitative* color palettes that 
 
 ```{r, fig.height=3}
 display.brewer.all(type="qual", colorblindFriendly=TRUE) 
+```
+
+
+You can use the function `display.brewer.pal()` to visualize a single brewer palette and use the `brewer.pal()` function to obtain the hexadecimade color code of the palette. 
+
+```{r, eval=FALSE}
+# display the 5 colors from the "Set2" color palette
+display.brewer.pal(5, "Set2")
+```
+
+```{r brewer-set2, echo=FALSE, eval=TRUE, out.height = "30%", out.width = "50%", fig.align='center'}
+knitr::include_graphics("figures/brewer_set2.png")
+```
+
+```{r}
+# return the hexadecimal code for 5 olors of the "Set2" palette
+brewer.pal(5, "Set2")
 ```
 
 
@@ -100,7 +118,7 @@ ggplot(data = <DATA>, mapping = aes(<x, y, ...>)) +
 
 You will see the use of `ggplot()` and the above mentioned components more concretely as we go through the visualization recipes in the subsequent sections.
 
-### A simple example
+### Visualize end use
 
 Bar graphs are a common way to visualize building simulation end use data. In this section, we will illustrate the use of ggplot and its various components using using the `report_end_use` data frame that was created in the preceding section.
 
@@ -211,12 +229,82 @@ ggplot(data = report_end_use, aes(x = category, y = value, fill = fuel)) +
           )
 ```
 
+### Visualize weather data
+
+Weather is a critical input to building energy simulation because it form the boundary conditions of the simulation. Weather for an EnergyPlus simulation comes in an **E**nergy**P**lus **W**eather (EPW) format and often contains 8760 hours (or 8784 hours for a leap year) of weather data. Therefore, being able to visualize weather data is an important component when exploring building energy simulation data. 
+
+Here, we demonstrate three useful graphics for visualizing weather data using outdoor dry bulb temperature as an example.
+
+Before creating the graphics using ggplot, we need to first extract the weather data, which we can easily carry out using the `$data()` method since we have earlier parsed the EPW file into RStudio as an `Epw` object.
+
+```{r}
+class(epw$data())
+head(epw$data())
+```
+
+```{r}
+weather_data <- epw$data() %>%
+    select(datetime, dry_bulb_temperature) %>%
+    mutate(month = month(datetime, label = TRUE),
+           day = day(datetime),
+           wday = wday(datetime, label = TRUE),
+           hour = hour(datetime))
+```
+
+In the subsequent graphics, we will be using various colors from the `Reds` color palette from RColorBrewer.
+
+```{r}
+# return the hexadecimal code for 5 olors of the "Set2" palette
+brewer.pal(8, "Reds")
+display.brewer.pal(8, "Reds")
+```
+
+
+
+You can visualize the weather data (dry bulb temperature in this example) as a single time series plot. Here, `geom_line()` is used to connect the observations sequentially over time. `expression()` is used to express the degree symbol in the y-axis label. 
+
+```{r, fig.width = 10}
+ggplot(weather_data, aes(x = datetime, y = dry_bulb_temperature)) +
+    geom_line(color = "#FB6A4A") +
+    xlab("Time (Hours)") +
+    ylab(expression("Dry bulb temperature " ( degree*C)))
+    
+```
+
+
+You can also visualize the data by the hour of the day using scatterplots. To avoid overplotting, a typical problem with scatterplots, you can subset the data by their month using `facet_grid()`. To further aid the ability to visually identify patterns in the presence of overplotting, you can use `geom_smooth()` to add a smoothed line on top of the scatterplot. 
+
+
+```{r, fig.width = 10}
+ggplot(weather_data, aes(x= hour, y = dry_bulb_temperature)) +
+    geom_point(color = "#FCBBA1", alpha = 0.7, size = 0.5) +
+    geom_smooth(color = "#EF3B2C") +
+    facet_grid(cols = vars(month)) +
+    xlab("Hour of the day") +
+    ylab(expression("Dry bulb temperature " ( degree*C)))
+```
+
+Last but not least, you can create heatmaps using the function `geom_tile()`. 
+
+```{r, fig.height=10}
+ggplot(weather_data, aes(x = hour, y = wday, fill = dry_bulb_temperature)) +
+    geom_tile() +
+    scale_fill_viridis(name = expression(degree*C),
+                       option = "plasma") +
+    facet_grid(rows = vars(month)) +
+    xlab("Hour of the day") +
+    ylab("Day of the week") 
+
+```
+
+
+### Saving Plots
 
 You can use the `ggsave()` function to save the plot. By default, it saves the last plot that was displayed. You can specify the size of the graphic using the units ("in", "cm", "mm", or "px"), width and height argument. 
 
 ```{r, eval=FALSE}
-ggsave("my_plot.pdf", width = 20, height = 16, units = "cm")
-ggsave("my_plot.png", width = 8, height = 6, units = "in")
+ggsave("my_plot.pdf", width = 16, height = 24, units = "cm")
+ggsave("my_plot.png", width = 6, height = 9, units = "in")
 ```
 
 
