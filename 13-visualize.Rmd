@@ -5,17 +5,22 @@
 
 In this chapter, you will use the **eplusr** package to interface with EnergyPlus via R, the **tidyverse** package to manipulate the simulation results, and the **here** package to specify relative file paths. 
 
-Additionally, we will introduce **ggplot2**, an input-tidy visualization package that is based on the the grammar of graphics [@wilkinson_grammar_2012]. We will also introduce **RColorBrewer** package that contains predefined color palettes that make it easy to pick the right one when creating graphics in R. 
+Additionally, we will introduce **ggplot2**, an input-tidy visualization package that is based on the the grammar of graphics [@wilkinson_grammar_2012]. We will also introduce **RColorBrewer** and **viridis** package that contains predefined color palettes that make it easy to pick the right one when creating graphics in R. 
 
+
+```{r, message=FALSE}
+library(ggplot2)
+library(RColorBrewer)
+library(viridis)
+```
+
+We will also be working with the following R packages in this chapter. 
 
 ```{r, message=FALSE}
 library(eplusr)
 library(tidyverse)
 library(here)
-library(ggplot2)
 library(lubridate)
-library(RColorBrewer)
-library(viridis)
 ```
 
 In this chapter, you will also be working with the U.S. Department of Energy (DOE) Commercial Reference Building for medium office energy model [@deru_us_2011] and the third and latest typical meteorological (TMY3) weather data for Chicago. You will first parse the IDf and EPW to R and run the simulation to extract the simulation results.
@@ -66,14 +71,11 @@ display.brewer.all(type="qual", colorblindFriendly=TRUE)
 
 You can use the function `display.brewer.pal()` to visualize a single brewer palette and use the `brewer.pal()` function to obtain the hexadecimade color code of the palette. 
 
-```{r, eval=FALSE}
-# display the 5 colors from the "Set2" color palette
+```{r}
+# display 5 colors from the "Set2" color palette
 display.brewer.pal(5, "Set2")
 ```
 
-```{r brewer-set2, echo=FALSE, eval=TRUE, out.height = "30%", out.width = "50%", fig.align='center'}
-knitr::include_graphics("figures/brewer_set2.png")
-```
 
 ```{r}
 # return the hexadecimal code for 5 olors of the "Set2" palette
@@ -263,7 +265,7 @@ display.brewer.pal(8, "Reds")
 
 You can visualize the weather data (dry bulb temperature in this example) as a single time series plot. Here, `geom_line()` is used to connect the observations sequentially over time. `expression()` is used to express the degree symbol in the y-axis label. 
 
-```{r, fig.width = 10}
+```{r, fig.width = 16}
 ggplot(weather_data, aes(x = datetime, y = dry_bulb_temperature)) +
     geom_line(color = "#FB6A4A") +
     xlab("Time (Hours)") +
@@ -286,14 +288,14 @@ ggplot(weather_data, aes(x= hour, y = dry_bulb_temperature)) +
 
 Last but not least, you can create heatmaps using the function `geom_tile()`. 
 
-```{r, fig.height=10}
-ggplot(weather_data, aes(x = hour, y = wday, fill = dry_bulb_temperature)) +
+```{r, fig.width = 10}
+ggplot(weather_data, aes(x = day, y = hour, fill = dry_bulb_temperature)) +
     geom_tile() +
     scale_fill_viridis(name = expression(degree*C),
                        option = "plasma") +
-    facet_grid(rows = vars(month)) +
-    xlab("Hour of the day") +
-    ylab("Day of the week") 
+    facet_grid(cols = vars(month)) +
+    ylab("Hour of the day") +
+    xlab("Day of the week") 
 
 ```
 

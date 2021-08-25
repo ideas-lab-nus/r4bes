@@ -2454,7 +2454,7 @@ If you do not want to save the simulation results locally, you can save the simu
 \begin{Highlighting}[]
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.08.25 00:08}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.08.25 08:16}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2505,9 +2505,9 @@ To output the summary reports from EnergyPlus, you need to first run the simulat
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
-\DocumentationTok{\#\# Replace the existing IDF located at /private/var/folders/6l/8dz74knn0yd02c\_bt8fl1pk80000gn/T/RtmpD3uJVZ/RefBldgMediumOfficeNew2004\_Chicago.idf.}
+\DocumentationTok{\#\# Replace the existing IDF located at /private/var/folders/6l/8dz74knn0yd02c\_bt8fl1pk80000gn/T/RtmpFV4gx9/RefBldgMediumOfficeNew2004\_Chicago.idf.}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.08.25 00:08}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.08.25 08:17}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2651,17 +2651,24 @@ You can refer to the section \emph{``Output:Table:SummaryReports''} in EnergyPlu
 
 In this chapter, you will use the \textbf{eplusr} package to interface with EnergyPlus via R, the \textbf{tidyverse} package to manipulate the simulation results, and the \textbf{here} package to specify relative file paths.
 
-Additionally, we will introduce \textbf{ggplot2}, an input-tidy visualization package that is based on the the grammar of graphics \citep{wilkinson_grammar_2012}. We will also introduce \textbf{RColorBrewer} package that contains predefined color palettes that make it easy to pick the right one when creating graphics in R.
+Additionally, we will introduce \textbf{ggplot2}, an input-tidy visualization package that is based on the the grammar of graphics \citep{wilkinson_grammar_2012}. We will also introduce \textbf{RColorBrewer} and \textbf{viridis} package that contains predefined color palettes that make it easy to pick the right one when creating graphics in R.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(RColorBrewer)}
+\FunctionTok{library}\NormalTok{(viridis)}
+\end{Highlighting}
+\end{Shaded}
+
+We will also be working with the following R packages in this chapter.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(eplusr)}
 \FunctionTok{library}\NormalTok{(tidyverse)}
 \FunctionTok{library}\NormalTok{(here)}
-\FunctionTok{library}\NormalTok{(ggplot2)}
 \FunctionTok{library}\NormalTok{(lubridate)}
-\FunctionTok{library}\NormalTok{(RColorBrewer)}
-\FunctionTok{library}\NormalTok{(viridis)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2677,7 +2684,7 @@ In this chapter, you will also be working with the U.S. Department of Energy (DO
 
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(}\AttributeTok{weather =}\NormalTok{ epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.08.25 00:09}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.08.25 08:17}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2705,7 +2712,7 @@ The RColorBrewer package provide three types of color palettes: sequential, dive
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-113-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-114-1.pdf}
 
 When representing gradients (such as temperature data), you want to use \emph{sequential} color palletes that are perceptually uniform as the color progresses from low to high.
 
@@ -2715,7 +2722,7 @@ When representing gradients (such as temperature data), you want to use \emph{se
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-114-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-115-1.pdf}
 
 You will want to use \emph{diverging} color palettes that uses a neutral mid-point that diverges at perceptually equal steps to both ends of the data. An example is using the \texttt{RdBu} color pallette to represent temperature data that diverges between cold and hot.
 
@@ -2725,7 +2732,7 @@ You will want to use \emph{diverging} color palettes that uses a neutral mid-poi
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-115-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-116-1.pdf}
 
 You will want to map categorical variables to \emph{qualitative} color palettes that are perceptually uniform and not have any variables standing out perceptually due to it's color. For instance, when visualizing the energy usage intensity of different buildings, you would want the colors used to represent each building to be easily distinguishable but at the same time not have one stand out from another even though they are numerically equivalent.
 
@@ -2735,18 +2742,18 @@ You will want to map categorical variables to \emph{qualitative} color palettes 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-116-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-117-1.pdf}
 
 You can use the function \texttt{display.brewer.pal()} to visualize a single brewer palette and use the \texttt{brewer.pal()} function to obtain the hexadecimade color code of the palette.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# display the 5 colors from the "Set2" color palette}
+\CommentTok{\# display 5 colors from the "Set2" color palette}
 \FunctionTok{display.brewer.pal}\NormalTok{(}\DecValTok{5}\NormalTok{, }\StringTok{"Set2"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.5\linewidth,height=0.3\textheight]{figures/brewer_set2} \end{center}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-118-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2834,7 +2841,7 @@ You can create bar graphs by adding \texttt{geom\_bar()}. By default, \texttt{st
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-122-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-123-1.pdf}
 
 By default, the bar charts would be stacked. In this scenario, we only have two groups of fuel, electricity and natural gas. However, when there are many groups, stacked bar charts can be difficult to visualize. You can place them side by side instead using \texttt{position\ =\ position\_dodge()}.
 
@@ -2845,7 +2852,7 @@ By default, the bar charts would be stacked. In this scenario, we only have two 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-123-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-124-1.pdf}
 
 You can use scale to change the fill and colors of the bar chart. The \texttt{scale\_*\_brewer()} and \texttt{scale\_*\_viridis()} functions provides an easy way to specify palettes from the RColorBrewer and the viridis package respectively. Particularly, \texttt{scale\_fill\_brewer()} and \texttt{scale\_fill\_viridis()} provides mapping to ggplot's fill aesthetics while \texttt{scale\_color\_brewer()} and \texttt{scale\_color\_viridis()} provides mapping to ggplot's color aesthetics.
 
@@ -2858,7 +2865,7 @@ You can use scale to change the fill and colors of the bar chart. The \texttt{sc
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-124-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-125-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2870,7 +2877,7 @@ You can use scale to change the fill and colors of the bar chart. The \texttt{sc
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-125-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-126-1.pdf}
 
 You can flip how the data coordinates maps to plot to get horizontal bar plots with \texttt{coord\_filp()}.
 
@@ -2883,7 +2890,7 @@ You can flip how the data coordinates maps to plot to get horizontal bar plots w
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-126-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-127-1.pdf}
 
 You can divide the plot into various \emph{facet}s by subsetting the plot based one or more discrete variables. In this example, we divide the plot row wise based on fuel type using \texttt{facet\_grid()}.
 
@@ -2896,7 +2903,7 @@ You can divide the plot into various \emph{facet}s by subsetting the plot based 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-127-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-128-1.pdf}
 
 As you probably have noticed. The x-axis labels are not legible due to overlapping when plotting the data as vertical bar charts.
 
@@ -2911,7 +2918,7 @@ You can use \texttt{theme()} and \texttt{element\_text()} to change how the x-ax
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-128-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-129-1.pdf}
 
 You can also use \texttt{theme()} together with various \texttt{element\_*} functions to control elements of the plot title, legend, axis labels, borders, background, etc. You can find out more about the possible arguments to each \texttt{element\_function()} by typing \texttt{?margin} into your console. \texttt{element\_*} functions are used with \texttt{theme()} to specify the non-data components of the plot. There are four element functions and they are:
 
@@ -2945,7 +2952,7 @@ You can also use \texttt{theme()} together with various \texttt{element\_*} func
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-129-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-130-1.pdf}
 
 \hypertarget{visualize-weather-data}{%
 \subsection{Visualize weather data}\label{visualize-weather-data}}
@@ -2998,7 +3005,7 @@ In the subsequent graphics, we will be using various colors from the \texttt{Red
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-132-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-133-1.pdf}
 
 You can visualize the weather data (dry bulb temperature in this example) as a single time series plot. Here, \texttt{geom\_line()} is used to connect the observations sequentially over time. \texttt{expression()} is used to express the degree symbol in the y-axis label.
 
@@ -3011,7 +3018,7 @@ You can visualize the weather data (dry bulb temperature in this example) as a s
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-133-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-134-1.pdf}
 
 You can also visualize the data by the hour of the day using scatterplots. To avoid overplotting, a typical problem with scatterplots, you can subset the data by their month using \texttt{facet\_grid()}. To further aid the ability to visually identify patterns in the presence of overplotting, you can use \texttt{geom\_smooth()} to add a smoothed line on top of the scatterplot.
 
@@ -3027,23 +3034,23 @@ You can also visualize the data by the hour of the day using scatterplots. To av
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-134-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-135-1.pdf}
 
 Last but not least, you can create heatmaps using the function \texttt{geom\_tile()}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{ggplot}\NormalTok{(weather\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ hour, }\AttributeTok{y =}\NormalTok{ wday, }\AttributeTok{fill =}\NormalTok{ dry\_bulb\_temperature)) }\SpecialCharTok{+}
+\FunctionTok{ggplot}\NormalTok{(weather\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ day, }\AttributeTok{y =}\NormalTok{ hour, }\AttributeTok{fill =}\NormalTok{ dry\_bulb\_temperature)) }\SpecialCharTok{+}
     \FunctionTok{geom\_tile}\NormalTok{() }\SpecialCharTok{+}
     \FunctionTok{scale\_fill\_viridis}\NormalTok{(}\AttributeTok{name =} \FunctionTok{expression}\NormalTok{(degree}\SpecialCharTok{*}\NormalTok{C),}
                        \AttributeTok{option =} \StringTok{"plasma"}\NormalTok{) }\SpecialCharTok{+}
-    \FunctionTok{facet\_grid}\NormalTok{(}\AttributeTok{rows =} \FunctionTok{vars}\NormalTok{(month)) }\SpecialCharTok{+}
-    \FunctionTok{xlab}\NormalTok{(}\StringTok{"Hour of the day"}\NormalTok{) }\SpecialCharTok{+}
-    \FunctionTok{ylab}\NormalTok{(}\StringTok{"Day of the week"}\NormalTok{) }
+    \FunctionTok{facet\_grid}\NormalTok{(}\AttributeTok{cols =} \FunctionTok{vars}\NormalTok{(month)) }\SpecialCharTok{+}
+    \FunctionTok{ylab}\NormalTok{(}\StringTok{"Hour of the day"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{xlab}\NormalTok{(}\StringTok{"Day of the week"}\NormalTok{) }
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-135-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-136-1.pdf}
 
 \hypertarget{saving-plots}{%
 \subsection{Saving Plots}\label{saving-plots}}
@@ -3923,7 +3930,7 @@ EnergyPlus allows you to specify meters to retrieve the simulation outputs. Howe
 \NormalTok{mdd}
 \DocumentationTok{\#\# == EnergyPlus Meter Data Dictionary File =======================================}
 \DocumentationTok{\#\#   * EnergyPlus version: 9.4.0 (998c4b761e)}
-\DocumentationTok{\#\#   * Simulation started: 2021{-}08{-}25 00:09:00}
+\DocumentationTok{\#\#   * Simulation started: 2021{-}08{-}25 08:17:00}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# {-}{-} Details {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 \DocumentationTok{\#\#      index reported\_time\_step report\_type}

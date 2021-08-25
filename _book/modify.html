@@ -82,12 +82,12 @@
 <span class="header-section-number">14.1</span> Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites-11"><i class="fas fa-link"></i></a>
 </h2>
 <p>In this chapter, we will use the <strong>eplusr</strong> package to query and modify various inputs in an EnergyPlus model. We will also combine what you have learned about data manipulation (with the <strong>tidyverse</strong> package) to make it easier to work with the simulation inputs.</p>
-<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://hongyuanjia.github.io/eplusr/">eplusr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span></code></pre></div>
 <p>We will be working with the IDF and EPW file that pertains to the U.S. Department of Energy (DOE) Commercial Reference Building and Chicago’s TMY3 respectively.</p>
-<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">path_idf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"idf"</span>, <span class="st">"RefBldgMediumOfficeNew2004_Chicago.idf"</span><span class="op">)</span>
 <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://hongyuanjia.github.io/eplusr/reference/read_idf.html">read_idf</a></span><span class="op">(</span><span class="va">path_idf</span><span class="op">)</span>
 
@@ -108,7 +108,7 @@
 <span class="header-section-number">14.2.1</span> Single object<a class="anchor" aria-label="anchor" href="#single-object"><i class="fas fa-link"></i></a>
 </h3>
 <p>Like how you can access the field values of the model using the <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> operator, you can likewise modify them simply by accessing and then replace the current value by assigning a different value. For instance, you can change the <code>Thermal Resistance</code> field value of the <code>CP02 CARPET PAD</code> object to <code>0.5</code> using the <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code> operator to assign <code>0.5</code> to the field <code>Thermal Resistance</code>.</p>
-<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="va">`Material:NoMass`</span><span class="op">$</span><span class="va">`CP02 CARPET PAD`</span><span class="op">$</span><span class="va">`Thermal Resistance`</span> <span class="op">&lt;-</span> <span class="fl">0.5</span>
 <span class="va">model</span><span class="op">$</span><span class="va">`Material:NoMass`</span><span class="op">$</span><span class="va">`CP02 CARPET PAD`</span>
 <span class="co">## &lt;IdfObject: 'Material:NoMass'&gt; [ID:56] `CP02 CARPET PAD`</span>
@@ -121,7 +121,7 @@
 <span class="co">## └─ 6 : 0.8;               !- Visible Absorptance</span></code></pre></div>
 <p>Another example showing how you can modify the lighting power density (field name: <code>Watts_per_Zone_Floor_Area</code>) of a particular zone (object name: Perimeter_bot_ZN_1_Lights) from <code>10.76</code> (current value) to <code>15</code> (new value).</p>
 <p>Existing field values of the object <code>Perimeter_bot_ZN_1_Lights</code>, an instance of the <code>Lights</code> class.</p>
-<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="va">Lights</span><span class="op">$</span><span class="va">Perimeter_bot_ZN_1_Lights</span>
 <span class="co">## &lt;IdfObject: 'Lights'&gt; [ID:240] `Perimeter_bot_ZN_1_Lights`</span>
 <span class="co">## Class: &lt;Lights&gt;</span>
@@ -135,7 +135,7 @@
 <span class="co">## │─ 08 : 0.4,                !- Return Air Fraction</span>
 <span class="va">....</span></code></pre></div>
 <p>Changing the value of the field <code>Watts_per_Zone_Floor_Area</code> from it’s existing value of <code>10.76</code> to <code>15</code>.</p>
-<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="va">Lights</span><span class="op">$</span><span class="va">Perimeter_bot_ZN_1_Lights</span><span class="op">$</span><span class="va">Watts_per_Zone_Floor_Area</span> <span class="op">&lt;-</span> <span class="fl">15</span>
 <span class="va">model</span><span class="op">$</span><span class="va">Lights</span><span class="op">$</span><span class="va">Perimeter_bot_ZN_1_Lights</span>
 <span class="co">## &lt;IdfObject: 'Lights'&gt; [ID:240] `Perimeter_bot_ZN_1_Lights`</span>
@@ -182,7 +182,7 @@
 <li>value (character): The value of the field.</li>
 </ul>
 <p>Take a minute now to open the EnergyPlus IDF file (<code>"RefBldgMediumOfficeNew2004_Chicago.idf"</code>). Compare the text file with the data frame below, and identify where the values for the columns <code>class</code>, <code>name</code>, and <code>field</code> would correspond to in the IDF text file. You will also notice that some of the EnergyPlus classes such as <code>Version</code> and <code>SimulationControl</code> do not have a <code>name</code> field, which explains why it is stored as <code>NA</code> in the data frame.</p>
-<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="fu">to_table</span><span class="op">(</span><span class="op">)</span>
 <span class="co">##        id name             class index</span>
 <span class="co">##    1:   1 &lt;NA&gt;           Version     1</span>
@@ -199,7 +199,7 @@
 <li>Subset by Class</li>
 </ul>
 <p>Working with the entire model can be difficult due to the large number of rows. You can extract all the objects belonging to a class by supplying a character vector of class names that are of interest to the argument <code>class</code>.</p>
-<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="fu">to_table</span><span class="op">(</span>class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Construction"</span>, <span class="st">"Lights"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##       id                         name        class index</span>
 <span class="co">##   1:  37 Steel Frame Non-res Ext Wall Construction     1</span>
@@ -213,7 +213,7 @@
 <span class="co">## 219: 251    Perimeter_top_ZN_4_Lights       Lights    11</span>
 <span class="va">....</span></code></pre></div>
 <p>You can also extract particular objects from different classes by supplying a character vector of object names to the argument <code>which</code>.</p>
-<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="fu">to_table</span><span class="op">(</span>which <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Wood Siding"</span>, 
                          <span class="st">"Steel Frame NonRes Wall Insulation"</span>, 
                          <span class="st">"1/2IN Gypsum"</span><span class="op">)</span><span class="op">)</span>
@@ -243,7 +243,7 @@
 <span class="va">....</span></code></pre></div>
 <p>Once the EnergyPlus objects are in a <code>data.frame</code> format, you can take advantage of the <code>tidyverse</code> library to easily manipulate and modify their values. For example, you can use the <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> function to subset the data frame to retain rows of interest and the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a></code> function to modify values within columns.</p>
 <p>In the example below, we first extract all objects in the <code>Lights</code> class from the EnergyPlus model. We then filter the data frame to contain only the field <code>"Watts per Zone Floor Area"</code>, which is used to specify the lighting power density in <span class="math inline">\(W/m^2\)</span> in EnergyPlus. Lastly, we change the lighting power density of all the objects in the <code>Lights</code> class from <span class="math inline">\(10.76 W/m^2\)</span> to <span class="math inline">\(15 W/m^2\)</span>.</p>
-<div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb160"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lights_df</span> <span class="op">&lt;-</span> <span class="va">model</span><span class="op">$</span><span class="fu">to_table</span><span class="op">(</span>class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Lights"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>value <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">field</span> <span class="op">==</span> <span class="st">"Watts per Zone Floor Area"</span>, <span class="co"># condition</span>
                          <span class="st">"15"</span>, <span class="co"># value if TRUE</span>
@@ -264,7 +264,7 @@
 <span class="co">## 193: 251 Perimeter_top_ZN_4_Lights Lights    11</span>
 <span class="va">....</span></code></pre></div>
 <p>However, notice that you are not modifying the model just by changing the values of the data frame. This is not surprising since the extracted data frame is a copy of the model and not the model itself.</p>
-<div class="sourceCode" id="cb160"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb161"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="va">`Lights`</span>
 <span class="co">## $Core_bottom_Lights</span>
 <span class="co">## &lt;IdfObject: 'Lights'&gt; [ID:237] `Core_bottom_Lights`</span>
@@ -278,7 +278,7 @@
 <span class="co">## │─ 04 : "Watts/Area",       !- Design Level Calculation Method</span>
 <span class="va">....</span></code></pre></div>
 <p>To modify the model, you need to use the <code>$update()</code> method in the <code>Idf</code> class, which can take the modified data frame as an argument.</p>
-<div class="sourceCode" id="cb161"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb162"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="fu">update</span><span class="op">(</span><span class="va">lights_df</span><span class="op">)</span>
 <span class="co">## $Core_bottom_Lights</span>
 <span class="co">## &lt;IdfObject: 'Lights'&gt; [ID:237] `Core_bottom_Lights`</span>
@@ -308,14 +308,14 @@
 </ul>
 <p>You can also extract data from the EnergyPlus model based on the object names by supplying the object names to the argument <code>which</code> of the <code>$to_table()</code> method. In the example that follows, we will show you how to do this by changing the thermal properties of the external wall construction.</p>
 <p>First, you can find out which <code>Construction</code> objects make up the external wall by scanning objects from the <code>BuildingSurface:Detailed</code> class, which describes all the surfaces of the model. In general, the external wall surfaces would be those that are of <code>Surface Type == Wall</code> and <code>Outside Boundary Conditions == Outdoors</code> (i.e., the surface is exposed to outside temperature conditions). In this model, the external wall is made up of the <code>Steel Frame Non-res Ext Wall</code> object of the <code>Construction</code> class.</p>
-<div class="sourceCode" id="cb162"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb163"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ext_wall_surf</span> <span class="op">&lt;-</span> <span class="va">model</span><span class="op">$</span><span class="fu">to_table</span><span class="op">(</span>class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"BuildingSurface:Detailed"</span><span class="op">)</span>, wide <span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">`Surface Type`</span> <span class="op">==</span> <span class="st">"Wall"</span>, <span class="va">`Outside Boundary Condition`</span> <span class="op">==</span> <span class="st">"Outdoors"</span><span class="op">)</span>
 
 <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/duplicated.html">unique</a></span><span class="op">(</span><span class="va">ext_wall_surf</span><span class="op">$</span><span class="va">`Construction Name`</span><span class="op">)</span>
 <span class="co">## [1] "Steel Frame Non-res Ext Wall"</span></code></pre></div>
 <p>The object <code>Steel Frame Non-res Ext Wall</code> comprises of three materials (<code>Wood Siding</code>, <code>Steel Frame NonRes Wall Insulation</code>, and <code>1/2IN Gypsum</code>) that are modeled using the class <code>Material</code>. To modify the thermal properties of the external wall, you would need to modify the inputs of either of these three materials.</p>
-<div class="sourceCode" id="cb163"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb164"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="fu">object_relation</span><span class="op">(</span><span class="st">"Steel Frame Non-res Ext Wall"</span><span class="op">)</span>
 <span class="co">## ── Refer to Others ─────────────────────────────────────────────────────────────</span>
 <span class="co">##  Class: &lt;Construction&gt;</span>
@@ -329,7 +329,7 @@
 <span class="co">##     ├─ 3: "Steel Frame NonRes Wall Insulation",  !- Layer 2</span>
 <span class="va">....</span></code></pre></div>
 <p>We first extract these three materials from the model.</p>
-<div class="sourceCode" id="cb164"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb165"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ext_wall_mat</span> <span class="op">&lt;-</span> <span class="va">model</span><span class="op">$</span><span class="fu">to_table</span><span class="op">(</span>which <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Wood Siding"</span>,
                                          <span class="st">"Steel Frame NonRes Wall Insulation"</span>,
                                          <span class="st">"1/2IN Gypsum"</span><span class="op">)</span><span class="op">)</span>
@@ -346,14 +346,14 @@
 <span class="co">##  9: 50                        Wood Siding Material     9 Visible Absorptance</span>
 <span class="va">....</span></code></pre></div>
 <p>You can then modify the extracted information in the <code>data.frame</code>. Here, we increase the <code>Conductivity</code> of the <code>1/2IN Gypsum</code> from <code>0.16</code> to <code>0.20</code>, and double the <code>Thickness</code> of the wall insultion (<code>Steel Frame NonRes Wall Insulation</code>).</p>
-<div class="sourceCode" id="cb165"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb166"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">ext_wall_mat</span><span class="op">[</span><span class="va">name</span> <span class="op">==</span> <span class="st">"1/2IN Gypsum"</span> <span class="op">&amp;</span> <span class="va">field</span> <span class="op">==</span> <span class="st">"Conductivity"</span><span class="op">]</span><span class="op">$</span><span class="va">value</span> <span class="op">&lt;-</span> <span class="st">"0.20"</span>
 
 <span class="va">ext_wall_mat</span><span class="op">[</span><span class="va">name</span> <span class="op">==</span> <span class="st">"Steel Frame NonRes Wall Insulation"</span> <span class="op">&amp;</span> 
                <span class="va">field</span> <span class="op">==</span> <span class="st">"Thickness"</span><span class="op">]</span><span class="op">$</span><span class="va">value</span> <span class="op">&lt;-</span> <span class="st">"0.174"</span></code></pre></div>
 <p>Subsequently, you can update the model using the modified <code>data.frame</code> with the <code>$update()</code> method in the <code>Idf</code> class.</p>
-<div class="sourceCode" id="cb166"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb167"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="fu">update</span><span class="op">(</span><span class="va">ext_wall_mat</span><span class="op">)</span>
 <span class="co">## $`Wood Siding`</span>
 <span class="co">## &lt;IdfObject: 'Material'&gt; [ID:50] `Wood Siding`</span>
@@ -403,7 +403,7 @@
 <span class="header-section-number">14.3.1</span> add<a class="anchor" aria-label="anchor" href="#add"><i class="fas fa-link"></i></a>
 </h3>
 <p>You can add new objects to the model using the <code>$add()</code> method in the <code>Idf</code> class. The <code>$add()</code> method takes as it’s first argument is a nested named list of the form. Note that <code>&lt;CLASS NAME&gt;</code> is case-sensitive while <code>&lt;FIELD NAME&gt;</code> is not.</p>
-<div class="sourceCode" id="cb167"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb168"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">`list(&lt;CLASS NAME&gt; = list(&lt;FIELD NAME&gt; = &lt;FIELD VALUE&gt;))`</span></code></pre></div>
 <p>Suppose you want to add a new material to your model, which you can define using EnergyPlus’s <code>Material</code> class. Figure <a href="modify.html#fig:idd-material">14.1</a> can be translated to tell us that the <code>Material</code> class consists of the following fields</p>
 <ul>
@@ -437,7 +437,7 @@ Figure 14.1: Definition of EnergyPlus Material class based on the IDD.
 </p>
 </div>
 <p>Based on the definitions provided in the IDD, you can define and add a new 100mm brick object. By default, all empty fields will be filled with default values specified in the IDD. As mentioned earlier, note that the class name (<code>Material</code> in this example) is case-sensitive, while the field names (<code>Name</code>, <code>Roughness</code>, <code>Thickness</code>, etc.) are case-insensitive.</p>
-<div class="sourceCode" id="cb168"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">new_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
   Material <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
     Name <span class="op">=</span> <span class="st">"100mm brick"</span>,
