@@ -81,12 +81,12 @@
 <span class="header-section-number">4.1</span> Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites-3"><i class="fas fa-link"></i></a>
 </h2>
 <p>In this chapter, we focus on the use of the <strong>readr</strong> package that forms a part of the <strong>tidyverse</strong> package. <strong>readr</strong> provides a fast and easy way to parse a file because it uses a sophisticated parser that guesses the data type for each column along with the flexibility to specify what to parse. You will also need the <strong>here</strong> package (to easily provide relative file paths) and the <strong>lubridate</strong> package (to work with dates and times).</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org">lubridate</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span></code></pre></div>
 <p>In this chapter we will also be using the following datasets. If the following code returns <code>FALSE</code>, you should refer to the section <a href="importing-data.html#finding-your-file">Finding your file</a> in the <a href="index.html#preface">Preface</a> on where you can download the datasets.</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/files.html">file.exists</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"iris.csv"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/files.html">file.exists</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"building.csv"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
@@ -95,11 +95,11 @@
 <span class="header-section-number">4.2</span> Finding your file<a class="anchor" aria-label="anchor" href="#finding-your-file"><i class="fas fa-link"></i></a>
 </h2>
 <p>Before importing data, you need to first let R know where to find the file by providing the file path. You can provide file paths relative to the top-level directory of the current R project with the <code><a href="https://here.r-lib.org//reference/here.html">here()</a></code> function.</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">## [1] "/Users/adrianchong/Documents/GitHub/r4bes"</span></code></pre></div>
 <p>To reference a file named <code>iris.csv</code> located in the <code>data</code> folder that is located in the top-level directory of your project</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"iris.csv"</span><span class="op">)</span>
 <span class="co">## [1] "/Users/adrianchong/Documents/GitHub/r4bes/data/iris.csv"</span></code></pre></div>
 </div>
@@ -109,7 +109,7 @@
 </h2>
 <p>We will focus on the <code>read_csv()</code> function because building data are typically stored in <code>csv</code> format. You can find out more about other file formats in <a href="https://readr.tidyverse.org">readr’s documentation</a>.</p>
 <p>The easiest way to parse a file is by providing the file path. In most cases, it will just work as expected where <code>readr</code> correctly guesses the column specification (that gets printed to the console) and you get a tibble as specified. <a href="https://readr.tidyverse.org/reference/readr_example.html"><code>readr_example()</code></a> is a function that makes it easy to access example files to demonstrate <code>readr</code>’s capabilities.</p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">read_csv</span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"iris.csv"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## </span>
 <span class="co">## ── Column specification ────────────────────────────────────────────────────────</span>
@@ -138,7 +138,7 @@
 </h2>
 <p>Data from buildings are often messy without a standardized format. Therefore, it is not uncommon if <code>readr</code> does not guess correctly. Parsing date/times is particularly important when working with time-series building data.</p>
 <p>For example, with the <code>building.csv</code> dataset, you can see that there are problems parsing the <code>timestamp</code> column. Specifically, column <code>timestamp</code> was parsed as a character vector when it actually contains a date/time. The <code>skip</code> argument is particularly useful since building data often contains meta-data that you want to exclude. A character vector can also be supplied to specify the column names.</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu">read_csv</span><span class="op">(</span>
   <span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"building.csv"</span><span class="op">)</span>,
@@ -167,7 +167,7 @@
 <span class="va">....</span></code></pre></div>
 <p>You can correct this using the <code>col_types</code> argument to specify that column <code>timestamp</code> should be parsed as a date/time. You can view the available column specifications by typing <code>?cols</code> in your console. Typically specifying the data type would have allowed the data to be parsed correctly. In this particular dataset, there are two problems that caused the parsing to fail. First, the <code>timestamp</code> column does not follow <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO8601</a> but date times are parsed as ISO8601 if no format specification is provided. Second, <code>col_double()</code> is strict and does not allow for leading or trailing characters.</p>
 <!--In representations for interchange, dates and times are arranged so the largest temporal term (the year) is placed to the left and each successively smaller term is placed to the right of the previous term..-->
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">read_csv</span><span class="op">(</span>
   <span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"building.csv"</span><span class="op">)</span>,
   col_types <span class="op">=</span> <span class="fu">cols</span><span class="op">(</span>
@@ -201,7 +201,7 @@
 <span class="co">##  7 NA                     NA</span>
 <span class="va">....</span></code></pre></div>
 <p>To resolve this, you can explicitly provide the date/time format specification that is similar to the function <code><a href="https://rdrr.io/r/base/strptime.html">strptime()</a></code>. Type <code>?strptime()</code> for the list of character representations. However, do note that the specified format must be a complete match to the entire string. Additionally, <code>col_number()</code> is used in place of <code>col_double()</code> because it is more flexible and ignores non-numeric characters. In general, it is recommended to be explicit in providing column specifications to mitigate parsing errors.</p>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">read_csv</span><span class="op">(</span>
   <span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"building.csv"</span><span class="op">)</span>,
   col_types <span class="op">=</span> <span class="fu">cols</span><span class="op">(</span>
@@ -258,7 +258,7 @@ Tidy data [@wickham_tidy_2014] is consistent format for organizing your data in 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-08-25.</p>
+    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-09-06.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

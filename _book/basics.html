@@ -318,20 +318,71 @@
 <span class="co">##      [,1] [,2]</span>
 <span class="co">## [1,]    1    3</span>
 <span class="co">## [2,]    2    4</span></code></pre></div>
-<p>A <code>data.frame</code> is a two-dimensional data structures that are used to store heterogeneous data types in R. As a result of it’s convenience, data frames are a commonly used data structure in R. You can use the function <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code> to create a data frame.</p>
+<p>You can access the values in a matrix by providing the row and column index. For example, <code>[1, 2]</code> would return the value stored in the first row, second column of the matrix. <code>[3, 1]</code> would return the value stored in the third row, first of the matrix. You can retrieve all the values in a column by leaving the row index empty and likewise retrieve all the values in a row by leaving the column index empty. For example, <code>[, 2]</code> would return all the values in column 2 and <code>[2, ]</code> would return all the values in row 2.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span>, nrow <span class="op">=</span> <span class="fl">3</span>, byrow <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+
+<span class="va">m</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">]</span>
+<span class="co">## [1] 4</span>
+
+<span class="va">m</span><span class="op">[</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">]</span>
+<span class="co">## [1] 3</span>
+
+<span class="va">m</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span>
+<span class="co">## [1] 4 5 6</span>
+
+<span class="va">m</span><span class="op">[</span><span class="fl">2</span>, <span class="op">]</span>
+<span class="co">## [1]  2  5  8 11</span></code></pre></div>
+<p>A <code>data.frame</code> is a two-dimensional data structures that are used to store heterogeneous data types in R. As a result of it’s convenience, data frames are a commonly used data structure in R. You can use the function <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code> to create a data frame.</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
   x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>,
   y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span><span class="op">)</span>,
   z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
+<p>You can access elements of a data.frame like a list <code>[]</code>, <code>[[]]</code> or <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code>. Using <code>[]</code> returns a <code>data.frame</code> of the selected element while using <code>[[]]</code> or <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> will reduce it to a vector.</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span>
+<span class="co">##   x     y     z</span>
+<span class="co">## 1 1   red  TRUE</span>
+<span class="co">## 2 2 green FALSE</span>
+<span class="co">## 3 3  blue  TRUE</span>
+
+<span class="va">df</span><span class="op">[</span><span class="st">"y"</span><span class="op">]</span>
+<span class="co">##       y</span>
+<span class="co">## 1   red</span>
+<span class="co">## 2 green</span>
+<span class="co">## 3  blue</span>
+
+<span class="va">df</span><span class="op">[[</span><span class="st">"y"</span><span class="op">]</span><span class="op">]</span>
+<span class="co">## [1] "red"   "green" "blue"</span>
+
+<span class="va">df</span><span class="op">$</span><span class="va">y</span>
+<span class="co">## [1] "red"   "green" "blue"</span></code></pre></div>
+<p>You can also access a <code>data.frame</code> like a matrix.</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span>
+<span class="co">##   x     y     z</span>
+<span class="co">## 1 1   red  TRUE</span>
+<span class="co">## 2 2 green FALSE</span>
+<span class="co">## 3 3  blue  TRUE</span>
+
+<span class="va">df</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">]</span>
+<span class="co">## [1] "red"</span>
+
+<span class="va">df</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span>
+<span class="co">## [1] "red"   "green" "blue"</span>
+
+<span class="va">df</span><span class="op">[</span><span class="fl">2</span>, <span class="op">]</span>
+<span class="co">##   x     y     z</span>
+<span class="co">## 2 2 green FALSE</span></code></pre></div>
 </div>
 <div id="tibbles" class="section level2" number="2.5">
 <h2>
 <span class="header-section-number">2.5</span> Tibbles<a class="anchor" aria-label="anchor" href="#tibbles"><i class="fas fa-link"></i></a>
 </h2>
-<p>Tibbles are basically a modified version of R’s <code>data.frame</code>. You can create a tibble using the function <code>tibble()</code>. Alternatively, you can coerce a data frame into a tibble using <code>as_tibble()</code></p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<p>Tibbles are basically a modified version of R’s <code>data.frame</code>. Therefore, you would also access tibbles like how you would access a <code>data.frame</code>. You can create a tibble using the function <code>tibble()</code>. Alternatively, you can coerce a data frame into a tibble using <code>as_tibble()</code>.</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">tibble</span><span class="op">(</span>
   x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>,
   y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span><span class="op">)</span>,
@@ -357,7 +408,7 @@
 <span class="co">##  7          4.6         3.4          1.4         0.3 setosa </span>
 <span class="va">....</span></code></pre></div>
 <p>A key difference lies in how tibbles are printed. Printing a tibble only results in the first ten rows being displayed with an explicit reporting of each column’s data type.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tb</span> <span class="op">&lt;-</span> <span class="fu">as_tibble</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">tb</span><span class="op">)</span>
 <span class="co">## # A tibble: 150 x 5</span>
@@ -386,7 +437,7 @@
 <span class="co">## 9            4.4         2.9          1.4         0.2     setosa</span>
 <span class="va">....</span></code></pre></div>
 <p>Unlike a <code>data.frame</code>, tibbles provides clarity on the data structure that it returns. When indexing with tibbles, <code><a href="https://rdrr.io/r/base/Extract.html">[</a></code> always return another tibble while <code><a href="https://rdrr.io/r/base/Extract.html">[[</a></code> and <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> alway returns a vector. In contrast, single column data frames are often converted into atomic vectors in R unless <code>drop = FALSE</code> is specified.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">tb</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span>
 <span class="co">## [1] "tbl_df"     "tbl"        "data.frame"</span>
 
@@ -402,7 +453,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>, <span class="fl">1</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span>
 <span class="co">## [1] "data.frame"</span></code></pre></div>
 <p>Additionally, tibbles do not do partial matching and raises a warning unless the variable specified is an exact match.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tb</span><span class="op">$</span><span class="va">Sepal.Lengt</span>
 <span class="co">## Warning: Unknown or uninitialised column: `Sepal.Lengt`.</span>
 <span class="co">## NULL</span>
@@ -424,7 +475,7 @@
 <span class="header-section-number">2.6</span> data.table<a class="anchor" aria-label="anchor" href="#data-table"><i class="fas fa-link"></i></a>
 </h2>
 <p>Like tibbles, <code>data.table</code>s are an enhanced version of <code>data.frame</code>s. You can create a <code>data.table</code> using the function <code><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html">data.table()</a></code>. You can also coerce existing R objects into a <code>data.table</code> with <code><a href="https://Rdatatable.gitlab.io/data.table/reference/setDT.html">setDT()</a></code> for <code>data.frame</code>s and lists, and <code><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html">as.data.table()</a></code> for other data structures. Note that <code><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html">as.data.table()</a></code> also works with <code>data.frame</code>s and lists. However <code><a href="https://Rdatatable.gitlab.io/data.table/reference/setDT.html">setDT()</a></code> is more memory efficient because it does not create a copy of the original data frame or list but instead returns a data table by reference.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html">data.table</a></span><span class="op">(</span>
   x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>,
   y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span><span class="op">)</span>,
@@ -439,7 +490,7 @@
 <span class="co">## [1] "data.table" "data.frame"</span></code></pre></div>
 <p><code>data.table</code>s provide additional functionality through the way it is queried. The general form for working with a data table is <code>[i, j, by]</code>, which can be read as subset rows using <code>i</code>, operate on <code>j</code>, and grouped by <code>by</code>.</p>
 <p>Lets see how this work using the <code>iris</code> example dataset.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html">as.data.table</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">dt</span><span class="op">)</span>
@@ -455,7 +506,7 @@
 <span class="co">## 148:          6.5         3.0          5.2         2.0 virginica</span>
 <span class="va">....</span></code></pre></div>
 <p>You can filter the rows to only contain <code>Species == "virginica</code>.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dt</span><span class="op">[</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"virginica"</span><span class="op">]</span>
 <span class="co">##     Sepal.Length Sepal.Width Petal.Length Petal.Width   Species</span>
 <span class="co">##  1:          6.3         3.3          6.0         2.5 virginica</span>
@@ -468,8 +519,8 @@
 <span class="co">##  8:          7.3         2.9          6.3         1.8 virginica</span>
 <span class="co">##  9:          6.7         2.5          5.8         1.8 virginica</span>
 <span class="va">....</span></code></pre></div>
-<p>You can select the columns using the <code>j</code> expression. Note the change in the type of data structure when <code><a href="https://rdrr.io/r/base/list.html">list()</a></code> or <code>.()</code> is used.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<p>You can select the columns using the <code>j</code> expression. Notice that wrapping the variables within <code><a href="https://rdrr.io/r/base/list.html">list()</a></code> or <code>.()</code> ensures that a <code>data.table</code> is returned. In contrast, an atomic vector is returned when <code><a href="https://rdrr.io/r/base/list.html">list()</a></code> or <code>.()</code> is not used. <code>.()</code> is an alias for <code><a href="https://rdrr.io/r/base/list.html">list()</a></code> and therefore the two are the same.</p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dt</span><span class="op">[</span>, <span class="va">Sepal.Length</span><span class="op">]</span>
 <span class="co">##   [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7 5.4 5.1</span>
 <span class="co">##  [19] 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5 4.9 5.0</span>
@@ -490,7 +541,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">dt</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
 <span class="co">## [1] "data.table" "data.frame"</span></code></pre></div>
 <p>You can select multiple columns with <code><a href="https://rdrr.io/r/base/list.html">list()</a></code> or <code>.()</code>.</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">dt</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Species</span><span class="op">)</span><span class="op">]</span>
 <span class="co">##      Sepal.Length   Species</span>
@@ -505,7 +556,7 @@
 <span class="co">## 148:          6.5 virginica</span>
 <span class="va">....</span></code></pre></div>
 <p>Aside from selecting columns using <code>j</code>, you can carry out computations on <code>j</code> involving one or more columns and a subset of rows using <code>i</code>.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">dt</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">)</span><span class="op">]</span>
 <span class="co">## [1] 5.843333</span>
@@ -527,7 +578,7 @@
 <span class="co">##    Sepal.Length.Mean Sepal.With.Mean</span>
 <span class="co">## 1:          5.642857        2.714286</span></code></pre></div>
 <p>You can then use the <code>by</code> expression in data tables to perform computations by groups.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">dt</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span>
   Sepal.Length.Mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">)</span>,
@@ -540,7 +591,7 @@ by <span class="op">=</span> <span class="va">Species</span>
 <span class="co">## 2: versicolor             5.936           2.770</span>
 <span class="co">## 3:  virginica             6.588           2.974</span></code></pre></div>
 <p>The <code>.N</code> variable that counts the number of instances is particularly useful when combined with <code>by</code>.</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">dt</span><span class="op">[</span>, <span class="va">.N</span>, by <span class="op">=</span> <span class="va">Species</span><span class="op">]</span>
 <span class="co">##       Species  N</span>
@@ -548,7 +599,7 @@ by <span class="op">=</span> <span class="va">Species</span>
 <span class="co">## 2: versicolor 50</span>
 <span class="co">## 3:  virginica 50</span></code></pre></div>
 <p>You can also apply it to multiple columns using the <code><a href="https://rdrr.io/r/base/list.html">list()</a></code> or <code>.()</code> notation. You can read the code below as calculating the mean of <code>Speal.Length</code> and the number of instances (given by <code>.N</code>) grouped by their <code>Species</code> and whether <code>Sepal.Length &lt; 6</code>.</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dt</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span>Sepal.Length.Mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">)</span>, <span class="va">.N</span><span class="op">)</span>,
   by <span class="op">=</span> <span class="fu">.</span><span class="op">(</span><span class="va">Species</span>, <span class="va">Sepal.Length</span> <span class="op">&lt;</span> <span class="fl">6</span><span class="op">)</span>
 <span class="op">]</span>
@@ -559,7 +610,7 @@ by <span class="op">=</span> <span class="va">Species</span>
 <span class="co">## 4:  virginica            FALSE          6.741860 43</span>
 <span class="co">## 5:  virginica             TRUE          5.642857  7</span></code></pre></div>
 <p><code>data.table</code>s add, update, and delete columns by reference to avoid redundant copies for performance improvements. You can use the <code>:=</code> operator to add, update, and delete columns in <code>j</code> by reference. There are two forms for using <code>:=</code> and they are: <code>[, LSH := RHS]</code> and <code>[,</code>:=<code>(LHS = RHS)]</code>.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html">as.data.table</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
 
 <span class="va">dt</span><span class="op">[</span>, <span class="va">Sepal.Sum</span> <span class="op">:=</span> <span class="fu">.</span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">+</span> <span class="va">Sepal.Width</span><span class="op">)</span><span class="op">]</span>
@@ -587,7 +638,7 @@ by <span class="op">=</span> <span class="va">Species</span>
 <span class="va">....</span></code></pre></div>
 <p>Note that in the above code, we do not need to make any assignments back to a variable because the modification is done by reference or in place. In other words we are modifying <code>dt</code> and not a copy of <code>dt</code>. Therefore, you will also see that if you run the entire code chunk above, <code>dt</code> will contain both columns <code>Sepal.Sum</code> and <code>Petal.Sum</code>.</p>
 <p>Since <code>:=</code> is used in <code>j</code>, it can be combined with <code>i</code> and <code>by</code> as we have seen in the earlier parts of this sub-section.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">dt</span><span class="op">[</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"versicolor"</span> <span class="op">|</span> <span class="va">Species</span> <span class="op">==</span> <span class="st">"virginica"</span>, <span class="va">Sepal.Length</span> <span class="op">:=</span> <span class="fl">0</span><span class="op">]</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">dt</span><span class="op">)</span>
@@ -651,7 +702,7 @@ by <span class="op">=</span> <span class="va">Species</span>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-08-25.</p>
+    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-09-06.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

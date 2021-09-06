@@ -81,11 +81,11 @@
 <span class="header-section-number">13.1</span> Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites-10"><i class="fas fa-link"></i></a>
 </h2>
 <p>In this chapter, we will use the <strong>eplusr</strong> package to extract various inputs in an EnergyPlus model, and through this, learn how the inputs in EnergyPlus are structured.</p>
-<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://hongyuanjia.github.io/eplusr/">eplusr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span></code></pre></div>
 <p>We will be working with the IDF and EPW file that pertains to the U.S. Department of Energy (DOE) Commercial Reference Building and Chicago’s TMY3 respectively.</p>
-<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">path_idf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"idf"</span>, <span class="st">"RefBldgMediumOfficeNew2004_Chicago.idf"</span><span class="op">)</span>
 <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://hongyuanjia.github.io/eplusr/reference/read_idf.html">read_idf</a></span><span class="op">(</span><span class="va">path_idf</span><span class="op">)</span>
 
@@ -166,7 +166,7 @@ Figure 13.3: Figure shows how three different glazing objects can be created fro
 </tbody>
 </table></div>
 <p>You can see what class groups exists in your model with the <code>$group_name()</code> method</p>
-<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="fu">group_name</span><span class="op">(</span><span class="op">)</span>
 <span class="co">##  [1] "Simulation Parameters"              "Location and Climate"              </span>
 <span class="co">##  [3] "Schedules"                          "Surface Construction Elements"     </span>
@@ -174,7 +174,7 @@ Figure 13.3: Figure shows how three different glazing objects can be created fro
 <span class="co">##  [7] "Zone Airflow"                       "Exterior Equipment"                </span>
 <span class="va">....</span></code></pre></div>
 <p>You can also view the list of classes in the model grouped by their corresponding class group.</p>
-<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="fu">class_name</span><span class="op">(</span>by_group <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">## $`Simulation Parameters`</span>
 <span class="co">##  [1] "Version"                            "SimulationControl"                 </span>
@@ -188,12 +188,12 @@ Figure 13.3: Figure shows how three different glazing objects can be created fro
 <span class="co">## [2] "SizingPeriod:DesignDay"                </span>
 <span class="va">....</span></code></pre></div>
 <p>You can also view the list of objects that have been defined in a particular class in the model using the <code>$object_name()</code> method. The example from the code chunk below tells us that there are currently two materials (<code>CP02 CARPET PAD</code> and <code>MAT-AIR-WALL</code>) that have been created using the <code>Material:NoMass</code> class. You can think of these classes as templates for creating objects that defines your model as explained in the previous sub-section. In this particular example, the two material objects <code>CP02 CARPET PAD</code> and <code>MAT-AIR-WALL</code> are instances in the model that have been defined based on the <code>Material:NoMass</code> class.</p>
-<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb146"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="fu">object_name</span><span class="op">(</span><span class="st">"Material:NoMass"</span><span class="op">)</span>
 <span class="co">## $`Material:NoMass`</span>
 <span class="co">## [1] "CP02 CARPET PAD" "MAT-AIR-WALL"</span></code></pre></div>
 <p>You can also query multiple classes.</p>
-<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="fu">object_name</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Material"</span>, <span class="st">"Construction"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## $Material</span>
 <span class="co">##  [1] "Steel Frame NonRes Wall Insulation" "IEAD NonRes Roof Insulation"       </span>
@@ -207,7 +207,7 @@ Figure 13.3: Figure shows how three different glazing objects can be created fro
 <span class="co">## $Construction</span>
 <span class="va">....</span></code></pre></div>
 <p>Finally, you can also query individual objects using the <code>$objects()</code> method.</p>
-<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="fu">objects</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Steel Frame Non-res Ext Wall"</span>, <span class="st">"IEAD Non-res Roof"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## $`Steel Frame Non-res Ext Wall`</span>
 <span class="co">## &lt;IdfObject: 'Construction'&gt; [ID:37] `Steel Frame Non-res Ext Wall`</span>
@@ -227,7 +227,7 @@ Figure 13.3: Figure shows how three different glazing objects can be created fro
 </h3>
 <p>Since the model is stored as a named list in R, you can use the <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> operator to also query elements by name. For instance, you can access the objects defined using the <code>Material:NoMass</code> class with <code>$Material:NoMass</code>. Since class, object, and field names in an EnergyPlus often violets the variable naming restrictions in R (e.g., containing special characters such as <code><a href="https://rdrr.io/r/base/Colon.html">:</a></code>, white spaces, etc.), the identifiers need to be placed within a set of single back quotes <code>`</code> to tell R that this is a variable name.</p>
 <p>With <code>$`Material:NoMass`</code> will list all the objects in the <code>Material:NoMass</code> class.</p>
-<div class="sourceCode" id="cb146"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="va">`Material:NoMass`</span>
 <span class="co">## $`CP02 CARPET PAD`</span>
 <span class="co">## &lt;IdfObject: 'Material:NoMass'&gt; [ID:56] `CP02 CARPET PAD`</span>
@@ -241,7 +241,7 @@ Figure 13.3: Figure shows how three different glazing objects can be created fro
 <span class="co">## </span>
 <span class="va">....</span></code></pre></div>
 <p>Since the model is stored hierarchically, you can chain them by adding another <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> to access and modify lower levels. Using the same example, you will be able to retrieve the <code>CP02 CARPET PAD</code> object with <code>$`Material:NoMass`$`CP02 CARPET PAD`</code>.</p>
-<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="va">`Material:NoMass`</span><span class="op">$</span><span class="va">`CP02 CARPET PAD`</span>
 <span class="co">## &lt;IdfObject: 'Material:NoMass'&gt; [ID:56] `CP02 CARPET PAD`</span>
 <span class="co">## Class: &lt;Material:NoMass&gt;</span>
@@ -252,12 +252,12 @@ Figure 13.3: Figure shows how three different glazing objects can be created fro
 <span class="co">## │─ 5 : 0.7,               !- Solar Absorptance</span>
 <span class="co">## └─ 6 : 0.8;               !- Visible Absorptance</span></code></pre></div>
 <p>Likewise, you could go further down the hierarchy and extract the value of a particular field of an object by further chaining with another <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code>. The example below shows that the <code>Thermal Resistance</code> value of the <code>CP02 CARPET PAD</code> object that was defined using the <code>Material:NoMass</code> class is <code>0.2165</code>.</p>
-<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="va">`Material:NoMass`</span><span class="op">$</span><span class="va">`CP02 CARPET PAD`</span><span class="op">$</span><span class="va">`Thermal Resistance`</span>
 <span class="co">## [1] 0.2165</span></code></pre></div>
 <p>You can use the <code>definition</code> method that returns the fields needed as inputs to define a particular class
 Now, compare the output from the code chunk below with Figure <a href="input.html#fig:input-structure">13.2</a>. The required fields are indicated by <code>eplusr</code> using an asterix <code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code>. Using the <code>Material:NoMass</code> class as an example (Figure <a href="input.html#fig:idd-nomass">13.4</a>), the same information can be obtained from the IDD file (<code>Energy+.idd</code>) where the required fields are indicated with the <code>\required-field</code> tag. The definitions of the different tags can be found at the begining of the IDD file.</p>
-<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="fu">definition</span><span class="op">(</span><span class="st">"Material:NoMass"</span><span class="op">)</span>
 <span class="co">## &lt;IddObject: 'Material:NoMass'&gt;</span>
 <span class="co">## ── MEMO ────────────────────────────────────────────────────────────────────────</span>
@@ -290,7 +290,7 @@ Figure 13.4: Screen capture of the definition of the Material:NoMass class from 
 </h2>
 <p>The inter-dependencies between different objects is a challenging aspect when working with energy models. It is important to note that changing an object not only affects the object but also the objects that reference it. A classic example is the relationship between the building’s thermal zones, surfaces, construction, and materials. A single building energy model comprises of one or more thermal zones and each thermal zone has it’s boundaries defined by several surfaces. Each surface is then assigned one construction where each layer of the construction is a material that is defined based on it’s thermal properties.</p>
 <p>Using the construction <code>Steel Frame Non-res Ext Wall</code> as an example. You can see that it references the materials <code>Wood Siding</code>, <code>Steel Frame NonRes Wall Insulation</code>, and <code>1/2IN Gypsum</code>. Likewise, it is referenced by the surfaces <code>Steel Frame Non-res Ext Wall</code>, <code>Perimeter_bot_Plenum_Wall_North</code>, …, <code>Perimeter_top_ZN_4_Wall_West</code>. Therefore, changing the thermal properties of either of the three materials <code>Wood Siding</code>, <code>Steel Frame NonRes Wall Insulation</code>, and <code>1/2IN Gypsum</code> would change the thermal properties of the <code>Steel Frame Non-res Ext Wall</code> Construction and subsequently all the surfaces that references it. On a different note, changing an object’s name would also require updating all the fields in the model that references the object. In this example, changing <code>Steel Frame Non-res Ext Wall</code> to <code>Steel Frame Non-res Wall</code> would require updating all the <code>Construction Name</code> field in the surfaces that references it, otherwise, a severe error would be raised when the simulation is run.</p>
-<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="fu">object_relation</span><span class="op">(</span><span class="st">"Steel Frame Non-res Ext Wall"</span><span class="op">)</span>
 <span class="co">## ── Refer to Others ─────────────────────────────────────────────────────────────</span>
 <span class="co">##  Class: &lt;Construction&gt;</span>
@@ -304,7 +304,7 @@ Figure 13.4: Screen capture of the definition of the Material:NoMass class from 
 <span class="co">##     ├─ 3: "Steel Frame NonRes Wall Insulation",  !- Layer 2</span>
 <span class="va">....</span></code></pre></div>
 <p>In EnergyPlus, each object may be referenced by other</p>
-<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="fu">object_relation</span><span class="op">(</span><span class="st">"Window Non-res Fixed"</span><span class="op">)</span>
 <span class="co">## ── Refer to Others ─────────────────────────────────────────────────────────────</span>
 <span class="co">##  Class: &lt;Construction&gt;</span>
@@ -354,7 +354,7 @@ Figure 13.4: Screen capture of the definition of the Material:NoMass class from 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-08-25.</p>
+    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-09-06.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

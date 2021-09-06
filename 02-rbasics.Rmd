@@ -183,6 +183,22 @@ matrix(c("TRUE", "TRUE", "FALSE", "FALSE"), ncol = 2)
 matrix(c(1L, 2L, 3L, 4L), ncol = 2)
 ```
 
+You can access the values in a matrix by providing the row and column index. For example, `[1, 2]` would return the value stored in the first row, second column of the matrix. `[3, 1]` would return the value stored in the third row, first of the matrix. You can retrieve all the values in a column by leaving the row index empty and likewise retrieve all the values in a row by leaving the column index empty. For example, `[, 2]` would return all the values in column 2 and `[2, ]` would return all the values in row 2.
+
+```{r}
+m <- matrix(1:12, nrow = 3, byrow = FALSE)
+
+m[1, 2]
+
+m[3, 1]
+
+m[, 2]
+
+m[2, ]
+
+```
+
+
 A `data.frame` is a two-dimensional data structures that are used to store heterogeneous data types in R. As a result of it's convenience, data frames are a commonly used data structure in R. You can use the function `data.frame()` to create a data frame. 
 
 ```{r}
@@ -193,10 +209,34 @@ df <- data.frame(
 )
 ```
 
+You can access elements of a data.frame like a list `[]`, `[[]]` or `$`. Using `[]` returns a `data.frame` of the selected element while using `[[]]` or `$` will reduce it to a vector.
+
+```{r}
+df
+
+df["y"]
+
+df[["y"]]
+
+df$y
+```
+
+You can also access a `data.frame` like a matrix.
+
+```{r}
+df
+
+df[1, 2]
+
+df[, 2]
+
+df[2, ]
+```
+
 
 ## Tibbles {#tibbles}
 
-Tibbles are basically a modified version of R's `data.frame`. You can create a tibble using the function `tibble()`. Alternatively, you can coerce a data frame into a tibble using `as_tibble()`
+Tibbles are basically a modified version of R's `data.frame`. Therefore, you would also access tibbles like how you would access a `data.frame`. You can create a tibble using the function `tibble()`. Alternatively, you can coerce a data frame into a tibble using `as_tibble()`. 
 
 
 ```{r}
@@ -279,7 +319,7 @@ You can filter the rows to only contain `Species == "virginica`.
 dt[Species == "virginica"]
 ```
 
-You can select the columns using the `j` expression. Note the change in the type of data structure when `list()` or `.()` is used.
+You can select the columns using the `j` expression. Notice that wrapping the variables within `list()` or `.()` ensures that a `data.table` is returned. In contrast, an atomic vector is returned when `list()` or `.()` is not used. `.()` is an alias for `list()` and therefore the two are the same.
 
 ```{r}
 dt[, Sepal.Length]
