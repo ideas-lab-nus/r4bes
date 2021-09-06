@@ -17,7 +17,7 @@ basic-data-types
 basic-data-structures
 tibbles
 data-table
-dates-and-times
+datetime
 prerequisites-2
 parsing-dates-and-times
 extracting-components

@@ -1096,8 +1096,8 @@ Since \texttt{:=} is used in \texttt{j}, it can be combined with \texttt{i} and 
 
 You can find out more about \texttt{data.table}s by typing \texttt{vignette(package\ =\ "data.table")} into the console.
 
-\hypertarget{dates-and-times}{%
-\chapter{Dates and Times}\label{dates-and-times}}
+\hypertarget{datetime}{%
+\chapter{Dates and Times}\label{datetime}}
 
 \hypertarget{prerequisites-2}{%
 \section{Prerequisites}\label{prerequisites-2}}
@@ -1318,72 +1318,27 @@ For example, with the \texttt{building.csv} dataset, you can see that there are 
 \end{Highlighting}
 \end{Shaded}
 
-You can correct this using the \texttt{col\_types} argument to specify that column \texttt{timestamp} should be parsed as a date/time. You can view the available column specifications by typing \texttt{?cols} in your console. Typically specifying the data type would have allowed the data to be parsed correctly. In this particular dataset, there are two problems that caused the parsing to fail. First, the \texttt{timestamp} column does not follow \href{https://en.wikipedia.org/wiki/ISO_8601}{ISO8601} but date times are parsed as ISO8601 if no format specification is provided. Second, \texttt{col\_double()} is strict and does not allow for leading or trailing characters.
+You can correct this by taking advantage of the \texttt{lubridate} package that was covered in Chapter \ref{datetime}. To recap, you can transform a character vector into a datetime object by specifying the order of the year \texttt{y}, month \texttt{m}, day \texttt{d}, hour \texttt{h}, minute \texttt{m} and second \texttt{s} with the date (\texttt{y}, \texttt{m}, and \texttt{d}) and the time (\texttt{h}, \texttt{m}, and \texttt{s}) separated by an underscore \texttt{\_}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{read\_csv}\NormalTok{(}
+\NormalTok{bldg }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}
   \FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"building.csv"}\NormalTok{),}
-  \AttributeTok{col\_types =} \FunctionTok{cols}\NormalTok{(}
-    \FunctionTok{col\_datetime}\NormalTok{(),}
-    \FunctionTok{col\_double}\NormalTok{()}
-\NormalTok{  ),}
   \AttributeTok{col\_names =} \FunctionTok{c}\NormalTok{(}
     \StringTok{"datetime"}\NormalTok{,}
     \StringTok{"power"}
 \NormalTok{  ),}
   \AttributeTok{skip =} \DecValTok{2}
 \NormalTok{)}
-\DocumentationTok{\#\# Warning: 2648 parsing failures.}
-\DocumentationTok{\#\# row      col               expected       actual                                                          file}
-\DocumentationTok{\#\#   1 datetime date like              1/9/19 0:00  \textquotesingle{}/Users/adrianchong/Documents/GitHub/r4bes/data/building.csv\textquotesingle{}}
-\DocumentationTok{\#\#   1 power    no trailing characters 2,210,184.75 \textquotesingle{}/Users/adrianchong/Documents/GitHub/r4bes/data/building.csv\textquotesingle{}}
-\DocumentationTok{\#\#   2 datetime date like              1/9/19 0:30  \textquotesingle{}/Users/adrianchong/Documents/GitHub/r4bes/data/building.csv\textquotesingle{}}
-\DocumentationTok{\#\#   2 power    no trailing characters 2,210,195.75 \textquotesingle{}/Users/adrianchong/Documents/GitHub/r4bes/data/building.csv\textquotesingle{}}
-\DocumentationTok{\#\#   3 datetime date like              1/9/19 1:00  \textquotesingle{}/Users/adrianchong/Documents/GitHub/r4bes/data/building.csv\textquotesingle{}}
-\DocumentationTok{\#\# ... ........ ...................... ............ .............................................................}
-\DocumentationTok{\#\# See problems(...) for more details.}
-\DocumentationTok{\#\# \# A tibble: 1,324 x 2}
-\DocumentationTok{\#\#    datetime            power}
-\DocumentationTok{\#\#    \textless{}dttm\textgreater{}              \textless{}dbl\textgreater{}}
-\DocumentationTok{\#\#  1 NA                     NA}
-\DocumentationTok{\#\#  2 NA                     NA}
-\DocumentationTok{\#\#  3 NA                     NA}
-\DocumentationTok{\#\#  4 NA                     NA}
-\DocumentationTok{\#\#  5 NA                     NA}
-\DocumentationTok{\#\#  6 NA                     NA}
-\DocumentationTok{\#\#  7 NA                     NA}
-\NormalTok{....}
-\end{Highlighting}
-\end{Shaded}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\# {-}{-} Column specification {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\DocumentationTok{\#\# cols(}
+\DocumentationTok{\#\#   datetime = col\_character(),}
+\DocumentationTok{\#\#   power = col\_number()}
+\DocumentationTok{\#\# )}
 
-To resolve this, you can explicitly provide the date/time format specification that is similar to the function \texttt{strptime()}. Type \texttt{?strptime()} for the list of character representations. However, do note that the specified format must be a complete match to the entire string. Additionally, \texttt{col\_number()} is used in place of \texttt{col\_double()} because it is more flexible and ignores non-numeric characters. In general, it is recommended to be explicit in providing column specifications to mitigate parsing errors.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{read\_csv}\NormalTok{(}
-  \FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"building.csv"}\NormalTok{),}
-  \AttributeTok{col\_types =} \FunctionTok{cols}\NormalTok{(}
-    \FunctionTok{col\_datetime}\NormalTok{(}\AttributeTok{format =} \StringTok{"\%d/\%m/\%y \%H:\%M"}\NormalTok{),}
-    \FunctionTok{col\_number}\NormalTok{()}
-\NormalTok{  ),}
-  \AttributeTok{col\_names =} \FunctionTok{c}\NormalTok{(}
-    \StringTok{"datetime"}\NormalTok{,}
-    \StringTok{"power"}
-\NormalTok{  ),}
-  \AttributeTok{skip =} \DecValTok{2}
-\NormalTok{)}
-\DocumentationTok{\#\# \# A tibble: 1,324 x 2}
-\DocumentationTok{\#\#    datetime               power}
-\DocumentationTok{\#\#    \textless{}dttm\textgreater{}                 \textless{}dbl\textgreater{}}
-\DocumentationTok{\#\#  1 2019{-}09{-}01 00:00:00 2210185.}
-\DocumentationTok{\#\#  2 2019{-}09{-}01 00:30:00 2210196.}
-\DocumentationTok{\#\#  3 2019{-}09{-}01 01:00:00 2210208.}
-\DocumentationTok{\#\#  4 2019{-}09{-}01 01:30:00 2210219 }
-\DocumentationTok{\#\#  5 2019{-}09{-}01 02:00:00 2210231 }
-\DocumentationTok{\#\#  6 2019{-}09{-}01 02:30:00 2210242.}
-\DocumentationTok{\#\#  7 2019{-}09{-}01 03:00:00 2210254.}
-\NormalTok{....}
+\CommentTok{\# transform the datetime character vector into a datetime object using lubridate}
+\NormalTok{bldg}\SpecialCharTok{$}\NormalTok{datetime }\OtherTok{\textless{}{-}} \FunctionTok{dmy\_hm}\NormalTok{(bldg}\SpecialCharTok{$}\NormalTok{datetime)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2520,7 +2475,7 @@ If you do not want to save the simulation results locally, you can save the simu
 \begin{Highlighting}[]
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.09.06 10:30}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.09.06 15:12}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2571,9 +2526,9 @@ To output the summary reports from EnergyPlus, you need to first run the simulat
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
-\DocumentationTok{\#\# Replace the existing IDF located at /private/var/folders/6l/8dz74knn0yd02c\_bt8fl1pk80000gn/T/RtmpOdxFsw/RefBldgMediumOfficeNew2004\_Chicago.idf.}
+\DocumentationTok{\#\# Replace the existing IDF located at /private/var/folders/6l/8dz74knn0yd02c\_bt8fl1pk80000gn/T/RtmpdVjwaj/RefBldgMediumOfficeNew2004\_Chicago.idf.}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.09.06 10:31}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.09.06 15:12}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2750,7 +2705,7 @@ In this chapter, you will also be working with the U.S. Department of Energy (DO
 
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(}\AttributeTok{weather =}\NormalTok{ epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.09.06 10:31}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.09.06 15:13}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2778,7 +2733,7 @@ The RColorBrewer package provide three types of color palettes: sequential, dive
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-117-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-116-1.pdf}
 
 When representing gradients (such as temperature data), you want to use \emph{sequential} color palletes that are perceptually uniform as the color progresses from low to high.
 
@@ -2788,7 +2743,7 @@ When representing gradients (such as temperature data), you want to use \emph{se
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-118-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-117-1.pdf}
 
 You will want to use \emph{diverging} color palettes that uses a neutral mid-point that diverges at perceptually equal steps to both ends of the data. An example is using the \texttt{RdBu} color pallette to represent temperature data that diverges between cold and hot.
 
@@ -2798,7 +2753,7 @@ You will want to use \emph{diverging} color palettes that uses a neutral mid-poi
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-119-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-118-1.pdf}
 
 You will want to map categorical variables to \emph{qualitative} color palettes that are perceptually uniform and not have any variables standing out perceptually due to it's color. For instance, when visualizing the energy usage intensity of different buildings, you would want the colors used to represent each building to be easily distinguishable but at the same time not have one stand out from another even though they are numerically equivalent.
 
@@ -2808,7 +2763,7 @@ You will want to map categorical variables to \emph{qualitative} color palettes 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-120-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-119-1.pdf}
 
 You can use the function \texttt{display.brewer.pal()} to visualize a single brewer palette and use the \texttt{brewer.pal()} function to obtain the hexadecimade color code of the palette.
 
@@ -2819,7 +2774,7 @@ You can use the function \texttt{display.brewer.pal()} to visualize a single bre
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-121-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-120-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2907,7 +2862,7 @@ You can create bar graphs by adding \texttt{geom\_bar()}. By default, \texttt{st
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-126-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-125-1.pdf}
 
 By default, the bar charts would be stacked. In this scenario, we only have two groups of fuel, electricity and natural gas. However, when there are many groups, stacked bar charts can be difficult to visualize. You can place them side by side instead using \texttt{position\ =\ position\_dodge()}.
 
@@ -2918,7 +2873,7 @@ By default, the bar charts would be stacked. In this scenario, we only have two 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-127-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-126-1.pdf}
 
 You can use scale to change the fill and colors of the bar chart. The \texttt{scale\_*\_brewer()} and \texttt{scale\_*\_viridis()} functions provides an easy way to specify palettes from the RColorBrewer and the viridis package respectively. Particularly, \texttt{scale\_fill\_brewer()} and \texttt{scale\_fill\_viridis()} provides mapping to ggplot's fill aesthetics while \texttt{scale\_color\_brewer()} and \texttt{scale\_color\_viridis()} provides mapping to ggplot's color aesthetics.
 
@@ -2931,7 +2886,7 @@ You can use scale to change the fill and colors of the bar chart. The \texttt{sc
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-128-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-127-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2943,7 +2898,7 @@ You can use scale to change the fill and colors of the bar chart. The \texttt{sc
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-129-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-128-1.pdf}
 
 You can flip how the data coordinates maps to plot to get horizontal bar plots with \texttt{coord\_filp()}.
 
@@ -2956,7 +2911,7 @@ You can flip how the data coordinates maps to plot to get horizontal bar plots w
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-130-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-129-1.pdf}
 
 You can divide the plot into various \emph{facet}s by subsetting the plot based one or more discrete variables. In this example, we divide the plot row wise based on fuel type using \texttt{facet\_grid()}.
 
@@ -2969,7 +2924,7 @@ You can divide the plot into various \emph{facet}s by subsetting the plot based 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-131-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-130-1.pdf}
 
 As you probably have noticed. The x-axis labels are not legible due to overlapping when plotting the data as vertical bar charts.
 
@@ -2984,7 +2939,7 @@ You can use \texttt{theme()} and \texttt{element\_text()} to change how the x-ax
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-132-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-131-1.pdf}
 
 You can also use \texttt{theme()} together with various \texttt{element\_*} functions to control elements of the plot title, legend, axis labels, borders, background, etc. You can find out more about the possible arguments to each \texttt{element\_function()} by typing \texttt{?margin} into your console. \texttt{element\_*} functions are used with \texttt{theme()} to specify the non-data components of the plot. There are four element functions and they are:
 
@@ -3018,7 +2973,7 @@ You can also use \texttt{theme()} together with various \texttt{element\_*} func
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-133-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-132-1.pdf}
 
 \hypertarget{visualize-weather-data}{%
 \subsection{Visualize weather data}\label{visualize-weather-data}}
@@ -3071,7 +3026,7 @@ In the subsequent graphics, we will be using various colors from the \texttt{Red
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-136-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-135-1.pdf}
 
 You can visualize the weather data (dry bulb temperature in this example) as a single time series plot. Here, \texttt{geom\_line()} is used to connect the observations sequentially over time. \texttt{expression()} is used to express the degree symbol in the y-axis label.
 
@@ -3084,7 +3039,7 @@ You can visualize the weather data (dry bulb temperature in this example) as a s
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-137-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-136-1.pdf}
 
 You can also visualize the data by the hour of the day using scatterplots. To avoid overplotting, a typical problem with scatterplots, you can subset the data by their month using \texttt{facet\_grid()}. To further aid the ability to visually identify patterns in the presence of overplotting, you can use \texttt{geom\_smooth()} to add a smoothed line on top of the scatterplot.
 
@@ -3100,7 +3055,7 @@ You can also visualize the data by the hour of the day using scatterplots. To av
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-138-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-137-1.pdf}
 
 Last but not least, you can create heatmaps using the function \texttt{geom\_tile()}.
 
@@ -3116,7 +3071,7 @@ Last but not least, you can create heatmaps using the function \texttt{geom\_til
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-139-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-138-1.pdf}
 
 \hypertarget{saving-plots}{%
 \subsection{Saving Plots}\label{saving-plots}}
@@ -3996,7 +3951,7 @@ EnergyPlus allows you to specify meters to retrieve the simulation outputs. Howe
 \NormalTok{mdd}
 \DocumentationTok{\#\# == EnergyPlus Meter Data Dictionary File =======================================}
 \DocumentationTok{\#\#   * EnergyPlus version: 9.4.0 (998c4b761e)}
-\DocumentationTok{\#\#   * Simulation started: 2021{-}09{-}06 10:31:00}
+\DocumentationTok{\#\#   * Simulation started: 2021{-}09{-}06 15:13:00}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# {-}{-} Details {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 \DocumentationTok{\#\#      index reported\_time\_step report\_type}
