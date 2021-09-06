@@ -60,50 +60,24 @@ read_csv(
 )
 ```
 
-You can correct this using the `col_types` argument to specify that column `timestamp` should be parsed as a date/time. You can view the available column specifications by typing `?cols` in your console. Typically specifying the data type would have allowed the data to be parsed correctly. In this particular dataset, there are two problems that caused the parsing to fail. First, the `timestamp` column does not follow [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) but date times are parsed as ISO8601 if no format specification is provided. Second, `col_double()` is strict and does not allow for leading or trailing characters. 
-
-
-<!--In representations for interchange, dates and times are arranged so the largest temporal term (the year) is placed to the left and each successively smaller term is placed to the right of the previous term..-->
-
+You can correct this by taking advantage of the `lubridate` package that was covered in Chapter \@ref(datetime). To recap, you can transform a character vector into a datetime object by specifying the order of the year `y`, month `m`, day `d`, hour `h`, minute `m` and second `s` with the date (`y`, `m`, and `d`) and the time (`h`, `m`, and `s`) separated by an underscore `_`. 
 
 ```{r}
-read_csv(
+bldg <- read_csv(
   here("data", "building.csv"),
-  col_types = cols(
-    col_datetime(),
-    col_double()
-  ),
   col_names = c(
     "datetime",
     "power"
   ),
   skip = 2
 )
-```
 
-To resolve this, you can explicitly provide the date/time format specification that is similar to the function `strptime()`. Type `?strptime()` for the list of character representations. However, do note that the specified format must be a complete match to the entire string. Additionally, `col_number()` is used in place of `col_double()` because it is more flexible and ignores non-numeric characters. In general, it is recommended to be explicit in providing column specifications to mitigate parsing errors.
+# transform the datetime character vector into a datetime object using lubridate
+bldg$datetime <- dmy_hm(bldg$datetime)
 
-
-```{r}
-read_csv(
-  here("data", "building.csv"),
-  col_types = cols(
-    col_datetime(format = "%d/%m/%y %H:%M"),
-    col_number()
-  ),
-  col_names = c(
-    "datetime",
-    "power"
-  ),
-  skip = 2
-)
 ```
 
 
-
-<!--## Tidy data
-
-Tidy data [@wickham_tidy_2014] is consistent format for organizing your data in R. Although getting your data into this format takes some effort, it is worth it simply because you would be able to take advantage of R's data wrangling and visualization capabilities once your data is in a tidy format. In particular, tidy data are rectangular datasets that have a specific structure where each variable forms a column, each instance is a row and every value belonging to a variable and an instance in a cell.-->
 
 
 
