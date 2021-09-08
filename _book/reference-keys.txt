@@ -26,10 +26,10 @@ prerequisites-3
 finding-your-file
 parsing-a-csv-file
 building-data
-regular-expressions
+regex
 prerequisites-4
 basic-matches
-character-classes
+regex-classes
 regex-escape
 anchors
 quantifies

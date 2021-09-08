@@ -117,7 +117,7 @@
 
 \title{R for Building Energy Simulation}
 \author{Adrian Chong}
-\date{2021-09-06}
+\date{2021-09-08}
 
 \begin{document}
 \maketitle
@@ -1342,8 +1342,8 @@ You can correct this by taking advantage of the \texttt{lubridate} package that 
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{regular-expressions}{%
-\chapter{Regular expressions}\label{regular-expressions}}
+\hypertarget{regex}{%
+\chapter{Regular expressions}\label{regex}}
 
 \emph{Regular expressions} are patterns that are used to match combinations of characters in a string. Before we begin, just a cautionary note that if your regular expressions are becoming too complex, perhaps it is time to step back and think about whether it is necessary and if they can be represented multiple expressions that are easier to understand.
 
@@ -1369,22 +1369,48 @@ The most basic form of matching is to match exact strings
 \FunctionTok{writeLines}\NormalTok{(x)}
 \DocumentationTok{\#\# abc ABC}
 \DocumentationTok{\#\# 123. !?\textbackslash{}()\{\}}
+\end{Highlighting}
+\end{Shaded}
 
+\begin{Shaded}
+\begin{Highlighting}[]
 \FunctionTok{str\_view}\NormalTok{(x, }\StringTok{"abc"}\NormalTok{)}
 \DocumentationTok{\#\# PhantomJS not found. You can install it with webshot::install\_phantomjs(). If it is installed, please make sure the phantomjs executable can be found via the PATH variable.}
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{character-classes}{%
-\section{Character classes}\label{character-classes}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str\_view}\NormalTok{(x, }\StringTok{"123"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{regex-classes}{%
+\section{Character classes}\label{regex-classes}}
 
 Character classes allows you to specify a list of characters for matching.
 
-A bracket \texttt{{[}...{]}} can be used to specify a list of character. Therefore, it will match any characters that was specified within the brackets. If a caret \texttt{\^{}} is added to the start of the list of characters, it will match any characters that are NOT in the list. You can also specify a range expression using a hyphen \texttt{-} between two characters.
+A bracket \texttt{{[}...{]}} can be used to specify a list of character. Therefore, it will match any characters that was specified within the brackets.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{str\_view\_all}\NormalTok{(x, }\StringTok{"[bcde]"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+If a caret \texttt{\^{}} is added to the start of the list of characters, it will match any characters that are NOT in the list.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str\_view\_all}\NormalTok{(x, }\StringTok{"[\^{}bcde]"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+You can also specify a range expression using a hyphen \texttt{-} between two characters.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str\_view\_all}\NormalTok{(x, }\StringTok{"[a{-}zA{-}Z]"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1405,11 +1431,17 @@ Regex & What it matches \\
 \bottomrule
 \end{longtable}
 
-Try out the other named classes using the function \texttt{str\_view\_all()}
+Try out some of the named classes using the function \texttt{str\_view\_all()}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{str\_view\_all}\NormalTok{(x, }\StringTok{"[:alnum:]"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str\_view\_all}\NormalTok{(x, }\StringTok{"[:punct:]"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1440,6 +1472,18 @@ Note that to include a \texttt{\textbackslash{}} in a regular expression, you ne
 \end{Highlighting}
 \end{Shaded}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str\_view\_all}\NormalTok{(x, }\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{d"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str\_view\_all}\NormalTok{(x, }\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{D"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
 \hypertarget{regex-escape}{%
 \section{Escaping}\label{regex-escape}}
 
@@ -1464,7 +1508,13 @@ For example, how would you create a regular expression to match the character \t
 \end{Highlighting}
 \end{Shaded}
 
-To represent a backslash \texttt{\textbackslash{}} as a regular expression, two levels of escape would be required!
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str\_view\_all}\NormalTok{(x, }\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+To represent a backslash \texttt{\textbackslash{}} as a regular expression, two levels of escape would be required! To elaborate, to represent a \texttt{\textbackslash{}} as a regular expression, you would need to escape it by creating the regular expression \texttt{\textbackslash{}\textbackslash{}}. To represent each of these \texttt{\textbackslash{}} you need to use a string, which also requires you to add an additional \texttt{\textbackslash{}} to escape it. Therefore, to match a \texttt{\textbackslash{}} you need to write \texttt{\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1530,11 +1580,47 @@ Regex & Number of times \\
 \end{Highlighting}
 \end{Shaded}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str\_view}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"abb"}\NormalTok{, }\StringTok{"abbb"}\NormalTok{), }\StringTok{"ab*"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str\_view}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"abb"}\NormalTok{, }\StringTok{"abbb"}\NormalTok{), }\StringTok{"ab?"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str\_view}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"abb"}\NormalTok{, }\StringTok{"abbb"}\NormalTok{), }\StringTok{"ab\{1\}"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str\_view}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"abb"}\NormalTok{, }\StringTok{"abbb"}\NormalTok{), }\StringTok{"ab\{1,\}"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str\_view}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"abb"}\NormalTok{, }\StringTok{"abbb"}\NormalTok{), }\StringTok{"ab\{1,2\}"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
 By default, quantifies are applied to a single character. You can use \texttt{(...)} to apply quantifies to more than one character.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{str\_view}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"ab"}\NormalTok{, }\StringTok{"abab"}\NormalTok{, }\StringTok{"ababab"}\NormalTok{), }\StringTok{"ab+"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str\_view}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"ab"}\NormalTok{, }\StringTok{"abab"}\NormalTok{, }\StringTok{"ababab"}\NormalTok{), }\StringTok{"(ab)+"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1633,7 +1719,7 @@ In this chapter we focus on the use of the \textbf{dplyr} package that forms a c
 
 To explore the basic data manipulation capabilities of dplyr package, we will use the \texttt{building\_meter} dataset. If the following code returns \texttt{FALSE}, you should refer to the section \protect\hyperlink{finding-your-file}{Finding your file} in the \protect\hyperlink{preface}{Preface} on where you can download the datasets.
 
-that can be downloaded from XXX. This dataset contains 8,760 time-series observations of typical building meter measurements that is simulated using the Department of Energy's (DOE) reference building energy model for medium sized offices \citep{deru_us_2011}.
+This dataset contains 8,760 time-series observations of typical building meter measurements that is simulated using the Department of Energy's (DOE) reference building energy model for medium sized offices \citep{deru_us_2011}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1667,11 +1753,39 @@ that can be downloaded from XXX. This dataset contains 8,760 time-series observa
 \end{Highlighting}
 \end{Shaded}
 
-Spaces make it difficult to
+Non-word characters such as spaces may make it difficult to reference columns. Therefore, a basic rule is to avoid naming columns using names that contain these characters in the first place. However, sometimes it is out of your control because you did not create the dataset but received it from source where the naming was done by someone else.
+
+Take for example the \texttt{building.csv} data that we just parsed into R. \texttt{names()} when applied to a \texttt{data.frame()} returns the column names of the \texttt{data.frame}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{new\_name }\OtherTok{\textless{}{-}} \FunctionTok{str\_replace\_all}\NormalTok{(}\FunctionTok{names}\NormalTok{(bldg), }\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{W}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{W?"}\NormalTok{, }\StringTok{"\_"}\NormalTok{)}
+\FunctionTok{names}\NormalTok{(bldg)}
+\DocumentationTok{\#\#  [1] "Date/Time"                                }
+\DocumentationTok{\#\#  [2] "Cooling:Electricity [J](Hourly)"          }
+\DocumentationTok{\#\#  [3] "Heating:NaturalGas [J](Hourly)"           }
+\DocumentationTok{\#\#  [4] "Heating:Electricity [J](Hourly)"          }
+\DocumentationTok{\#\#  [5] "InteriorLights:Electricity [J](Hourly)"   }
+\DocumentationTok{\#\#  [6] "ExteriorLights:Electricity [J](Hourly)"   }
+\DocumentationTok{\#\#  [7] "InteriorEquipment:Electricity [J](Hourly)"}
+\DocumentationTok{\#\#  [8] "Fans:Electricity [J](Hourly)"             }
+\DocumentationTok{\#\#  [9] "Pumps:Electricity [J](Hourly)"            }
+\DocumentationTok{\#\# [10] "WaterSystems:NaturalGas [J](Hourly)"}
+\NormalTok{....}
+\end{Highlighting}
+\end{Shaded}
+
+An easy way to remove non-word characters is to use the \texttt{str\_replace\_all()} function to replace non-word characters with an underscore \texttt{\_}. Referring back to Chapter @ref\{regex\}, remember that \texttt{\textbackslash{}\textbackslash{}W} can be used to match non-word class of characters while \texttt{+} is a quantifies that can be used to match a pattern one or more times. Therefore, \texttt{str\_replace\_all(names(bldg),\ "\textbackslash{}\textbackslash{}W+",\ "\_")} would replace all non-word characters that appear one or more times in the character vector \texttt{names(bldg)} with an underscore \texttt{\_}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{new\_name }\OtherTok{\textless{}{-}} \FunctionTok{str\_replace\_all}\NormalTok{(}\FunctionTok{names}\NormalTok{(bldg), }\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{W+"}\NormalTok{, }\StringTok{"\_"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+You can also remove parts of the character vector that you do not want using the function \texttt{str\_remove\_all()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \FunctionTok{names}\NormalTok{(bldg) }\OtherTok{\textless{}{-}} \FunctionTok{str\_remove\_all}\NormalTok{(new\_name, }\StringTok{"\_Hourly\_"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -1824,7 +1938,7 @@ Additionally, tidyverse provides helper functions that lets you select columns b
 \begin{itemize}
 \tightlist
 \item
-  \texttt{matches()}: Select columns that matches a regular expression. \texttt{rename()} is a dplyr function that allows you to change the names of individual columns using \texttt{new\_name} = \texttt{old\_name}.
+  \texttt{matches()}: Select columns that matches a regular expression. \texttt{rename()} is a dplyr function that allows you to change the names of individual columns using \texttt{new\_name} = \texttt{old\_name}. Referring back to Chapter @ref\{regex\}, remember that the \texttt{.} is used to match any character except newline \texttt{\textbackslash{}n} while \texttt{?} is a quantifies that can be used to match a pattern zero or one times.
 \end{itemize}
 
 \begin{Shaded}
@@ -2475,7 +2589,7 @@ If you do not want to save the simulation results locally, you can save the simu
 \begin{Highlighting}[]
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.09.06 15:12}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.09.08 09:36}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2526,9 +2640,9 @@ To output the summary reports from EnergyPlus, you need to first run the simulat
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
-\DocumentationTok{\#\# Replace the existing IDF located at /private/var/folders/6l/8dz74knn0yd02c\_bt8fl1pk80000gn/T/RtmpdVjwaj/RefBldgMediumOfficeNew2004\_Chicago.idf.}
+\DocumentationTok{\#\# Replace the existing IDF located at /private/var/folders/6l/8dz74knn0yd02c\_bt8fl1pk80000gn/T/RtmpILF7sp/RefBldgMediumOfficeNew2004\_Chicago.idf.}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.09.06 15:12}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.09.08 09:37}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2705,7 +2819,7 @@ In this chapter, you will also be working with the U.S. Department of Energy (DO
 
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(}\AttributeTok{weather =}\NormalTok{ epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.09.06 15:13}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.09.08 09:37}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2733,7 +2847,7 @@ The RColorBrewer package provide three types of color palettes: sequential, dive
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-116-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-132-1.pdf}
 
 When representing gradients (such as temperature data), you want to use \emph{sequential} color palletes that are perceptually uniform as the color progresses from low to high.
 
@@ -2743,7 +2857,7 @@ When representing gradients (such as temperature data), you want to use \emph{se
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-117-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-133-1.pdf}
 
 You will want to use \emph{diverging} color palettes that uses a neutral mid-point that diverges at perceptually equal steps to both ends of the data. An example is using the \texttt{RdBu} color pallette to represent temperature data that diverges between cold and hot.
 
@@ -2753,7 +2867,7 @@ You will want to use \emph{diverging} color palettes that uses a neutral mid-poi
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-118-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-134-1.pdf}
 
 You will want to map categorical variables to \emph{qualitative} color palettes that are perceptually uniform and not have any variables standing out perceptually due to it's color. For instance, when visualizing the energy usage intensity of different buildings, you would want the colors used to represent each building to be easily distinguishable but at the same time not have one stand out from another even though they are numerically equivalent.
 
@@ -2763,7 +2877,7 @@ You will want to map categorical variables to \emph{qualitative} color palettes 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-119-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-135-1.pdf}
 
 You can use the function \texttt{display.brewer.pal()} to visualize a single brewer palette and use the \texttt{brewer.pal()} function to obtain the hexadecimade color code of the palette.
 
@@ -2774,7 +2888,7 @@ You can use the function \texttt{display.brewer.pal()} to visualize a single bre
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-120-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-136-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2862,7 +2976,7 @@ You can create bar graphs by adding \texttt{geom\_bar()}. By default, \texttt{st
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-125-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-141-1.pdf}
 
 By default, the bar charts would be stacked. In this scenario, we only have two groups of fuel, electricity and natural gas. However, when there are many groups, stacked bar charts can be difficult to visualize. You can place them side by side instead using \texttt{position\ =\ position\_dodge()}.
 
@@ -2873,7 +2987,7 @@ By default, the bar charts would be stacked. In this scenario, we only have two 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-126-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-142-1.pdf}
 
 You can use scale to change the fill and colors of the bar chart. The \texttt{scale\_*\_brewer()} and \texttt{scale\_*\_viridis()} functions provides an easy way to specify palettes from the RColorBrewer and the viridis package respectively. Particularly, \texttt{scale\_fill\_brewer()} and \texttt{scale\_fill\_viridis()} provides mapping to ggplot's fill aesthetics while \texttt{scale\_color\_brewer()} and \texttt{scale\_color\_viridis()} provides mapping to ggplot's color aesthetics.
 
@@ -2886,7 +3000,7 @@ You can use scale to change the fill and colors of the bar chart. The \texttt{sc
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-127-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-143-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2898,7 +3012,7 @@ You can use scale to change the fill and colors of the bar chart. The \texttt{sc
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-128-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-144-1.pdf}
 
 You can flip how the data coordinates maps to plot to get horizontal bar plots with \texttt{coord\_filp()}.
 
@@ -2911,7 +3025,7 @@ You can flip how the data coordinates maps to plot to get horizontal bar plots w
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-129-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-145-1.pdf}
 
 You can divide the plot into various \emph{facet}s by subsetting the plot based one or more discrete variables. In this example, we divide the plot row wise based on fuel type using \texttt{facet\_grid()}.
 
@@ -2924,7 +3038,7 @@ You can divide the plot into various \emph{facet}s by subsetting the plot based 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-130-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-146-1.pdf}
 
 As you probably have noticed. The x-axis labels are not legible due to overlapping when plotting the data as vertical bar charts.
 
@@ -2939,7 +3053,7 @@ You can use \texttt{theme()} and \texttt{element\_text()} to change how the x-ax
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-131-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-147-1.pdf}
 
 You can also use \texttt{theme()} together with various \texttt{element\_*} functions to control elements of the plot title, legend, axis labels, borders, background, etc. You can find out more about the possible arguments to each \texttt{element\_function()} by typing \texttt{?margin} into your console. \texttt{element\_*} functions are used with \texttt{theme()} to specify the non-data components of the plot. There are four element functions and they are:
 
@@ -2973,7 +3087,7 @@ You can also use \texttt{theme()} together with various \texttt{element\_*} func
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-132-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-148-1.pdf}
 
 \hypertarget{visualize-weather-data}{%
 \subsection{Visualize weather data}\label{visualize-weather-data}}
@@ -3026,7 +3140,7 @@ In the subsequent graphics, we will be using various colors from the \texttt{Red
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-135-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-151-1.pdf}
 
 You can visualize the weather data (dry bulb temperature in this example) as a single time series plot. Here, \texttt{geom\_line()} is used to connect the observations sequentially over time. \texttt{expression()} is used to express the degree symbol in the y-axis label.
 
@@ -3039,7 +3153,7 @@ You can visualize the weather data (dry bulb temperature in this example) as a s
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-136-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-152-1.pdf}
 
 You can also visualize the data by the hour of the day using scatterplots. To avoid overplotting, a typical problem with scatterplots, you can subset the data by their month using \texttt{facet\_grid()}. To further aid the ability to visually identify patterns in the presence of overplotting, you can use \texttt{geom\_smooth()} to add a smoothed line on top of the scatterplot.
 
@@ -3055,7 +3169,7 @@ You can also visualize the data by the hour of the day using scatterplots. To av
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-137-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-153-1.pdf}
 
 Last but not least, you can create heatmaps using the function \texttt{geom\_tile()}.
 
@@ -3071,7 +3185,7 @@ Last but not least, you can create heatmaps using the function \texttt{geom\_til
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-138-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-154-1.pdf}
 
 \hypertarget{saving-plots}{%
 \subsection{Saving Plots}\label{saving-plots}}
@@ -3951,7 +4065,7 @@ EnergyPlus allows you to specify meters to retrieve the simulation outputs. Howe
 \NormalTok{mdd}
 \DocumentationTok{\#\# == EnergyPlus Meter Data Dictionary File =======================================}
 \DocumentationTok{\#\#   * EnergyPlus version: 9.4.0 (998c4b761e)}
-\DocumentationTok{\#\#   * Simulation started: 2021{-}09{-}06 15:13:00}
+\DocumentationTok{\#\#   * Simulation started: 2021{-}09{-}08 09:37:00}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# {-}{-} Details {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 \DocumentationTok{\#\#      index reported\_time\_step report\_type}

@@ -1,4 +1,4 @@
-# Regular expressions
+# Regular expressions {#regex}
 
 *Regular expressions* are patterns that are used to match combinations of characters in a string. Before we begin, just a cautionary note that if your regular expressions are becoming too complex, perhaps it is time to step back and think about whether it is necessary and if they can be represented multiple expressions that are easier to understand. 
 
@@ -19,21 +19,42 @@ The most basic form of matching is to match exact strings
 x <- c("abc ABC\n123. !?\\(){}")
 writeLines(x)
 
+```
+
+
+```{r}
 str_view(x, "abc")
+```
+
+
+```{r}
 str_view(x, "123")
 ```
 
-## Character classes
+## Character classes {#regex-classes}
 
 Character classes allows you to specify a list of characters for matching. 
 
-A bracket `[...]` can be used to specify a list of character. Therefore, it will match any characters that was specified within the brackets. If a caret `^` is added to the start of the list of characters, it will match any characters that are NOT in the list. You can also specify a range expression using a hyphen `-` between two characters.  
+A bracket `[...]` can be used to specify a list of character. Therefore, it will match any characters that was specified within the brackets.  
 
 ```{r}
 str_view_all(x, "[bcde]")
+```
+
+
+If a caret `^` is added to the start of the list of characters, it will match any characters that are NOT in the list.
+
+```{r}
 str_view_all(x, "[^bcde]")
+```
+
+
+You can also specify a range expression using a hyphen `-` between two characters.  
+
+```{r}
 str_view_all(x, "[a-zA-Z]")
 ```
+
 
 You can also specify character classes using pre-defined names of these classes with a bracket expression. 
 
@@ -47,12 +68,17 @@ You can also specify character classes using pre-defined names of these classes 
 [:punct:]     punctuations
 [:space:]     space characters
 
-Try out the other named classes using the function `str_view_all()`
+Try out some of the named classes using the function `str_view_all()`
 
 ```{r}
 str_view_all(x, "[:alnum:]")
+```
+
+
+```{r}
 str_view_all(x, "[:punct:]")
 ```
+
 
 There are also special metacharacters you can use to match entire classes of characters. 
 
@@ -73,9 +99,15 @@ Note that to include a `\` in a regular expression, you need to escape it using 
 
 ```{r}
 str_view_all(x, ".")
+```
 
+
+```{r}
 str_view_all(x, "\\d")
+```
 
+
+```{r}
 str_view_all(x, "\\D")
 ```
 
@@ -95,13 +127,16 @@ For example, how would you create a regular expression to match the character `"
 
 ```{r}
 str_view_all(x, ".")
+```
+
+
+```{r}
 str_view_all(x, "\\.")
 ```
 
 
-To represent a backslash `\` as a regular expression, two levels of escape would be required!
+To represent a backslash `\` as a regular expression, two levels of escape would be required! To elaborate, to represent a `\` as a regular expression, you would need to escape it by creating the regular expression `\\`. To represent each of these `\` you need to use a string, which also requires you to add an additional `\` to escape it. Therefore, to match a `\` you need to write `\\\\`.
  
-
 ```{r}
 str_view(x, "\\\\")
 ```
@@ -156,16 +191,42 @@ You can use quantifiers to specify the number of times a pattern matches.
 
 ```{r}
 str_view(c("a", "abb", "abbb"), "ab+")
+```
+
+
+```{r}
 str_view(c("a", "abb", "abbb"), "ab*")
+```
+
+
+```{r}
 str_view(c("a", "abb", "abbb"), "ab?")
+```
+
+
+```{r}
 str_view(c("a", "abb", "abbb"), "ab{1}")
+```
+
+
+```{r}
 str_view(c("a", "abb", "abbb"), "ab{1,}")
+```
+
+
+```{r}
 str_view(c("a", "abb", "abbb"), "ab{1,2}")
 ```
+
+
 By default, quantifies are applied to a single character. You can use `(...)` to apply quantifies to more than one character.
 
 ```{r}
 str_view(c("ab", "abab", "ababab"), "ab+")
+```
+
+
+```{r}
 str_view(c("ab", "abab", "ababab"), "(ab)+")
 ```
 

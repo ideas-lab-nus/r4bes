@@ -16,17 +16,30 @@ library(here)
 
 To explore the basic data manipulation capabilities of dplyr package, we will use the `building_meter` dataset. If the following code returns `FALSE`, you should refer to the section [Finding your file] in the [Preface] on where you can download the datasets. 
 
-that can be downloaded from XXX. This dataset contains 8,760 time-series observations of typical building meter measurements that is simulated using the Department of Energy's (DOE) reference building energy model for medium sized offices [@deru_us_2011].
+This dataset contains 8,760 time-series observations of typical building meter measurements that is simulated using the Department of Energy's (DOE) reference building energy model for medium sized offices [@deru_us_2011].
 
 ```{r}
 bldg <- read_csv(here("data", "building_meter.csv"))
 bldg
 ```
 
-Spaces make it difficult to 
+Non-word characters such as spaces may make it difficult to reference columns. Therefore, a basic rule is to avoid naming columns using names that contain these characters in the first place. However, sometimes it is out of your control because you did not create the dataset but received it from source where the naming was done by someone else. 
+
+Take for example the `building.csv` data that we just parsed into R. `names()` when applied to a `data.frame()` returns the column names of the `data.frame`
 
 ```{r}
-new_name <- str_replace_all(names(bldg), "\\W\\W?", "_")
+names(bldg)
+```
+
+An easy way to remove non-word characters is to use the `str_replace_all()` function to replace non-word characters with an underscore `_`. Referring back to Chapter \@ref{regex}, remember that `\\W` can be used to match non-word class of characters while `+` is a quantifies that can be used to match a pattern one or more times. Therefore, `str_replace_all(names(bldg), "\\W+", "_")` would replace all non-word characters that appear one or more times in the character vector `names(bldg)` with an underscore `_`.
+
+```{r}
+new_name <- str_replace_all(names(bldg), "\\W+", "_")
+```
+
+You can also remove parts of the character vector that you do not want using the function `str_remove_all()`.
+
+```{r}
 names(bldg) <- str_remove_all(new_name, "_Hourly_")
 ```
 
@@ -88,7 +101,7 @@ select(
 )
 ```
 
-* `matches()`: Select columns that matches a regular expression. `rename()` is a dplyr function that allows you to change the names of individual columns using `new_name` = `old_name`.
+* `matches()`: Select columns that matches a regular expression. `rename()` is a dplyr function that allows you to change the names of individual columns using `new_name` = `old_name`. Referring back to Chapter \@ref{regex}, remember that the `.` is used to match any character except newline `\n` while `?` is a quantifies that can be used to match a pattern zero or one times. 
 
 ```{r}
 reg_ex <- "[dD]ate.?[tT]ime"
