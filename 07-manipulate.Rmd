@@ -208,16 +208,20 @@ transmute(bldg,
 )
 ```
 
-Useful mutate functions include
+Useful mutate and transmute functions include
+
 - Arithmetic operators (`+`, `-`, *`, `/`, etc.) and logarithms (`log()`, `log2()`, etc.)
-- `lead()` and `lag()`, allowing you to create lead and lag variables that are useful especially when working with timeseries data.
-- `if_else()` and `case_when()`
 
 ```{r}
 heat <- transmute(bldg,
   Total_Heating_J = Heating_NaturalGas_J + Heating_Electricity_J
-)
+  )
+heat
+```
 
+- `lead()` and `lag()`, allowing you to create lead and lag variables that are useful especially when working with timeseries data.
+
+```{r}
 mutate(
   heat,
   lag_1 = lag(Total_Heating_J),
@@ -226,8 +230,27 @@ mutate(
 )
 ```
 
+- `if_else()` is function of the form `if_else(condition, true, false)` that allows you to test a condition that you provide as a first argument to the function. If the condition is `TRUE`, `if_else()` will return the second argument. By contrast, if the condition is `FALSE`, it will return the third argument. In the example below, we are using mutate to create a new variable/column `New_Total_Heating_J`. This new column will contain the characters "low" if the condition `Total_Heating_J < 200000000` is `TRUE` and "high" if it is `FALSE`.
 
-TODO: Example of use of `if_else()` and `case_when()` in `mutate()` pipe
+```{r}
+mutate(
+  heat,
+  New_Total_Heating_J = if_else(Total_Heating_J < 200000000, "low", "high")
+  )
+```
+
+- `case_when()` is an extension of `if_else()` by allowing you to write multiple `if_else()` statements. Below, we assign a `"low"` when `Total_Heating_J < 200000000`, `"medium"` when `200000000 <= Total_Heating_J <= 400000000`, and high when `Total_Heating_J > 400000000`.  
+
+```{r}
+mutate(
+  heat,
+  New_Total_Heating_J = case_when(
+    Total_Heating_J < 200000000 ~ "low",
+    Total_Heating_J >= 200000000 & Total_Heating_J <= 400000000 ~ "medium",
+    Total_Heating_J > 400000000 ~ "high")
+  )
+```
+
 
 ### `summarise()` and `group_by()`
 

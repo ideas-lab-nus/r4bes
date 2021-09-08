@@ -2271,15 +2271,42 @@ You can use \texttt{transmute()} if you only want to keep the new variables in y
 \end{Highlighting}
 \end{Shaded}
 
-Useful mutate functions include
-- Arithmetic operators (\texttt{+}, \texttt{-}, *\texttt{,}/\texttt{,\ etc.)\ and\ logarithms\ (}log()\texttt{,}log2()\texttt{,\ etc.)\ -}lead()\texttt{and}lag()\texttt{,\ allowing\ you\ to\ create\ lead\ and\ lag\ variables\ that\ are\ useful\ especially\ when\ working\ with\ timeseries\ data.\ -}if\_else()\texttt{and}case\_when()`
+Useful mutate and transmute functions include
+
+\begin{itemize}
+\tightlist
+\item
+  Arithmetic operators (\texttt{+}, \texttt{-}, *\texttt{,}/\texttt{,\ etc.)\ and\ logarithms\ (}log()\texttt{,}log2()`, etc.)
+\end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{heat }\OtherTok{\textless{}{-}} \FunctionTok{transmute}\NormalTok{(bldg,}
   \AttributeTok{Total\_Heating\_J =}\NormalTok{ Heating\_NaturalGas\_J }\SpecialCharTok{+}\NormalTok{ Heating\_Electricity\_J}
-\NormalTok{)}
+\NormalTok{  )}
+\NormalTok{heat}
+\DocumentationTok{\#\# \# A tibble: 8,760 x 1}
+\DocumentationTok{\#\#    Total\_Heating\_J}
+\DocumentationTok{\#\#              \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\#  1      195804272.}
+\DocumentationTok{\#\#  2      195085034.}
+\DocumentationTok{\#\#  3      261096124.}
+\DocumentationTok{\#\#  4      204764484.}
+\DocumentationTok{\#\#  5      273175257.}
+\DocumentationTok{\#\#  6      212557265.}
+\DocumentationTok{\#\#  7      282017901.}
+\NormalTok{....}
+\end{Highlighting}
+\end{Shaded}
 
+\begin{itemize}
+\tightlist
+\item
+  \texttt{lead()} and \texttt{lag()}, allowing you to create lead and lag variables that are useful especially when working with timeseries data.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \FunctionTok{mutate}\NormalTok{(}
 \NormalTok{  heat,}
   \AttributeTok{lag\_1 =} \FunctionTok{lag}\NormalTok{(Total\_Heating\_J),}
@@ -2300,7 +2327,60 @@ Useful mutate functions include
 \end{Highlighting}
 \end{Shaded}
 
-TODO: Example of use of \texttt{if\_else()} and \texttt{case\_when()} in \texttt{mutate()} pipe
+\begin{itemize}
+\tightlist
+\item
+  \texttt{if\_else()} is function of the form \texttt{if\_else(condition,\ true,\ false)} that allows you to test a condition that you provide as a first argument to the function. If the condition is \texttt{TRUE}, \texttt{if\_else()} will return the second argument. By contrast, if the condition is \texttt{FALSE}, it will return the third argument. In the example below, we are using mutate to create a new variable/column \texttt{New\_Total\_Heating\_J}. This new column will contain the characters ``low'' if the condition \texttt{Total\_Heating\_J\ \textless{}\ 200000000} is \texttt{TRUE} and ``high'' if it is \texttt{FALSE}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mutate}\NormalTok{(}
+\NormalTok{  heat,}
+  \AttributeTok{New\_Total\_Heating\_J =} \FunctionTok{if\_else}\NormalTok{(Total\_Heating\_J }\SpecialCharTok{\textless{}} \DecValTok{200000000}\NormalTok{, }\StringTok{"low"}\NormalTok{, }\StringTok{"high"}\NormalTok{)}
+\NormalTok{  )}
+\DocumentationTok{\#\# \# A tibble: 8,760 x 2}
+\DocumentationTok{\#\#    Total\_Heating\_J New\_Total\_Heating\_J}
+\DocumentationTok{\#\#              \textless{}dbl\textgreater{} \textless{}chr\textgreater{}              }
+\DocumentationTok{\#\#  1      195804272. low                }
+\DocumentationTok{\#\#  2      195085034. low                }
+\DocumentationTok{\#\#  3      261096124. high               }
+\DocumentationTok{\#\#  4      204764484. high               }
+\DocumentationTok{\#\#  5      273175257. high               }
+\DocumentationTok{\#\#  6      212557265. high               }
+\DocumentationTok{\#\#  7      282017901. high               }
+\NormalTok{....}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{case\_when()} is an extension of \texttt{if\_else()} by allowing you to write multiple \texttt{if\_else()} statements. Below, we assign a \texttt{"low"} when \texttt{Total\_Heating\_J\ \textless{}\ 200000000}, \texttt{"medium"} when \texttt{200000000\ \textless{}=\ Total\_Heating\_J\ \textless{}=\ 400000000}, and high when \texttt{Total\_Heating\_J\ \textgreater{}\ 400000000}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mutate}\NormalTok{(}
+\NormalTok{  heat,}
+  \AttributeTok{New\_Total\_Heating\_J =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{    Total\_Heating\_J }\SpecialCharTok{\textless{}} \DecValTok{200000000} \SpecialCharTok{\textasciitilde{}} \StringTok{"low"}\NormalTok{,}
+\NormalTok{    Total\_Heating\_J }\SpecialCharTok{\textgreater{}=} \DecValTok{200000000} \SpecialCharTok{\&}\NormalTok{ Total\_Heating\_J }\SpecialCharTok{\textless{}=} \DecValTok{400000000} \SpecialCharTok{\textasciitilde{}} \StringTok{"medium"}\NormalTok{,}
+\NormalTok{    Total\_Heating\_J }\SpecialCharTok{\textgreater{}} \DecValTok{400000000} \SpecialCharTok{\textasciitilde{}} \StringTok{"high"}\NormalTok{)}
+\NormalTok{  )}
+\DocumentationTok{\#\# \# A tibble: 8,760 x 2}
+\DocumentationTok{\#\#    Total\_Heating\_J New\_Total\_Heating\_J}
+\DocumentationTok{\#\#              \textless{}dbl\textgreater{} \textless{}chr\textgreater{}              }
+\DocumentationTok{\#\#  1      195804272. low                }
+\DocumentationTok{\#\#  2      195085034. low                }
+\DocumentationTok{\#\#  3      261096124. medium             }
+\DocumentationTok{\#\#  4      204764484. medium             }
+\DocumentationTok{\#\#  5      273175257. medium             }
+\DocumentationTok{\#\#  6      212557265. medium             }
+\DocumentationTok{\#\#  7      282017901. medium             }
+\NormalTok{....}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{summarise-and-group_by}{%
 \subsection{\texorpdfstring{\texttt{summarise()} and \texttt{group\_by()}}{summarise() and group\_by()}}\label{summarise-and-group_by}}
@@ -2589,7 +2669,7 @@ If you do not want to save the simulation results locally, you can save the simu
 \begin{Highlighting}[]
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.09.08 09:36}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.09.08 16:55}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2640,9 +2720,9 @@ To output the summary reports from EnergyPlus, you need to first run the simulat
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
-\DocumentationTok{\#\# Replace the existing IDF located at /private/var/folders/6l/8dz74knn0yd02c\_bt8fl1pk80000gn/T/RtmpILF7sp/RefBldgMediumOfficeNew2004\_Chicago.idf.}
+\DocumentationTok{\#\# Replace the existing IDF located at /private/var/folders/6l/8dz74knn0yd02c\_bt8fl1pk80000gn/T/Rtmp3RnGlt/RefBldgMediumOfficeNew2004\_Chicago.idf.}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.09.08 09:37}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.09.08 16:55}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2819,7 +2899,7 @@ In this chapter, you will also be working with the U.S. Department of Energy (DO
 
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(}\AttributeTok{weather =}\NormalTok{ epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.09.08 09:37}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.09.08 16:56}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2847,7 +2927,7 @@ The RColorBrewer package provide three types of color palettes: sequential, dive
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-132-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-135-1.pdf}
 
 When representing gradients (such as temperature data), you want to use \emph{sequential} color palletes that are perceptually uniform as the color progresses from low to high.
 
@@ -2857,7 +2937,7 @@ When representing gradients (such as temperature data), you want to use \emph{se
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-133-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-136-1.pdf}
 
 You will want to use \emph{diverging} color palettes that uses a neutral mid-point that diverges at perceptually equal steps to both ends of the data. An example is using the \texttt{RdBu} color pallette to represent temperature data that diverges between cold and hot.
 
@@ -2867,7 +2947,7 @@ You will want to use \emph{diverging} color palettes that uses a neutral mid-poi
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-134-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-137-1.pdf}
 
 You will want to map categorical variables to \emph{qualitative} color palettes that are perceptually uniform and not have any variables standing out perceptually due to it's color. For instance, when visualizing the energy usage intensity of different buildings, you would want the colors used to represent each building to be easily distinguishable but at the same time not have one stand out from another even though they are numerically equivalent.
 
@@ -2877,7 +2957,7 @@ You will want to map categorical variables to \emph{qualitative} color palettes 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-135-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-138-1.pdf}
 
 You can use the function \texttt{display.brewer.pal()} to visualize a single brewer palette and use the \texttt{brewer.pal()} function to obtain the hexadecimade color code of the palette.
 
@@ -2888,7 +2968,7 @@ You can use the function \texttt{display.brewer.pal()} to visualize a single bre
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-136-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-139-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2976,7 +3056,7 @@ You can create bar graphs by adding \texttt{geom\_bar()}. By default, \texttt{st
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-141-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-144-1.pdf}
 
 By default, the bar charts would be stacked. In this scenario, we only have two groups of fuel, electricity and natural gas. However, when there are many groups, stacked bar charts can be difficult to visualize. You can place them side by side instead using \texttt{position\ =\ position\_dodge()}.
 
@@ -2987,7 +3067,7 @@ By default, the bar charts would be stacked. In this scenario, we only have two 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-142-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-145-1.pdf}
 
 You can use scale to change the fill and colors of the bar chart. The \texttt{scale\_*\_brewer()} and \texttt{scale\_*\_viridis()} functions provides an easy way to specify palettes from the RColorBrewer and the viridis package respectively. Particularly, \texttt{scale\_fill\_brewer()} and \texttt{scale\_fill\_viridis()} provides mapping to ggplot's fill aesthetics while \texttt{scale\_color\_brewer()} and \texttt{scale\_color\_viridis()} provides mapping to ggplot's color aesthetics.
 
@@ -3000,7 +3080,7 @@ You can use scale to change the fill and colors of the bar chart. The \texttt{sc
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-143-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-146-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3012,7 +3092,7 @@ You can use scale to change the fill and colors of the bar chart. The \texttt{sc
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-144-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-147-1.pdf}
 
 You can flip how the data coordinates maps to plot to get horizontal bar plots with \texttt{coord\_filp()}.
 
@@ -3025,7 +3105,7 @@ You can flip how the data coordinates maps to plot to get horizontal bar plots w
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-145-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-148-1.pdf}
 
 You can divide the plot into various \emph{facet}s by subsetting the plot based one or more discrete variables. In this example, we divide the plot row wise based on fuel type using \texttt{facet\_grid()}.
 
@@ -3038,7 +3118,7 @@ You can divide the plot into various \emph{facet}s by subsetting the plot based 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-146-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-149-1.pdf}
 
 As you probably have noticed. The x-axis labels are not legible due to overlapping when plotting the data as vertical bar charts.
 
@@ -3053,7 +3133,7 @@ You can use \texttt{theme()} and \texttt{element\_text()} to change how the x-ax
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-147-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-150-1.pdf}
 
 You can also use \texttt{theme()} together with various \texttt{element\_*} functions to control elements of the plot title, legend, axis labels, borders, background, etc. You can find out more about the possible arguments to each \texttt{element\_function()} by typing \texttt{?margin} into your console. \texttt{element\_*} functions are used with \texttt{theme()} to specify the non-data components of the plot. There are four element functions and they are:
 
@@ -3087,7 +3167,7 @@ You can also use \texttt{theme()} together with various \texttt{element\_*} func
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-148-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-151-1.pdf}
 
 \hypertarget{visualize-weather-data}{%
 \subsection{Visualize weather data}\label{visualize-weather-data}}
@@ -3140,7 +3220,7 @@ In the subsequent graphics, we will be using various colors from the \texttt{Red
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-151-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-154-1.pdf}
 
 You can visualize the weather data (dry bulb temperature in this example) as a single time series plot. Here, \texttt{geom\_line()} is used to connect the observations sequentially over time. \texttt{expression()} is used to express the degree symbol in the y-axis label.
 
@@ -3153,7 +3233,7 @@ You can visualize the weather data (dry bulb temperature in this example) as a s
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-152-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-155-1.pdf}
 
 You can also visualize the data by the hour of the day using scatterplots. To avoid overplotting, a typical problem with scatterplots, you can subset the data by their month using \texttt{facet\_grid()}. To further aid the ability to visually identify patterns in the presence of overplotting, you can use \texttt{geom\_smooth()} to add a smoothed line on top of the scatterplot.
 
@@ -3169,7 +3249,7 @@ You can also visualize the data by the hour of the day using scatterplots. To av
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-153-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-156-1.pdf}
 
 Last but not least, you can create heatmaps using the function \texttt{geom\_tile()}.
 
@@ -3185,7 +3265,7 @@ Last but not least, you can create heatmaps using the function \texttt{geom\_til
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r4bes_files/figure-latex/unnamed-chunk-154-1.pdf}
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-157-1.pdf}
 
 \hypertarget{saving-plots}{%
 \subsection{Saving Plots}\label{saving-plots}}
@@ -4065,7 +4145,7 @@ EnergyPlus allows you to specify meters to retrieve the simulation outputs. Howe
 \NormalTok{mdd}
 \DocumentationTok{\#\# == EnergyPlus Meter Data Dictionary File =======================================}
 \DocumentationTok{\#\#   * EnergyPlus version: 9.4.0 (998c4b761e)}
-\DocumentationTok{\#\#   * Simulation started: 2021{-}09{-}08 09:37:00}
+\DocumentationTok{\#\#   * Simulation started: 2021{-}09{-}08 16:56:00}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# {-}{-} Details {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 \DocumentationTok{\#\#      index reported\_time\_step report\_type}

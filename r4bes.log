@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.4.12)  8 SEP 2021 09:38
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.4.12)  8 SEP 2021 16:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -968,234 +968,240 @@ Underfull \vbox (badness 1546) has occurred while \output is active []
 Underfull \vbox (badness 2698) detected at line 2182
  []
 
-[61] [62] [63]
-Underfull \hbox (badness 10000) in paragraph at lines 2274--2276
-\TU/lmtt/m/n/10 and logarithms (\TU/lmr/m/n/10 log()\TU/lmtt/m/n/10 ,\TU/lmr/m/
-n/10 log2()\TU/lmtt/m/n/10 , etc.) -\TU/lmr/m/n/10 lead()\TU/lmtt/m/n/10 and\TU
-/lmr/m/n/10 lag()\TU/lmtt/m/n/10 , allowing you to
+[61] [62] [63] [64]
+Underfull \hbox (badness 1163) in paragraph at lines 2359--2360
+\TU/lmr/m/n/10 multiple \TU/lmtt/m/n/10 if_else() \TU/lmr/m/n/10 statements. Be
+low, we assign a \TU/lmtt/m/n/10 "low" \TU/lmr/m/n/10 when
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2274--2276
-\TU/lmtt/m/n/10 create lead and lag variables that are useful especially when
+Underfull \hbox (badness 10000) in paragraph at lines 2359--2360
+\TU/lmtt/m/n/10 Total_Heating_J < 200000000\TU/lmr/m/n/10 , \TU/lmtt/m/n/10 "me
+dium" \TU/lmr/m/n/10 when \TU/lmtt/m/n/10 200000000 <=
  []
 
-[64] [65] [66]
+
+Underfull \hbox (badness 2376) in paragraph at lines 2359--2360
+\TU/lmtt/m/n/10 Total_Heating_J <= 400000000\TU/lmr/m/n/10 , and high when \TU/
+lmtt/m/n/10 Total_Heating_J
+ []
+
+[65] [66] [67]
 File: figures/pipe.png Graphic file (type bmp)
 <figures/pipe.png>
-[67] [68
+[68] [69] [70
 
-] [69] [70]
+] [71] [72]
 Chapter 8.
-[71
+[73
 
-] [72
+] [74
 
 ]
 Chapter 9.
 
-Overfull \hbox (119.90201pt too wide) in paragraph at lines 2502--2503
+Overfull \hbox (119.90201pt too wide) in paragraph at lines 2582--2583
 []\TU/lmr/m/n/10 For your convenience, the model can be found at \TU/lmtt/m/n/1
 0 ./data/idf/RefBldgMediumOfficeNew2004_Chicago.idf
  []
 
 
-Overfull \hbox (11.54001pt too wide) in paragraph at lines 2502--2503
+Overfull \hbox (11.54001pt too wide) in paragraph at lines 2582--2583
 \TU/lmr/m/n/10 can be found at \TU/lmtt/m/n/10 ./data/epw/USA_IL_Chicago-OHare.
 Intl.AP.725300_TMY3.epw
  []
 
-[73]
-Underfull \hbox (badness 1436) in paragraph at lines 2557--2558
+[75]
+Underfull \hbox (badness 1436) in paragraph at lines 2637--2638
 \TU/lmr/m/n/10 You should check the SimulationControl and RunPeriod objects in 
 En-
  []
 
 
-Underfull \hbox (badness 2538) in paragraph at lines 2557--2558
+Underfull \hbox (badness 2538) in paragraph at lines 2637--2638
 \TU/lmr/m/n/10 ergyPlus before simulating the model. The SimulationControl obje
 ct
  []
 
 
-Underfull \hbox (badness 2409) in paragraph at lines 2557--2558
+Underfull \hbox (badness 2409) in paragraph at lines 2637--2638
 \TU/lmr/m/n/10 allows the user to specify the type of simulations that will be 
 per-
  []
 
 
-Underfull \hbox (badness 1199) in paragraph at lines 2557--2558
+Underfull \hbox (badness 1199) in paragraph at lines 2637--2638
 \TU/lmtt/m/n/10 Simulation for Weather File Run Periods \TU/lmr/m/n/10 field is
  \TU/lmtt/m/n/10 NO \TU/lmr/m/n/10 as illustrated in
  []
 
-[74]
+[76]
 File: figures/sim_control.png Graphic file (type bmp)
 <figures/sim_control.png>
 File: figures/run_period.png Graphic file (type bmp)
 <figures/run_period.png>
-[75] [76]
+[77] [78]
 Chapter 10.
-[77
+[79
 
 ]
 File: figures/tabular_data.png Graphic file (type bmp)
 <figures/tabular_data.png>
 
-Underfull \hbox (badness 1342) in paragraph at lines 2669--2670
+Underfull \hbox (badness 1342) in paragraph at lines 2749--2750
 \TU/lmr/m/n/10 method, which extracts all the EnergyPlus summary reports into a
  R
  []
 
-[78] [79] [80]
+[80] [81] [82]
 Chapter 11.
-[81
+[83
 
 ]
-File: r4bes_files/figure-latex/unnamed-chunk-132-1.pdf Graphic file (type pdf)
-<use r4bes_files/figure-latex/unnamed-chunk-132-1.pdf>
+File: r4bes_files/figure-latex/unnamed-chunk-135-1.pdf Graphic file (type pdf)
+<use r4bes_files/figure-latex/unnamed-chunk-135-1.pdf>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[82]
-File: r4bes_files/figure-latex/unnamed-chunk-133-1.pdf Graphic file (type pdf)
-<use r4bes_files/figure-latex/unnamed-chunk-133-1.pdf>
+[84]
+File: r4bes_files/figure-latex/unnamed-chunk-136-1.pdf Graphic file (type pdf)
+<use r4bes_files/figure-latex/unnamed-chunk-136-1.pdf>
 
 Underfull \vbox (badness 7522) has occurred while \output is active []
 
-[83]
-File: r4bes_files/figure-latex/unnamed-chunk-134-1.pdf Graphic file (type pdf)
-<use r4bes_files/figure-latex/unnamed-chunk-134-1.pdf>
-[84]
-File: r4bes_files/figure-latex/unnamed-chunk-135-1.pdf Graphic file (type pdf)
-<use r4bes_files/figure-latex/unnamed-chunk-135-1.pdf>
-File: r4bes_files/figure-latex/unnamed-chunk-136-1.pdf Graphic file (type pdf)
-<use r4bes_files/figure-latex/unnamed-chunk-136-1.pdf>
 [85]
+File: r4bes_files/figure-latex/unnamed-chunk-137-1.pdf Graphic file (type pdf)
+<use r4bes_files/figure-latex/unnamed-chunk-137-1.pdf>
+[86]
+File: r4bes_files/figure-latex/unnamed-chunk-138-1.pdf Graphic file (type pdf)
+<use r4bes_files/figure-latex/unnamed-chunk-138-1.pdf>
+File: r4bes_files/figure-latex/unnamed-chunk-139-1.pdf Graphic file (type pdf)
+<use r4bes_files/figure-latex/unnamed-chunk-139-1.pdf>
+[87]
 File: figures/viridis.png Graphic file (type bmp)
 <figures/viridis.png>
 
-Overfull \hbox (39.1562pt too wide) in paragraph at lines 2903--2903
+Overfull \hbox (39.1562pt too wide) in paragraph at lines 2983--2983
  [] 
  []
 
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <14.4> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 2906.
-[86] [87]
-File: r4bes_files/figure-latex/unnamed-chunk-141-1.pdf Graphic file (type pdf)
-<use r4bes_files/figure-latex/unnamed-chunk-141-1.pdf>
-File: r4bes_files/figure-latex/unnamed-chunk-142-1.pdf Graphic file (type pdf)
-<use r4bes_files/figure-latex/unnamed-chunk-142-1.pdf>
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[88]
-Underfull \hbox (badness 2334) in paragraph at lines 2992--2993
-\TU/lmr/m/n/10 tively. Particularly, \TU/lmtt/m/n/10 scale_fill_brewer() \TU/lm
-r/m/n/10 and \TU/lmtt/m/n/10 scale_fill_viridis()
- []
-
-File: r4bes_files/figure-latex/unnamed-chunk-143-1.pdf Graphic file (type pdf)
-<use r4bes_files/figure-latex/unnamed-chunk-143-1.pdf>
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[89]
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 2986.
+[88] [89]
 File: r4bes_files/figure-latex/unnamed-chunk-144-1.pdf Graphic file (type pdf)
 <use r4bes_files/figure-latex/unnamed-chunk-144-1.pdf>
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[90]
 File: r4bes_files/figure-latex/unnamed-chunk-145-1.pdf Graphic file (type pdf)
 <use r4bes_files/figure-latex/unnamed-chunk-145-1.pdf>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[91]
+[90]
+Underfull \hbox (badness 2334) in paragraph at lines 3072--3073
+\TU/lmr/m/n/10 tively. Particularly, \TU/lmtt/m/n/10 scale_fill_brewer() \TU/lm
+r/m/n/10 and \TU/lmtt/m/n/10 scale_fill_viridis()
+ []
+
 File: r4bes_files/figure-latex/unnamed-chunk-146-1.pdf Graphic file (type pdf)
 <use r4bes_files/figure-latex/unnamed-chunk-146-1.pdf>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[92]
+[91]
 File: r4bes_files/figure-latex/unnamed-chunk-147-1.pdf Graphic file (type pdf)
 <use r4bes_files/figure-latex/unnamed-chunk-147-1.pdf>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[93]
+[92]
 File: r4bes_files/figure-latex/unnamed-chunk-148-1.pdf Graphic file (type pdf)
 <use r4bes_files/figure-latex/unnamed-chunk-148-1.pdf>
 
-Underfull \vbox (badness 4832) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[94] [95]
+[93]
+File: r4bes_files/figure-latex/unnamed-chunk-149-1.pdf Graphic file (type pdf)
+<use r4bes_files/figure-latex/unnamed-chunk-149-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[94]
+File: r4bes_files/figure-latex/unnamed-chunk-150-1.pdf Graphic file (type pdf)
+<use r4bes_files/figure-latex/unnamed-chunk-150-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[95]
 File: r4bes_files/figure-latex/unnamed-chunk-151-1.pdf Graphic file (type pdf)
 <use r4bes_files/figure-latex/unnamed-chunk-151-1.pdf>
 
-Underfull \vbox (badness 1014) has occurred while \output is active []
+Underfull \vbox (badness 4832) has occurred while \output is active []
 
-[96]
-File: r4bes_files/figure-latex/unnamed-chunk-152-1.pdf Graphic file (type pdf)
-<use r4bes_files/figure-latex/unnamed-chunk-152-1.pdf>
-File: r4bes_files/figure-latex/unnamed-chunk-153-1.pdf Graphic file (type pdf)
-<use r4bes_files/figure-latex/unnamed-chunk-153-1.pdf>
-
-Overfull \vbox (1.18864pt too high) detected at line 3186
- []
-
-[97]
+[96] [97]
 File: r4bes_files/figure-latex/unnamed-chunk-154-1.pdf Graphic file (type pdf)
 <use r4bes_files/figure-latex/unnamed-chunk-154-1.pdf>
-[98] [99
 
-] [100]
+Underfull \vbox (badness 1014) has occurred while \output is active []
+
+[98]
+File: r4bes_files/figure-latex/unnamed-chunk-155-1.pdf Graphic file (type pdf)
+<use r4bes_files/figure-latex/unnamed-chunk-155-1.pdf>
+File: r4bes_files/figure-latex/unnamed-chunk-156-1.pdf Graphic file (type pdf)
+<use r4bes_files/figure-latex/unnamed-chunk-156-1.pdf>
+
+Overfull \vbox (1.18864pt too high) detected at line 3266
+ []
+
+[99]
+File: r4bes_files/figure-latex/unnamed-chunk-157-1.pdf Graphic file (type pdf)
+<use r4bes_files/figure-latex/unnamed-chunk-157-1.pdf>
+[100] [101
+
+] [102]
 Chapter 12.
-[101
+[103
 
-] [102
+] [104
 
 ]
 Chapter 13.
 
-Underfull \hbox (badness 1360) in paragraph at lines 3242--3243
+Underfull \hbox (badness 1360) in paragraph at lines 3322--3323
 \TU/lmr/m/n/10 installation of EnergyPlus. You will find these documents within
  En-
  []
 
 
-Underfull \hbox (badness 1142) in paragraph at lines 3242--3243
+Underfull \hbox (badness 1142) in paragraph at lines 3322--3323
 \TU/lmr/m/n/10 ergyPlus’s installation folder.By default, EnergyPlus will be in
 stalled in
  []
 
 
-Underfull \hbox (badness 2913) in paragraph at lines 3244--3245
+Underfull \hbox (badness 2913) in paragraph at lines 3324--3325
 []\TU/lmr/m/n/10 I would highly recommend referring to the EnergyPlus input out
 put
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3244--3245
+Underfull \hbox (badness 10000) in paragraph at lines 3324--3325
 \TU/lmr/m/n/10 reference (\TU/lmtt/m/n/10 [EnergyPlus installation folder] > Do
 cumentation >
  []
 
 
-Underfull \hbox (badness 2503) in paragraph at lines 3244--3245
+Underfull \hbox (badness 2503) in paragraph at lines 3324--3325
 \TU/lmtt/m/n/10 InputOutputReference.pdf\TU/lmr/m/n/10 ), which provides a thor
 ough description of
  []
 
-[103]
-Underfull \hbox (badness 1655) in paragraph at lines 3246--3247
+[105]
+Underfull \hbox (badness 1655) in paragraph at lines 3326--3327
 \TU/lmr/m/n/10 inquisitive mind, I would recommend reading the EnergyPlus engin
 eer-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3246--3247
+Underfull \hbox (badness 10000) in paragraph at lines 3326--3327
 \TU/lmr/m/n/10 ing reference (\TU/lmtt/m/n/10 [EnergyPlus installation folder] 
 > Documentation >
  []
@@ -1203,32 +1209,32 @@ Underfull \hbox (badness 10000) in paragraph at lines 3246--3247
 File: figures/group_class_field.png Graphic file (type bmp)
 <figures/group_class_field.png>
 
-Underfull \hbox (badness 2573) in paragraph at lines 3262--3263
+Underfull \hbox (badness 2573) in paragraph at lines 3342--3343
 \TU/lmtt/m/n/10 Elements \TU/lmr/m/n/10 in EnergyPlus. The \TU/lmtt/m/n/10 Surf
 ace Construction Elements \TU/lmr/m/n/10 class
  []
 
 
-Underfull \hbox (badness 4205) in paragraph at lines 3262--3263
+Underfull \hbox (badness 4205) in paragraph at lines 3342--3343
 \TU/lmr/m/n/10 groups consists of several classes that include the \TU/lmtt/m/n
 /10 Material:NoMass\TU/lmr/m/n/10 ,
  []
 
 
-Underfull \hbox (badness 2818) in paragraph at lines 3262--3263
+Underfull \hbox (badness 2818) in paragraph at lines 3342--3343
 \TU/lmtt/m/n/10 Material:AirGap\TU/lmr/m/n/10 , and the \TU/lmtt/m/n/10 WindowM
 aterial:SimpleGalzingSystem \TU/lmr/m/n/10 class
  []
 
 File: figures/input_structure.png Graphic file (type bmp)
 <figures/input_structure.png>
-[104]
+[106]
 File: figures/class_object.png Graphic file (type bmp)
 <figures/class_object.png>
 
 Overfull \vbox (165.39102pt too high) has occurred while \output is active []
 
-[105] [106]
+[107] [108]
 Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
@@ -1247,7 +1253,7 @@ Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no └ (U+2514) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-[107]
+[109]
 Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
@@ -1260,11 +1266,11 @@ Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no └ (U+2514) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-[108]
+[110]
 File: figures/idd_nomass.png Graphic file (type bmp)
 <figures/idd_nomass.png>
 
-Overfull \hbox (342.64435pt too wide) in paragraph at lines 3464--3465
+Overfull \hbox (342.64435pt too wide) in paragraph at lines 3544--3545
  [][] 
  []
 
@@ -1285,7 +1291,7 @@ Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-[109] [110]
+[111] [112]
 Missing character: There is no └ (U+2514) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no └ (U+2514) in font [lmmonolt10-boldoblique]:!
@@ -1296,11 +1302,11 @@ Missing character: There is no └ (U+2514) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no └ (U+2514) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-[111] [112
+[113] [114
 
 ]
 Chapter 14.
-[113]
+[115]
 Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
@@ -1329,7 +1335,7 @@ Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-[114]
+[116]
 Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
@@ -1347,12 +1353,12 @@ Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 
-Overfull \hbox (93.33891pt too wide) in paragraph at lines 3652--3653
+Overfull \hbox (93.33891pt too wide) in paragraph at lines 3732--3733
 []\TU/lmr/m/n/10 Take a minute now to open the EnergyPlus IDF file (\TU/lmtt/m/
 n/10 "RefBldgMediumOfficeNew2004_Chicago.idf"\TU/lmr/m/n/10 ).
  []
 
-[115] [116] [117]
+[117] [118] [119]
 Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
@@ -1377,7 +1383,7 @@ Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-[118]
+[120]
 Missing character: There is no └ (U+2514) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
@@ -1395,7 +1401,7 @@ Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
-[119]
+[121]
 Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
@@ -1443,16 +1449,16 @@ Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 
-Underfull \vbox (badness 1540) detected at line 3924
+Underfull \vbox (badness 1540) detected at line 4004
  []
 
 
 Underfull \vbox (badness 1490) has occurred while \output is active []
 
-[120]
+[122]
 File: figures/idd_material.png Graphic file (type bmp)
 <figures/idd_material.png>
-[121] [122]
+[123] [124]
 Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
@@ -1480,63 +1486,63 @@ Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[123] [124]
+[125] [126]
 Chapter 15.
-[125
+[127
 
-] [126] [127] [128
+] [128] [129] [130
 
 ]
 Chapter 16.
-[129] [130
+[131] [132
 
-] [131] [132]
+] [133] [134]
 Chapter 17.
-[133
+[135
 
-] [134
+] [136
 
 ]
 Chapter 18.
-[135] [136
+[137] [138
 
 ]
 Chapter 19.
-[137] [138
+[139] [140
 
-] [139] [140]
+] [141] [142]
 Chapter 20.
-[141
+[143
 
-] [142
+] [144
 
 ]
 Chapter 21.
-[143] [144
-
-]
-Chapter 22.
 [145] [146
 
 ]
-Chapter 23.
+Chapter 22.
 [147] [148
 
-] [149] [150]
-Chapter 24.
-[151
+]
+Chapter 23.
+[149] [150
 
-] [152
+] [151] [152]
+Chapter 24.
+[153
+
+] [154
 
 ]
 Chapter 25.
-[153] [154
+[155] [156
 
 ]
 Chapter 26.
-(./r4bes.bbl [155] [156
+(./r4bes.bbl [157] [158
 
-]) [157] (./r4bes.aux)
+]) [159] (./r4bes.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -1544,10 +1550,10 @@ LaTeX Warning: There were undefined references.
 Here is how much of TeX's memory you used:
  18836 strings out of 476919
  336376 string characters out of 5821840
- 826444 words of memory out of 5000000
+ 826445 words of memory out of 5000000
  38498 multiletter control sequences out of 15000+600000
  409937 words of font info for 87 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  98i,6n,122p,1185b,508s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on r4bes.pdf (157 pages).
+Output written on r4bes.pdf (159 pages).

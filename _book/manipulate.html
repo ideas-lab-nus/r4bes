@@ -541,14 +541,32 @@
 <span class="co">##  6      212557265.                59.0</span>
 <span class="co">##  7      282017901.                78.3</span>
 <span class="va">....</span></code></pre></div>
-<p>Useful mutate functions include
-- Arithmetic operators (<code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code>, <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code>, *<code>,</code>/<code>, etc.) and logarithms (</code>log()<code>,</code>log2()<code>, etc.) -</code>lead()<code>and</code>lag()<code>, allowing you to create lead and lag variables that are useful especially when working with timeseries data. -</code>if_else()<code>and</code>case_when()`</p>
+<p>Useful mutate and transmute functions include</p>
+<ul>
+<li>Arithmetic operators (<code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code>, <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code>, *<code>,</code>/<code>, etc.) and logarithms (</code>log()<code>,</code>log2()`, etc.)</li>
+</ul>
 <div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">heat</span> <span class="op">&lt;-</span> <span class="fu">transmute</span><span class="op">(</span><span class="va">bldg</span>,
   Total_Heating_J <span class="op">=</span> <span class="va">Heating_NaturalGas_J</span> <span class="op">+</span> <span class="va">Heating_Electricity_J</span>
-<span class="op">)</span>
-
-<span class="fu">mutate</span><span class="op">(</span>
+  <span class="op">)</span>
+<span class="va">heat</span>
+<span class="co">## # A tibble: 8,760 x 1</span>
+<span class="co">##    Total_Heating_J</span>
+<span class="co">##              &lt;dbl&gt;</span>
+<span class="co">##  1      195804272.</span>
+<span class="co">##  2      195085034.</span>
+<span class="co">##  3      261096124.</span>
+<span class="co">##  4      204764484.</span>
+<span class="co">##  5      273175257.</span>
+<span class="co">##  6      212557265.</span>
+<span class="co">##  7      282017901.</span>
+<span class="va">....</span></code></pre></div>
+<ul>
+<li>
+<code><a href="https://Rdatatable.gitlab.io/data.table/reference/shift.html">lead()</a></code> and <code><a href="https://Rdatatable.gitlab.io/data.table/reference/shift.html">lag()</a></code>, allowing you to create lead and lag variables that are useful especially when working with timeseries data.</li>
+</ul>
+<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">mutate</span><span class="op">(</span>
   <span class="va">heat</span>,
   lag_1 <span class="op">=</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/shift.html">lag</a></span><span class="op">(</span><span class="va">Total_Heating_J</span><span class="op">)</span>,
   lag_2 <span class="op">=</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/shift.html">lag</a></span><span class="op">(</span><span class="va">lag_1</span><span class="op">)</span>,
@@ -565,14 +583,56 @@
 <span class="co">##  6      212557265. 273175257. 204764484. 261096124.</span>
 <span class="co">##  7      282017901. 212557265. 273175257. 204764484.</span>
 <span class="va">....</span></code></pre></div>
-<p>TODO: Example of use of <code>if_else()</code> and <code>case_when()</code> in <code>mutate()</code> pipe</p>
+<ul>
+<li>
+<code>if_else()</code> is function of the form <code>if_else(condition, true, false)</code> that allows you to test a condition that you provide as a first argument to the function. If the condition is <code>TRUE</code>, <code>if_else()</code> will return the second argument. By contrast, if the condition is <code>FALSE</code>, it will return the third argument. In the example below, we are using mutate to create a new variable/column <code>New_Total_Heating_J</code>. This new column will contain the characters “low” if the condition <code>Total_Heating_J &lt; 200000000</code> is <code>TRUE</code> and “high” if it is <code>FALSE</code>.</li>
+</ul>
+<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">mutate</span><span class="op">(</span>
+  <span class="va">heat</span>,
+  New_Total_Heating_J <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">Total_Heating_J</span> <span class="op">&lt;</span> <span class="fl">200000000</span>, <span class="st">"low"</span>, <span class="st">"high"</span><span class="op">)</span>
+  <span class="op">)</span>
+<span class="co">## # A tibble: 8,760 x 2</span>
+<span class="co">##    Total_Heating_J New_Total_Heating_J</span>
+<span class="co">##              &lt;dbl&gt; &lt;chr&gt;              </span>
+<span class="co">##  1      195804272. low                </span>
+<span class="co">##  2      195085034. low                </span>
+<span class="co">##  3      261096124. high               </span>
+<span class="co">##  4      204764484. high               </span>
+<span class="co">##  5      273175257. high               </span>
+<span class="co">##  6      212557265. high               </span>
+<span class="co">##  7      282017901. high               </span>
+<span class="va">....</span></code></pre></div>
+<ul>
+<li>
+<code>case_when()</code> is an extension of <code>if_else()</code> by allowing you to write multiple <code>if_else()</code> statements. Below, we assign a <code>"low"</code> when <code>Total_Heating_J &lt; 200000000</code>, <code>"medium"</code> when <code>200000000 &lt;= Total_Heating_J &lt;= 400000000</code>, and high when <code>Total_Heating_J &gt; 400000000</code>.</li>
+</ul>
+<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">mutate</span><span class="op">(</span>
+  <span class="va">heat</span>,
+  New_Total_Heating_J <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span>
+    <span class="va">Total_Heating_J</span> <span class="op">&lt;</span> <span class="fl">200000000</span> <span class="op">~</span> <span class="st">"low"</span>,
+    <span class="va">Total_Heating_J</span> <span class="op">&gt;=</span> <span class="fl">200000000</span> <span class="op">&amp;</span> <span class="va">Total_Heating_J</span> <span class="op">&lt;=</span> <span class="fl">400000000</span> <span class="op">~</span> <span class="st">"medium"</span>,
+    <span class="va">Total_Heating_J</span> <span class="op">&gt;</span> <span class="fl">400000000</span> <span class="op">~</span> <span class="st">"high"</span><span class="op">)</span>
+  <span class="op">)</span>
+<span class="co">## # A tibble: 8,760 x 2</span>
+<span class="co">##    Total_Heating_J New_Total_Heating_J</span>
+<span class="co">##              &lt;dbl&gt; &lt;chr&gt;              </span>
+<span class="co">##  1      195804272. low                </span>
+<span class="co">##  2      195085034. low                </span>
+<span class="co">##  3      261096124. medium             </span>
+<span class="co">##  4      204764484. medium             </span>
+<span class="co">##  5      273175257. medium             </span>
+<span class="co">##  6      212557265. medium             </span>
+<span class="co">##  7      282017901. medium             </span>
+<span class="va">....</span></code></pre></div>
 </div>
 <div id="summarise-and-group_by" class="section level3" number="7.2.5">
 <h3>
 <span class="header-section-number">7.2.5</span> <code>summarise()</code> and <code>group_by()</code><a class="anchor" aria-label="anchor" href="#summarise-and-group_by"><i class="fas fa-link"></i></a>
 </h3>
 <p><code>summarise()</code> or <code>summarize()</code> collapse a data frame into one row for each combination of grouping variables. Therefore, it is not very useful by itself.</p>
-<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">summarise</span><span class="op">(</span><span class="va">bldg</span>,
   Heating_Total <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">Heating_Electricity_J</span><span class="op">)</span>,
   Heating_Avg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Heating_Electricity_J</span><span class="op">)</span>,
@@ -583,7 +643,7 @@
 <span class="co">##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;</span>
 <span class="co">## 1 508713824519.   58072354.   1002989103</span></code></pre></div>
 <p>However, <code>summarise()</code> combined with <code>group_by()</code> will allow you to easily summarise data based on individual groups.</p>
-<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bldg_month</span> <span class="op">&lt;-</span> <span class="fu">mutate</span><span class="op">(</span><span class="va">bldg</span>,
   Year <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">Date_Time</span><span class="op">)</span>,
   Month <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">Date_Time</span><span class="op">)</span>
@@ -614,7 +674,7 @@
 <span class="header-section-number">7.2.6</span> <code>across()</code><a class="anchor" aria-label="anchor" href="#across"><i class="fas fa-link"></i></a>
 </h3>
 <p><code>across()</code> makes it possible to apply functions across multiple columns within the functions <code>summarise()</code> and <code>mutate()</code>, using the semantics in <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> (see section <a href="manipulate.html#select">7.2.1</a>) that makes it easy to refer to columns based on their names.</p>
-<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu">mutate</span><span class="op">(</span><span class="va">bldg</span>,
   total <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -631,7 +691,7 @@
 <span class="co">##  7 2020-01-01 07:00:00                   0          29745424.         252272477.</span>
 <span class="va">....</span></code></pre></div>
 <p>You may also pass a list of functions to be applied to each of the selected columns.</p>
-<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu">summarise</span><span class="op">(</span>
   <span class="va">bldg_by_month</span>,
@@ -661,12 +721,12 @@
 <p>The <code>%&gt;%</code> is a forward pipe operator from the <code>magrittr</code> package that comes loaded with the <code>tidyverse</code> package. The pipe operator <code>%&gt;%</code> is a very handy that allows operations to be performed sequentially. In general, you can think of it as sending the output of one function as an input to the next .</p>
 <p>With the pipe operator,</p>
 <p>Instead of many intermediary steps</p>
-<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">first_output</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/last.html">first</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
 <span class="va">second_output</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/second.html">second</a></span><span class="op">(</span><span class="va">first_output</span><span class="op">)</span>
 <span class="va">final_result</span> <span class="op">&lt;-</span> <span class="fu">third</span><span class="op">(</span><span class="va">second_output</span><span class="op">)</span></code></pre></div>
 <p>You can connect multiple operators sequentially using the pipe operator</p>
-<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">final_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/last.html">first</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="http://lubridate.tidyverse.org/reference/second.html">second</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">third</span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -678,7 +738,7 @@ Figure 7.1: Piping data from one function to the next sequentially
 </p>
 </div>
 <p>An example using the <code>bldg</code> dataset.</p>
-<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">bldg</span> <span class="op">%&gt;%</span>
   <span class="fu">select</span><span class="op">(</span><span class="va">Date_Time</span>, <span class="fu">contains</span><span class="op">(</span><span class="st">"Heating"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
