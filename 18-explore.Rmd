@@ -23,3 +23,7 @@ epw <- read_epw(path_epw)
 
 
 
+
+
+
+## Energy signature

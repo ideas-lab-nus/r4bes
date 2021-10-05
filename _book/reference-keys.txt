@@ -84,10 +84,10 @@ add
 duplicate
 output
 prerequisites-12
-meters
-variables
+variable-dictionary-reports
 explore
 prerequisites-13
+energy-signature
 program
 energy-efficient-measures
 parametric-simulations

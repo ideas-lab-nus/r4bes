@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.4.12)  8 SEP 2021 16:57
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.4.12)  5 OCT 2021 14:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1490,70 +1490,115 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Chapter 15.
 [127
 
-] [128] [129] [130
-
 ]
-Chapter 16.
-[131] [132
+Underfull \vbox (badness 10000) detected at line 4196
+ []
 
-] [133] [134]
-Chapter 17.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[128]
+Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no └ (U+2514) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+[129]
+Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no └ (U+2514) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no └ (U+2514) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+[130]
+Underfull \vbox (badness 1412) detected at line 4343
+ []
+
+[131]
+Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no └ (U+2514) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+[132]
+Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no └ (U+2514) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
+Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+[133] [134]
+Chapter 16.
 [135
 
 ] [136
 
+] [137] [138]
+Chapter 17.
+[139
+
+] [140
+
 ]
 Chapter 18.
-[137] [138
+[141] [142
 
 ]
 Chapter 19.
-[139] [140
+[143] [144
 
-] [141] [142]
+] [145] [146]
 Chapter 20.
-[143
+[147
 
-] [144
+] [148
 
 ]
 Chapter 21.
-[145] [146
+[149] [150
 
 ]
 Chapter 22.
-[147] [148
+[151] [152
 
 ]
 Chapter 23.
-[149] [150
+[153] [154
 
-] [151] [152]
+] [155] [156]
 Chapter 24.
-[153
+[157
 
-] [154
+] [158
 
 ]
 Chapter 25.
-[155] [156
+[159] [160
 
 ]
 Chapter 26.
-(./r4bes.bbl [157] [158
+(./r4bes.bbl [161] [162
 
-]) [159] (./r4bes.aux)
+]) [163] (./r4bes.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
  18836 strings out of 476919
- 336376 string characters out of 5821840
- 826445 words of memory out of 5000000
+ 336404 string characters out of 5821840
+ 825473 words of memory out of 5000000
  38498 multiletter control sequences out of 15000+600000
  409937 words of font info for 87 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  98i,6n,122p,1185b,508s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on r4bes.pdf (159 pages).
+Output written on r4bes.pdf (163 pages).

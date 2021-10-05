@@ -117,7 +117,7 @@
 
 \title{R for Building Energy Simulation}
 \author{Adrian Chong}
-\date{2021-09-08}
+\date{2021-10-05}
 
 \begin{document}
 \maketitle
@@ -2669,7 +2669,7 @@ If you do not want to save the simulation results locally, you can save the simu
 \begin{Highlighting}[]
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.09.08 16:55}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.10.05 14:06}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2720,9 +2720,9 @@ To output the summary reports from EnergyPlus, you need to first run the simulat
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
-\DocumentationTok{\#\# Replace the existing IDF located at /private/var/folders/6l/8dz74knn0yd02c\_bt8fl1pk80000gn/T/Rtmp3RnGlt/RefBldgMediumOfficeNew2004\_Chicago.idf.}
+\DocumentationTok{\#\# Replace the existing IDF located at /private/var/folders/6l/8dz74knn0yd02c\_bt8fl1pk80000gn/T/RtmpHymxxt/RefBldgMediumOfficeNew2004\_Chicago.idf.}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.09.08 16:55}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.10.05 14:07}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2899,7 +2899,7 @@ In this chapter, you will also be working with the U.S. Department of Energy (DO
 
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(}\AttributeTok{weather =}\NormalTok{ epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.09.08 16:56}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.10.05 14:07}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -3287,7 +3287,7 @@ You can use the \texttt{ggsave()} function to save the plot. By default, it save
 
 In this part of the book, you will learn EnergyPlus's input data structure (Chapter \ref{input}), and how to programmatically query and modify them in R (Chapter \ref{modify}). We will also point you to the corresponding EnergyPlus reference documentation that will help you gain a better understanding of the inner workings of EnergyPlus. Understanding the inputs to a model is important as the proverb ``garbage in, garbage out'' clearly spells out. You can have the best data science workflows but your simulation results would only be as good the quality of your model and it's inputs.
 
-Subsequently, you will learn how to extract the more detailed output files (Chapter \ref{output}). You will work with time-series simulation results and explore them using R's data transformation and data visualization capabilities (Chapter \ref{explore}).
+Subsequently, you will learn how to extract the more detailed output files (Chapter \ref{explore}). You will work with time-series simulation results and explore them using R's data transformation and data visualization capabilities (Chapter \ref{explore}).
 
 \hypertarget{input}{%
 \chapter{Model Input Structure}\label{input}}
@@ -4134,10 +4134,30 @@ We will be working with the IDF and EPW file that pertains to the U.S. Departmen
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{meters}{%
-\section{Meters}\label{meters}}
+\hypertarget{variable-dictionary-reports}{%
+\section{Variable dictionary reports}\label{variable-dictionary-reports}}
 
-EnergyPlus allows you to specify meters to retrieve the simulation outputs. However, to know what meters are available (for output) in your model, you must first run the simulation. You can then retrieve the list of available meters with the function \texttt{read\_mdd()}, which returns a five column \texttt{data.table}.
+The variable dictionary reports are one of the most important outputs when working with EnergyPlus simulations. These reports inform EnergyPlus users the outputs that are available for a specific EnergyPlus simulation. Knowing the outputs that are available in your model would allow users to identify and subsequently specify relevant outputs for further analysis. Two data dictionary reports are produced and they are the \textbf{m}eter \textbf{d}ata \textbf{d}ictionary (\texttt{.mdd}) file and the \textbf{r}eport \textbf{d}ata \textbf{d}ictionary (\texttt{.rdd}) file. The \texttt{.mdd} file lists the names of the output meters while the \texttt{.rdd} file lists the names of the output variables that are available for the simulation. However, you must first run the simulation before the available variables and meters can be known. By setting \texttt{weather\ =\ NULL}, a design day simulation will be run, allowing us to obtain the \texttt{.rdd} and \texttt{.mdd} file without running an annual simulation that can be time consuming for complex models.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(}\AttributeTok{weather =} \ConstantTok{NULL}\NormalTok{, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
+\DocumentationTok{\#\# Replace the existing IDF located at /private/var/folders/6l/8dz74knn0yd02c\_bt8fl1pk80000gn/T/RtmpHymxxt/RefBldgMediumOfficeNew2004\_Chicago.idf.}
+\DocumentationTok{\#\# EnergyPlus Starting}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.10.05 14:08}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
+\DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
+\DocumentationTok{\#\# Consider setting $PYTHONHOME to \textless{}prefix\textgreater{}[:\textless{}exec\_prefix\textgreater{}]}
+\DocumentationTok{\#\# Initializing Response Factors}
+\DocumentationTok{\#\# Calculating CTFs for "STEEL FRAME NON{-}RES EXT WALL"}
+\DocumentationTok{\#\# Calculating CTFs for "IEAD NON{-}RES ROOF"}
+\DocumentationTok{\#\# Calculating CTFs for "EXT{-}SLAB"}
+\NormalTok{....}
+\end{Highlighting}
+\end{Shaded}
+
+You can then retrieve the list of available variables and meters with the function \texttt{read\_rdd()} and the \texttt{read\_mdd()} function respectively. Both functions return a five column \texttt{data.table}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4145,7 +4165,7 @@ EnergyPlus allows you to specify meters to retrieve the simulation outputs. Howe
 \NormalTok{mdd}
 \DocumentationTok{\#\# == EnergyPlus Meter Data Dictionary File =======================================}
 \DocumentationTok{\#\#   * EnergyPlus version: 9.4.0 (998c4b761e)}
-\DocumentationTok{\#\#   * Simulation started: 2021{-}09{-}08 16:56:00}
+\DocumentationTok{\#\#   * Simulation started: 2021{-}10{-}05 14:08:00}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# {-}{-} Details {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 \DocumentationTok{\#\#      index reported\_time\_step report\_type}
@@ -4157,16 +4177,137 @@ EnergyPlus allows you to specify meters to retrieve the simulation outputs. Howe
 \end{Highlighting}
 \end{Shaded}
 
-After
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rdd }\OtherTok{\textless{}{-}}\NormalTok{ job}\SpecialCharTok{$}\FunctionTok{read\_rdd}\NormalTok{()}
+\NormalTok{rdd}
+\DocumentationTok{\#\# == EnergyPlus Report Data Dictionary File ======================================}
+\DocumentationTok{\#\#   * EnergyPlus version: 9.4.0 (998c4b761e)}
+\DocumentationTok{\#\#   * Simulation started: 2021{-}10{-}05 14:08:00}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\# {-}{-} Details {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\DocumentationTok{\#\#      index reported\_time\_step report\_type}
+\DocumentationTok{\#\#   1:     1               Zone     Average}
+\DocumentationTok{\#\#   2:     2               Zone     Average}
+\DocumentationTok{\#\#   3:     3               Zone     Average}
+\DocumentationTok{\#\#   4:     4               Zone     Average}
+\NormalTok{....}
+\end{Highlighting}
+\end{Shaded}
 
-\hypertarget{variables}{%
-\section{Variables}\label{variables}}
+To specify an output variable of interest, you can add the name of the variable and the corresponding reporting frequency to the \texttt{Output:Variable} object. To avoid a long list of redundant and unnecessary output variables, you should first remove all of them.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model}\SpecialCharTok{$}\NormalTok{Output\_Variable }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{model}\SpecialCharTok{$}\NormalTok{Output\_Meter }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\end{Highlighting}
+\end{Shaded}
+
+You can then use the \texttt{\$add()} method to add your variable output of interest. The first argument to the \texttt{\$add()} method is a list of EnergyPlus object definitions where each list is named with a valid class name. In this case, the relevant EnergyPlus objects for defining output meters (\texttt{.mdd}) and variables (\texttt{.rdd}) are the \texttt{Output:Meter} and the \texttt{Output:Variable} objects respectively.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{output\_list }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
+    \AttributeTok{Output\_Variable =} \FunctionTok{list}\NormalTok{(}
+        \AttributeTok{key\_value =} \StringTok{"*"}\NormalTok{,}
+        \AttributeTok{Variable\_Name =} \StringTok{"Site Outdoor Air Drybulb Temperature"}\NormalTok{,}
+        \AttributeTok{Reporting\_Frequency =} \StringTok{"Hourly"}\NormalTok{),}
+    \AttributeTok{Output\_Variable =} \FunctionTok{list}\NormalTok{(}
+        \AttributeTok{key\_value =} \StringTok{"*"}\NormalTok{,}
+        \AttributeTok{Variable\_Name =} \StringTok{"Zone Mean Air Temperature"}\NormalTok{,}
+        \AttributeTok{Reporting\_Frequency =} \StringTok{"Hourly"}\NormalTok{),}
+    \AttributeTok{Output\_Meter =} \FunctionTok{list}\NormalTok{(}
+        \AttributeTok{key\_name =} \StringTok{"Cooling:Electricity"}\NormalTok{,}
+        \AttributeTok{Reporting\_Frequency =} \StringTok{"Hourly"}\NormalTok{),}
+    \AttributeTok{Output\_Meter =} \FunctionTok{list}\NormalTok{(}
+        \AttributeTok{key\_name =} \StringTok{"Heating:NaturalGas"}\NormalTok{,}
+        \AttributeTok{Reporting\_Frequency =} \StringTok{"Hourly"}\NormalTok{)}
+\NormalTok{)}
+
+\NormalTok{model}\SpecialCharTok{$}\FunctionTok{add}\NormalTok{(output\_list)}
+\DocumentationTok{\#\# $\textless{}NA\textgreater{}}
+\DocumentationTok{\#\# \textless{}IdfObject: \textquotesingle{}Output:Variable\textquotesingle{}\textgreater{} [ID:682]}
+\DocumentationTok{\#\# Class: \textless{}Output:Variable\textgreater{}}
+\DocumentationTok{\#\# ├─ 1 : "*",                !{-} Key Value}
+\DocumentationTok{\#\# │─ 2*: "Site Outdoor Air Drybulb Temperature",  !{-} Variable Name}
+\DocumentationTok{\#\# └─ 3 : "Hourly";           !{-} Reporting Frequency}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\# $\textless{}NA\textgreater{}}
+\DocumentationTok{\#\# \textless{}IdfObject: \textquotesingle{}Output:Variable\textquotesingle{}\textgreater{} [ID:683]}
+\DocumentationTok{\#\# Class: \textless{}Output:Variable\textgreater{}}
+\NormalTok{....}
+\end{Highlighting}
+\end{Shaded}
+
+The above code to add meters and variables can become unnecessarily long if you are adding multiple objects of the same class (in the above example, the \texttt{Output:Meter} and \texttt{Output:Variable} class. You can take advantage of \texttt{data.table}'s \texttt{:=} operator to assign the object name by reference.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{variables }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
+    \AttributeTok{key\_value =} \StringTok{"*"}\NormalTok{,}
+    \AttributeTok{Variable\_Name =} \FunctionTok{c}\NormalTok{(}
+        \StringTok{"Site Outdoor Air Drybulb Temperature"}\NormalTok{,}
+        \StringTok{"Zone Mean Air Temperature"}
+\NormalTok{    ),}
+    \AttributeTok{Reporting\_Frequency =} \StringTok{"Hourly"}
+\NormalTok{)}
+
+\NormalTok{model}\SpecialCharTok{$}\FunctionTok{add}\NormalTok{(}\AttributeTok{Output\_Variable :=}\NormalTok{ variables)}
+\DocumentationTok{\#\# $\textless{}NA\textgreater{}}
+\DocumentationTok{\#\# \textless{}IdfObject: \textquotesingle{}Output:Variable\textquotesingle{}\textgreater{} [ID:686]}
+\DocumentationTok{\#\# Class: \textless{}Output:Variable\textgreater{}}
+\DocumentationTok{\#\# ├─ 1 : "*",                !{-} Key Value}
+\DocumentationTok{\#\# │─ 2*: "Site Outdoor Air Drybulb Temperature",  !{-} Variable Name}
+\DocumentationTok{\#\# └─ 3 : "Hourly";           !{-} Reporting Frequency}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\# $\textless{}NA\textgreater{}}
+\DocumentationTok{\#\# \textless{}IdfObject: \textquotesingle{}Output:Variable\textquotesingle{}\textgreater{} [ID:687]}
+\DocumentationTok{\#\# Class: \textless{}Output:Variable\textgreater{}}
+\NormalTok{....}
+\end{Highlighting}
+\end{Shaded}
+
+Likewise, you can use the \texttt{\$add()} method to add your variable meter of interest.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model}\SpecialCharTok{$}\NormalTok{Output\_Meter }\OtherTok{\textless{}{-}} \ConstantTok{NULL} \CommentTok{\# remove all existing Output:Meter objects}
+
+\NormalTok{meters }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
+    \AttributeTok{key\_name =} \FunctionTok{c}\NormalTok{(}
+        \StringTok{"Cooling:Electricity"}\NormalTok{,}
+        \StringTok{"Heating:NaturalGas"}
+\NormalTok{    ),}
+    \AttributeTok{Reporting\_Frequency =} \StringTok{"Hourly"}
+\NormalTok{)}
+
+\CommentTok{\# add meter outputs to get hourly time{-}series energy consumption}
+\NormalTok{model}\SpecialCharTok{$}\FunctionTok{add}\NormalTok{(}\AttributeTok{Output\_Meter :=}\NormalTok{ meters)}
+\DocumentationTok{\#\# $\textless{}NA\textgreater{}}
+\DocumentationTok{\#\# \textless{}IdfObject: \textquotesingle{}Output:Meter\textquotesingle{}\textgreater{} [ID:688]}
+\DocumentationTok{\#\# Class: \textless{}Output:Meter\textgreater{}}
+\DocumentationTok{\#\# ├─ 1*: "Cooling:Electricity",  !{-} Key Name}
+\DocumentationTok{\#\# └─ 2 : "Hourly";           !{-} Reporting Frequency}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\# $\textless{}NA\textgreater{}}
+\DocumentationTok{\#\# \textless{}IdfObject: \textquotesingle{}Output:Meter\textquotesingle{}\textgreater{} [ID:689]}
+\DocumentationTok{\#\# Class: \textless{}Output:Meter\textgreater{}}
+\DocumentationTok{\#\# ├─ 1*: "Heating:NaturalGas",  !{-} Key Name}
+\NormalTok{....}
+\end{Highlighting}
+\end{Shaded}
+
+Here is a useful function \texttt{preprocess\_idf()} that you can use to preprocess your EnergyPlus simulations so that it (1) uses the weather file for the simulation, (2) presents energy consumption outputs in kWh, and (3) remove all existing output meters and variables and add the list of meters and variables provided as arguments to the function.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{preprocess\_idf }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(idf, meters, variables) \{}
     \CommentTok{\# make sure weather file input is respected}
 \NormalTok{    idf}\SpecialCharTok{$}\NormalTok{SimulationControl}\SpecialCharTok{$}\NormalTok{Run\_Simulation\_for\_Weather\_File\_Run\_Periods }\OtherTok{\textless{}{-}} \StringTok{"Yes"}
+    
+    \CommentTok{\# make sure simulation is not run for sizing periods}
+\NormalTok{    idf}\SpecialCharTok{$}\NormalTok{SimulationControl}\SpecialCharTok{$}\NormalTok{Run\_Simulation\_for\_Sizing\_Periods }\OtherTok{\textless{}{-}} \StringTok{"No"}
 
     \CommentTok{\# make sure energy consumption is presented in kWh}
     \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{is.null}\NormalTok{(idf}\SpecialCharTok{$}\NormalTok{OutputControl\_Table\_Style)) \{}
@@ -4201,6 +4342,8 @@ After
 \end{Highlighting}
 \end{Shaded}
 
+The following code demonstrates the use of the function \texttt{preprocess\_idf()}.
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{meters }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
@@ -4221,15 +4364,95 @@ After
 \NormalTok{variables }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
     \AttributeTok{key\_value =} \StringTok{"*"}\NormalTok{,}
     \AttributeTok{Variable\_Name =} \FunctionTok{c}\NormalTok{(}
-        \StringTok{"Zone Mean Air Temperature"}
+        \StringTok{"Site Outdoor Air Drybulb Temperature"}\NormalTok{,}
+        \StringTok{"Site Outdoor Air Relative Humidity"}
 \NormalTok{    ),}
     \AttributeTok{Reporting\_Frequency =} \StringTok{"Hourly"}
 \NormalTok{)}
 
-\CommentTok{\#model \textless{}{-} preprocess\_idf(model, meters, variables)}
+\NormalTok{model }\OtherTok{\textless{}{-}} \FunctionTok{preprocess\_idf}\NormalTok{(model, meters, variables)}
+\end{Highlighting}
+\end{Shaded}
 
-\CommentTok{\#model$save(here("data/idf/model\_preprocessed.idf"), overwrite = TRUE)}
-\CommentTok{\#job \textless{}{-} model$run(path\_epw)}
+Check if the output variables and meters have been correctly added
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model}\SpecialCharTok{$}\NormalTok{Output\_Variable}
+\DocumentationTok{\#\# $\textless{}NA\textgreater{}}
+\DocumentationTok{\#\# \textless{}IdfObject: \textquotesingle{}Output:Variable\textquotesingle{}\textgreater{} [ID:691]}
+\DocumentationTok{\#\# Class: \textless{}Output:Variable\textgreater{}}
+\DocumentationTok{\#\# ├─ 1 : "*",                !{-} Key Value}
+\DocumentationTok{\#\# │─ 2*: "Site Outdoor Air Drybulb Temperature",  !{-} Variable Name}
+\DocumentationTok{\#\# └─ 3 : "Hourly";           !{-} Reporting Frequency}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\# $\textless{}NA\textgreater{}}
+\DocumentationTok{\#\# \textless{}IdfObject: \textquotesingle{}Output:Variable\textquotesingle{}\textgreater{} [ID:692]}
+\DocumentationTok{\#\# Class: \textless{}Output:Variable\textgreater{}}
+\NormalTok{....}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model}\SpecialCharTok{$}\NormalTok{Output\_Meter}
+\DocumentationTok{\#\# $\textless{}NA\textgreater{}}
+\DocumentationTok{\#\# \textless{}IdfObject: \textquotesingle{}Output:Meter\textquotesingle{}\textgreater{} [ID:682]}
+\DocumentationTok{\#\# Class: \textless{}Output:Meter\textgreater{}}
+\DocumentationTok{\#\# ├─ 1*: "Cooling:Electricity",  !{-} Key Name}
+\DocumentationTok{\#\# └─ 2 : "Hourly";           !{-} Reporting Frequency}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\# $\textless{}NA\textgreater{}}
+\DocumentationTok{\#\# \textless{}IdfObject: \textquotesingle{}Output:Meter\textquotesingle{}\textgreater{} [ID:683]}
+\DocumentationTok{\#\# Class: \textless{}Output:Meter\textgreater{}}
+\DocumentationTok{\#\# ├─ 1*: "Heating:NaturalGas",  !{-} Key Name}
+\NormalTok{....}
+\end{Highlighting}
+\end{Shaded}
+
+Before you can explore the outputs, you have to first save the model and run the simulation.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model}\SpecialCharTok{$}\FunctionTok{save}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"idf"}\NormalTok{, }\StringTok{"model\_preprocessed.idf"}\NormalTok{), }\AttributeTok{overwrite =} \ConstantTok{TRUE}\NormalTok{)}
+\DocumentationTok{\#\# Replace the existing IDF located at /Users/adrianchong/Documents/GitHub/r4bes/data/idf/model\_preprocessed.idf.}
+\NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
+\DocumentationTok{\#\# EnergyPlus Starting}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.10.05 14:08}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
+\DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
+\DocumentationTok{\#\# Consider setting $PYTHONHOME to \textless{}prefix\textgreater{}[:\textless{}exec\_prefix\textgreater{}]}
+\DocumentationTok{\#\# Initializing Response Factors}
+\DocumentationTok{\#\# Calculating CTFs for "STEEL FRAME NON{-}RES EXT WALL"}
+\DocumentationTok{\#\# Calculating CTFs for "IEAD NON{-}RES ROOF"}
+\DocumentationTok{\#\# Calculating CTFs for "EXT{-}SLAB"}
+\NormalTok{....}
+\end{Highlighting}
+\end{Shaded}
+
+You will then be able to extract the output variables and meters that have just been specified.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{report }\OtherTok{\textless{}{-}}\NormalTok{ job}\SpecialCharTok{$}\FunctionTok{report\_data}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{drop\_na}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{select}\NormalTok{(datetime, name, value) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{filter}\NormalTok{(name }\SpecialCharTok{\%in\%}\NormalTok{ variables}\SpecialCharTok{$}\NormalTok{Variable\_Name }\SpecialCharTok{|}\NormalTok{ name }\SpecialCharTok{\%in\%}\NormalTok{ meters}\SpecialCharTok{$}\NormalTok{key\_name) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from =}\NormalTok{ name, }\AttributeTok{values\_from =}\NormalTok{ value)}
+
+\FunctionTok{head}\NormalTok{(report)}
+\DocumentationTok{\#\# \# A tibble: 6 x 12}
+\DocumentationTok{\#\#   datetime            \textasciigrave{}Site Outdoor Air D\textasciitilde{} \textasciigrave{}Site Outdoor Air \textasciitilde{} \textasciigrave{}InteriorLights:\textasciitilde{}}
+\DocumentationTok{\#\#   \textless{}dttm\textgreater{}                             \textless{}dbl\textgreater{}               \textless{}dbl\textgreater{}             \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 2021{-}01{-}01 01:00:00                {-}7.82                72.6          9649498.}
+\DocumentationTok{\#\# 2 2021{-}01{-}01 02:00:00               {-}11.9                 73            9649498.}
+\DocumentationTok{\#\# 3 2021{-}01{-}01 03:00:00               {-}11.4                 73            9649498.}
+\DocumentationTok{\#\# 4 2021{-}01{-}01 04:00:00               {-}11.1                 73            9649498.}
+\DocumentationTok{\#\# 5 2021{-}01{-}01 05:00:00               {-}10.8                 73            9649498.}
+\DocumentationTok{\#\# 6 2021{-}01{-}01 06:00:00               {-}10.6                 73            9649498.}
+\DocumentationTok{\#\# \# ... with 8 more variables: InteriorEquipment:Electricity \textless{}dbl\textgreater{},}
+\NormalTok{....}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4259,6 +4482,9 @@ We will be working with the IDF and EPW file that pertains to the U.S. Departmen
 \NormalTok{epw }\OtherTok{\textless{}{-}} \FunctionTok{read\_epw}\NormalTok{(path\_epw)}
 \end{Highlighting}
 \end{Shaded}
+
+\hypertarget{energy-signature}{%
+\section{Energy signature}\label{energy-signature}}
 
 \hypertarget{part-program}{%
 \part{Program}\label{part-program}}

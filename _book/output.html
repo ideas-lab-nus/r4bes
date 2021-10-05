@@ -94,17 +94,32 @@
 <span class="va">path_epw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"epw"</span>, <span class="st">"USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw"</span><span class="op">)</span>
 <span class="va">epw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://hongyuanjia.github.io/eplusr/reference/read_epw.html">read_epw</a></span><span class="op">(</span><span class="va">path_epw</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="meters" class="section level2" number="15.2">
+<div id="variable-dictionary-reports" class="section level2" number="15.2">
 <h2>
-<span class="header-section-number">15.2</span> Meters<a class="anchor" aria-label="anchor" href="#meters"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.2</span> Variable dictionary reports<a class="anchor" aria-label="anchor" href="#variable-dictionary-reports"><i class="fas fa-link"></i></a>
 </h2>
-<p>EnergyPlus allows you to specify meters to retrieve the simulation outputs. However, to know what meters are available (for output) in your model, you must first run the simulation. You can then retrieve the list of available meters with the function <code><a href="https://hongyuanjia.github.io/eplusr/reference/rdd.html">read_mdd()</a></code>, which returns a five column <code>data.table</code>.</p>
+<p>The variable dictionary reports are one of the most important outputs when working with EnergyPlus simulations. These reports inform EnergyPlus users the outputs that are available for a specific EnergyPlus simulation. Knowing the outputs that are available in your model would allow users to identify and subsequently specify relevant outputs for further analysis. Two data dictionary reports are produced and they are the <strong>m</strong>eter <strong>d</strong>ata <strong>d</strong>ictionary (<code>.mdd</code>) file and the <strong>r</strong>eport <strong>d</strong>ata <strong>d</strong>ictionary (<code>.rdd</code>) file. The <code>.mdd</code> file lists the names of the output meters while the <code>.rdd</code> file lists the names of the output variables that are available for the simulation. However, you must first run the simulation before the available variables and meters can be known. By setting <code>weather = NULL</code>, a design day simulation will be run, allowing us to obtain the <code>.rdd</code> and <code>.mdd</code> file without running an annual simulation that can be time consuming for complex models.</p>
 <div class="sourceCode" id="cb193"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">job</span> <span class="op">&lt;-</span> <span class="va">model</span><span class="op">$</span><span class="fu">run</span><span class="op">(</span>weather <span class="op">=</span> <span class="cn">NULL</span>, dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="co">## Replace the existing IDF located at /private/var/folders/6l/8dz74knn0yd02c_bt8fl1pk80000gn/T/RtmpMh1Uu9/RefBldgMediumOfficeNew2004_Chicago.idf.</span>
+<span class="co">## EnergyPlus Starting</span>
+<span class="co">## EnergyPlus, Version 9.4.0-998c4b761e, YMD=2021.10.05 14:12</span>
+<span class="co">## </span>
+<span class="co">## Could not find platform independent libraries &lt;prefix&gt;</span>
+<span class="co">## Could not find platform dependent libraries &lt;exec_prefix&gt;</span>
+<span class="co">## Consider setting $PYTHONHOME to &lt;prefix&gt;[:&lt;exec_prefix&gt;]</span>
+<span class="co">## Initializing Response Factors</span>
+<span class="co">## Calculating CTFs for "STEEL FRAME NON-RES EXT WALL"</span>
+<span class="co">## Calculating CTFs for "IEAD NON-RES ROOF"</span>
+<span class="co">## Calculating CTFs for "EXT-SLAB"</span>
+<span class="va">....</span></code></pre></div>
+<p>You can then retrieve the list of available variables and meters with the function <code><a href="https://hongyuanjia.github.io/eplusr/reference/rdd.html">read_rdd()</a></code> and the <code><a href="https://hongyuanjia.github.io/eplusr/reference/rdd.html">read_mdd()</a></code> function respectively. Both functions return a five column <code>data.table</code>.</p>
+<div class="sourceCode" id="cb194"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mdd</span> <span class="op">&lt;-</span> <span class="va">job</span><span class="op">$</span><span class="fu">read_mdd</span><span class="op">(</span><span class="op">)</span>
 <span class="va">mdd</span>
 <span class="co">## ══ EnergyPlus Meter Data Dictionary File ═══════════════════════════════════════</span>
 <span class="co">##   * EnergyPlus version: 9.4.0 (998c4b761e)</span>
-<span class="co">##   * Simulation started: 2021-09-08 16:59:00</span>
+<span class="co">##   * Simulation started: 2021-10-05 14:12:00</span>
 <span class="co">## </span>
 <span class="co">## ── Details ─────────────────────────────────────────────────────────────────────</span>
 <span class="co">##      index reported_time_step report_type</span>
@@ -113,16 +128,111 @@
 <span class="co">##   3:     3               Zone       Meter</span>
 <span class="co">##   4:     4               Zone       Meter</span>
 <span class="va">....</span></code></pre></div>
-<p>After</p>
-</div>
-<div id="variables" class="section level2" number="15.3">
-<h2>
-<span class="header-section-number">15.3</span> Variables<a class="anchor" aria-label="anchor" href="#variables"><i class="fas fa-link"></i></a>
-</h2>
-<div class="sourceCode" id="cb194"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb195"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rdd</span> <span class="op">&lt;-</span> <span class="va">job</span><span class="op">$</span><span class="fu">read_rdd</span><span class="op">(</span><span class="op">)</span>
+<span class="va">rdd</span>
+<span class="co">## ══ EnergyPlus Report Data Dictionary File ══════════════════════════════════════</span>
+<span class="co">##   * EnergyPlus version: 9.4.0 (998c4b761e)</span>
+<span class="co">##   * Simulation started: 2021-10-05 14:12:00</span>
+<span class="co">## </span>
+<span class="co">## ── Details ─────────────────────────────────────────────────────────────────────</span>
+<span class="co">##      index reported_time_step report_type</span>
+<span class="co">##   1:     1               Zone     Average</span>
+<span class="co">##   2:     2               Zone     Average</span>
+<span class="co">##   3:     3               Zone     Average</span>
+<span class="co">##   4:     4               Zone     Average</span>
+<span class="va">....</span></code></pre></div>
+<p>To specify an output variable of interest, you can add the name of the variable and the corresponding reporting frequency to the <code>Output:Variable</code> object. To avoid a long list of redundant and unnecessary output variables, you should first remove all of them.</p>
+<div class="sourceCode" id="cb196"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="va">Output_Variable</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
+<span class="va">model</span><span class="op">$</span><span class="va">Output_Meter</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></code></pre></div>
+<p>You can then use the <code>$add()</code> method to add your variable output of interest. The first argument to the <code>$add()</code> method is a list of EnergyPlus object definitions where each list is named with a valid class name. In this case, the relevant EnergyPlus objects for defining output meters (<code>.mdd</code>) and variables (<code>.rdd</code>) are the <code>Output:Meter</code> and the <code>Output:Variable</code> objects respectively.</p>
+<div class="sourceCode" id="cb197"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">output_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+    Output_Variable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+        key_value <span class="op">=</span> <span class="st">"*"</span>,
+        Variable_Name <span class="op">=</span> <span class="st">"Site Outdoor Air Drybulb Temperature"</span>,
+        Reporting_Frequency <span class="op">=</span> <span class="st">"Hourly"</span><span class="op">)</span>,
+    Output_Variable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+        key_value <span class="op">=</span> <span class="st">"*"</span>,
+        Variable_Name <span class="op">=</span> <span class="st">"Zone Mean Air Temperature"</span>,
+        Reporting_Frequency <span class="op">=</span> <span class="st">"Hourly"</span><span class="op">)</span>,
+    Output_Meter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+        key_name <span class="op">=</span> <span class="st">"Cooling:Electricity"</span>,
+        Reporting_Frequency <span class="op">=</span> <span class="st">"Hourly"</span><span class="op">)</span>,
+    Output_Meter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+        key_name <span class="op">=</span> <span class="st">"Heating:NaturalGas"</span>,
+        Reporting_Frequency <span class="op">=</span> <span class="st">"Hourly"</span><span class="op">)</span>
+<span class="op">)</span>
+
+<span class="va">model</span><span class="op">$</span><span class="fu">add</span><span class="op">(</span><span class="va">output_list</span><span class="op">)</span>
+<span class="co">## $&lt;NA&gt;</span>
+<span class="co">## &lt;IdfObject: 'Output:Variable'&gt; [ID:682]</span>
+<span class="co">## Class: &lt;Output:Variable&gt;</span>
+<span class="co">## ├─ 1 : "*",                !- Key Value</span>
+<span class="co">## │─ 2*: "Site Outdoor Air Drybulb Temperature",  !- Variable Name</span>
+<span class="co">## └─ 3 : "Hourly";           !- Reporting Frequency</span>
+<span class="co">## </span>
+<span class="co">## $&lt;NA&gt;</span>
+<span class="co">## &lt;IdfObject: 'Output:Variable'&gt; [ID:683]</span>
+<span class="co">## Class: &lt;Output:Variable&gt;</span>
+<span class="va">....</span></code></pre></div>
+<p>The above code to add meters and variables can become unnecessarily long if you are adding multiple objects of the same class (in the above example, the <code>Output:Meter</code> and <code>Output:Variable</code> class. You can take advantage of <code>data.table</code>’s <code>:=</code> operator to assign the object name by reference.</p>
+<div class="sourceCode" id="cb198"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">variables</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+    key_value <span class="op">=</span> <span class="st">"*"</span>,
+    Variable_Name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+        <span class="st">"Site Outdoor Air Drybulb Temperature"</span>,
+        <span class="st">"Zone Mean Air Temperature"</span>
+    <span class="op">)</span>,
+    Reporting_Frequency <span class="op">=</span> <span class="st">"Hourly"</span>
+<span class="op">)</span>
+
+<span class="va">model</span><span class="op">$</span><span class="fu">add</span><span class="op">(</span><span class="va">Output_Variable</span> <span class="op">:=</span> <span class="va">variables</span><span class="op">)</span>
+<span class="co">## $&lt;NA&gt;</span>
+<span class="co">## &lt;IdfObject: 'Output:Variable'&gt; [ID:686]</span>
+<span class="co">## Class: &lt;Output:Variable&gt;</span>
+<span class="co">## ├─ 1 : "*",                !- Key Value</span>
+<span class="co">## │─ 2*: "Site Outdoor Air Drybulb Temperature",  !- Variable Name</span>
+<span class="co">## └─ 3 : "Hourly";           !- Reporting Frequency</span>
+<span class="co">## </span>
+<span class="co">## $&lt;NA&gt;</span>
+<span class="co">## &lt;IdfObject: 'Output:Variable'&gt; [ID:687]</span>
+<span class="co">## Class: &lt;Output:Variable&gt;</span>
+<span class="va">....</span></code></pre></div>
+<p>Likewise, you can use the <code>$add()</code> method to add your variable meter of interest.</p>
+<div class="sourceCode" id="cb199"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="va">Output_Meter</span> <span class="op">&lt;-</span> <span class="cn">NULL</span> <span class="co"># remove all existing Output:Meter objects</span>
+
+<span class="va">meters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+    key_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+        <span class="st">"Cooling:Electricity"</span>,
+        <span class="st">"Heating:NaturalGas"</span>
+    <span class="op">)</span>,
+    Reporting_Frequency <span class="op">=</span> <span class="st">"Hourly"</span>
+<span class="op">)</span>
+
+<span class="co"># add meter outputs to get hourly time-series energy consumption</span>
+<span class="va">model</span><span class="op">$</span><span class="fu">add</span><span class="op">(</span><span class="va">Output_Meter</span> <span class="op">:=</span> <span class="va">meters</span><span class="op">)</span>
+<span class="co">## $&lt;NA&gt;</span>
+<span class="co">## &lt;IdfObject: 'Output:Meter'&gt; [ID:688]</span>
+<span class="co">## Class: &lt;Output:Meter&gt;</span>
+<span class="co">## ├─ 1*: "Cooling:Electricity",  !- Key Name</span>
+<span class="co">## └─ 2 : "Hourly";           !- Reporting Frequency</span>
+<span class="co">## </span>
+<span class="co">## $&lt;NA&gt;</span>
+<span class="co">## &lt;IdfObject: 'Output:Meter'&gt; [ID:689]</span>
+<span class="co">## Class: &lt;Output:Meter&gt;</span>
+<span class="co">## ├─ 1*: "Heating:NaturalGas",  !- Key Name</span>
+<span class="va">....</span></code></pre></div>
+<p>Here is a useful function <code>preprocess_idf()</code> that you can use to preprocess your EnergyPlus simulations so that it (1) uses the weather file for the simulation, (2) presents energy consumption outputs in kWh, and (3) remove all existing output meters and variables and add the list of meters and variables provided as arguments to the function.</p>
+<div class="sourceCode" id="cb200"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">preprocess_idf</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">idf</span>, <span class="va">meters</span>, <span class="va">variables</span><span class="op">)</span> <span class="op">{</span>
     <span class="co"># make sure weather file input is respected</span>
     <span class="va">idf</span><span class="op">$</span><span class="va">SimulationControl</span><span class="op">$</span><span class="va">Run_Simulation_for_Weather_File_Run_Periods</span> <span class="op">&lt;-</span> <span class="st">"Yes"</span>
+    
+    <span class="co"># make sure simulation is not run for sizing periods</span>
+    <span class="va">idf</span><span class="op">$</span><span class="va">SimulationControl</span><span class="op">$</span><span class="va">Run_Simulation_for_Sizing_Periods</span> <span class="op">&lt;-</span> <span class="st">"No"</span>
 
     <span class="co"># make sure energy consumption is presented in kWh</span>
     <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">idf</span><span class="op">$</span><span class="va">OutputControl_Table_Style</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
@@ -154,7 +264,8 @@
     <span class="co"># make sure the modified model is returned</span>
     <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">idf</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
-<div class="sourceCode" id="cb195"><pre class="downlit sourceCode r">
+<p>The following code demonstrates the use of the function <code>preprocess_idf()</code>.</p>
+<div class="sourceCode" id="cb201"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">meters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
     key_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
         <span class="st">"Cooling:Electricity"</span>,
@@ -173,15 +284,76 @@
 <span class="va">variables</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
     key_value <span class="op">=</span> <span class="st">"*"</span>,
     Variable_Name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
-        <span class="st">"Zone Mean Air Temperature"</span>
+        <span class="st">"Site Outdoor Air Drybulb Temperature"</span>,
+        <span class="st">"Site Outdoor Air Relative Humidity"</span>
     <span class="op">)</span>,
     Reporting_Frequency <span class="op">=</span> <span class="st">"Hourly"</span>
 <span class="op">)</span>
 
-<span class="co">#model &lt;- preprocess_idf(model, meters, variables)</span>
+<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">preprocess_idf</span><span class="op">(</span><span class="va">model</span>, <span class="va">meters</span>, <span class="va">variables</span><span class="op">)</span></code></pre></div>
+<p>Check if the output variables and meters have been correctly added</p>
+<div class="sourceCode" id="cb202"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="va">Output_Variable</span>
+<span class="co">## $&lt;NA&gt;</span>
+<span class="co">## &lt;IdfObject: 'Output:Variable'&gt; [ID:691]</span>
+<span class="co">## Class: &lt;Output:Variable&gt;</span>
+<span class="co">## ├─ 1 : "*",                !- Key Value</span>
+<span class="co">## │─ 2*: "Site Outdoor Air Drybulb Temperature",  !- Variable Name</span>
+<span class="co">## └─ 3 : "Hourly";           !- Reporting Frequency</span>
+<span class="co">## </span>
+<span class="co">## $&lt;NA&gt;</span>
+<span class="co">## &lt;IdfObject: 'Output:Variable'&gt; [ID:692]</span>
+<span class="co">## Class: &lt;Output:Variable&gt;</span>
+<span class="va">....</span></code></pre></div>
+<div class="sourceCode" id="cb203"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="va">Output_Meter</span>
+<span class="co">## $&lt;NA&gt;</span>
+<span class="co">## &lt;IdfObject: 'Output:Meter'&gt; [ID:682]</span>
+<span class="co">## Class: &lt;Output:Meter&gt;</span>
+<span class="co">## ├─ 1*: "Cooling:Electricity",  !- Key Name</span>
+<span class="co">## └─ 2 : "Hourly";           !- Reporting Frequency</span>
+<span class="co">## </span>
+<span class="co">## $&lt;NA&gt;</span>
+<span class="co">## &lt;IdfObject: 'Output:Meter'&gt; [ID:683]</span>
+<span class="co">## Class: &lt;Output:Meter&gt;</span>
+<span class="co">## ├─ 1*: "Heating:NaturalGas",  !- Key Name</span>
+<span class="va">....</span></code></pre></div>
+<p>Before you can explore the outputs, you have to first save the model and run the simulation.</p>
+<div class="sourceCode" id="cb204"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"idf"</span>, <span class="st">"model_preprocessed.idf"</span><span class="op">)</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">## Replace the existing IDF located at /Users/adrianchong/Documents/GitHub/r4bes/data/idf/model_preprocessed.idf.</span>
+<span class="va">job</span> <span class="op">&lt;-</span> <span class="va">model</span><span class="op">$</span><span class="fu">run</span><span class="op">(</span><span class="va">epw</span>, dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="co">## EnergyPlus Starting</span>
+<span class="co">## EnergyPlus, Version 9.4.0-998c4b761e, YMD=2021.10.05 14:12</span>
+<span class="co">## </span>
+<span class="co">## Could not find platform independent libraries &lt;prefix&gt;</span>
+<span class="co">## Could not find platform dependent libraries &lt;exec_prefix&gt;</span>
+<span class="co">## Consider setting $PYTHONHOME to &lt;prefix&gt;[:&lt;exec_prefix&gt;]</span>
+<span class="co">## Initializing Response Factors</span>
+<span class="co">## Calculating CTFs for "STEEL FRAME NON-RES EXT WALL"</span>
+<span class="co">## Calculating CTFs for "IEAD NON-RES ROOF"</span>
+<span class="co">## Calculating CTFs for "EXT-SLAB"</span>
+<span class="va">....</span></code></pre></div>
+<p>You will then be able to extract the output variables and meters that have just been specified.</p>
+<div class="sourceCode" id="cb205"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">report</span> <span class="op">&lt;-</span> <span class="va">job</span><span class="op">$</span><span class="fu">report_data</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">drop_na</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">select</span><span class="op">(</span><span class="va">datetime</span>, <span class="va">name</span>, <span class="va">value</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">name</span> <span class="op">%in%</span> <span class="va">variables</span><span class="op">$</span><span class="va">Variable_Name</span> <span class="op">|</span> <span class="va">name</span> <span class="op">%in%</span> <span class="va">meters</span><span class="op">$</span><span class="va">key_name</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">name</span>, values_from <span class="op">=</span> <span class="va">value</span><span class="op">)</span>
 
-<span class="co">#model$save(here("data/idf/model_preprocessed.idf"), overwrite = TRUE)</span>
-<span class="co">#job &lt;- model$run(path_epw)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">report</span><span class="op">)</span>
+<span class="co">## # A tibble: 6 x 12</span>
+<span class="co">##   datetime            `Site Outdoor Air D… `Site Outdoor Air … `InteriorLights:…</span>
+<span class="co">##   &lt;dttm&gt;                             &lt;dbl&gt;               &lt;dbl&gt;             &lt;dbl&gt;</span>
+<span class="co">## 1 2021-01-01 01:00:00                -7.82                72.6          9649498.</span>
+<span class="co">## 2 2021-01-01 02:00:00               -11.9                 73            9649498.</span>
+<span class="co">## 3 2021-01-01 03:00:00               -11.4                 73            9649498.</span>
+<span class="co">## 4 2021-01-01 04:00:00               -11.1                 73            9649498.</span>
+<span class="co">## 5 2021-01-01 05:00:00               -10.8                 73            9649498.</span>
+<span class="co">## 6 2021-01-01 06:00:00               -10.6                 73            9649498.</span>
+<span class="co">## # … with 8 more variables: InteriorEquipment:Electricity &lt;dbl&gt;,</span>
+<span class="va">....</span></code></pre></div>
 
 </div>
 </div>
@@ -193,8 +365,7 @@
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#output"><span class="header-section-number">15</span> Detailed output</a></li>
 <li><a class="nav-link" href="#prerequisites-12"><span class="header-section-number">15.1</span> Prerequisites</a></li>
-<li><a class="nav-link" href="#meters"><span class="header-section-number">15.2</span> Meters</a></li>
-<li><a class="nav-link" href="#variables"><span class="header-section-number">15.3</span> Variables</a></li>
+<li><a class="nav-link" href="#variable-dictionary-reports"><span class="header-section-number">15.2</span> Variable dictionary reports</a></li>
 </ul>
 
       <div class="book-extra">
@@ -211,7 +382,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-09-08.</p>
+    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-10-05.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

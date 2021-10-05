@@ -22,28 +22,102 @@ epw <- read_epw(path_epw)
 ```
 
 
+## Variable dictionary reports
+
+The variable dictionary reports are one of the most important outputs when working with EnergyPlus simulations. These reports inform EnergyPlus users the outputs that are available for a specific EnergyPlus simulation. Knowing the outputs that are available in your model would allow users to identify and subsequently specify relevant outputs for further analysis. Two data dictionary reports are produced and they are the **m**eter **d**ata **d**ictionary (`.mdd`) file and the **r**eport **d**ata **d**ictionary (`.rdd`) file. The `.mdd` file lists the names of the output meters while the `.rdd` file lists the names of the output variables that are available for the simulation. However, you must first run the simulation before the available variables and meters can be known. By setting `weather = NULL`, a design day simulation will be run, allowing us to obtain the `.rdd` and `.mdd` file without running an annual simulation that can be time consuming for complex models. 
 
 
-## Meters
+```{r}
+job <- model$run(weather = NULL, dir = tempdir())
+```
 
-EnergyPlus allows you to specify meters to retrieve the simulation outputs. However, to know what meters are available (for output) in your model, you must first run the simulation. You can then retrieve the list of available meters with the function `read_mdd()`, which returns a five column `data.table`.
+
+You can then retrieve the list of available variables and meters with the function `read_rdd()` and the `read_mdd()` function respectively. Both functions return a five column `data.table`.
 
 ```{r}
 mdd <- job$read_mdd()
 mdd
 ```
 
-After
+
+```{r}
+rdd <- job$read_rdd()
+rdd
+```
 
 
+To specify an output variable of interest, you can add the name of the variable and the corresponding reporting frequency to the `Output:Variable` object. To avoid a long list of redundant and unnecessary output variables, you should first remove all of them.
 
-## Variables
+```{r}
+model$Output_Variable <- NULL
+model$Output_Meter <- NULL
+```
 
+You can then use the `$add()` method to add your variable output of interest. The first argument to the `$add()` method is a list of EnergyPlus object definitions where each list is named with a valid class name. In this case, the relevant EnergyPlus objects for defining output meters (`.mdd`) and variables (`.rdd`) are the `Output:Meter` and the `Output:Variable` objects respectively.
+
+```{r}
+output_list <- list(
+    Output_Variable = list(
+        key_value = "*",
+        Variable_Name = "Site Outdoor Air Drybulb Temperature",
+        Reporting_Frequency = "Hourly"),
+    Output_Variable = list(
+        key_value = "*",
+        Variable_Name = "Zone Mean Air Temperature",
+        Reporting_Frequency = "Hourly"),
+    Output_Meter = list(
+        key_name = "Cooling:Electricity",
+        Reporting_Frequency = "Hourly"),
+    Output_Meter = list(
+        key_name = "Heating:NaturalGas",
+        Reporting_Frequency = "Hourly")
+)
+
+model$add(output_list)
+```
+
+The above code to add meters and variables can become unnecessarily long if you are adding multiple objects of the same class (in the above example, the `Output:Meter` and `Output:Variable` class. You can take advantage of `data.table`'s `:=` operator to assign the object name by reference. 
+
+```{r}
+variables <- list(
+    key_value = "*",
+    Variable_Name = c(
+        "Site Outdoor Air Drybulb Temperature",
+        "Zone Mean Air Temperature"
+    ),
+    Reporting_Frequency = "Hourly"
+)
+
+model$add(Output_Variable := variables)
+```
+
+Likewise, you can use the `$add()` method to add your variable meter of interest. 
+
+```{r}
+model$Output_Meter <- NULL # remove all existing Output:Meter objects
+
+meters <- list(
+    key_name = c(
+        "Cooling:Electricity",
+        "Heating:NaturalGas"
+    ),
+    Reporting_Frequency = "Hourly"
+)
+
+# add meter outputs to get hourly time-series energy consumption
+model$add(Output_Meter := meters)
+
+```
+
+Here is a useful function `preprocess_idf()` that you can use to preprocess your EnergyPlus simulations so that it (1) uses the weather file for the simulation, (2) presents energy consumption outputs in kWh, and (3) remove all existing output meters and variables and add the list of meters and variables provided as arguments to the function. 
 
 ```{r}
 preprocess_idf <- function(idf, meters, variables) {
     # make sure weather file input is respected
     idf$SimulationControl$Run_Simulation_for_Weather_File_Run_Periods <- "Yes"
+    
+    # make sure simulation is not run for sizing periods
+    idf$SimulationControl$Run_Simulation_for_Sizing_Periods <- "No"
 
     # make sure energy consumption is presented in kWh
     if (is.null(idf$OutputControl_Table_Style)) {
@@ -78,6 +152,8 @@ preprocess_idf <- function(idf, meters, variables) {
 ```
 
 
+The following code demonstrates the use of the function `preprocess_idf()`.
+
 ```{r}
 meters <- list(
     key_name = c(
@@ -97,17 +173,47 @@ meters <- list(
 variables <- list(
     key_value = "*",
     Variable_Name = c(
-        "Zone Mean Air Temperature"
+        "Site Outdoor Air Drybulb Temperature",
+        "Site Outdoor Air Relative Humidity"
     ),
     Reporting_Frequency = "Hourly"
 )
 
-#model <- preprocess_idf(model, meters, variables)
+model <- preprocess_idf(model, meters, variables)
 
-#model$save(here("data/idf/model_preprocessed.idf"), overwrite = TRUE)
-#job <- model$run(path_epw)
 ```
 
 
+Check if the output variables and meters have been correctly added
+
+```{r}
+model$Output_Variable
+```
+
+
+```{r}
+model$Output_Meter
+```
+
+
+Before you can explore the outputs, you have to first save the model and run the simulation. 
+
+```{r}
+model$save(here("data", "idf", "model_preprocessed.idf"), overwrite = TRUE)
+job <- model$run(epw, dir = tempdir())
+```
+
+
+You will then be able to extract the output variables and meters that have just been specified.
+
+```{r}
+report <- job$report_data() %>%
+    drop_na() %>%
+    select(datetime, name, value) %>%
+    filter(name %in% variables$Variable_Name | name %in% meters$key_name) %>%
+    pivot_wider(names_from = name, values_from = value)
+
+head(report)
+```
 
 

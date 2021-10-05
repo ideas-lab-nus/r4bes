@@ -102,9 +102,9 @@
 <p>To output the summary reports from EnergyPlus, you need to first run the simulation. The object <code>job</code> in the code below belongs to the <code>EplusJob</code> class. If you set <code>dir = NULL</code>, the simulation results will not be saved into a temporary directory but instead in the folder containing the IDF file. Do that and you will find the summary report in a html file as illustrated in Figure <a href="summary.html#fig:tabular-data">10.1</a>.</p>
 <div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">job</span> <span class="op">&lt;-</span> <span class="va">model</span><span class="op">$</span><span class="fu">run</span><span class="op">(</span><span class="va">epw</span>, dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## Replace the existing IDF located at /private/var/folders/6l/8dz74knn0yd02c_bt8fl1pk80000gn/T/Rtmp56aATG/RefBldgMediumOfficeNew2004_Chicago.idf.</span>
+<span class="co">## Replace the existing IDF located at /private/var/folders/6l/8dz74knn0yd02c_bt8fl1pk80000gn/T/RtmpMh1Uu9/RefBldgMediumOfficeNew2004_Chicago.idf.</span>
 <span class="co">## EnergyPlus Starting</span>
-<span class="co">## EnergyPlus, Version 9.4.0-998c4b761e, YMD=2021.09.08 16:59</span>
+<span class="co">## EnergyPlus, Version 9.4.0-998c4b761e, YMD=2021.10.05 14:11</span>
 <span class="co">## </span>
 <span class="co">## Could not find platform independent libraries &lt;prefix&gt;</span>
 <span class="co">## Could not find platform dependent libraries &lt;exec_prefix&gt;</span>
@@ -217,7 +217,7 @@ Figure 10.1: Report summary html file output from EnergyPlus
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-09-08.</p>
+    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-10-05.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
