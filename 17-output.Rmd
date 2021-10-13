@@ -94,8 +94,6 @@ model$add(Output_Variable := variables)
 Likewise, you can use the `$add()` method to add your variable meter of interest. 
 
 ```{r}
-model$Output_Meter <- NULL # remove all existing Output:Meter objects
-
 meters <- list(
     key_name = c(
         "Cooling:Electricity",
@@ -210,3 +208,8 @@ report <- job$report_data() %>%
 
 head(report)
 ```
+
+
+## mtd file
+
+You can also look at the mtd file to know what report variables are on which meters and vice versa

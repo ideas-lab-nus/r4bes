@@ -85,8 +85,10 @@ duplicate
 output
 prerequisites-12
 variable-dictionary-reports
+mtd-file
 explore
 prerequisites-13
+extracting
 energy-signature
 program
 energy-efficient-measures

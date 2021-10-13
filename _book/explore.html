@@ -80,9 +80,11 @@
 <h2>
 <span class="header-section-number">16.1</span> Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites-13"><i class="fas fa-link"></i></a>
 </h2>
+<p>In this chapter we will explore the model to uncover energy characteristics and create an overview of general trends. We will use eplusr to run the EnergyPlus simulation and extract relevant model inputs/outputs, tidyverse for data transformation, and ggplot2 to visualize the extracted and subsequently transformed data.</p>
 <div class="sourceCode" id="cb206"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://hongyuanjia.github.io/eplusr/">eplusr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org">lubridate</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span></code></pre></div>
 <p>We will be working with the IDF and EPW file that pertains to the U.S. Department of Energy (DOE) Commercial Reference Building and Chicago’s TMY3 respectively.</p>
@@ -93,10 +95,141 @@
 <span class="va">path_epw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"epw"</span>, <span class="st">"USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw"</span><span class="op">)</span>
 <span class="va">epw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://hongyuanjia.github.io/eplusr/reference/read_epw.html">read_epw</a></span><span class="op">(</span><span class="va">path_epw</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="energy-signature" class="section level2" number="16.2">
+<div id="extracting" class="section level2" number="16.2">
 <h2>
-<span class="header-section-number">16.2</span> Energy signature<a class="anchor" aria-label="anchor" href="#energy-signature"><i class="fas fa-link"></i></a>
+<span class="header-section-number">16.2</span> Extracting<a class="anchor" aria-label="anchor" href="#extracting"><i class="fas fa-link"></i></a>
 </h2>
+<p>Before carrying out any model exploration, you need to first specify the outputs of interest. The code below preprocesses the model by adding the list of output meters and variables to the model (See Chapter <a href="output.html#output">15</a> for details).</p>
+<div class="sourceCode" id="cb208"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">preprocess_idf</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">idf</span>, <span class="va">meters</span>, <span class="va">variables</span><span class="op">)</span> <span class="op">{</span>
+    <span class="co"># make sure weather file input is respected</span>
+    <span class="va">idf</span><span class="op">$</span><span class="va">SimulationControl</span><span class="op">$</span><span class="va">Run_Simulation_for_Weather_File_Run_Periods</span> <span class="op">&lt;-</span> <span class="st">"Yes"</span>
+    
+    <span class="co"># make sure simulation is not run for sizing periods</span>
+    <span class="va">idf</span><span class="op">$</span><span class="va">SimulationControl</span><span class="op">$</span><span class="va">Run_Simulation_for_Sizing_Periods</span> <span class="op">&lt;-</span> <span class="st">"No"</span>
+
+    <span class="co"># make sure energy consumption is presented in kWh</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">idf</span><span class="op">$</span><span class="va">OutputControl_Table_Style</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+        <span class="va">idf</span><span class="op">$</span><span class="fu">add</span><span class="op">(</span>OutputControl_Table_Style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"HTML"</span>, <span class="st">"JtoKWH"</span><span class="op">)</span><span class="op">)</span>
+    <span class="op">}</span><span class="kw">else</span><span class="op">{</span>
+        <span class="va">idf</span><span class="op">$</span><span class="va">OutputControl_Table_Style</span><span class="op">$</span><span class="va">Unit_Conversion</span> <span class="op">&lt;-</span> <span class="st">"JtoKWH"</span>
+    <span class="op">}</span>
+
+    <span class="co"># remove all existing meter and variable outputs</span>
+    <span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">idf</span><span class="op">$</span><span class="va">`Output:Meter`</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
+        <span class="va">idf</span><span class="op">$</span><span class="va">Output_Meter</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
+    <span class="op">}</span>
+    
+    <span class="co"># remove all existing meter and variable outputs</span>
+    <span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">idf</span><span class="op">$</span><span class="va">`Output:Table:Monthly`</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
+        <span class="va">idf</span><span class="op">$</span><span class="va">`Output:Table:Monthly`</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
+    <span class="op">}</span>
+
+    <span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">idf</span><span class="op">$</span><span class="va">`Output:Variable`</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
+        <span class="va">idf</span><span class="op">$</span><span class="va">Output_Variable</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
+    <span class="op">}</span>
+
+    <span class="co"># add meter outputs to get hourly time-series energy consumption</span>
+    <span class="va">idf</span><span class="op">$</span><span class="fu">add</span><span class="op">(</span><span class="va">Output_Meter</span> <span class="op">:=</span> <span class="va">meters</span><span class="op">)</span>
+    
+    <span class="co"># add variable outputs to get hourly zone air temperature</span>
+    <span class="va">idf</span><span class="op">$</span><span class="fu">add</span><span class="op">(</span><span class="va">Output_Variable</span> <span class="op">:=</span> <span class="va">variables</span><span class="op">)</span>
+
+    <span class="co"># make sure the modified model is returned</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">idf</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="va">meters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+    key_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+        <span class="st">"Cooling:Electricity"</span>,
+        <span class="st">"Heating:NaturalGas"</span>,
+        <span class="st">"Heating:Electricity"</span>,
+        <span class="st">"InteriorLights:Electricity"</span>,
+        <span class="st">"ExteriorLights:Electricity"</span>,
+        <span class="st">"InteriorEquipment:Electricity"</span>,
+        <span class="st">"Fans:Electricity"</span>,
+        <span class="st">"Pumps:Electricity"</span>,
+        <span class="st">"WaterSystems:NaturalGas"</span>
+    <span class="op">)</span>,
+    Reporting_Frequency <span class="op">=</span> <span class="st">"Hourly"</span>
+<span class="op">)</span>
+
+<span class="va">variables</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+    key_value <span class="op">=</span> <span class="st">"*"</span>,
+    Variable_Name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+        <span class="st">"Site Outdoor Air Drybulb Temperature"</span>,
+        <span class="st">"Site Outdoor Air Relative Humidity"</span>
+    <span class="op">)</span>,
+    Reporting_Frequency <span class="op">=</span> <span class="st">"Hourly"</span>
+<span class="op">)</span>
+
+<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">preprocess_idf</span><span class="op">(</span><span class="va">model</span>, <span class="va">meters</span>, <span class="va">variables</span><span class="op">)</span></code></pre></div>
+<p>You can then run the simulation and it will be possible to extract the output of interest from the model.</p>
+<div class="sourceCode" id="cb209"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"idf"</span>, <span class="st">"model_preprocessed.idf"</span><span class="op">)</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">## Replace the existing IDF located at /Users/adrianchong/Documents/GitHub/r4bes/data/idf/model_preprocessed.idf.</span>
+<span class="va">job</span> <span class="op">&lt;-</span> <span class="va">model</span><span class="op">$</span><span class="fu">run</span><span class="op">(</span><span class="va">epw</span>, dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="co">## Replace the existing IDF located at /private/var/folders/6l/8dz74knn0yd02c_bt8fl1pk80000gn/T/RtmpvR9Eai/model_preprocessed.idf.</span>
+<span class="co">## EnergyPlus Starting</span>
+<span class="co">## EnergyPlus, Version 9.4.0-998c4b761e, YMD=2021.10.13 23:08</span>
+<span class="co">## </span>
+<span class="co">## Could not find platform independent libraries &lt;prefix&gt;</span>
+<span class="co">## Could not find platform dependent libraries &lt;exec_prefix&gt;</span>
+<span class="co">## Consider setting $PYTHONHOME to &lt;prefix&gt;[:&lt;exec_prefix&gt;]</span>
+<span class="co">## Initializing Response Factors</span>
+<span class="co">## Calculating CTFs for "STEEL FRAME NON-RES EXT WALL"</span>
+<span class="co">## Calculating CTFs for "IEAD NON-RES ROOF"</span>
+<span class="co">## Calculating CTFs for "EXT-SLAB"</span>
+<span class="va">....</span></code></pre></div>
+</div>
+<div id="energy-signature" class="section level2" number="16.3">
+<h2>
+<span class="header-section-number">16.3</span> Energy signature<a class="anchor" aria-label="anchor" href="#energy-signature"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb210"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pt_of_interest</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Site Outdoor Air Drybulb Temperature"</span>,
+                    <span class="st">"Cooling:Electricity"</span>,
+                    <span class="st">"Heating:NaturalGas"</span><span class="op">)</span>
+
+
+<span class="va">report</span> <span class="op">&lt;-</span> <span class="va">job</span><span class="op">$</span><span class="fu">report_data</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">drop_na</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">select</span><span class="op">(</span><span class="va">datetime</span>, <span class="va">name</span>, <span class="va">value</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">name</span> <span class="op">%in%</span> <span class="va">pt_of_interest</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">name</span>, values_from <span class="op">=</span> <span class="va">value</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">pivot_longer</span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Cooling:Electricity"</span>, <span class="st">"Heating:NaturalGas"</span><span class="op">)</span>, 
+               names_to <span class="op">=</span> <span class="st">"type"</span>, values_to <span class="op">=</span> <span class="st">"value"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>value <span class="op">=</span> <span class="va">value</span> <span class="op">*</span> <span class="fl">1e-6</span>, <span class="co"># convert J to MJ</span>
+         month <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">datetime</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="co"># create a new column containing the month</span>
+         day <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/day.html">day</a></span><span class="op">(</span><span class="va">datetime</span><span class="op">)</span>, <span class="co"># create a new column containing the day of the month</span>
+         wday <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/day.html">wday</a></span><span class="op">(</span><span class="va">datetime</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="co"># create a new column containing day of the week</span>
+         hour <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/hour.html">hour</a></span><span class="op">(</span><span class="va">datetime</span><span class="op">)</span><span class="op">)</span> <span class="co"># create a new column containing the hour of the day</span></code></pre></div>
+<div class="sourceCode" id="cb211"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">report</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">`Site Outdoor Air Drybulb Temperature`</span>,
+                   y <span class="op">=</span> <span class="va">value</span>,
+                   color <span class="op">=</span> <span class="va">type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fl">1</span>, alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span>rows <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set2"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="st">"Outdoor drybulb temperature"</span><span class="op">~</span><span class="op">(</span><span class="va">degree</span><span class="op">*</span><span class="va">C</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Energy consumption (MJ)"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="r4bes_files/figure-html/unnamed-chunk-210-1.png" width="672"></div>
+<div class="sourceCode" id="cb212"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="va">report_heating</span> <span class="op">&lt;-</span> <span class="va">report</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">type</span> <span class="op">==</span> <span class="st">"Heating:NaturalGas"</span><span class="op">)</span>
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">report_heating</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">day</span>, y <span class="op">=</span> <span class="va">hour</span>, 
+                           fill <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html">scale_fill_viridis</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Heating\nEnergy (MJ)"</span>,
+                     option <span class="op">=</span> <span class="st">"plasma"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Hour of the day"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Day of the week"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="r4bes_files/figure-html/unnamed-chunk-211-1.png" width="672"></div>
 
 </div>
 </div>
@@ -111,7 +244,8 @@
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#explore"><span class="header-section-number">16</span> Model Exploration</a></li>
 <li><a class="nav-link" href="#prerequisites-13"><span class="header-section-number">16.1</span> Prerequisites</a></li>
-<li><a class="nav-link" href="#energy-signature"><span class="header-section-number">16.2</span> Energy signature</a></li>
+<li><a class="nav-link" href="#extracting"><span class="header-section-number">16.2</span> Extracting</a></li>
+<li><a class="nav-link" href="#energy-signature"><span class="header-section-number">16.3</span> Energy signature</a></li>
 </ul>
 
       <div class="book-extra">
@@ -128,7 +262,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-10-05.</p>
+    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-10-13.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

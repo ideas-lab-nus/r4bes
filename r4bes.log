@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.4.12)  5 OCT 2021 14:09
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.4.12)  13 OCT 2021 23:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1518,7 +1518,7 @@ Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 [130]
-Underfull \vbox (badness 1412) detected at line 4343
+Underfull \vbox (badness 1412) detected at line 4341
  []
 
 [131]
@@ -1528,6 +1528,10 @@ Missing character: There is no │ (U+2502) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no └ (U+2514) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
+
+Overfull \vbox (2.02997pt too high) detected at line 4392
+ []
+
 [132]
 Missing character: There is no ├ (U+251C) in font [lmmonolt10-boldoblique]:!
 Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
@@ -1539,66 +1543,84 @@ Missing character: There is no ─ (U+2500) in font [lmmonolt10-boldoblique]:!
 Chapter 16.
 [135
 
-] [136
+]
+Underfull \vbox (badness 10000) detected at line 4563
+ []
 
-] [137] [138]
+
+Underfull \vbox (badness 10000) detected at line 4563
+ []
+
+[136] [137]
+File: r4bes_files/figure-latex/unnamed-chunk-210-1.pdf Graphic file (type pdf)
+<use r4bes_files/figure-latex/unnamed-chunk-210-1.pdf>
+
+Underfull \vbox (badness 2142) detected at line 4644
+ []
+
+[138]
+File: r4bes_files/figure-latex/unnamed-chunk-211-1.pdf Graphic file (type pdf)
+<use r4bes_files/figure-latex/unnamed-chunk-211-1.pdf>
+[139] [140
+
+] [141] [142]
 Chapter 17.
-[139
+[143
 
-] [140
+] [144
 
 ]
 Chapter 18.
-[141] [142
+[145] [146
 
 ]
 Chapter 19.
-[143] [144
+[147] [148
 
-] [145] [146]
+] [149] [150]
 Chapter 20.
-[147
+[151
 
-] [148
+] [152
 
 ]
 Chapter 21.
-[149] [150
+[153] [154
 
 ]
 Chapter 22.
-[151] [152
+[155] [156
 
 ]
 Chapter 23.
-[153] [154
+[157] [158
 
-] [155] [156]
+] [159] [160]
 Chapter 24.
-[157
+[161
 
-] [158
+] [162
 
 ]
 Chapter 25.
-[159] [160
+[163] [164
 
 ]
 Chapter 26.
-(./r4bes.bbl [161] [162
+(./r4bes.bbl [165] [166
 
-]) [163] (./r4bes.aux)
+]) [167] (./r4bes.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 18836 strings out of 476919
- 336404 string characters out of 5821840
- 825473 words of memory out of 5000000
- 38498 multiletter control sequences out of 15000+600000
+ 18852 strings out of 476919
+ 337020 string characters out of 5821840
+ 825553 words of memory out of 5000000
+ 38512 multiletter control sequences out of 15000+600000
  409937 words of font info for 87 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  98i,6n,122p,1185b,508s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on r4bes.pdf (163 pages).
+Output written on r4bes.pdf (167 pages).
