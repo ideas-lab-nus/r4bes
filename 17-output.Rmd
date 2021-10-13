@@ -13,6 +13,7 @@ library(here)
 ```
 
 We will be working with the IDF and EPW file that pertains to the U.S. Department of Energy (DOE) Commercial Reference Building and Chicago's TMY3 respectively.
+
 ```{r, message=FALSE}
 path_idf <- here("data", "idf", "RefBldgMediumOfficeNew2004_Chicago.idf")
 model <- read_idf(path_idf)
@@ -94,8 +95,6 @@ model$add(Output_Variable := variables)
 Likewise, you can use the `$add()` method to add your variable meter of interest. 
 
 ```{r}
-model$Output_Meter <- NULL # remove all existing Output:Meter objects
-
 meters <- list(
     key_name = c(
         "Cooling:Electricity",
@@ -217,3 +216,6 @@ head(report)
 ```
 
 
+## mtd file
+
+You can also look at the mtd file to know what report variables are on which meters and vice versa

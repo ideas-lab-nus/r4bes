@@ -101,9 +101,9 @@
 <p>The variable dictionary reports are one of the most important outputs when working with EnergyPlus simulations. These reports inform EnergyPlus users the outputs that are available for a specific EnergyPlus simulation. Knowing the outputs that are available in your model would allow users to identify and subsequently specify relevant outputs for further analysis. Two data dictionary reports are produced and they are the <strong>m</strong>eter <strong>d</strong>ata <strong>d</strong>ictionary (<code>.mdd</code>) file and the <strong>r</strong>eport <strong>d</strong>ata <strong>d</strong>ictionary (<code>.rdd</code>) file. The <code>.mdd</code> file lists the names of the output meters while the <code>.rdd</code> file lists the names of the output variables that are available for the simulation. However, you must first run the simulation before the available variables and meters can be known. By setting <code>weather = NULL</code>, a design day simulation will be run, allowing us to obtain the <code>.rdd</code> and <code>.mdd</code> file without running an annual simulation that can be time consuming for complex models.</p>
 <div class="sourceCode" id="cb193"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">job</span> <span class="op">&lt;-</span> <span class="va">model</span><span class="op">$</span><span class="fu">run</span><span class="op">(</span>weather <span class="op">=</span> <span class="cn">NULL</span>, dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## Replace the existing IDF located at /private/var/folders/6l/8dz74knn0yd02c_bt8fl1pk80000gn/T/RtmpMh1Uu9/RefBldgMediumOfficeNew2004_Chicago.idf.</span>
+<span class="co">## Replace the existing IDF located at /private/var/folders/6l/8dz74knn0yd02c_bt8fl1pk80000gn/T/RtmpvR9Eai/RefBldgMediumOfficeNew2004_Chicago.idf.</span>
 <span class="co">## EnergyPlus Starting</span>
-<span class="co">## EnergyPlus, Version 9.4.0-998c4b761e, YMD=2021.10.05 14:12</span>
+<span class="co">## EnergyPlus, Version 9.4.0-998c4b761e, YMD=2021.10.13 23:08</span>
 <span class="co">## </span>
 <span class="co">## Could not find platform independent libraries &lt;prefix&gt;</span>
 <span class="co">## Could not find platform dependent libraries &lt;exec_prefix&gt;</span>
@@ -119,7 +119,7 @@
 <span class="va">mdd</span>
 <span class="co">## ══ EnergyPlus Meter Data Dictionary File ═══════════════════════════════════════</span>
 <span class="co">##   * EnergyPlus version: 9.4.0 (998c4b761e)</span>
-<span class="co">##   * Simulation started: 2021-10-05 14:12:00</span>
+<span class="co">##   * Simulation started: 2021-10-13 23:08:00</span>
 <span class="co">## </span>
 <span class="co">## ── Details ─────────────────────────────────────────────────────────────────────</span>
 <span class="co">##      index reported_time_step report_type</span>
@@ -133,7 +133,7 @@
 <span class="va">rdd</span>
 <span class="co">## ══ EnergyPlus Report Data Dictionary File ══════════════════════════════════════</span>
 <span class="co">##   * EnergyPlus version: 9.4.0 (998c4b761e)</span>
-<span class="co">##   * Simulation started: 2021-10-05 14:12:00</span>
+<span class="co">##   * Simulation started: 2021-10-13 23:08:00</span>
 <span class="co">## </span>
 <span class="co">## ── Details ─────────────────────────────────────────────────────────────────────</span>
 <span class="co">##      index reported_time_step report_type</span>
@@ -202,9 +202,7 @@
 <span class="va">....</span></code></pre></div>
 <p>Likewise, you can use the <code>$add()</code> method to add your variable meter of interest.</p>
 <div class="sourceCode" id="cb199"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">model</span><span class="op">$</span><span class="va">Output_Meter</span> <span class="op">&lt;-</span> <span class="cn">NULL</span> <span class="co"># remove all existing Output:Meter objects</span>
-
-<span class="va">meters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+<code class="sourceCode R"><span class="va">meters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
     key_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
         <span class="st">"Cooling:Electricity"</span>,
         <span class="st">"Heating:NaturalGas"</span>
@@ -324,7 +322,7 @@
 <span class="co">## Replace the existing IDF located at /Users/adrianchong/Documents/GitHub/r4bes/data/idf/model_preprocessed.idf.</span>
 <span class="va">job</span> <span class="op">&lt;-</span> <span class="va">model</span><span class="op">$</span><span class="fu">run</span><span class="op">(</span><span class="va">epw</span>, dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## EnergyPlus Starting</span>
-<span class="co">## EnergyPlus, Version 9.4.0-998c4b761e, YMD=2021.10.05 14:12</span>
+<span class="co">## EnergyPlus, Version 9.4.0-998c4b761e, YMD=2021.10.13 23:08</span>
 <span class="co">## </span>
 <span class="co">## Could not find platform independent libraries &lt;prefix&gt;</span>
 <span class="co">## Could not find platform dependent libraries &lt;exec_prefix&gt;</span>
@@ -354,6 +352,12 @@
 <span class="co">## 6 2021-01-01 06:00:00               -10.6                 73            9649498.</span>
 <span class="co">## # … with 8 more variables: InteriorEquipment:Electricity &lt;dbl&gt;,</span>
 <span class="va">....</span></code></pre></div>
+</div>
+<div id="mtd-file" class="section level2" number="15.3">
+<h2>
+<span class="header-section-number">15.3</span> mtd file<a class="anchor" aria-label="anchor" href="#mtd-file"><i class="fas fa-link"></i></a>
+</h2>
+<p>You can also look at the mtd file to know what report variables are on which meters and vice versa</p>
 
 </div>
 </div>
@@ -366,6 +370,7 @@
 <li><a class="nav-link" href="#output"><span class="header-section-number">15</span> Detailed output</a></li>
 <li><a class="nav-link" href="#prerequisites-12"><span class="header-section-number">15.1</span> Prerequisites</a></li>
 <li><a class="nav-link" href="#variable-dictionary-reports"><span class="header-section-number">15.2</span> Variable dictionary reports</a></li>
+<li><a class="nav-link" href="#mtd-file"><span class="header-section-number">15.3</span> mtd file</a></li>
 </ul>
 
       <div class="book-extra">
@@ -382,7 +387,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-10-05.</p>
+    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-10-13.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
