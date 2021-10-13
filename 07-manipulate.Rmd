@@ -53,9 +53,8 @@ The [cheat sheet for dplyr](https://github.com/rstudio/cheatsheets/blob/master/d
 - `filter()`: To subset rows based on their values.
 - `mutate()`: To add new variables whose values are a function of existing variables.
 - `arrange()`: To sort the dataset based on the values of selected columns
-- `summarise()`: 
-- `join.R`: generic functions that joins two tables together
-
+- `summarise()` and `group_by()`: To apply computations by groups
+- `*_join()`: generic functions that joins two tables together
 
 ### `select()` {#select}
 You can use the function `select()` to choose the variables to retain in the dataset based on their names. It is not uncommon to get datasets with hundred or thousands of variables. An example is when working with data from the building management system. Under these scenarios, it is often very useful to narrow down the dataset to contain only the variables of interest. `select()` allows you to do this very easily, to zoom in on the variables or columns of interest.
@@ -63,6 +62,7 @@ You can use the function `select()` to choose the variables to retain in the dat
 ```{r}
 select(bldg, Date_Time, Cooling_Electricity_J, Heating_Electricity_J)
 ```
+
 You can also optionally rename columns with the `select()` function.
 
 ```{r}
