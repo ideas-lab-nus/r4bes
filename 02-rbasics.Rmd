@@ -313,6 +313,14 @@ dt <- as.data.table(iris)
 print(dt)
 ```
 
+If you want to get an explicit reporting of each column's data type, as the `tibble` does by default, you can set the `data.table.print.class` to `TRUE`.
+
+```{r}
+options(datatable.print.class = TRUE)
+
+print(dt)
+```
+
 You can filter the rows to only contain `Species == "virginica`.
 
 ```{r}
