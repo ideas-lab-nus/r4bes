@@ -1,6 +1,8 @@
 --- 
 title: "R for Building Energy Simulation"
-author: "Adrian Chong"
+author:
+  - "Adrian Chong"
+  - "Hongyuan Jia"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::bs4_book
