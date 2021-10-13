@@ -99,7 +99,7 @@ model$objects(c("Steel Frame Non-res Ext Wall", "IEAD Non-res Roof"))
 
 ### `$` operator
 
-Since the model is stored as a named list in R, you can use the `$` operator to also query elements by name. For instance, you can access the objects defined using the `Material:NoMass` class with `$Material:NoMass`. Since class, object, and field names in an EnergyPlus often violets the variable naming restrictions in R (e.g., containing special characters such as `:`, white spaces, etc.), the identifiers need to be placed within a set of single back quotes ``` ` ``` to tell R that this is a variable name. 
+{eplusr} lets you to query model elements by names using the `$` operator, just like a normal named list in R. For instance, you can access the objects defined using the `Material:NoMass` class with `$Material:NoMass`. Since class, object, and field names in EnergyPlus often violets the variable naming restrictions in R (e.g., containing special characters such as `:`, white spaces, etc.), the identifiers need to be placed within a set of single back quotes ``` ` ``` to tell R that this is a variable name. 
 
 With ``` $`Material:NoMass` ``` will list all the objects in the `Material:NoMass` class. 
 
