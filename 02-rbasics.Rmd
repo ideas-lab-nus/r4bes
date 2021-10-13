@@ -282,7 +282,7 @@ tb$Sepal.Lengt
 df$Sepal.Lengt
 ```
 
-You can read more about tibbles by typing vignette("tibble") in your console. 
+You can read more about tibbles by typing `vignette("tibble")` in your console. 
 
 
 ## data.table {#data-table}
