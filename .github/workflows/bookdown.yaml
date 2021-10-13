@@ -38,6 +38,10 @@ jobs:
           key: bookdown-${{ hashFiles('**/*Rmd') }}
           restore-keys: bookdown-
 
+      - name: Install EnergyPlus v9.4
+        run: eplusr::install_eplus(9.4)
+        shell: Rscript {0}
+        
       - name: Build site
         run: Rscript -e 'bookdown::render_book("index.Rmd", quiet = TRUE)'
 

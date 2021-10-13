@@ -23,7 +23,7 @@ Before starting to work with EnergyPlus, there are three main EnergyPlus files t
 
 Before starting, you need to first tell R where EnergyPlus is located.
 
-```{r}
+```{r eval = FALSE}
 use_eplus("/Applications/EnergyPlus-9-4-0")
 ```
 
