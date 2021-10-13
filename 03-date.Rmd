@@ -3,7 +3,7 @@
 
 ## Prerequisites
 
-In this chapter, we will introduce the **lubridate** package that is designed to make it easier to work with dates and times in R. 
+In this chapter, we will introduce the **{lubridate}** package that is designed to make it easier to work with dates and times in R. 
 
 ```{r, message=FALSE}
 library(lubridate)
@@ -42,7 +42,7 @@ You can also specify the time zone by providing inputs to the argument `tz`. You
 ymd_hms("1985/12/03 21:05:30", tz = "Singapore")
 ```
 
-Date vs date-time objects that are created using lubridate. By default, dates will be created as Date objects without the time component. You can force the creation of a date-time object by including the timezone `tz` argument. 
+Date vs date-time objects that are created using {lubridate}. By default, dates will be created as `Date` objects without the time component. You can force the creation of a date-time object by including the timezone `tz` argument. 
 
 ```{r}
 class(ymd("1985/12/03"))
@@ -53,7 +53,7 @@ class(ymd_hms("1985/12/03 21:05:30"))
 
 ## Extracting components
 
-Lubridate provides simple functions that allows you to easily get different components of a date or date-time object. These functions are especially useful when analyzing time-series data and when you want to group your data by a particular time period. 
+{lubridate} provides simple functions that allows you to easily get different components of a date or date-time object. These functions are especially useful when analyzing time-series data and when you want to group your data by a particular time period. 
 
 ```{r}
 

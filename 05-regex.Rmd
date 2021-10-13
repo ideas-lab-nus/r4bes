@@ -4,7 +4,7 @@
 
 ## Prerequisites
 
-The functions `str_view()` and `str_view_all()` from the **stringr** package (part of tidyverse) will be used to learn regular expressions interactively. `str_view()` shows the first match while `str_view_all()` shows all the matches. 
+The functions `str_view()` and `str_view_all()` from the **{stringr}** package (part of {tidyverse}) will be used to learn regular expressions interactively. `str_view()` shows the first match while `str_view_all()` shows all the matches. 
 
 ```{r}
 library(tidyverse)

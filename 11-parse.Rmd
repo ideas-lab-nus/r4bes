@@ -3,7 +3,7 @@
 
 ## Prerequisites
 
-In this chapter we will introduce the **eplusr** package that was designed to interface with EnergyPlus and ease the application of data driven analytics. If you like to learn more about the underlying theory of how data is structured under the hood, you might enjoy the *eplusr* paper published in the Journal Energy and Buildings [@jia_eplusr_2021]. 
+In this chapter we will introduce the **{eplusr}** package that was designed to interface with EnergyPlus and ease the application of data driven analytics. If you like to learn more about the underlying theory of how data is structured under the hood, you might enjoy the *{eplusr}* paper published in the Journal Energy and Buildings [@jia_eplusr_2021]. 
 
 ```{r}
 library(eplusr)

@@ -4,7 +4,7 @@
 
 We introduce the basics in R programming in this chapter. We will review the basic operators and data types in this chapter. We also provide an introduction to the basic R data structures (including tibbles and data tables).
 
-Most of this chapter involves working with R basic operators and data types, which do not require any extra packages. We will also introduce the **tibble** package, which forms part of the tidyverse package in section \@ref(tibbles), and the  **data.table** package in section \@ref(data-table)
+Most of this chapter involves working with R basic operators and data types, which do not require any extra packages. We will also introduce the **{tibble}** package, which forms part of the tidyverse package in section \@ref(tibbles), and the  **{data.table}** package in section \@ref(data-table)
 
 ```{r, message=FALSE}
 library(tidyverse)
