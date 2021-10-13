@@ -34,12 +34,14 @@ An easy way to remove non-word characters is to use the `str_replace_all()` func
 
 ```{r}
 new_name <- str_replace_all(names(bldg), "\\W+", "_")
+new_name
 ```
 
 You can also remove parts of the character vector that you do not want using the function `str_remove_all()`.
 
 ```{r}
 names(bldg) <- str_remove_all(new_name, "_Hourly_")
+names(bldg)
 ```
 
 
