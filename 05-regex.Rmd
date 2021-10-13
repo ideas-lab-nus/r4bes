@@ -17,7 +17,7 @@ The most basic form of matching is to match exact strings
 
 ```{r}
 x <- c("abc ABC\n123. !?\\(){}")
-writeLines(x)
+cat(x)
 
 ```
 
@@ -116,7 +116,7 @@ In regular expressions, the backslash `\` is used as an *escape* character and i
 
 ```{r}
 x <- c("abc ABC\n123. !?\\(){}")
-writeLines(x)
+cat(x)
 ```
 
 
