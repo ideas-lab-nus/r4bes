@@ -346,6 +346,13 @@ You can select multiple columns with `list()` or `.()`.
 dt[, .(Sepal.Length, Species)]
 ```
 
+You can also save the targeted column names in a variable and use it to specify columns with `..` prefix.
+
+```{r}
+cols <- c("Sepal.Length", "Species")
+
+dt[, ..cols]
+```
 
 Aside from selecting columns using `j`, you can carry out computations on `j` involving one or more columns and a subset of rows using `i`.
 
