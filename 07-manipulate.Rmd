@@ -3,7 +3,6 @@
 
 Data-preprocessing is an important step in any data science process. Rarely will you receive data that is in the exact form that you need. More often than not, you would need to pre-process the data by transforming and manipulating them so that they are easier to work with. This will be the focus in this chapter.
 
-
 ## Prerequisites
 
 In this chapter we focus on the use of the **{dplyr}** package that forms a core part of the **{tidyverse}** package. **{dplyr}** provides function that alleviates the challenges of data manipulation. 
@@ -56,7 +55,6 @@ The [cheat sheet for dplyr](https://github.com/rstudio/cheatsheets/blob/master/d
 - `join.R`: generic functions that joins two tables together
 
 
-
 ### `select()` {#select}
 You can use the function `select()` to choose the variables to retain in the dataset based on their names. It is not uncommon to get datasets with hundred or thousands of variables. An example is when working with data from the building management system. Under these scenarios, it is often very useful to narrow down the dataset to contain only the variables of interest. `select()` allows you to do this very easily, to zoom in on the variables or columns of interest.
 
@@ -76,12 +74,14 @@ select(bldg,
 Additionally, {tidyverse} provides helper functions that lets you select columns by matching patterns in their names. For the following selection helper functions, a character vector is provided for the match. If `length()` of the character vector is larger than 1, the logical union (OR `|` operator) is taken. 
 
 * `starts_with()`: Select columns that starts with a specific character vector
+
 ```{r}
 select(bldg, starts_with(c("Heating", "Cooling")))
 ```
 
 
 * `ends_with()`: Select columns that ends with a specific character vector 
+
 ```{r}
 select(bldg, ends_with("Time"))
 ```
@@ -117,7 +117,6 @@ select(bldg_rename_b, matches(reg_ex, ignore.case = FALSE))
 
 * `all_of()` and `any_of()`: You can also select variables from a character vector using the selection helper functions `all_of()` and `any_of()`. The key difference is that `all_of()` is used for strict selection where an error is thrown for variable names that do not exist. In contrast, `any_of()` does not check for missing variable names, and thus is often used to ensure a specific column is removed. 
 
-
 ```{r}
 vars <- c("Heating_NaturalGas_J", "WaterSystems_NaturalGas_J")
 select(bldg, all_of(vars))
@@ -143,13 +142,13 @@ select(
 )
 ```
 
-
-
 ### `filter()`
+
 You can use `filter()` to subset rows based on their values. dplyr's `filter()` function retains rows that return `TRUE` for all the conditions specified. The first argument is the data frame and the subsequent arguments are the conditions that are used to subset the observations. In other words, multiple arguments to `filter()` are combined by the `&` (and) logical operator. To work with other logical operators such as `|` (or) and `!` (not), you would have to combine them within a single argument. 
 
 ```{r}
 filter(bldg, Cooling_Electricity_J != 0)
+
 filter(bldg, InteriorLights_Electricity_J > 100000000)
 
 filter(
@@ -162,32 +161,33 @@ filter(
 Often, the ability to subset observations based on their timestamp is a very useful feature when working with timeseries data
 
 ```{r}
-
 filter(bldg, month(Date_Time) == 1, day(Date_Time) == 1)
+
 filter(bldg, day(Date_Time) == 1)
+
 filter(bldg, month(Date_Time) > 4, month(Date_Time) < 10)
+
 filter(bldg, month(Date_Time) > 4 & month(Date_Time) < 10)
 ```
 
 You can also combine `filter()` with `grepl()` to subset rows using regular expressions.
 
-
-
 ### `arrange()`
-You can use `arrange()` to sort the dataset based on the values of selected columns. The first argument is the data frame and the second is the column name to sort the data frame by. If more than one column name is provided, subsequent column names will be used to break ties in the preceeding columns.
+
+You can use `arrange()` to sort the dataset based on the values of selected columns. The first argument is the data frame and the second is the column name to sort the data frame by. If more than one column name is provided, subsequent column names will be used to break ties in the preceding columns.
 
 ```{r}
 arrange(bldg, Cooling_Electricity_J)
 ```
+
 You can use `desc()` to order a column in descending order
 
 ```{r}
 arrange(bldg, desc(Cooling_Electricity_J))
 ```
 
-
-
 ### `mutate()`
+
 You can use `mutate()` to add new variables whose values are a function of existing variables (Note that you can also refer to newly created variables). The newly created variables will be added to the end of the dataset. 
 
 ```{r}
@@ -196,7 +196,6 @@ mutate(bldg,
   Cooling_Heating_kWh = (Total_Heating_J + Cooling_Electricity_J) * 2.77778e-7
 )
 ```
-
 
 You can use `transmute()` if you only want to keep the new variables in your dataset. 
 
@@ -214,7 +213,7 @@ Useful mutate and transmute functions include
 ```{r}
 heat <- transmute(bldg,
   Total_Heating_J = Heating_NaturalGas_J + Heating_Electricity_J
-  )
+)
 heat
 ```
 
@@ -229,13 +228,13 @@ mutate(
 )
 ```
 
-- `if_else()` is function of the form `if_else(condition, true, false)` that allows you to test a condition that you provide as a first argument to the function. If the condition is `TRUE`, `if_else()` will return the second argument. By contrast, if the condition is `FALSE`, it will return the third argument. In the example below, we are using mutate to create a new variable/column `New_Total_Heating_J`. This new column will contain the characters "low" if the condition `Total_Heating_J < 200000000` is `TRUE` and "high" if it is `FALSE`.
+- `if_else()` is function of the form `if_else(condition, true, false)` that allows you to test a condition that you provide as a first argument to the function. If the condition is `TRUE`, `if_else()` will return the second argument. By contrast, if the condition is `FALSE`, it will return the third argument. In the example below, we are using mutate to create a new variable/column `New_Total_Heating_J`. This new column will contain the characters `"low"` if the condition `Total_Heating_J < 200000000` is `TRUE` and `"high"` if it is `FALSE`.
 
 ```{r}
 mutate(
   heat,
   New_Total_Heating_J = if_else(Total_Heating_J < 200000000, "low", "high")
-  )
+)
 ```
 
 - `case_when()` is an extension of `if_else()` by allowing you to write multiple `if_else()` statements. Below, we assign a `"low"` when `Total_Heating_J < 200000000`, `"medium"` when `200000000 <= Total_Heating_J <= 400000000`, and high when `Total_Heating_J > 400000000`.  
@@ -247,9 +246,8 @@ mutate(
     Total_Heating_J < 200000000 ~ "low",
     Total_Heating_J >= 200000000 & Total_Heating_J <= 400000000 ~ "medium",
     Total_Heating_J > 400000000 ~ "high")
-  )
+)
 ```
-
 
 ### `summarise()` and `group_by()`
 
@@ -294,7 +292,6 @@ mutate(bldg,
 You may also pass a list of functions to be applied to each of the selected columns.
 
 ```{r}
-
 summarise(
   bldg_by_month,
   across(
@@ -303,8 +300,6 @@ summarise(
   )
 )
 ```
-
-
 
 ##  Pipes
 
@@ -326,9 +321,7 @@ final_result <- first(data) %>%
   third()
 ```
 
-
 Figure \@ref(fig:pipe) shows what is happening graphically.
-
 
 ```{r pipe, echo=FALSE, eval=TRUE, out.width = "70%", fig.cap="Piping data from one function to the next sequentially", fig.align='center'}
 knitr::include_graphics("figures/pipe.png")

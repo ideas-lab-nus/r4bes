@@ -47,13 +47,11 @@ The RColorBrewer package provide three types of color palettes: sequential, dive
 display.brewer.all(colorblindFriendly = TRUE)
 ```
 
-
 When representing gradients (such as temperature data), you want to use *sequential* color palletes that are perceptually uniform as the color progresses from low to high. 
 
 ```{r, fig.height=7}
 display.brewer.all(type="seq", colorblindFriendly=TRUE)
 ```
-
 
 You will want to use *diverging* color palettes that uses a neutral mid-point that diverges at perceptually equal steps to both ends of the data. An example is using the `RdBu` color pallette to represent temperature data that diverges between cold and hot. 
 
@@ -61,13 +59,11 @@ You will want to use *diverging* color palettes that uses a neutral mid-point th
 display.brewer.all(type="div", colorblindFriendly=TRUE)
 ```
 
-
 You will want to map categorical variables to *qualitative* color palettes that are perceptually uniform and not have any variables standing out perceptually due to it's color. For instance, when visualizing the energy usage intensity of different buildings, you would want the colors used to represent each building to be easily distinguishable but at the same time not have one stand out from another even though they are numerically equivalent. 
 
 ```{r, fig.height=3}
 display.brewer.all(type="qual", colorblindFriendly=TRUE) 
 ```
-
 
 You can use the function `display.brewer.pal()` to visualize a single brewer palette and use the `brewer.pal()` function to obtain the hexadecimade color code of the palette. 
 
@@ -76,12 +72,10 @@ You can use the function `display.brewer.pal()` to visualize a single brewer pal
 display.brewer.pal(5, "Set2")
 ```
 
-
 ```{r}
 # return the hexadecimal code for 5 olors of the "Set2" palette
 brewer.pal(5, "Set2")
 ```
-
 
 Visualizing building related data such as electricity consumption often involves mapping continuous data onto the color or fill of the graphic you want to create. Although the brewer palettes can be extended to continuous data through interpololation, I have found the color scales in the viridis package to be more robust because they are designed to be perceptually uniform while maintaining a large range. The viridis package contains eight different color scales with the viridis scale forming the default or primary color map.
 
@@ -89,7 +83,6 @@ Visualizing building related data such as electricity consumption often involves
 ```{r viridis, echo=FALSE, eval=TRUE, out.height = "70%", fig.align='center'}
 knitr::include_graphics("figures/viridis.png")
 ```
-
 
 ## `ggplot()`
 
@@ -148,15 +141,12 @@ ggplot(data = report_end_use, aes(x = category, y = value, fill = fuel)) +
 
 By default, the bar charts would be stacked. In this scenario, we only have two groups of fuel, electricity and natural gas. However, when there are many groups, stacked bar charts can be difficult to visualize. You can place them side by side instead using `position = position_dodge()`.
 
-
 ```{r}
 ggplot(data = report_end_use, aes(x = category, y = value, fill = fuel)) +
     geom_bar(stat="identity", position = position_dodge())
 ```
 
-
 You can use scale to change the fill and colors of the bar chart. The `scale_*_brewer()` and `scale_*_viridis()` functions provides an easy way to specify palettes from the RColorBrewer and the viridis package respectively. Particularly, `scale_fill_brewer()` and `scale_fill_viridis()` provides mapping to ggplot's fill aesthetics while `scale_color_brewer()` and `scale_color_viridis()` provides mapping to ggplot's color aesthetics. 
-
 
 ```{r}
 ggplot(data = report_end_use, aes(x = category, y = value, fill = fuel)) +
@@ -165,7 +155,6 @@ ggplot(data = report_end_use, aes(x = category, y = value, fill = fuel)) +
     scale_fill_brewer(palette = "Set2") 
 ```
 
-
 ```{r}
 ggplot(data = report_end_use, aes(x = category, y = value, fill = fuel)) +
     geom_bar(stat="identity") + 
@@ -173,7 +162,6 @@ ggplot(data = report_end_use, aes(x = category, y = value, fill = fuel)) +
     scale_fill_viridis(option = "cividis",
                        discrete = TRUE) 
 ```
-
 
 You can flip how the data coordinates maps to plot to get horizontal bar plots with `coord_filp()`.
 
@@ -193,11 +181,9 @@ ggplot(data = report_end_use, aes(x = category, y = value)) +
     facet_grid(rows = vars(fuel))
 ```
 
-
 As you probably have noticed. The x-axis labels are not legible due to overlapping when plotting the data as vertical bar charts.
 
 You can use `theme()` and `element_text()` to change how the x-axis labels appear. In this case we are rotating it counter-clockwise by 90 degrees (`angle = 90`), vertically center justify the text (`vjust = 0.5`), and horizontally right justify the text (`hjust = 1`). For `vjust` and `hjust`, 0 and 1 refers to left and right justify respectively.  
-
 
 ```{r}
 ggplot(data = report_end_use, aes(x = category, y = value, fill = fuel)) +
@@ -206,14 +192,12 @@ ggplot(data = report_end_use, aes(x = category, y = value, fill = fuel)) +
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
 
-
 You can also use `theme()` together with various `element_*` functions to control elements of the plot title, legend, axis labels, borders, background, etc. You can find out more about the possible arguments to each `element_function()` by typing `?margin` into your console. `element_*` functions are used with `theme()` to specify the non-data components of the plot. There are four element functions and they are:
 
 * `element_blank()`: to assign a blank
 * `element_rect()`: for specifying borders and background
 * `element_line()`: for specifying lines
 * `element_text()`: for specifying text
-
 
 ```{r}
 ggplot(data = report_end_use, aes(x = category, y = value, fill = fuel)) +
@@ -228,7 +212,7 @@ ggplot(data = report_end_use, aes(x = category, y = value, fill = fuel)) +
                                    arrow = arrow()),
           plot.background = element_rect(fill = "grey"),
           legend.title = element_blank() # remove legend title
-          )
+   )
 ```
 
 ### Visualize weather data
@@ -261,8 +245,6 @@ brewer.pal(8, "Reds")
 display.brewer.pal(8, "Reds")
 ```
 
-
-
 You can visualize the weather data (dry bulb temperature in this example) as a single time series plot. Here, `geom_line()` is used to connect the observations sequentially over time. `expression()` is used to express the degree symbol in the y-axis label. 
 
 ```{r, fig.width = 16}
@@ -273,9 +255,7 @@ ggplot(weather_data, aes(x = datetime, y = dry_bulb_temperature)) +
     
 ```
 
-
 You can also visualize the data by the hour of the day using scatterplots. To avoid overplotting, a typical problem with scatterplots, you can subset the data by their month using `facet_grid()`. To further aid the ability to visually identify patterns in the presence of overplotting, you can use `geom_smooth()` to add a smoothed line on top of the scatterplot. 
-
 
 ```{r, fig.width = 10}
 ggplot(weather_data, aes(x= hour, y = dry_bulb_temperature)) +
@@ -299,7 +279,6 @@ ggplot(weather_data, aes(x = day, y = hour, fill = dry_bulb_temperature)) +
 
 ```
 
-
 ### Saving Plots
 
 You can use the `ggsave()` function to save the plot. By default, it saves the last plot that was displayed. You can specify the size of the graphic using the units ("in", "cm", "mm", or "px"), width and height argument. 
@@ -308,6 +287,3 @@ You can use the `ggsave()` function to save the plot. By default, it saves the l
 ggsave("my_plot.pdf", width = 16, height = 24, units = "cm")
 ggsave("my_plot.png", width = 6, height = 9, units = "in")
 ```
-
-
-

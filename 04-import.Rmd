@@ -19,18 +19,18 @@ file.exists(here("data", "building.csv"))
 
 
 ## Finding your file
+
 Before importing data, you need to first let R know where to find the file by providing the file path. You can provide file paths relative to the top-level directory of the current R project with the `here()` function.
 
 ```{r}
 here()
 ```
 
-To reference a file named `iris.csv` located in the `data` folder that is located in the top-level directory of your project
+To reference a file named `iris.csv` located in the `data` folder that is located in the top-level directory of your project:
 
 ```{r}
 here("data", "iris.csv")
 ```
-
 
 ## Parsing a csv file
 
@@ -76,13 +76,3 @@ bldg <- read_csv(
 bldg$datetime <- dmy_hm(bldg$datetime)
 
 ```
-
-
-
-
-
-
-
-
-
-

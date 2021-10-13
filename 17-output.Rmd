@@ -3,7 +3,7 @@
 
 ## Prerequisites
 
-In this chapter we will focus on how to set and get EnergyPlus simulation outputs using the eplusr package. We will illustrate the manipulation of simulation data using tidyverse, and use ggplot2 to visualize the simulation data
+In this chapter we will focus on how to set and get EnergyPlus simulation outputs using the {eplusr} package. We will illustrate the manipulation of simulation data using {tidyverse}, and use {ggplot2} to visualize the simulation data
 
 ```{r, message=FALSE}
 library(eplusr)
@@ -13,6 +13,7 @@ library(here)
 ```
 
 We will be working with the IDF and EPW file that pertains to the U.S. Department of Energy (DOE) Commercial Reference Building and Chicago's TMY3 respectively.
+
 ```{r, message=FALSE}
 path_idf <- here("data", "idf", "RefBldgMediumOfficeNew2004_Chicago.idf")
 model <- read_idf(path_idf)
@@ -44,7 +45,6 @@ mdd
 rdd <- job$read_rdd()
 rdd
 ```
-
 
 To specify an output variable of interest, you can add the name of the variable and the corresponding reporting frequency to the `Output:Variable` object. To avoid a long list of redundant and unnecessary output variables, you should first remove all of them.
 
@@ -122,7 +122,7 @@ preprocess_idf <- function(idf, meters, variables) {
     # make sure energy consumption is presented in kWh
     if (is.null(idf$OutputControl_Table_Style)) {
         idf$add(OutputControl_Table_Style = list("HTML", "JtoKWH"))
-    }else{
+    } else {
         idf$OutputControl_Table_Style$Unit_Conversion <- "JtoKWH"
     }
 
@@ -150,7 +150,6 @@ preprocess_idf <- function(idf, meters, variables) {
     return(idf)
 }
 ```
-
 
 The following code demonstrates the use of the function `preprocess_idf()`.
 
@@ -180,9 +179,7 @@ variables <- list(
 )
 
 model <- preprocess_idf(model, meters, variables)
-
 ```
-
 
 Check if the output variables and meters have been correctly added
 
@@ -195,14 +192,12 @@ model$Output_Variable
 model$Output_Meter
 ```
 
-
 Before you can explore the outputs, you have to first save the model and run the simulation. 
 
 ```{r}
 model$save(here("data", "idf", "model_preprocessed.idf"), overwrite = TRUE)
 job <- model$run(epw, dir = tempdir())
 ```
-
 
 You will then be able to extract the output variables and meters that have just been specified.
 
@@ -215,5 +210,3 @@ report <- job$report_data() %>%
 
 head(report)
 ```
-
-
