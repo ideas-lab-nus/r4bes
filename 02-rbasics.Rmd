@@ -430,5 +430,3 @@ head(dt)
 
 
 You can find out more about `data.table`s by typing `vignette(package = "data.table")` into the console. 
-
-
