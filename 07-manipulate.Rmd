@@ -285,8 +285,8 @@ summarise(bldg_by_month,
 `across()` makes it possible to apply functions across multiple columns within the functions `summarise()` and `mutate()`, using the semantics in `filter()` (see section \@ref(select)) that makes it easy to refer to columns based on their names.  
 
 ```{r}
-
-mutate(bldg,
+transmute(bldg,
+  `Date/Time`,
   total = rowSums(across(where(is.numeric)))
 )
 ```
