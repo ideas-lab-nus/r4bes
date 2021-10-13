@@ -28,7 +28,7 @@ avail_eplus()
 
 Alternatively, you can specify the location of the EnergyPlus you want to use.
 
-```{r}
+```{r, eval = FALSE}
 use_eplus("/Applications/EnergyPlus-9-4-0")
 ```
 
