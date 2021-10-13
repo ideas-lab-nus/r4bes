@@ -286,7 +286,7 @@ summarise(bldg_by_month,
 
 ```{r}
 transmute(bldg,
-  `Date/Time`,
+  Date_Time,
   total = rowSums(across(where(is.numeric)))
 )
 ```
