@@ -90,39 +90,39 @@
 </h2>
 <p>You can easily transform dates and times stored as character vectors to Date or POSIXct (or date-time) objects in R using lubridate. All you need to do is specify the order of the year <code>y</code>, month <code>m</code>, and the day <code>d</code> and lubridate will automatically figure out the format.</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">dmy</a></span><span class="op">(</span><span class="st">"3/12/1985"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html">dmy</a></span><span class="op">(</span><span class="st">"3/12/1985"</span><span class="op">)</span>
 <span class="co">## [1] "1985-12-03"</span>
-<span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span><span class="op">(</span><span class="st">"85/12/03"</span><span class="op">)</span>
+<span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span><span class="op">(</span><span class="st">"85/12/03"</span><span class="op">)</span>
 <span class="co">## [1] "1985-12-03"</span>
-<span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">mdy</a></span><span class="op">(</span><span class="st">"Dec 3rd 1985"</span><span class="op">)</span>
+<span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html">mdy</a></span><span class="op">(</span><span class="st">"Dec 3rd 1985"</span><span class="op">)</span>
 <span class="co">## [1] "1985-12-03"</span>
-<span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">ydm</a></span><span class="op">(</span><span class="st">"85-3rd-december"</span><span class="op">)</span>
+<span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html">ydm</a></span><span class="op">(</span><span class="st">"85-3rd-december"</span><span class="op">)</span>
 <span class="co">## [1] "1985-12-03"</span></code></pre></div>
 <p>The same functions can also convert numeric vectors.</p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span><span class="op">(</span><span class="fl">19851203</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span><span class="op">(</span><span class="fl">19851203</span><span class="op">)</span>
 <span class="co">## [1] "1985-12-03"</span>
-<span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">dmy</a></span><span class="op">(</span><span class="fl">31285</span><span class="op">)</span>
+<span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html">dmy</a></span><span class="op">(</span><span class="fl">31285</span><span class="op">)</span>
 <span class="co">## [1] "1985-12-03"</span></code></pre></div>
 <p>You can create Date objects with the time component using a POSIXct or date-time object simply by adding an underscore followed by the order of the hour <code>h</code>, minute <code>m</code> and second <code>s</code>.</p>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd_hms.html">ymd_h</a></span><span class="op">(</span><span class="st">"1985/12/03 21"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html">ymd_h</a></span><span class="op">(</span><span class="st">"1985/12/03 21"</span><span class="op">)</span>
 <span class="co">## [1] "1985-12-03 21:00:00 UTC"</span>
-<span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd_hms.html">ymd_hm</a></span><span class="op">(</span><span class="st">"1985/12/03 21:05"</span><span class="op">)</span>
+<span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html">ymd_hm</a></span><span class="op">(</span><span class="st">"1985/12/03 21:05"</span><span class="op">)</span>
 <span class="co">## [1] "1985-12-03 21:05:00 UTC"</span>
-<span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd_hms.html">ymd_hms</a></span><span class="op">(</span><span class="st">"1985/12/03 21:05:30"</span><span class="op">)</span>
+<span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html">ymd_hms</a></span><span class="op">(</span><span class="st">"1985/12/03 21:05:30"</span><span class="op">)</span>
 <span class="co">## [1] "1985-12-03 21:05:30 UTC"</span></code></pre></div>
 <p>You can also specify the time zone by providing inputs to the argument <code>tz</code>. You can find out more about time zones in R by typing <code><a href="https://rdrr.io/r/base/timezones.html">?timezones</a></code> into the console.</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd_hms.html">ymd_hms</a></span><span class="op">(</span><span class="st">"1985/12/03 21:05:30"</span>, tz <span class="op">=</span> <span class="st">"Singapore"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html">ymd_hms</a></span><span class="op">(</span><span class="st">"1985/12/03 21:05:30"</span>, tz <span class="op">=</span> <span class="st">"Singapore"</span><span class="op">)</span>
 <span class="co">## [1] "1985-12-03 21:05:30 +08"</span></code></pre></div>
 <p>Date vs date-time objects that are created using lubridate. By default, dates will be created as Date objects without the time component. You can force the creation of a date-time object by including the timezone <code>tz</code> argument.</p>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span><span class="op">(</span><span class="st">"1985/12/03"</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span><span class="op">(</span><span class="st">"1985/12/03"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## [1] "Date"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span><span class="op">(</span><span class="st">"1985/12/03"</span>, tz <span class="op">=</span> <span class="st">"Singapore"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span><span class="op">(</span><span class="st">"1985/12/03"</span>, tz <span class="op">=</span> <span class="st">"Singapore"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## [1] "POSIXct" "POSIXt"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd_hms.html">ymd_hms</a></span><span class="op">(</span><span class="st">"1985/12/03 21:05:30"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html">ymd_hms</a></span><span class="op">(</span><span class="st">"1985/12/03 21:05:30"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## [1] "POSIXct" "POSIXt"</span></code></pre></div>
 </div>
 <div id="extracting-components" class="section level2" number="3.3">
@@ -132,20 +132,20 @@
 <p>Lubridate provides simple functions that allows you to easily get different components of a date or date-time object. These functions are especially useful when analyzing time-series data and when you want to group your data by a particular time period.</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
-<span class="va">my_dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd_hms.html">ymd_hms</a></span><span class="op">(</span><span class="st">"1985/12/03 21:05:30"</span><span class="op">)</span>
-<span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">my_dt</span><span class="op">)</span>
+<span class="va">my_dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html">ymd_hms</a></span><span class="op">(</span><span class="st">"1985/12/03 21:05:30"</span><span class="op">)</span>
+<span class="fu"><a href="https://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">my_dt</span><span class="op">)</span>
 <span class="co">## [1] 1985</span>
-<span class="fu"><a href="http://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">my_dt</span><span class="op">)</span>
+<span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">my_dt</span><span class="op">)</span>
 <span class="co">## [1] 12</span>
-<span class="fu"><a href="http://lubridate.tidyverse.org/reference/day.html">day</a></span><span class="op">(</span><span class="va">my_dt</span><span class="op">)</span>
+<span class="fu"><a href="https://lubridate.tidyverse.org/reference/day.html">day</a></span><span class="op">(</span><span class="va">my_dt</span><span class="op">)</span>
 <span class="co">## [1] 3</span>
-<span class="fu"><a href="http://lubridate.tidyverse.org/reference/hour.html">hour</a></span><span class="op">(</span><span class="va">my_dt</span><span class="op">)</span>
+<span class="fu"><a href="https://lubridate.tidyverse.org/reference/hour.html">hour</a></span><span class="op">(</span><span class="va">my_dt</span><span class="op">)</span>
 <span class="co">## [1] 21</span>
-<span class="fu"><a href="http://lubridate.tidyverse.org/reference/minute.html">minute</a></span><span class="op">(</span><span class="va">my_dt</span><span class="op">)</span>
+<span class="fu"><a href="https://lubridate.tidyverse.org/reference/minute.html">minute</a></span><span class="op">(</span><span class="va">my_dt</span><span class="op">)</span>
 <span class="co">## [1] 5</span>
-<span class="fu"><a href="http://lubridate.tidyverse.org/reference/second.html">second</a></span><span class="op">(</span><span class="va">my_dt</span><span class="op">)</span>
+<span class="fu"><a href="https://lubridate.tidyverse.org/reference/second.html">second</a></span><span class="op">(</span><span class="va">my_dt</span><span class="op">)</span>
 <span class="co">## [1] 30</span>
-<span class="fu"><a href="http://lubridate.tidyverse.org/reference/day.html">wday</a></span><span class="op">(</span><span class="va">my_dt</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu"><a href="https://lubridate.tidyverse.org/reference/day.html">wday</a></span><span class="op">(</span><span class="va">my_dt</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">## [1] Tue</span>
 <span class="co">## Levels: Sun &lt; Mon &lt; Tue &lt; Wed &lt; Thu &lt; Fri &lt; Sat</span></code></pre></div>
 
@@ -177,7 +177,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-10-05.</p>
+    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-10-13.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

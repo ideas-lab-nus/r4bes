@@ -420,7 +420,7 @@
 <p>Often, the ability to subset observations based on their timestamp is a very useful feature when working with timeseries data</p>
 <div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
-<span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">bldg</span>, <span class="fu"><a href="http://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">Date_Time</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span>, <span class="fu"><a href="http://lubridate.tidyverse.org/reference/day.html">day</a></span><span class="op">(</span><span class="va">Date_Time</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">bldg</span>, <span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">Date_Time</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span>, <span class="fu"><a href="https://lubridate.tidyverse.org/reference/day.html">day</a></span><span class="op">(</span><span class="va">Date_Time</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span>
 <span class="co">## # A tibble: 24 x 10</span>
 <span class="co">##    Date_Time           Cooling_Electricit… Heating_NaturalGa… Heating_Electrici…</span>
 <span class="co">##    &lt;dttm&gt;                            &lt;dbl&gt;              &lt;dbl&gt;              &lt;dbl&gt;</span>
@@ -432,7 +432,7 @@
 <span class="co">##  6 2020-01-01 06:00:00                   0          21886933.         190670331.</span>
 <span class="co">##  7 2020-01-01 07:00:00                   0          29745424.         252272477.</span>
 <span class="va">....</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">bldg</span>, <span class="fu"><a href="http://lubridate.tidyverse.org/reference/day.html">day</a></span><span class="op">(</span><span class="va">Date_Time</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">bldg</span>, <span class="fu"><a href="https://lubridate.tidyverse.org/reference/day.html">day</a></span><span class="op">(</span><span class="va">Date_Time</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span>
 <span class="co">## # A tibble: 287 x 10</span>
 <span class="co">##    Date_Time           Cooling_Electricit… Heating_NaturalGa… Heating_Electrici…</span>
 <span class="co">##    &lt;dttm&gt;                            &lt;dbl&gt;              &lt;dbl&gt;              &lt;dbl&gt;</span>
@@ -444,7 +444,7 @@
 <span class="co">##  6 2020-01-01 06:00:00                   0          21886933.         190670331.</span>
 <span class="co">##  7 2020-01-01 07:00:00                   0          29745424.         252272477.</span>
 <span class="va">....</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">bldg</span>, <span class="fu"><a href="http://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">Date_Time</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">4</span>, <span class="fu"><a href="http://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">Date_Time</span><span class="op">)</span> <span class="op">&lt;</span> <span class="fl">10</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">bldg</span>, <span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">Date_Time</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">4</span>, <span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">Date_Time</span><span class="op">)</span> <span class="op">&lt;</span> <span class="fl">10</span><span class="op">)</span>
 <span class="co">## # A tibble: 3,672 x 10</span>
 <span class="co">##    Date_Time           Cooling_Electricit… Heating_NaturalGa… Heating_Electrici…</span>
 <span class="co">##    &lt;dttm&gt;                            &lt;dbl&gt;              &lt;dbl&gt;              &lt;dbl&gt;</span>
@@ -456,7 +456,7 @@
 <span class="co">##  6 2020-05-01 05:00:00                  0                   0                 0 </span>
 <span class="co">##  7 2020-05-01 06:00:00                  0                   0         252935532.</span>
 <span class="va">....</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">bldg</span>, <span class="fu"><a href="http://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">Date_Time</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">4</span> <span class="op">&amp;</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">Date_Time</span><span class="op">)</span> <span class="op">&lt;</span> <span class="fl">10</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">bldg</span>, <span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">Date_Time</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">4</span> <span class="op">&amp;</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">Date_Time</span><span class="op">)</span> <span class="op">&lt;</span> <span class="fl">10</span><span class="op">)</span>
 <span class="co">## # A tibble: 3,672 x 10</span>
 <span class="co">##    Date_Time           Cooling_Electricit… Heating_NaturalGa… Heating_Electrici…</span>
 <span class="co">##    &lt;dttm&gt;                            &lt;dbl&gt;              &lt;dbl&gt;              &lt;dbl&gt;</span>
@@ -645,8 +645,8 @@
 <p>However, <code>summarise()</code> combined with <code>group_by()</code> will allow you to easily summarise data based on individual groups.</p>
 <div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bldg_month</span> <span class="op">&lt;-</span> <span class="fu">mutate</span><span class="op">(</span><span class="va">bldg</span>,
-  Year <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">Date_Time</span><span class="op">)</span>,
-  Month <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">Date_Time</span><span class="op">)</span>
+  Year <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">Date_Time</span><span class="op">)</span>,
+  Month <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">Date_Time</span><span class="op">)</span>
 <span class="op">)</span>
 
 <span class="va">bldg_by_month</span> <span class="op">&lt;-</span> <span class="fu">group_by</span><span class="op">(</span><span class="va">bldg_month</span>, <span class="va">Year</span>, <span class="va">Month</span><span class="op">)</span>
@@ -723,12 +723,12 @@
 <p>Instead of many intermediary steps</p>
 <div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">first_output</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/last.html">first</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
-<span class="va">second_output</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/second.html">second</a></span><span class="op">(</span><span class="va">first_output</span><span class="op">)</span>
+<span class="va">second_output</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/second.html">second</a></span><span class="op">(</span><span class="va">first_output</span><span class="op">)</span>
 <span class="va">final_result</span> <span class="op">&lt;-</span> <span class="fu">third</span><span class="op">(</span><span class="va">second_output</span><span class="op">)</span></code></pre></div>
 <p>You can connect multiple operators sequentially using the pipe operator</p>
 <div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">final_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/last.html">first</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="http://lubridate.tidyverse.org/reference/second.html">second</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://lubridate.tidyverse.org/reference/second.html">second</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">third</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>Figure <a href="manipulate.html#fig:pipe">7.1</a> shows what is happening graphically.</p>
 <div class="figure" style="text-align: center">
@@ -743,7 +743,7 @@ Figure 7.1: Piping data from one function to the next sequentially
 <span class="va">bldg</span> <span class="op">%&gt;%</span>
   <span class="fu">select</span><span class="op">(</span><span class="va">Date_Time</span>, <span class="fu">contains</span><span class="op">(</span><span class="st">"Heating"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>
-    Month <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">Date_Time</span><span class="op">)</span>,
+    Month <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">Date_Time</span><span class="op">)</span>,
     Total_Heating_J <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
   <span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">group_by</span><span class="op">(</span><span class="va">Month</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -803,7 +803,7 @@ Figure 7.1: Piping data from one function to the next sequentially
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-10-05.</p>
+    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-10-13.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

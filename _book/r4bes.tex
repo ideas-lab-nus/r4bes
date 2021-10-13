@@ -117,7 +117,7 @@
 
 \title{R for Building Energy Simulation}
 \author{Adrian Chong}
-\date{2021-10-05}
+\date{2021-10-13}
 
 \begin{document}
 \maketitle
@@ -2669,7 +2669,7 @@ If you do not want to save the simulation results locally, you can save the simu
 \begin{Highlighting}[]
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.10.05 14:06}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.10.13 23:01}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2720,9 +2720,9 @@ To output the summary reports from EnergyPlus, you need to first run the simulat
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
-\DocumentationTok{\#\# Replace the existing IDF located at /private/var/folders/6l/8dz74knn0yd02c\_bt8fl1pk80000gn/T/RtmpHymxxt/RefBldgMediumOfficeNew2004\_Chicago.idf.}
+\DocumentationTok{\#\# Replace the existing IDF located at /private/var/folders/6l/8dz74knn0yd02c\_bt8fl1pk80000gn/T/Rtmp8E9SE5/RefBldgMediumOfficeNew2004\_Chicago.idf.}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.10.05 14:07}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.10.13 23:02}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -2899,7 +2899,7 @@ In this chapter, you will also be working with the U.S. Department of Energy (DO
 
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(}\AttributeTok{weather =}\NormalTok{ epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.10.05 14:07}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.10.13 23:02}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -3287,7 +3287,7 @@ You can use the \texttt{ggsave()} function to save the plot. By default, it save
 
 In this part of the book, you will learn EnergyPlus's input data structure (Chapter \ref{input}), and how to programmatically query and modify them in R (Chapter \ref{modify}). We will also point you to the corresponding EnergyPlus reference documentation that will help you gain a better understanding of the inner workings of EnergyPlus. Understanding the inputs to a model is important as the proverb ``garbage in, garbage out'' clearly spells out. You can have the best data science workflows but your simulation results would only be as good the quality of your model and it's inputs.
 
-Subsequently, you will learn how to extract the more detailed output files (Chapter \ref{explore}). You will work with time-series simulation results and explore them using R's data transformation and data visualization capabilities (Chapter \ref{explore}).
+Subsequently, you will learn how to extract the more detailed output files (Chapter \ref{output}. You will work with time-series simulation results and explore them using R's data transformation and data visualization capabilities (Chapter \ref{explore}).
 
 \hypertarget{input}{%
 \chapter{Model Input Structure}\label{input}}
@@ -4142,9 +4142,9 @@ The variable dictionary reports are one of the most important outputs when worki
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(}\AttributeTok{weather =} \ConstantTok{NULL}\NormalTok{, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
-\DocumentationTok{\#\# Replace the existing IDF located at /private/var/folders/6l/8dz74knn0yd02c\_bt8fl1pk80000gn/T/RtmpHymxxt/RefBldgMediumOfficeNew2004\_Chicago.idf.}
+\DocumentationTok{\#\# Replace the existing IDF located at /private/var/folders/6l/8dz74knn0yd02c\_bt8fl1pk80000gn/T/Rtmp8E9SE5/RefBldgMediumOfficeNew2004\_Chicago.idf.}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.10.05 14:08}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.10.13 23:03}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -4165,7 +4165,7 @@ You can then retrieve the list of available variables and meters with the functi
 \NormalTok{mdd}
 \DocumentationTok{\#\# == EnergyPlus Meter Data Dictionary File =======================================}
 \DocumentationTok{\#\#   * EnergyPlus version: 9.4.0 (998c4b761e)}
-\DocumentationTok{\#\#   * Simulation started: 2021{-}10{-}05 14:08:00}
+\DocumentationTok{\#\#   * Simulation started: 2021{-}10{-}13 23:03:00}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# {-}{-} Details {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 \DocumentationTok{\#\#      index reported\_time\_step report\_type}
@@ -4183,7 +4183,7 @@ You can then retrieve the list of available variables and meters with the functi
 \NormalTok{rdd}
 \DocumentationTok{\#\# == EnergyPlus Report Data Dictionary File ======================================}
 \DocumentationTok{\#\#   * EnergyPlus version: 9.4.0 (998c4b761e)}
-\DocumentationTok{\#\#   * Simulation started: 2021{-}10{-}05 14:08:00}
+\DocumentationTok{\#\#   * Simulation started: 2021{-}10{-}13 23:03:00}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# {-}{-} Details {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 \DocumentationTok{\#\#      index reported\_time\_step report\_type}
@@ -4272,8 +4272,6 @@ Likewise, you can use the \texttt{\$add()} method to add your variable meter of 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{model}\SpecialCharTok{$}\NormalTok{Output\_Meter }\OtherTok{\textless{}{-}} \ConstantTok{NULL} \CommentTok{\# remove all existing Output:Meter objects}
-
 \NormalTok{meters }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
     \AttributeTok{key\_name =} \FunctionTok{c}\NormalTok{(}
         \StringTok{"Cooling:Electricity"}\NormalTok{,}
@@ -4418,7 +4416,7 @@ Before you can explore the outputs, you have to first save the model and run the
 \DocumentationTok{\#\# Replace the existing IDF located at /Users/adrianchong/Documents/GitHub/r4bes/data/idf/model\_preprocessed.idf.}
 \NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
 \DocumentationTok{\#\# EnergyPlus Starting}
-\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.10.05 14:08}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.10.13 23:03}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
 \DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
@@ -4456,16 +4454,24 @@ You will then be able to extract the output variables and meters that have just 
 \end{Highlighting}
 \end{Shaded}
 
+\hypertarget{mtd-file}{%
+\section{mtd file}\label{mtd-file}}
+
+You can also look at the mtd file to know what report variables are on which meters and vice versa
+
 \hypertarget{explore}{%
 \chapter{Model Exploration}\label{explore}}
 
 \hypertarget{prerequisites-13}{%
 \section{Prerequisites}\label{prerequisites-13}}
 
+In this chapter we will explore the model to uncover energy characteristics and create an overview of general trends. We will use eplusr to run the EnergyPlus simulation and extract relevant model inputs/outputs, tidyverse for data transformation, and ggplot2 to visualize the extracted and subsequently transformed data.
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(eplusr)}
 \FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(lubridate)}
 \FunctionTok{library}\NormalTok{(ggplot2)}
 \FunctionTok{library}\NormalTok{(here)}
 \end{Highlighting}
@@ -4483,8 +4489,161 @@ We will be working with the IDF and EPW file that pertains to the U.S. Departmen
 \end{Highlighting}
 \end{Shaded}
 
+\hypertarget{extracting}{%
+\section{Extracting}\label{extracting}}
+
+Before carrying out any model exploration, you need to first specify the outputs of interest. The code below preprocesses the model by adding the list of output meters and variables to the model (See Chapter \ref{output} for details).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{preprocess\_idf }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(idf, meters, variables) \{}
+    \CommentTok{\# make sure weather file input is respected}
+\NormalTok{    idf}\SpecialCharTok{$}\NormalTok{SimulationControl}\SpecialCharTok{$}\NormalTok{Run\_Simulation\_for\_Weather\_File\_Run\_Periods }\OtherTok{\textless{}{-}} \StringTok{"Yes"}
+    
+    \CommentTok{\# make sure simulation is not run for sizing periods}
+\NormalTok{    idf}\SpecialCharTok{$}\NormalTok{SimulationControl}\SpecialCharTok{$}\NormalTok{Run\_Simulation\_for\_Sizing\_Periods }\OtherTok{\textless{}{-}} \StringTok{"No"}
+
+    \CommentTok{\# make sure energy consumption is presented in kWh}
+    \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{is.null}\NormalTok{(idf}\SpecialCharTok{$}\NormalTok{OutputControl\_Table\_Style)) \{}
+\NormalTok{        idf}\SpecialCharTok{$}\FunctionTok{add}\NormalTok{(}\AttributeTok{OutputControl\_Table\_Style =} \FunctionTok{list}\NormalTok{(}\StringTok{"HTML"}\NormalTok{, }\StringTok{"JtoKWH"}\NormalTok{))}
+\NormalTok{    \}}\ControlFlowTok{else}\NormalTok{\{}
+\NormalTok{        idf}\SpecialCharTok{$}\NormalTok{OutputControl\_Table\_Style}\SpecialCharTok{$}\NormalTok{Unit\_Conversion }\OtherTok{\textless{}{-}} \StringTok{"JtoKWH"}
+\NormalTok{    \}}
+
+    \CommentTok{\# remove all existing meter and variable outputs}
+    \ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.null}\NormalTok{(idf}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Output:Meter}\StringTok{\textasciigrave{}}\NormalTok{))\{}
+\NormalTok{        idf}\SpecialCharTok{$}\NormalTok{Output\_Meter }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{    \}}
+    
+    \CommentTok{\# remove all existing meter and variable outputs}
+    \ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.null}\NormalTok{(idf}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Output:Table:Monthly}\StringTok{\textasciigrave{}}\NormalTok{))\{}
+\NormalTok{        idf}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Output:Table:Monthly}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{    \}}
+
+    \ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.null}\NormalTok{(idf}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Output:Variable}\StringTok{\textasciigrave{}}\NormalTok{))\{}
+\NormalTok{        idf}\SpecialCharTok{$}\NormalTok{Output\_Variable }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{    \}}
+
+    \CommentTok{\# add meter outputs to get hourly time{-}series energy consumption}
+\NormalTok{    idf}\SpecialCharTok{$}\FunctionTok{add}\NormalTok{(}\AttributeTok{Output\_Meter :=}\NormalTok{ meters)}
+    
+    \CommentTok{\# add variable outputs to get hourly zone air temperature}
+\NormalTok{    idf}\SpecialCharTok{$}\FunctionTok{add}\NormalTok{(}\AttributeTok{Output\_Variable :=}\NormalTok{ variables)}
+
+    \CommentTok{\# make sure the modified model is returned}
+    \FunctionTok{return}\NormalTok{(idf)}
+\NormalTok{\}}
+
+\NormalTok{meters }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
+    \AttributeTok{key\_name =} \FunctionTok{c}\NormalTok{(}
+        \StringTok{"Cooling:Electricity"}\NormalTok{,}
+        \StringTok{"Heating:NaturalGas"}\NormalTok{,}
+        \StringTok{"Heating:Electricity"}\NormalTok{,}
+        \StringTok{"InteriorLights:Electricity"}\NormalTok{,}
+        \StringTok{"ExteriorLights:Electricity"}\NormalTok{,}
+        \StringTok{"InteriorEquipment:Electricity"}\NormalTok{,}
+        \StringTok{"Fans:Electricity"}\NormalTok{,}
+        \StringTok{"Pumps:Electricity"}\NormalTok{,}
+        \StringTok{"WaterSystems:NaturalGas"}
+\NormalTok{    ),}
+    \AttributeTok{Reporting\_Frequency =} \StringTok{"Hourly"}
+\NormalTok{)}
+
+\NormalTok{variables }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
+    \AttributeTok{key\_value =} \StringTok{"*"}\NormalTok{,}
+    \AttributeTok{Variable\_Name =} \FunctionTok{c}\NormalTok{(}
+        \StringTok{"Site Outdoor Air Drybulb Temperature"}\NormalTok{,}
+        \StringTok{"Site Outdoor Air Relative Humidity"}
+\NormalTok{    ),}
+    \AttributeTok{Reporting\_Frequency =} \StringTok{"Hourly"}
+\NormalTok{)}
+
+\NormalTok{model }\OtherTok{\textless{}{-}} \FunctionTok{preprocess\_idf}\NormalTok{(model, meters, variables)}
+\end{Highlighting}
+\end{Shaded}
+
+You can then run the simulation and it will be possible to extract the output of interest from the model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model}\SpecialCharTok{$}\FunctionTok{save}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"idf"}\NormalTok{, }\StringTok{"model\_preprocessed.idf"}\NormalTok{), }\AttributeTok{overwrite =} \ConstantTok{TRUE}\NormalTok{)}
+\DocumentationTok{\#\# Replace the existing IDF located at /Users/adrianchong/Documents/GitHub/r4bes/data/idf/model\_preprocessed.idf.}
+\NormalTok{job }\OtherTok{\textless{}{-}}\NormalTok{ model}\SpecialCharTok{$}\FunctionTok{run}\NormalTok{(epw, }\AttributeTok{dir =} \FunctionTok{tempdir}\NormalTok{())}
+\DocumentationTok{\#\# Replace the existing IDF located at /private/var/folders/6l/8dz74knn0yd02c\_bt8fl1pk80000gn/T/Rtmp8E9SE5/model\_preprocessed.idf.}
+\DocumentationTok{\#\# EnergyPlus Starting}
+\DocumentationTok{\#\# EnergyPlus, Version 9.4.0{-}998c4b761e, YMD=2021.10.13 23:03}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\# Could not find platform independent libraries \textless{}prefix\textgreater{}}
+\DocumentationTok{\#\# Could not find platform dependent libraries \textless{}exec\_prefix\textgreater{}}
+\DocumentationTok{\#\# Consider setting $PYTHONHOME to \textless{}prefix\textgreater{}[:\textless{}exec\_prefix\textgreater{}]}
+\DocumentationTok{\#\# Initializing Response Factors}
+\DocumentationTok{\#\# Calculating CTFs for "STEEL FRAME NON{-}RES EXT WALL"}
+\DocumentationTok{\#\# Calculating CTFs for "IEAD NON{-}RES ROOF"}
+\DocumentationTok{\#\# Calculating CTFs for "EXT{-}SLAB"}
+\NormalTok{....}
+\end{Highlighting}
+\end{Shaded}
+
 \hypertarget{energy-signature}{%
 \section{Energy signature}\label{energy-signature}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pt\_of\_interest }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Site Outdoor Air Drybulb Temperature"}\NormalTok{,}
+                    \StringTok{"Cooling:Electricity"}\NormalTok{,}
+                    \StringTok{"Heating:NaturalGas"}\NormalTok{)}
+
+
+\NormalTok{report }\OtherTok{\textless{}{-}}\NormalTok{ job}\SpecialCharTok{$}\FunctionTok{report\_data}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{drop\_na}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(datetime, name, value) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(name }\SpecialCharTok{\%in\%}\NormalTok{ pt\_of\_interest) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from =}\NormalTok{ name, }\AttributeTok{values\_from =}\NormalTok{ value) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \FunctionTok{c}\NormalTok{(}\StringTok{"Cooling:Electricity"}\NormalTok{, }\StringTok{"Heating:NaturalGas"}\NormalTok{), }
+               \AttributeTok{names\_to =} \StringTok{"type"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"value"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{value =}\NormalTok{ value }\SpecialCharTok{*} \FloatTok{1e{-}6}\NormalTok{, }\CommentTok{\# convert J to MJ}
+         \AttributeTok{month =} \FunctionTok{month}\NormalTok{(datetime, }\AttributeTok{label =} \ConstantTok{TRUE}\NormalTok{), }\CommentTok{\# create a new column containing the month}
+         \AttributeTok{day =} \FunctionTok{day}\NormalTok{(datetime), }\CommentTok{\# create a new column containing the day of the month}
+         \AttributeTok{wday =} \FunctionTok{wday}\NormalTok{(datetime, }\AttributeTok{label =} \ConstantTok{TRUE}\NormalTok{), }\CommentTok{\# create a new column containing day of the week}
+         \AttributeTok{hour =} \FunctionTok{hour}\NormalTok{(datetime)) }\CommentTok{\# create a new column containing the hour of the day}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(report, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \StringTok{\textasciigrave{}}\AttributeTok{Site Outdoor Air Drybulb Temperature}\StringTok{\textasciigrave{}}\NormalTok{,}
+                   \AttributeTok{y =}\NormalTok{ value,}
+                   \AttributeTok{color =}\NormalTok{ type)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{shape =} \DecValTok{1}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_grid}\NormalTok{(}\AttributeTok{rows =} \FunctionTok{vars}\NormalTok{(type)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_brewer}\NormalTok{(}\AttributeTok{palette =} \StringTok{"Set2"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\FunctionTok{expression}\NormalTok{(}\StringTok{"Outdoor drybulb temperature"}\SpecialCharTok{\textasciitilde{}}\NormalTok{(degree}\SpecialCharTok{*}\NormalTok{C))) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Energy consumption (MJ)"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-210-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+
+\NormalTok{report\_heating }\OtherTok{\textless{}{-}}\NormalTok{ report }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(type }\SpecialCharTok{==} \StringTok{"Heating:NaturalGas"}\NormalTok{)}
+
+\FunctionTok{ggplot}\NormalTok{(report\_heating, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ day, }\AttributeTok{y =}\NormalTok{ hour, }
+                           \AttributeTok{fill =}\NormalTok{ value)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_tile}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_viridis}\NormalTok{(}\AttributeTok{name =} \StringTok{"Heating}\SpecialCharTok{\textbackslash{}n}\StringTok{Energy (MJ)"}\NormalTok{,}
+                     \AttributeTok{option =} \StringTok{"plasma"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_grid}\NormalTok{(}\AttributeTok{cols =} \FunctionTok{vars}\NormalTok{(month)) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Hour of the day"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Day of the week"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"bottom"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{r4bes_files/figure-latex/unnamed-chunk-211-1.pdf}
 
 \hypertarget{part-program}{%
 \part{Program}\label{part-program}}

@@ -102,7 +102,7 @@
 
 <span class="va">job</span> <span class="op">&lt;-</span> <span class="va">model</span><span class="op">$</span><span class="fu">run</span><span class="op">(</span>weather <span class="op">=</span> <span class="va">epw</span>, dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## EnergyPlus Starting</span>
-<span class="co">## EnergyPlus, Version 9.4.0-998c4b761e, YMD=2021.10.05 14:12</span>
+<span class="co">## EnergyPlus, Version 9.4.0-998c4b761e, YMD=2021.10.13 23:07</span>
 <span class="co">## </span>
 <span class="co">## Could not find platform independent libraries &lt;prefix&gt;</span>
 <span class="co">## Could not find platform dependent libraries &lt;exec_prefix&gt;</span>
@@ -292,10 +292,10 @@
 <div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">weather_data</span> <span class="op">&lt;-</span> <span class="va">epw</span><span class="op">$</span><span class="fu">data</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
     <span class="fu">select</span><span class="op">(</span><span class="va">datetime</span>, <span class="va">dry_bulb_temperature</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu">mutate</span><span class="op">(</span>month <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">datetime</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-           day <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/day.html">day</a></span><span class="op">(</span><span class="va">datetime</span><span class="op">)</span>,
-           wday <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/day.html">wday</a></span><span class="op">(</span><span class="va">datetime</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-           hour <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/hour.html">hour</a></span><span class="op">(</span><span class="va">datetime</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <span class="fu">mutate</span><span class="op">(</span>month <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">datetime</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
+           day <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/day.html">day</a></span><span class="op">(</span><span class="va">datetime</span><span class="op">)</span>,
+           wday <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/day.html">wday</a></span><span class="op">(</span><span class="va">datetime</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
+           hour <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/hour.html">hour</a></span><span class="op">(</span><span class="va">datetime</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>In the subsequent graphics, we will be using various colors from the <code>Reds</code> color palette from RColorBrewer.</p>
 <div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># return the hexadecimal code for 5 olors of the "Set2" palette</span>
@@ -380,7 +380,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-10-05.</p>
+    <p>"<strong>R for Building Energy Simulation</strong>" was written by Adrian Chong. It was last built on 2021-10-13.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
