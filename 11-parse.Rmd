@@ -22,8 +22,8 @@ Before starting to work with EnergyPlus, there are three main EnergyPlus files t
 
 Before starting, you need to first tell R where EnergyPlus is located. By default, the eplusr package will try to locate all EnergyPlus installed in your computer. Versions of found EnergyPlus can be retrieved by running the `avail_eplus()` function.
 
-```{r}
-avail_eplus()
+```{r eval = FALSE}
+use_eplus("/Applications/EnergyPlus-9-4-0")
 ```
 
 Alternatively, you can specify the location of the EnergyPlus you want to use.
