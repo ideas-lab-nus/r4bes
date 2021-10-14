@@ -24,6 +24,9 @@ jobs:
         with:
           use-public-rspm: true
 
+      - name: Install system dependencies
+        run: apt-get install -y libudunits2-dev
+
       - uses: r-lib/actions/setup-renv@v1
 
       - name: Cache bookdown results
