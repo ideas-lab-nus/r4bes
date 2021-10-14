@@ -25,7 +25,7 @@ jobs:
           use-public-rspm: true
 
       - name: Install system dependencies
-        run: apt-get install -y libudunits2-dev
+        run: sudo apt-get install -y libudunits2-dev
 
       - uses: r-lib/actions/setup-renv@v1
 
