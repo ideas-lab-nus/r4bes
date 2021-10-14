@@ -4,7 +4,7 @@
 
 ## Prerequisites
 
-The functions `str_view()` and `str_view_all()` from the **stringr** package (part of tidyverse) will be used to learn regular expressions interactively. `str_view()` shows the first match while `str_view_all()` shows all the matches. 
+The functions `str_view()` and `str_view_all()` from the **{stringr}** package (part of {tidyverse}) will be used to learn regular expressions interactively. `str_view()` shows the first match while `str_view_all()` shows all the matches. 
 
 ```{r}
 library(tidyverse)
@@ -17,7 +17,7 @@ The most basic form of matching is to match exact strings
 
 ```{r}
 x <- c("abc ABC\n123. !?\\(){}")
-writeLines(x)
+cat(x)
 
 ```
 
@@ -33,14 +33,13 @@ str_view(x, "123")
 
 ## Character classes {#regex-classes}
 
-Character classes allows you to specify a list of characters for matching. 
+Character classes allow you to specify a list of characters for matching. 
 
 A bracket `[...]` can be used to specify a list of character. Therefore, it will match any characters that was specified within the brackets.  
 
 ```{r}
 str_view_all(x, "[bcde]")
 ```
-
 
 If a caret `^` is added to the start of the list of characters, it will match any characters that are NOT in the list.
 
@@ -59,14 +58,14 @@ str_view_all(x, "[a-zA-Z]")
 You can also specify character classes using pre-defined names of these classes with a bracket expression. 
 
  Regex        What it matches      
-----------    ---------------------------------------------------------------------
-[:alnum:]     letters and numbers
-[:alpha:]     letters
-[:upper:]     uppercase letters
-[:lower:]     lowercase letters
-[:digit:]     numbers
-[:punct:]     punctuations
-[:space:]     space characters
+-----------   ---------------------------------------------------------------------
+`[:alnum:]`     letters and numbers
+`[:alpha:]`     letters
+`[:upper:]`     uppercase letters
+`[:lower:]`     lowercase letters
+`[:digit:]`     numbers
+`[:punct:]`     punctuations
+`[:space:]`     space characters
 
 Try out some of the named classes using the function `str_view_all()`
 
@@ -94,7 +93,7 @@ There are also special metacharacters you can use to match entire classes of cha
 `\w`          "word" i.e., letters (a-z and A-Z), digits (0-9) or (_)
 `\W`          non-"word"
 
-Note that to include a `\` in a regular expression, you need to escape it using `\\`. This is explained in the next subsection on escaping . 
+Note that to include a `\` in a regular expression, you need to escape it using `\\`. This is explained in the next subsection on escaping. 
 
 
 ```{r}
@@ -117,7 +116,7 @@ In regular expressions, the backslash `\` is used as an *escape* character and i
 
 ```{r}
 x <- c("abc ABC\n123. !?\\(){}")
-writeLines(x)
+cat(x)
 ```
 
 
@@ -158,8 +157,17 @@ You can use `^` to match the start of a string and `$` to match the end of a str
 
 ```{r}
 str_view_all(c("apple", "apple pie", "juicy apple"), "apple")
+```
+
+```{r}
 str_view_all(c("apple", "apple pie", "juicy apple"), "^apple")
+```
+
+```{r}
 str_view_all(c("apple", "apple pie", "juicy apple"), "apple$")
+```
+
+```{r}
 str_view_all(c("apple", "apple pie", "juicy apple"), "^apple$")
 ```
 
@@ -167,11 +175,17 @@ str_view_all(c("apple", "apple pie", "juicy apple"), "^apple$")
 
 ```{r}
 str_view_all(c("apple", "pineapple", "juicy apple"), "\\bapple\\b")
+```
 
+```{r}
 str_view_all(c("apple", "pineapple", "juicy apple"), "apple\\b")
+```
 
+```{r}
 str_view_all(c("apple", "pineapple", "juicy apple"), "\\Bapple\\B")
+```
 
+```{r}
 str_view_all(c("apple", "pineapple", "juicy apple"), "\\Bapple")
 ```
 

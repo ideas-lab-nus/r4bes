@@ -4,7 +4,7 @@ In this chapter, you will learn how modify the model inputs.
 
 ## Prerequisites
 
-In this chapter, we will use the **eplusr** package to query and modify various inputs in an EnergyPlus model. We will also combine what you have learned about data manipulation (with the **tidyverse** package) to make it easier to work with the simulation inputs. 
+In this chapter, we will use the **{eplusr}** package to query and modify various inputs in an EnergyPlus model. We will also combine what you have learned about data manipulation (with the **{tidyverse}** package) to make it easier to work with the simulation inputs. 
 
 ```{r, message=FALSE}
 library(eplusr)
@@ -22,10 +22,9 @@ path_epw <- here("data", "epw", "USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw")
 epw <- read_epw(path_epw)
 ```
 
-
 ## Extract and Modify 
 
-Changing the values of the existing objects in the model is an important functionality in the application of data exploration and data science to EnergyPlus. There are many approaches to extract and modify an EnergyPlus model using eplusr. In this chapter we focus on 
+Changing the values of the existing objects in the model is an important functionality in the application of data exploration and data science to EnergyPlus. There are many approaches to extract and modify an EnergyPlus model using {eplusr}. In this chapter we focus on 
 
 * Directly extracting and modifying the field values of a single object using the `[[` or `$` operator.
 
@@ -33,14 +32,12 @@ Changing the values of the existing objects in the model is an important functio
 
 ### Single object
 
-
 Like how you can access the field values of the model using the `$` operator, you can likewise modify them simply by accessing and then replace the current value by assigning a different value. For instance, you can change the `Thermal Resistance` field value of the `CP02 CARPET PAD` object to `0.5` using the `<-` operator to assign `0.5` to the field `Thermal Resistance`.
 
 ```{r}
 model$`Material:NoMass`$`CP02 CARPET PAD`$`Thermal Resistance` <- 0.5
 model$`Material:NoMass`$`CP02 CARPET PAD`
 ```
-
 
 Another example showing how you can modify the lighting power density (field name: `Watts_per_Zone_Floor_Area`) of a particular zone (object name: Perimeter_bot_ZN_1_Lights) from `10.76` (current value) to `15` (new value).
 
@@ -57,7 +54,6 @@ model$Lights$Perimeter_bot_ZN_1_Lights$Watts_per_Zone_Floor_Area <- 15
 model$Lights$Perimeter_bot_ZN_1_Lights
 ```
 
-
 ### Multiple objects
 
 Methods to extract data:
@@ -66,8 +62,6 @@ Methods          Description
 --------------   ------------------------------------------------------
 `$to_table()`    Extract specified objects of the model to data.frames     
 `$to_string()`   Extract specified objects of the model to strings
-
-
 
 You can extract the EnergyPlus objects of interest into a R data frame using the `$to_table` method in the `Idf` class. If no arguments are provided to the method, the entire EnergyPlus model is converted to a data frame.
 
@@ -85,6 +79,7 @@ Take a minute now to open the EnergyPlus IDF file (`"RefBldgMediumOfficeNew2004_
 ```{r}
 model$to_table()
 ```
+
 * Subset by Class
 
 Working with the entire model can be difficult due to the large number of rows. You can extract all the objects belonging to a class by supplying a character vector of class names that are of interest to the argument `class`.
@@ -103,22 +98,19 @@ model$to_table(which = c("Wood Siding",
 model$to_table(which = c("Perimeter_bot_ZN_1_Lights"))
 ```
 
-Once the EnergyPlus objects are in a `data.frame` format, you can take advantage of the `tidyverse` library to easily manipulate and modify their values. For example, you can use the `filter()` function to subset the data frame to retain rows of interest and the `dplyr::mutate()` function to modify values within columns. 
+Once the EnergyPlus objects are in a `data.frame` format, you can take advantage of the {tidyverse} library to easily manipulate and modify their values. For example, you can use the `filter()` function to subset the data frame to retain rows of interest and the `mutate()` function to modify values within columns. 
 
-In the example below, we first extract all objects in the `Lights` class from the EnergyPlus model. We then filter the data frame to contain only the field `"Watts per Zone Floor Area"`, which is used to specify the lighting power density in $W/m^2$ in EnergyPlus. Lastly, we change the lighting power density of all the objects in the `Lights` class from $10.76 W/m^2$ to $15 W/m^2$.
+In the example below, we first extract all objects in the `Lights` class from the EnergyPlus model. We then filter the data frame to contain only the field `"Watts per Zone Floor Area"`, which is used to specify the lighting power density in $W/m^2$ in EnergyPlus. Lastly, we change the lighting power density of all the objects in the `Lights` class from $10.76 \mathrm{W}/\mathrm{m}^2$ to $15 \mathrm{W}/\mathrm{m}^2$.
 
 ```{r}
 lights_df <- model$to_table(class = c("Lights")) %>%
   mutate(value = if_else(field == "Watts per Zone Floor Area", # condition
                          "15", # value if TRUE
                          value) # value if FALSE
-         )
-
+ )
 
 lights_df
-
 ```
-
 
 However, notice that you are not modifying the model just by changing the values of the data frame. This is not surprising since the extracted data frame is a copy of the model and not the model itself. 
 
@@ -169,11 +161,9 @@ ext_wall_mat[name == "1/2IN Gypsum" & field == "Conductivity"]$value <- "0.20"
 
 ext_wall_mat[name == "Steel Frame NonRes Wall Insulation" & 
                field == "Thickness"]$value <- "0.174"
-
-
 ```
-Subsequently, you can update the model using the modified `data.frame` with the `$update()` method in the `Idf` class. 
 
+Subsequently, you can update the model using the modified `data.frame` with the `$update()` method in the `Idf` class. 
 
 ```{r}
 model$update(ext_wall_mat)
@@ -182,8 +172,6 @@ model$Material$`1/2IN Gypsum`
 
 model$Material$`Steel Frame NonRes Wall Insulation`
 ```
-
-
 
 ## Create new objects
 
@@ -200,9 +188,9 @@ Suppose you want to add a new material to your model, which you can define using
 * `Name` is a required field of type `alpha` (i.e., a string)
 * `Roughness` is a required field of type `choice` and the possible choices are `VeryRough`, `Rough`, `MediumRou.gh`, `MediumSmooth`, `Smooth`, and `VerySmooth`.
 * `Thickness` is a required field with unit of measurement meters. It is a `real` number and must be $>=0$ 
-* `Conductivity` is a required field with unit of measurement $W/m.K$. It is a `real` number and must be $>=0$ 
-* `Density` is a required field with unit of measurement $kg/m^3$. It is a `real` number and must be $>=0$ 
-* `Specific Heat` is a required field with unit of measurement $J/kg.K$. It is a `real` number and must be $>=100$ 
+* `Conductivity` is a required field with unit of measurement $\mathrm{W}/\mathrm{m}\cdot\mathrm{K}$. It is a `real` number and must be $>=0$ 
+* `Density` is a required field with unit of measurement $\mathrm{kg}/\mathrm{m}^3$. It is a `real` number and must be $>=0$ 
+* `Specific Heat` is a required field with unit of measurement $\mathrm{J}/\mathrm{kg}\cdot\mathrm{K}$. It is a `real` number and must be $>=100$ 
 * `Thermal Absorptance` is *not* a required field. It is a `real` number, has a default value of 0.9 if not specified, and must be between 0 and 0.99999.
 * `Solar Absorptance` is *not* a required field. It is a `real` number, has a default value of 0.7 if not specified, and must be between 0 and 0.99999.
 * `Visible Absorptance` is *not* a required field. It is a `real` number, has a default value of 0.7 if not specified, and must be between 0 and 0.99999.
@@ -238,19 +226,6 @@ model$objects(c("100mm brick", "spandrel glass"))
 
 ```
 
-
-
-
 By default, all empty fields will be filled with default values specified in the IDD and the object would be defined using only the minimum number of fields. You change change this by setting with `.default = FALSE` (no default values used) and `.all = TRUE` (all fields are added). 
 
-
-
-
-
 ### duplicate
-
-
-
-
-
-

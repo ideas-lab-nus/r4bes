@@ -14,6 +14,7 @@ library(here)
 ```
 
 We will be working with the IDF and EPW file that pertains to the U.S. Department of Energy (DOE) Commercial Reference Building and Chicago's TMY3 respectively.
+
 ```{r, message=FALSE}
 path_idf <- here("data", "idf", "RefBldgMediumOfficeNew2004_Chicago.idf")
 model <- read_idf(path_idf)

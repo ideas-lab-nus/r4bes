@@ -1,4 +1,5 @@
 # bookdown
+_book
 _bookdown_files
 
 # History files
@@ -19,6 +20,9 @@ _bookdown_files
 
 # Output files from R CMD check
 /*.Rcheck/
+
+# macOS Desktop Services Store
+.DS_Store
 
 # RStudio files
 .Rproj.user/

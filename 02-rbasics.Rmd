@@ -4,7 +4,7 @@
 
 We introduce the basics in R programming in this chapter. We will review the basic operators and data types in this chapter. We also provide an introduction to the basic R data structures (including tibbles and data tables).
 
-Most of this chapter involves working with R basic operators and data types, which do not require any extra packages. We will also introduce the **tibble** package, which forms part of the tidyverse package in section \@ref(tibbles), and the  **data.table** package in section \@ref(data-table)
+Most of this chapter involves working with R basic operators and data types, which do not require any extra packages. We will also introduce the **{tibble}** package, which forms part of the tidyverse package in section \@ref(tibbles), and the  **{data.table}** package in section \@ref(data-table)
 
 ```{r, message=FALSE}
 library(tidyverse)
@@ -282,7 +282,7 @@ tb$Sepal.Lengt
 df$Sepal.Lengt
 ```
 
-You can read more about tibbles by typing vignette("tibble") in your console. 
+You can read more about tibbles by typing `vignette("tibble")` in your console. 
 
 
 ## data.table {#data-table}
@@ -313,6 +313,14 @@ dt <- as.data.table(iris)
 print(dt)
 ```
 
+If you want to get an explicit reporting of each column's data type, as the `tibble` does by default, you can set the `data.table.print.class` to `TRUE`.
+
+```{r}
+options(datatable.print.class = TRUE)
+
+print(dt)
+```
+
 You can filter the rows to only contain `Species == "virginica`.
 
 ```{r}
@@ -338,6 +346,13 @@ You can select multiple columns with `list()` or `.()`.
 dt[, .(Sepal.Length, Species)]
 ```
 
+You can also save the targeted column names in a variable and use it to specify columns with `..` prefix.
+
+```{r}
+cols <- c("Sepal.Length", "Species")
+
+dt[, ..cols]
+```
 
 Aside from selecting columns using `j`, you can carry out computations on `j` involving one or more columns and a subset of rows using `i`.
 
@@ -415,5 +430,3 @@ head(dt)
 
 
 You can find out more about `data.table`s by typing `vignette(package = "data.table")` into the console. 
-
-

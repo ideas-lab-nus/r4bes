@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-In this chapter, we focus on the use of the **readr** package that forms a part of the **tidyverse** package. **readr** provides a fast and easy way to parse a file because it uses a sophisticated parser that guesses the data type for each column along with the flexibility to specify what to parse. You will also need  the **here** package (to easily provide relative file paths) and the **lubridate** package (to work with dates and times). 
+In this chapter, we focus on the use of the **{readr}** package that forms a part of the **{tidyverse}** package. **{readr}** provides a fast and easy way to parse a file because it uses a sophisticated parser that guesses the data type for each column along with the flexibility to specify what to parse. You will also need  the **{here}** package (to easily provide relative file paths) and the **{lubridate}** package (to work with dates and times). 
 
 ```{r, message=FALSE}
 library(tidyverse)
@@ -19,18 +19,18 @@ file.exists(here("data", "building.csv"))
 
 
 ## Finding your file
+
 Before importing data, you need to first let R know where to find the file by providing the file path. You can provide file paths relative to the top-level directory of the current R project with the `here()` function.
 
 ```{r}
 here()
 ```
 
-To reference a file named `iris.csv` located in the `data` folder that is located in the top-level directory of your project
+To reference a file named `iris.csv` located in the `data` folder that is located in the top-level directory of your project:
 
 ```{r}
 here("data", "iris.csv")
 ```
-
 
 ## Parsing a csv file
 
@@ -60,7 +60,7 @@ read_csv(
 )
 ```
 
-You can correct this by taking advantage of the `lubridate` package that was covered in Chapter \@ref(datetime). To recap, you can transform a character vector into a datetime object by specifying the order of the year `y`, month `m`, day `d`, hour `h`, minute `m` and second `s` with the date (`y`, `m`, and `d`) and the time (`h`, `m`, and `s`) separated by an underscore `_`. 
+You can correct this by taking advantage of the {lubridate} package that was covered in Chapter \@ref(datetime). To recap, you can transform a character vector into a datetime object by specifying the order of the year `y`, month `m`, day `d`, hour `h`, minute `m` and second `s` with the date (`y`, `m`, and `d`) and the time (`h`, `m`, and `s`) separated by an underscore `_`. 
 
 ```{r}
 bldg <- read_csv(
@@ -72,17 +72,7 @@ bldg <- read_csv(
   skip = 2
 )
 
-# transform the datetime character vector into a datetime object using lubridate
+# transform the datetime character vector into a datetime object using {lubridate}
 bldg$datetime <- dmy_hm(bldg$datetime)
 
 ```
-
-
-
-
-
-
-
-
-
-
