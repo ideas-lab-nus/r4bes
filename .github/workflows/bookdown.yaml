@@ -9,7 +9,7 @@ name: bookdown
 
 jobs:
   bookdown:
-    runs-on: macOS-latest
+    runs-on: ubuantu-20.04
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -23,7 +23,18 @@ jobs:
         run: brew install xquartz
 
       - uses: r-lib/actions/setup-renv@v1
-    
+
+      - name: Install Remotes
+        run: install.packages("remotes")
+        shell: Rscript {0}
+
+      - name: Install system dependencies
+        run: |
+          while read -r cmd
+          do
+            eval sudo $cmd
+          done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
+
       - name: Cache Renv packages
         uses: actions/cache@v1
         with:
@@ -41,7 +52,7 @@ jobs:
       - name: Install EnergyPlus v9.4
         run: eplusr::install_eplus(9.4)
         shell: Rscript {0}
-        
+
       - name: Build site
         run: Rscript -e 'bookdown::render_book("index.Rmd", quiet = TRUE)'
 
