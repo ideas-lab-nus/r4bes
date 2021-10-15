@@ -74,7 +74,7 @@ job <- model$run(weather = epw,
                  dir = here("data", "idf", "run", "test_run"))
 ```
 
-If you do not want to save the simulation results locally, you can save the simulation output files to a temporary directory by specifying `dir = tempdir()`.
+It is sometime useful to save the simulation output files to a temporary directory when the model is still evolving. You can achieve this by specifying `dir = tempdir()`.
 
 ```{r}
 job <- model$run(epw, dir = tempdir())
