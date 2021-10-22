@@ -28,7 +28,7 @@ epw <- read_epw(path_epw)
 The variable dictionary reports are one of the most important outputs when working with EnergyPlus simulations. These reports inform EnergyPlus users the outputs that are available for a specific EnergyPlus simulation. Knowing the outputs that are available in your model would allow users to identify and subsequently specify relevant outputs for further analysis. Two data dictionary reports are produced and they are the **m**eter **d**ata **d**ictionary (`.mdd`) file and the **r**eport **d**ata **d**ictionary (`.rdd`) file. The `.mdd` file lists the names of the output meters while the `.rdd` file lists the names of the output variables that are available for the simulation. However, you must first run the simulation before the available variables and meters can be known. By setting `weather = NULL`, a design day simulation will be run, allowing us to obtain the `.rdd` and `.mdd` file without running an annual simulation that can be time consuming for complex models. 
 
 
-```{r}
+```{r, out.lines = 15}
 job <- model$run(weather = NULL, dir = tempdir())
 ```
 
@@ -192,7 +192,7 @@ model$Output_Meter
 
 Before you can explore the outputs, you have to first save the model and run the simulation. 
 
-```{r}
+```{r, out.lines = 15}
 model$save(here("data", "idf", "model_preprocessed.idf"), overwrite = TRUE)
 job <- model$run(epw, dir = tempdir())
 ```

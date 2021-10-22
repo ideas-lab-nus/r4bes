@@ -96,7 +96,7 @@ model <- preprocess_idf(model, meters, variables)
 
 You can then run the simulation and it will be possible to extract the output of interest from the model.
 
-```{r}
+```{r, out.lines = 15}
 model$save(here("data", "idf", "model_preprocessed.idf"), overwrite = TRUE)
 job <- model$run(epw, dir = tempdir())
 ```

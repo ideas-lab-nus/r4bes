@@ -76,6 +76,6 @@ job <- model$run(weather = epw,
 
 It is sometime useful to save the simulation output files to a temporary directory when the model is still evolving. You can achieve this by specifying `dir = tempdir()`.
 
-```{r}
+```{r, out.lines = 15}
 job <- model$run(epw, dir = tempdir())
 ```
