@@ -5,7 +5,7 @@
 
 In this chapter we will introduce the **{eplusr}** package that was designed to interface with EnergyPlus and ease the application of data driven analytics. If you like to learn more about the underlying theory of how data is structured under the hood, you might enjoy the *{eplusr}* paper published in the Journal Energy and Buildings [@jia_eplusr_2021]. 
 
-```{r}
+```{r, message = FALSE}
 library(eplusr)
 library(here)
 ```
@@ -36,7 +36,7 @@ To get started, you need to first be familiar with the three basic classes (`Idf
 
 The `Idf` class is used to represent the EnergyPlus model. It contains methods that allows you to easily query and modify the model. You can use the `read_idf()` function to parse the EnergyPlus model into R by providing the file path to the EnergyPlus IDF file. You can use the function `here()` to easily reference the file path relative to the project root folder. 
 
-```{r}
+```{r, message = FALSE}
 path_idf <- here("data", "idf", "RefBldgMediumOfficeNew2004_Chicago.idf")
 model <- read_idf(path_idf)
 ```

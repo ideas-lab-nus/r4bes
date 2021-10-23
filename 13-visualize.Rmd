@@ -8,7 +8,7 @@ In this chapter, you will use the **{eplusr}** package to interface with EnergyP
 Additionally, we will introduce **{ggplot2}**, an input-tidy visualization package that is based on the the grammar of graphics [@wilkinson_grammar_2012]. We will also introduce **{RColorBrewer}** and **{viridis}** package that contains predefined color palettes that make it easy to pick the right one when creating graphics in R. 
 
 
-```{r, message=FALSE}
+```{r, message = FALSE}
 library(ggplot2)
 library(RColorBrewer)
 library(viridis)
@@ -16,7 +16,7 @@ library(viridis)
 
 We will also be working with the following R packages in this chapter. 
 
-```{r, message=FALSE}
+```{r, message = FALSE}
 library(eplusr)
 library(tidyverse)
 library(here)
