@@ -67,15 +67,15 @@ knitr::include_graphics("figures/sim_control.png")
 knitr::include_graphics("figures/run_period.png")
 ```
 
-You can use the `run()` method of the Idf class to run the simulation using EnergyPlus. You can choose the weather file to run the simulation by specifying an `Epw` object or a file path of an `.epw` file to the `weather` argument. You can also specify a directory to save the simulation results using the `dir` argument. By default, the folder of your Idf file is used to save the simulation results. 
+You can use the `run()` method of the Idf class to run the simulation using EnergyPlus. You can choose the weather file to run the simulation by specifying an `Epw` object or a file path of an `.epw` file to the `weather` argument. You can also specify a directory to save the simulation results using the `dir` argument. By default, the folder of your IDF file is used to save the simulation results. 
 
 ```{r, eval = FALSE}
 job <- model$run(weather = epw,
-                 dir = here("data", "idf", "run", "test_run.idf"))
+                 dir = here("data", "idf", "run", "test_run"))
 ```
 
-If you do not want to save the simulation results locally, you can save the simulation output files to a temporary directory by specifying `dir = tempdir()`.
+It is sometime useful to save the simulation output files to a temporary directory when the model is still evolving. You can achieve this by specifying `dir = tempdir()`.
 
-```{r}
+```{r, out.lines = 15}
 job <- model$run(epw, dir = tempdir())
 ```

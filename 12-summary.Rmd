@@ -3,7 +3,7 @@
 
 ## Prerequisites
 
-In this chapter we will focus on how to set and get EnergyPlus simulation outputs using the eplusr package. We will illustrate the manipulation of simulation data using tidyverse, and use ggplot2 to visualize the simulation data
+In this chapter we will focus on how to set and get EnergyPlus simulation outputs using the eplusr package. We will illustrate the manipulation of simulation data using {tidyverse}, and use {ggplot2} to visualize the simulation data
 
 ```{r, message=FALSE}
 library(eplusr)
@@ -28,7 +28,7 @@ epw <- read_epw(path_epw)
 
 To output the summary reports from EnergyPlus, you need to first run the simulation. The object `job` in the code below belongs to the `EplusJob` class. If you set `dir = NULL`, the simulation results will not be saved into a temporary directory but instead in the folder containing the IDF file. Do that and you will find the summary report in a html file as illustrated in Figure \@ref(fig:tabular-data).
 
-```{r}
+```{r, out.lines = 15}
 job <- model$run(epw, dir = tempdir())
 class(job)
 ```
