@@ -21,11 +21,17 @@ hook_output <- knitr::knit_hooks$get("output")
 # set a new output hook to truncate text output
 knitr::knit_hooks$set(output = function(x, options) {
   if (!is.null(n <- options$out.lines)) {
+    cat("Required output lines: ", n, "\n")
     x <- xfun::split_lines(x)
+    cat("Number of lines after split", length(x), "\n")
     if (length(x) > n) {
+      cat("Contents after split:\n")
       cat(x)
       # truncate the output
       x <- c(head(x, n), "....\n")
+    } else {
+      cat("Contents after split:\n")
+      cat(x)
     }
     x <- paste(x, collapse = "\n")
   }
