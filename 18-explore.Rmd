@@ -123,10 +123,6 @@ report <- job$report_data() %>%
          day = day(datetime), # create a new column containing the day of the month
          wday = wday(datetime, label = TRUE), # create a new column containing day of the week
          hour = hour(datetime)) # create a new column containing the hour of the day
-
-
-
-
 ```
 
 
@@ -147,15 +143,14 @@ ggplot(report, aes(x = `Site Outdoor Air Drybulb Temperature`,
 
 
 ```{r}
-
 report_heating <- report %>%
   filter(type == "Heating:NaturalGas")
 
 ggplot(report_heating, aes(x = day, y = hour, 
                            fill = value)) +
   geom_tile() +
-  scale_fill_viridis(name = "Heating\nEnergy (MJ)",
-                     option = "plasma") +
+  scale_fill_viridis_c(name = "Heating\nEnergy (MJ)",
+                       option = "plasma") +
   facet_grid(cols = vars(month)) +
   ylab("Hour of the day") +
   xlab("Day of the week") +
