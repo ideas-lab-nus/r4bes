@@ -23,6 +23,7 @@ knitr::knit_hooks$set(output = function(x, options) {
   if (!is.null(n <- options$out.lines)) {
     x <- xfun::split_lines(x)
     if (length(x) > n) {
+      cat(x)
       # truncate the output
       x <- c(head(x, n), "....\n")
     }
