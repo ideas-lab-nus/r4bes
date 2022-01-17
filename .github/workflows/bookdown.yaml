@@ -40,7 +40,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Build site
-        run: Rscript -e 'bookdown::render_book("index.Rmd", quiet = TRUE)'
+        run: Rscript -e 'bookdown::render_book("index.Rmd", quiet = FALSE)'
 
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.2
