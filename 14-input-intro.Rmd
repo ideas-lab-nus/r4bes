@@ -1,6 +1,7 @@
 # (PART) Inputs and Outputs {-}
 
-```{r, file='_common.R', include=FALSE}
+```{r, include=FALSE}
+source("_common.R", local = knitr::knit_global())
 ```
 
 # Introduction {#input-output}

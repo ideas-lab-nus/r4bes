@@ -1,6 +1,7 @@
 # Manipulating Data {#manipulate}
 
-```{r, file='_common.R', include=FALSE}
+```{r, include=FALSE}
+source("_common.R", local = knitr::knit_global())
 ```
 
 Data-preprocessing is an important step in any data science process. Rarely will you receive data that is in the exact form that you need. More often than not, you would need to pre-process the data by transforming and manipulating them so that they are easier to work with. This will be the focus in this chapter.

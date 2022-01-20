@@ -1,6 +1,7 @@
 # (PART) Get Started {-}
 
-```{r, file='_common.R', include=FALSE}
+```{r, include=FALSE}
+source("_common.R", local = knitr::knit_global())
 ```
 
 # Introduction {#get-started}

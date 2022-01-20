@@ -1,6 +1,7 @@
 # Functions
 
-```{r, file='_common.R', include=FALSE}
+```{r, include=FALSE}
+source("_common.R", local = knitr::knit_global())
 ```
 
 Writing functions is a simple way to automate commonly used code in a more general way. Therefore, you should write a function when you realized that you are copying and pasting a code block more than once. Particularly, you will see the power of functions as we start writing functions to define building energy efficient measures that we wish to apply to the building energy simulation. 
