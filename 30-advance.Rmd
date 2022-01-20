@@ -2,6 +2,10 @@
 
 # Introduction {#advanced}
 
+```{r, include=FALSE}
+source("_common.R", local = knitr::knit_global())
+```
+
 # Sensitivity analysis
 
 William of Occam to seek an economical description of natural phenomena and avoid excessive models that are overparameterized. Principal of Parisimony. 

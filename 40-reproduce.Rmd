@@ -2,6 +2,10 @@
 
 # Introduction {#reproduce}
 
+```{r, include=FALSE}
+source("_common.R", local = knitr::knit_global())
+```
+
 ## Prerequisites
 
 In this chapter we will introduce concepts of reproducibility.

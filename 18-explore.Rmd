@@ -1,5 +1,8 @@
-
 # Model Exploration {#explore}
+
+```{r, include=FALSE}
+source("_common.R", local = knitr::knit_global())
+```
 
 ## Prerequisites
 

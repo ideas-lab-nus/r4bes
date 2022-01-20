@@ -1,4 +1,5 @@
-
-
 # Energy Efficient Measures
 
+```{r, include=FALSE}
+source("_common.R", local = knitr::knit_global())
+```

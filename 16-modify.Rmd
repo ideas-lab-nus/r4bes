@@ -1,5 +1,9 @@
 # Modify model inputs {#modify}
 
+```{r, include=FALSE}
+source("_common.R", local = knitr::knit_global())
+```
+
 In this chapter, you will learn how modify the model inputs.
 
 ## Prerequisites

@@ -1,5 +1,8 @@
-
 # Dates and Times {#datetime}
+
+```{r, include=FALSE}
+source("_common.R", local = knitr::knit_global())
+```
 
 ## Prerequisites
 
