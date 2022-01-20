@@ -218,7 +218,7 @@ knitr::include_graphics("figures/line_length.png")
 
 <!-- To compile this example to PDF, you need XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <https://yihui.org/tinytex/>. -->
 
-```{r include=FALSE, eval=FALSE}
+```{r include=FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(c(
   .packages(), "bookdown", "knitr", "rmarkdown"
