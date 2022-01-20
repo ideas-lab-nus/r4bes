@@ -1,5 +1,7 @@
-
 # Dates and Times {#datetime}
+
+```{r, file='_common.R', include=FALSE}
+```
 
 ## Prerequisites
 

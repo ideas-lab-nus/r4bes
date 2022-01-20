@@ -1,5 +1,7 @@
-
 # Model Input Structure {#input}
+
+```{r, file='_common.R', include=FALSE}
+```
 
 ## Prerequisites
 

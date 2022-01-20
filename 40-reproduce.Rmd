@@ -2,6 +2,9 @@
 
 # Introduction {#reproduce}
 
+```{r, file='_common.R', include=FALSE}
+```
+
 ## Prerequisites
 
 In this chapter we will introduce concepts of reproducibility.

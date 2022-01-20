@@ -1,5 +1,8 @@
 # Functions
 
+```{r, file='_common.R', include=FALSE}
+```
+
 Writing functions is a simple way to automate commonly used code in a more general way. Therefore, you should write a function when you realized that you are copying and pasting a code block more than once. Particularly, you will see the power of functions as we start writing functions to define building energy efficient measures that we wish to apply to the building energy simulation. 
 
 Additionally, using functions helps you to avoid making mistakes that happen all too often when copying and pasting code. Additionally, as your requirements change, you only need to update the code in one place (i.e., within the function) instead of searching and updating pieces of code, which is again error-prone. 

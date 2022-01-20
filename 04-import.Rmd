@@ -1,5 +1,8 @@
 # Importing Data
 
+```{r, file='_common.R', include=FALSE}
+```
+
 ## Prerequisites
 
 In this chapter, we focus on the use of the **{readr}** package that forms a part of the **{tidyverse}** package. **{readr}** provides a fast and easy way to parse a file because it uses a sophisticated parser that guesses the data type for each column along with the flexibility to specify what to parse. You will also need  the **{here}** package (to easily provide relative file paths) and the **{lubridate}** package (to work with dates and times). 

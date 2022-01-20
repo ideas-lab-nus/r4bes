@@ -1,5 +1,8 @@
 # Modify model inputs {#modify}
 
+```{r, file='_common.R', include=FALSE}
+```
+
 In this chapter, you will learn how modify the model inputs.
 
 ## Prerequisites

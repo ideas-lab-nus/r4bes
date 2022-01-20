@@ -2,6 +2,9 @@
 
 # Introduction {#advanced}
 
+```{r, file='_common.R', include=FALSE}
+```
+
 # Sensitivity analysis
 
 William of Occam to seek an economical description of natural phenomena and avoid excessive models that are overparameterized. Principal of Parisimony. 

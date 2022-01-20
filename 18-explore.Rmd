@@ -1,5 +1,7 @@
-
 # Model Exploration {#explore}
+
+```{r, file='_common.R', include=FALSE}
+```
 
 ## Prerequisites
 

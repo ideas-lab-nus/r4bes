@@ -1,5 +1,7 @@
-
 # Detailed output {#output}
+
+```{r, file='_common.R', include=FALSE}
+```
 
 ## Prerequisites
 

@@ -2,3 +2,5 @@
 
 # Introduction {#program}
 
+```{r, file='_common.R', include=FALSE}
+```

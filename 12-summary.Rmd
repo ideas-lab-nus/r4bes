@@ -1,5 +1,7 @@
-
 # Summary reports {#summary}
+
+```{r, file='_common.R', include=FALSE}
+```
 
 ## Prerequisites
 

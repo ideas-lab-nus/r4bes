@@ -1,5 +1,8 @@
 # Basics
 
+```{r, file='_common.R', include=FALSE}
+```
+
 ## Prerequisites
 
 We introduce the basics in R programming in this chapter. We will review the basic operators and data types in this chapter. We also provide an introduction to the basic R data structures (including tibbles and data tables).

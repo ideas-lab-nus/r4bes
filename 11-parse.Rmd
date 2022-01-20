@@ -1,5 +1,7 @@
-
 # Parse then simulate {#parse}
+
+```{r, file='_common.R', include=FALSE}
+```
 
 ## Prerequisites
 

@@ -1,4 +1,4 @@
-
-
 # Energy Efficient Measures
 
+```{r, file='_common.R', include=FALSE}
+```

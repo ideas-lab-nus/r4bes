@@ -1,5 +1,8 @@
 # (PART) Inputs and Outputs {-}
 
+```{r, file='_common.R', include=FALSE}
+```
+
 # Introduction {#input-output}
 
 In this part of the book, you will learn EnergyPlus's input data structure (Chapter \@ref(input)), and how to programmatically query and modify them in R (Chapter \@ref(modify)). We will also point you to the corresponding EnergyPlus reference documentation that will help you gain a better understanding of the inner workings of EnergyPlus. Understanding the inputs to a model is important as the proverb "garbage in, garbage out" clearly spells out. You can have the best data science workflows but your simulation results would only be as good the quality of your model and it's inputs. 

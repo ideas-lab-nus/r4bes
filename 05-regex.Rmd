@@ -1,5 +1,8 @@
 # Regular expressions {#regex}
 
+```{r, file='_common.R', include=FALSE}
+```
+
 *Regular expressions* are patterns that are used to match combinations of characters in a string. Before we begin, just a cautionary note that if your regular expressions are becoming too complex, perhaps it is time to step back and think about whether it is necessary and if they can be represented multiple expressions that are easier to understand. 
 
 ## Prerequisites

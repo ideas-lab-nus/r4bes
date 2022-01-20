@@ -1,3 +1,4 @@
-
 # Parametric simulations
 
+```{r, file='_common.R', include=FALSE}
+```
