@@ -121,7 +121,7 @@ pt_of_interest <- c(
     "Heating:NaturalGas"
 )
 
-report <- job$report_data() %>%
+report <- job$report_data(environment_name = "annual") %>%
     drop_na() %>%
     select(datetime, name, value) %>%
     filter(name %in% pt_of_interest) %>%
