@@ -15,4 +15,8 @@ knitr::knit_hooks$set(output = function(x, options) {
 })
 
 # set default output lines to 10
-knitr::opts_chunk$set(echo = TRUE, collapse = TRUE, tidy = TRUE, out.lines = 10)
+knitr::opts_chunk$set(
+    echo = TRUE, collapse = TRUE,
+    tidy = "styler", tidy.opts = list(indent_by = 4),
+    out.lines = 10
+)
