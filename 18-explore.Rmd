@@ -6,7 +6,11 @@ source("_common.R", local = knitr::knit_global())
 
 ## Prerequisites
 
-In this chapter we will explore the model to uncover energy characteristics and create an overview of general trends. We will use eplusr to run the EnergyPlus simulation and extract relevant model inputs/outputs, tidyverse for data transformation, and ggplot2 to visualize the extracted and subsequently transformed data. 
+In this chapter we will explore the model to uncover energy characteristics and
+create an overview of general trends. We will use eplusr to run the EnergyPlus
+simulation and extract relevant model inputs/outputs, tidyverse for data
+transformation, and ggplot2 to visualize the extracted and subsequently
+transformed data.
 
 ```{r, message=FALSE}
 library(eplusr)
@@ -16,7 +20,9 @@ library(ggplot2)
 library(here)
 ```
 
-We will be working with the IDF and EPW file that pertains to the U.S. Department of Energy (DOE) Commercial Reference Building and Chicago's TMY3 respectively.
+We will be working with the IDF and EPW file that pertains to the U.S.
+Department of Energy (DOE) Commercial Reference Building and Chicago's TMY3
+respectively.
 
 ```{r, message=FALSE}
 path_idf <- here("data", "idf", "RefBldgMediumOfficeNew2004_Chicago.idf")
@@ -26,9 +32,11 @@ path_epw <- here("data", "epw", "USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw")
 epw <- read_epw(path_epw)
 ```
 
-## Extracting 
+## Extracting
 
-Before carrying out any model exploration, you need to first specify the outputs of interest. The code below preprocesses the model by adding the list of output meters and variables to the model (See Chapter \@ref(output) for details).
+Before carrying out any model exploration, you need to first specify the outputs
+of interest. The code below preprocesses the model by adding the list of output
+meters and variables to the model (See Chapter \@ref(output) for details).
 
 ```{r}
 preprocess_idf <- function(idf, meters, variables) {
@@ -96,17 +104,15 @@ variables <- list(
 model <- preprocess_idf(model, meters, variables)
 ```
 
-
-You can then run the simulation and it will be possible to extract the output of interest from the model.
+You can then run the simulation and it will be possible to extract the output of
+interest from the model.
 
 ```{r, out.lines = 15}
 model$save(here("data", "idf", "model_preprocessed.idf"), overwrite = TRUE)
 job <- model$run(epw, dir = tempdir())
 ```
 
-
 ## Energy signature
-
 
 ```{r}
 pt_of_interest <- c("Site Outdoor Air Drybulb Temperature",
@@ -128,9 +134,6 @@ report <- job$report_data() %>%
          hour = hour(datetime)) # create a new column containing the hour of the day
 ```
 
-
-
-
 ```{r}
 ggplot(report, aes(x = `Site Outdoor Air Drybulb Temperature`,
                    y = value,
@@ -143,7 +146,6 @@ ggplot(report, aes(x = `Site Outdoor Air Drybulb Temperature`,
   theme(legend.position = "none")
 
 ```
-
 
 ```{r}
 report_heating <- report %>%
@@ -159,6 +161,3 @@ ggplot(report_heating, aes(x = day, y = hour,
   xlab("Day of the week") +
   theme(legend.position = "bottom")
 ```
-
-
-

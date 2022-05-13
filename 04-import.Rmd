@@ -6,7 +6,12 @@ source("_common.R", local = knitr::knit_global())
 
 ## Prerequisites
 
-In this chapter, we focus on the use of the **{readr}** package that forms a part of the **{tidyverse}** package. **{readr}** provides a fast and easy way to parse a file because it uses a sophisticated parser that guesses the data type for each column along with the flexibility to specify what to parse. You will also need  the **{here}** package (to easily provide relative file paths) and the **{lubridate}** package (to work with dates and times). 
+In this chapter, we focus on the use of the **{readr}** package that forms a
+part of the **{tidyverse}** package. **{readr}** provides a fast and easy way to
+parse a file because it uses a sophisticated parser that guesses the data type
+for each column along with the flexibility to specify what to parse. You will
+also need the **{here}** package (to easily provide relative file paths) and the
+**{lubridate}** package (to work with dates and times).
 
 ```{r, message=FALSE}
 library(tidyverse)
@@ -14,23 +19,27 @@ library(lubridate)
 library(here)
 ```
 
-In this chapter we will also be using the following datasets. If the following code returns `FALSE`, you should refer to the section [Finding your file] in the [Preface] on where you can download the datasets. 
+In this chapter we will also be using the following datasets. If the following
+code returns `FALSE`, you should refer to the section [Finding your file] in the
+[Preface] on where you can download the datasets.
 
 ```{r, eval=FALSE}
 file.exists(here("data", "iris.csv"))
 file.exists(here("data", "building.csv"))
 ```
 
-
 ## Finding your file
 
-Before importing data, you need to first let R know where to find the file by providing the file path. You can provide file paths relative to the top-level directory of the current R project with the `here()` function.
+Before importing data, you need to first let R know where to find the file by
+providing the file path. You can provide file paths relative to the top-level
+directory of the current R project with the `here()` function.
 
 ```{r}
 here()
 ```
 
-To reference a file named `iris.csv` located in the `data` folder that is located in the top-level directory of your project:
+To reference a file named `iris.csv` located in the `data` folder that is
+located in the top-level directory of your project:
 
 ```{r}
 here("data", "iris.csv")
@@ -38,9 +47,17 @@ here("data", "iris.csv")
 
 ## Parsing a csv file
 
-We will focus on the `read_csv()` function because building data are typically stored in `csv` format. You can find out more about other file formats in [readr's documentation](https://readr.tidyverse.org). 
+We will focus on the `read_csv()` function because building data are typically
+stored in `csv` format. You can find out more about other file formats in
+[readr's documentation](https://readr.tidyverse.org).
 
-The easiest way to parse a file is by providing the file path. In most cases, it will just work as expected where `readr` correctly guesses the column specification (that gets printed to the console) and you get a tibble as specified. [`readr_example()`](https://readr.tidyverse.org/reference/readr_example.html) is a function that makes it easy to access example files to demonstrate `readr`'s capabilities.
+The easiest way to parse a file is by providing the file path. In most cases, it
+will just work as expected where `readr` correctly guesses the column
+specification (that gets printed to the console) and you get a tibble as
+specified.
+[`readr_example()`](https://readr.tidyverse.org/reference/readr_example.html) is
+a function that makes it easy to access example files to demonstrate `readr`'s
+capabilities.
 
 ```{r}
 read_csv(here("data", "iris.csv"))
@@ -48,9 +65,16 @@ read_csv(here("data", "iris.csv"))
 
 ## Building data
 
-Data from buildings are often messy without a standardized format. Therefore, it is not uncommon if `readr` does not guess correctly. Parsing date/times is particularly important when working with time-series building data.
+Data from buildings are often messy without a standardized format. Therefore, it
+is not uncommon if `readr` does not guess correctly. Parsing date/times is
+particularly important when working with time-series building data.
 
-For example, with the `building.csv` dataset, you can see that there are problems parsing the `timestamp` column. Specifically, column `timestamp` was parsed as a character vector when it actually contains a date/time. The `skip` argument is particularly useful since building data often contains meta-data that you want to exclude. A character vector can also be supplied to specify the column names. 
+For example, with the `building.csv` dataset, you can see that there are
+problems parsing the `timestamp` column. Specifically, column `timestamp` was
+parsed as a character vector when it actually contains a date/time. The `skip`
+argument is particularly useful since building data often contains meta-data
+that you want to exclude. A character vector can also be supplied to specify the
+column names.
 
 ```{r}
 
@@ -64,7 +88,11 @@ read_csv(
 )
 ```
 
-You can correct this by taking advantage of the {lubridate} package that was covered in Chapter \@ref(datetime). To recap, you can transform a character vector into a datetime object by specifying the order of the year `y`, month `m`, day `d`, hour `h`, minute `m` and second `s` with the date (`y`, `m`, and `d`) and the time (`h`, `m`, and `s`) separated by an underscore `_`. 
+You can correct this by taking advantage of the {lubridate} package that was
+covered in Chapter \@ref(datetime). To recap, you can transform a character
+vector into a datetime object by specifying the order of the year `y`, month
+`m`, day `d`, hour `h`, minute `m` and second `s` with the date (`y`, `m`, and
+`d`) and the time (`h`, `m`, and `s`) separated by an underscore `_`.
 
 ```{r}
 bldg <- read_csv(
