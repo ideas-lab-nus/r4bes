@@ -42,34 +42,34 @@ meters and variables to the model (See Chapter \@ref(output) for details).
 preprocess_idf <- function(idf, meters, variables) {
     # make sure weather file input is respected
     idf$SimulationControl$Run_Simulation_for_Weather_File_Run_Periods <- "Yes"
-    
+
     # make sure simulation is not run for sizing periods
     idf$SimulationControl$Run_Simulation_for_Sizing_Periods <- "No"
 
     # make sure energy consumption is presented in kWh
     if (is.null(idf$OutputControl_Table_Style)) {
         idf$add(OutputControl_Table_Style = list("HTML", "JtoKWH"))
-    }else{
+    } else {
         idf$OutputControl_Table_Style$Unit_Conversion <- "JtoKWH"
     }
 
     # remove all existing meter and variable outputs
-    if(!is.null(idf$`Output:Meter`)){
+    if (!is.null(idf$`Output:Meter`)) {
         idf$Output_Meter <- NULL
     }
-    
+
     # remove all existing meter and variable outputs
-    if(!is.null(idf$`Output:Table:Monthly`)){
+    if (!is.null(idf$`Output:Table:Monthly`)) {
         idf$`Output:Table:Monthly` <- NULL
     }
 
-    if(!is.null(idf$`Output:Variable`)){
+    if (!is.null(idf$`Output:Variable`)) {
         idf$Output_Variable <- NULL
     }
 
     # add meter outputs to get hourly time-series energy consumption
     idf$add(Output_Meter := meters)
-    
+
     # add variable outputs to get hourly zone air temperature
     idf$add(Output_Variable := variables)
 
@@ -115,49 +115,59 @@ job <- model$run(epw, dir = tempdir())
 ## Energy signature
 
 ```{r}
-pt_of_interest <- c("Site Outdoor Air Drybulb Temperature",
-                    "Cooling:Electricity",
-                    "Heating:NaturalGas")
-
+pt_of_interest <- c(
+    "Site Outdoor Air Drybulb Temperature",
+    "Cooling:Electricity",
+    "Heating:NaturalGas"
+)
 
 report <- job$report_data() %>%
-  drop_na() %>%
-  select(datetime, name, value) %>%
-  filter(name %in% pt_of_interest) %>%
-  pivot_wider(names_from = name, values_from = value) %>%
-  pivot_longer(cols = c("Cooling:Electricity", "Heating:NaturalGas"), 
-               names_to = "type", values_to = "value") %>%
-  mutate(value = value * 1e-6, # convert J to MJ
-         month = month(datetime, label = TRUE), # create a new column containing the month
-         day = day(datetime), # create a new column containing the day of the month
-         wday = wday(datetime, label = TRUE), # create a new column containing day of the week
-         hour = hour(datetime)) # create a new column containing the hour of the day
+    drop_na() %>%
+    select(datetime, name, value) %>%
+    filter(name %in% pt_of_interest) %>%
+    pivot_wider(names_from = name, values_from = value) %>%
+    pivot_longer(
+        cols = c("Cooling:Electricity", "Heating:NaturalGas"),
+        names_to = "type", values_to = "value"
+    ) %>%
+    mutate(
+        value = value * 1e-6, # convert J to MJ
+        month = month(datetime, label = TRUE), # create a new column containing the month
+        day = day(datetime), # create a new column containing the day of the month
+        wday = wday(datetime, label = TRUE), # create a new column containing day of the week
+        hour = hour(datetime)
+    ) # create a new column containing the hour of the day
 ```
 
 ```{r}
-ggplot(report, aes(x = `Site Outdoor Air Drybulb Temperature`,
-                   y = value,
-                   color = type)) +
-  geom_point(shape = 1, alpha = 0.7) +
-  facet_grid(rows = vars(type)) +
-  scale_color_brewer(palette = "Set2") +
-  xlab(expression("Outdoor drybulb temperature"~(degree*C))) +
-  ylab("Energy consumption (MJ)") +
-  theme(legend.position = "none")
-
+ggplot(report, aes(
+    x = `Site Outdoor Air Drybulb Temperature`,
+    y = value,
+    color = type
+)) +
+    geom_point(shape = 1, alpha = 0.7) +
+    facet_grid(rows = vars(type)) +
+    scale_color_brewer(palette = "Set2") +
+    xlab(expression("Outdoor drybulb temperature" ~ (degree * C))) +
+    ylab("Energy consumption (MJ)") +
+    theme(legend.position = "none")
 ```
 
 ```{r}
 report_heating <- report %>%
-  filter(type == "Heating:NaturalGas")
+    filter(type == "Heating:NaturalGas")
 
-ggplot(report_heating, aes(x = day, y = hour, 
-                           fill = value)) +
-  geom_tile() +
-  scale_fill_viridis_c(name = "Heating\nEnergy (MJ)",
-                       option = "plasma") +
-  facet_grid(cols = vars(month)) +
-  ylab("Hour of the day") +
-  xlab("Day of the week") +
-  theme(legend.position = "bottom")
+ggplot(report_heating, aes(
+    x = day, y = hour,
+    fill = value
+)) +
+    geom_tile() +
+    scale_fill_viridis_c(
+        name = "Heating\nEnergy (MJ)",
+        option = "plasma"
+    ) +
+    facet_grid(cols = vars(month)) +
+    ylab("Hour of the day") +
+    xlab("Day of the week") +
+    theme(legend.position = "bottom")
 ```

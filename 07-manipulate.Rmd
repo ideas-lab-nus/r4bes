@@ -101,9 +101,9 @@ You can also optionally rename columns with the `select()` function.
 
 ```{r}
 select(bldg,
-  datetime = Date_Time,
-  cooling = Cooling_Electricity_J,
-  heating = Heating_Electricity_J
+    datetime = Date_Time,
+    cooling = Cooling_Electricity_J,
+    heating = Heating_Electricity_J
 )
 ```
 
@@ -128,13 +128,13 @@ select(bldg, ends_with("Time"))
 
 ```{r}
 select(
-  bldg,
-  contains(
-    c(
-      "Time",
-      "electricity"
+    bldg,
+    contains(
+        c(
+            "Time",
+            "electricity"
+        )
     )
-  )
 )
 ```
 
@@ -184,10 +184,10 @@ You can also define the function to be applied within `where()`
 ```{r}
 
 select(
-  bldg,
-  where(
-    function(x) is.numeric(x)
-  )
+    bldg,
+    where(
+        function(x) is.numeric(x)
+    )
 )
 ```
 
@@ -207,9 +207,9 @@ filter(bldg, Cooling_Electricity_J != 0)
 filter(bldg, InteriorLights_Electricity_J > 100000000)
 
 filter(
-  bldg, Cooling_Electricity_J != 0,
-  Cooling_Electricity_J < 4000000 |
-    Cooling_Electricity_J > 22000000,
+    bldg, Cooling_Electricity_J != 0,
+    Cooling_Electricity_J < 4000000 |
+        Cooling_Electricity_J > 22000000,
 )
 ```
 
@@ -254,8 +254,8 @@ The newly created variables will be added to the end of the dataset.
 
 ```{r}
 mutate(bldg,
-  Total_Heating_J = Heating_NaturalGas_J + Heating_Electricity_J,
-  Cooling_Heating_kWh = (Total_Heating_J + Cooling_Electricity_J) * 2.77778e-7
+    Total_Heating_J = Heating_NaturalGas_J + Heating_Electricity_J,
+    Cooling_Heating_kWh = (Total_Heating_J + Cooling_Electricity_J) * 2.77778e-7
 )
 ```
 
@@ -264,8 +264,8 @@ dataset.
 
 ```{r}
 transmute(bldg,
-  Total_Heating_J = Heating_NaturalGas_J + Heating_Electricity_J,
-  Cooling_Heating_kWh = (Total_Heating_J + Cooling_Electricity_J) * 2.77778e-7
+    Total_Heating_J = Heating_NaturalGas_J + Heating_Electricity_J,
+    Cooling_Heating_kWh = (Total_Heating_J + Cooling_Electricity_J) * 2.77778e-7
 )
 ```
 
@@ -276,7 +276,7 @@ Useful mutate and transmute functions include
 
 ```{r}
 heat <- transmute(bldg,
-  Total_Heating_J = Heating_NaturalGas_J + Heating_Electricity_J
+    Total_Heating_J = Heating_NaturalGas_J + Heating_Electricity_J
 )
 heat
 ```
@@ -286,10 +286,10 @@ heat
 
 ```{r}
 mutate(
-  heat,
-  lag_1 = lag(Total_Heating_J),
-  lag_2 = lag(lag_1),
-  lag_3 = lag(Total_Heating_J, 3)
+    heat,
+    lag_1 = lag(Total_Heating_J),
+    lag_2 = lag(lag_1),
+    lag_3 = lag(Total_Heating_J, 3)
 )
 ```
 
@@ -304,8 +304,8 @@ mutate(
 
 ```{r}
 mutate(
-  heat,
-  New_Total_Heating_J = if_else(Total_Heating_J < 200000000, "low", "high")
+    heat,
+    New_Total_Heating_J = if_else(Total_Heating_J < 200000000, "low", "high")
 )
 ```
 
@@ -317,11 +317,12 @@ mutate(
 
 ```{r}
 mutate(
-  heat,
-  New_Total_Heating_J = case_when(
-    Total_Heating_J < 200000000 ~ "low",
-    Total_Heating_J >= 200000000 & Total_Heating_J <= 400000000 ~ "medium",
-    Total_Heating_J > 400000000 ~ "high")
+    heat,
+    New_Total_Heating_J = case_when(
+        Total_Heating_J < 200000000 ~ "low",
+        Total_Heating_J >= 200000000 & Total_Heating_J <= 400000000 ~ "medium",
+        Total_Heating_J > 400000000 ~ "high"
+    )
 )
 ```
 
@@ -332,9 +333,9 @@ combination of grouping variables. Therefore, it is not very useful by itself.
 
 ```{r}
 summarise(bldg,
-  Heating_Total = sum(Heating_Electricity_J),
-  Heating_Avg = mean(Heating_Electricity_J),
-  Heating_Peak = max(Heating_Electricity_J)
+    Heating_Total = sum(Heating_Electricity_J),
+    Heating_Avg = mean(Heating_Electricity_J),
+    Heating_Peak = max(Heating_Electricity_J)
 )
 ```
 
@@ -343,16 +344,16 @@ summarise data based on individual groups.
 
 ```{r}
 bldg_month <- mutate(bldg,
-  Year = year(Date_Time),
-  Month = month(Date_Time)
+    Year = year(Date_Time),
+    Month = month(Date_Time)
 )
 
 bldg_by_month <- group_by(bldg_month, Year, Month)
 
 summarise(bldg_by_month,
-  Heating_Total = sum(Heating_Electricity_J),
-  Heating_Avg = mean(Heating_Electricity_J),
-  Heating_Peak = max(Heating_Electricity_J)
+    Heating_Total = sum(Heating_Electricity_J),
+    Heating_Avg = mean(Heating_Electricity_J),
+    Heating_Peak = max(Heating_Electricity_J)
 )
 ```
 
@@ -365,8 +366,8 @@ their names.
 
 ```{r}
 transmute(bldg,
-  Date_Time,
-  total = rowSums(across(where(is.numeric)))
+    Date_Time,
+    total = rowSums(across(where(is.numeric)))
 )
 ```
 
@@ -375,11 +376,11 @@ columns.
 
 ```{r}
 summarise(
-  bldg_by_month,
-  across(
-    contains("electricity"),
-    list(Total = sum, Avg = mean, Peak = max)
-  )
+    bldg_by_month,
+    across(
+        contains("electricity"),
+        list(Total = sum, Avg = mean, Peak = max)
+    )
 )
 ```
 
@@ -404,8 +405,8 @@ You can connect multiple operators sequentially using the pipe operator
 
 ```{r, eval=FALSE}
 final_result <- first(data) %>%
-  second() %>%
-  third()
+    second() %>%
+    third()
 ```
 
 Figure \@ref(fig:pipe) shows what is happening graphically.
@@ -419,14 +420,14 @@ An example using the `bldg` dataset.
 ```{r}
 
 bldg %>%
-  select(Date_Time, contains("Heating")) %>%
-  mutate(
-    Month = month(Date_Time),
-    Total_Heating_J = rowSums(across(where(is.numeric)))
-  ) %>%
-  group_by(Month) %>%
-  summarise(across(
-    where(is.numeric),
-    list(Total = sum, Peak = max)
-  ))
+    select(Date_Time, contains("Heating")) %>%
+    mutate(
+        Month = month(Date_Time),
+        Total_Heating_J = rowSums(across(where(is.numeric)))
+    ) %>%
+    group_by(Month) %>%
+    summarise(across(
+        where(is.numeric),
+        list(Total = sum, Peak = max)
+    ))
 ```

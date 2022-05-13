@@ -86,10 +86,12 @@ report. Note that there are no whitespaces when specifying the `report_name`.
 
 ```{r}
 report_example <- report %>%
-    filter(report_name == "AnnualBuildingUtilityPerformanceSummary", 
-           table_name == "Site and Source Energy",
-           column_name == "Energy Per Total Building Area",
-           row_name == "Total Site Energy")
+    filter(
+        report_name == "AnnualBuildingUtilityPerformanceSummary",
+        table_name == "Site and Source Energy",
+        column_name == "Energy Per Total Building Area",
+        row_name == "Total Site Energy"
+    )
 ```
 
 Other examples as follows.
@@ -99,11 +101,15 @@ value.
 
 ```{r}
 report_end_use <- report %>%
-    filter(table_name == "End Uses", 
-           grepl("Electricity|Natural Gas", column_name, ignore.case = TRUE),
-           !grepl("total", row_name, ignore.case = TRUE)) %>%
-    mutate(value = as.numeric(value)*277.778,
-           units = "kWh") %>%
+    filter(
+        table_name == "End Uses",
+        grepl("Electricity|Natural Gas", column_name, ignore.case = TRUE),
+        !grepl("total", row_name, ignore.case = TRUE)
+    ) %>%
+    mutate(
+        value = as.numeric(value) * 277.778,
+        units = "kWh"
+    ) %>%
     select(row_name, column_name, units, value) %>%
     rename(category = row_name, fuel = column_name) %>%
     arrange(desc(value)) %>%
@@ -114,15 +120,18 @@ You can retrieve normalized metrics and group them by their fuel type.
 
 ```{r}
 report_norm <- report %>%
-    filter(table_name == "Utility Use Per Conditioned Floor Area",
-           row_name != "Total") %>%
-    mutate(value = as.numeric(value) * 0.2777777777777778,
-           units = "kWh/m2") %>%
+    filter(
+        table_name == "Utility Use Per Conditioned Floor Area",
+        row_name != "Total"
+    ) %>%
+    mutate(
+        value = as.numeric(value) * 0.2777777777777778,
+        units = "kWh/m2"
+    ) %>%
     filter(value > 0.0) %>%
     select(category = row_name, fuel = column_name, units, value) %>%
     group_by(category) %>%
     summarise(total = sum(value))
-
 ```
 
 You can also retrieve details of the model inputs from the summary reports.
@@ -131,18 +140,22 @@ Opaque exterior of the building envelope.
 
 ```{r}
 report_op_ext <- report %>%
-    filter(table_name == "Opaque Exterior",
-           grepl("Azimuth|U-Factor with Film", column_name)) %>%
+    filter(
+        table_name == "Opaque Exterior",
+        grepl("Azimuth|U-Factor with Film", column_name)
+    ) %>%
     mutate(value = as.numeric(value)) %>%
-    select(row_name, column_name, units, value) 
+    select(row_name, column_name, units, value)
 ```
 
 Exterior fenestration of the building envelope.
 
 ```{r}
 report_ext_fenestration <- report %>%
-    filter(table_name == "Exterior Fenestration",
-           !grepl("total", row_name, ignore.case = TRUE)) %>%
+    filter(
+        table_name == "Exterior Fenestration",
+        !grepl("total", row_name, ignore.case = TRUE)
+    ) %>%
     mutate(value = as.numeric(value)) %>%
     filter(value > 0) %>%
     select(row_name, column_name, units, value)

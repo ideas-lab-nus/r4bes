@@ -27,7 +27,6 @@ The most basic form of matching is to match exact strings
 ```{r}
 x <- c("abc ABC\n123. !?\\(){}")
 cat(x)
-
 ```
 
 ```{r}

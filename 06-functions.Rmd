@@ -39,8 +39,8 @@ using the `function` keyword. In general, a function consists of:
     of the body of the function.
 
 ```{r, eval=FALSE}
-function_name <- function(arg1, arg2, ...){
-  Function body
+function_name <- function(arg1, arg2, ...) {
+    Function body
 }
 ```
 

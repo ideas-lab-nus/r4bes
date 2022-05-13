@@ -79,12 +79,12 @@ column names.
 ```{r}
 
 read_csv(
-  here("data", "building.csv"),
-  col_names = c(
-    "datetime",
-    "power"
-  ),
-  skip = 2
+    here("data", "building.csv"),
+    col_names = c(
+        "datetime",
+        "power"
+    ),
+    skip = 2
 )
 ```
 
@@ -96,15 +96,14 @@ vector into a datetime object by specifying the order of the year `y`, month
 
 ```{r}
 bldg <- read_csv(
-  here("data", "building.csv"),
-  col_names = c(
-    "datetime",
-    "power"
-  ),
-  skip = 2
+    here("data", "building.csv"),
+    col_names = c(
+        "datetime",
+        "power"
+    ),
+    skip = 2
 )
 
 # transform the datetime character vector into a datetime object using {lubridate}
 bldg$datetime <- dmy_hm(bldg$datetime)
-
 ```

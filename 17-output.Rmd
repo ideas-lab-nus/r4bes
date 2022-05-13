@@ -85,17 +85,21 @@ output_list <- list(
     Output_Variable = list(
         key_value = "*",
         Variable_Name = "Site Outdoor Air Drybulb Temperature",
-        Reporting_Frequency = "Hourly"),
+        Reporting_Frequency = "Hourly"
+    ),
     Output_Variable = list(
         key_value = "*",
         Variable_Name = "Zone Mean Air Temperature",
-        Reporting_Frequency = "Hourly"),
+        Reporting_Frequency = "Hourly"
+    ),
     Output_Meter = list(
         key_name = "Cooling:Electricity",
-        Reporting_Frequency = "Hourly"),
+        Reporting_Frequency = "Hourly"
+    ),
     Output_Meter = list(
         key_name = "Heating:NaturalGas",
-        Reporting_Frequency = "Hourly")
+        Reporting_Frequency = "Hourly"
+    )
 )
 
 model$add(output_list)
@@ -133,7 +137,6 @@ meters <- list(
 
 # add meter outputs to get hourly time-series energy consumption
 model$add(Output_Meter := meters)
-
 ```
 
 Here is a useful function `preprocess_idf()` that you can use to preprocess your
@@ -146,7 +149,7 @@ arguments to the function.
 preprocess_idf <- function(idf, meters, variables) {
     # make sure weather file input is respected
     idf$SimulationControl$Run_Simulation_for_Weather_File_Run_Periods <- "Yes"
-    
+
     # make sure simulation is not run for sizing periods
     idf$SimulationControl$Run_Simulation_for_Sizing_Periods <- "No"
 
@@ -158,16 +161,16 @@ preprocess_idf <- function(idf, meters, variables) {
     }
 
     # remove all existing meter and variable outputs
-    if(!is.null(idf$`Output:Meter`)){
+    if (!is.null(idf$`Output:Meter`)) {
         idf$Output_Meter <- NULL
     }
-    
+
     # remove all existing meter and variable outputs
-    if(!is.null(idf$`Output:Table:Monthly`)){
+    if (!is.null(idf$`Output:Table:Monthly`)) {
         idf$`Output:Table:Monthly` <- NULL
     }
 
-    if(!is.null(idf$`Output:Variable`)){
+    if (!is.null(idf$`Output:Variable`)) {
         idf$Output_Variable <- NULL
     }
 

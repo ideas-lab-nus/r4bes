@@ -124,9 +124,11 @@ You can also extract particular objects from different classes by supplying a
 character vector of object names to the argument `which`.
 
 ```{r}
-model$to_table(which = c("Wood Siding", 
-                         "Steel Frame NonRes Wall Insulation", 
-                         "1/2IN Gypsum"))
+model$to_table(which = c(
+    "Wood Siding",
+    "Steel Frame NonRes Wall Insulation",
+    "1/2IN Gypsum"
+))
 
 model$to_table(which = c("Perimeter_bot_ZN_1_Lights"))
 ```
@@ -145,10 +147,13 @@ $15 \mathrm{W}/\mathrm{m}^2$.
 
 ```{r}
 lights_df <- model$to_table(class = c("Lights")) %>%
-  mutate(value = if_else(field == "Watts per Zone Floor Area", # condition
-                         "15", # value if TRUE
-                         value) # value if FALSE
- )
+    mutate(
+        value = if_else(
+            field == "Watts per Zone Floor Area", # condition
+            "15", # value if TRUE
+            value # value if FALSE
+        )
+    )
 
 lights_df
 ```
@@ -185,8 +190,8 @@ outside temperature conditions). In this model, the external wall is made up of
 the `Steel Frame Non-res Ext Wall` object of the `Construction` class.
 
 ```{r}
-ext_wall_surf <- model$to_table(class = c("BuildingSurface:Detailed"), wide =TRUE) %>%
-  filter(`Surface Type` == "Wall", `Outside Boundary Condition` == "Outdoors")
+ext_wall_surf <- model$to_table(class = c("BuildingSurface:Detailed"), wide = TRUE) %>%
+    filter(`Surface Type` == "Wall", `Outside Boundary Condition` == "Outdoors")
 
 unique(ext_wall_surf$`Construction Name`)
 ```
@@ -204,9 +209,11 @@ model$object_relation("Steel Frame Non-res Ext Wall")
 We first extract these three materials from the model.
 
 ```{r}
-ext_wall_mat <- model$to_table(which = c("Wood Siding",
-                                         "Steel Frame NonRes Wall Insulation",
-                                         "1/2IN Gypsum"))
+ext_wall_mat <- model$to_table(which = c(
+    "Wood Siding",
+    "Steel Frame NonRes Wall Insulation",
+    "1/2IN Gypsum"
+))
 ext_wall_mat
 ```
 
@@ -219,8 +226,8 @@ double the `Thickness` of the wall insultion
 
 ext_wall_mat[name == "1/2IN Gypsum" & field == "Conductivity"]$value <- "0.20"
 
-ext_wall_mat[name == "Steel Frame NonRes Wall Insulation" & 
-               field == "Thickness"]$value <- "0.174"
+ext_wall_mat[name == "Steel Frame NonRes Wall Insulation" &
+    field == "Thickness"]$value <- "0.174"
 ```
 
 Subsequently, you can update the model using the modified `data.frame` with the
@@ -284,27 +291,27 @@ in this example) is case-sensitive, while the field names (`Name`, `Roughness`,
 
 ```{r}
 new_mat <- list(
-  Material = list(
-    Name = "100mm brick",
-    ROUGHness = "Rough",
-    thickness = 0.10,
-    conducTIVITY = 0.89,
-    density = 1920,
-    `Specific Heat` = 790
-  ),
-  Material = list(
-    name = "spandrel glass",
-    roughness = "smooth",
-    thickness = 0.006,
-    conductivity = 0.99,
-    density = 2528,
-    `Specific Heat` = 880
-  ))
+    Material = list(
+        Name = "100mm brick",
+        ROUGHness = "Rough",
+        thickness = 0.10,
+        conducTIVITY = 0.89,
+        density = 1920,
+        `Specific Heat` = 790
+    ),
+    Material = list(
+        name = "spandrel glass",
+        roughness = "smooth",
+        thickness = 0.006,
+        conductivity = 0.99,
+        density = 2528,
+        `Specific Heat` = 880
+    )
+)
 
 model$add(new_mat)
 
 model$objects(c("100mm brick", "spandrel glass"))
-
 ```
 
 By default, all empty fields will be filled with default values specified in the

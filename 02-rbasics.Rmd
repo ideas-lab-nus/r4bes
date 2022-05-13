@@ -154,10 +154,10 @@ a list.
 
 ```{r}
 my_list <- list(
-  c(1, 2, 3, 4),
-  c("a", "b"),
-  1L,
-  matrix(1:9, ncol = 3)
+    c(1, 2, 3, 4),
+    c("a", "b"),
+    1L,
+    matrix(1:9, ncol = 3)
 )
 
 my_list_a <- my_list[1]
@@ -174,10 +174,10 @@ specifying their names in the brackets or using the `$` operator.
 
 ```{r}
 named_list <- list(
-  a = c(1, 2, 3, 4),
-  b = c("a", "b"),
-  c = 1L,
-  d = matrix(1:9, ncol = 3)
+    a = c(1, 2, 3, 4),
+    b = c("a", "b"),
+    c = 1L,
+    d = matrix(1:9, ncol = 3)
 )
 
 class(named_list["a"])
@@ -230,7 +230,6 @@ m[3, 1]
 m[, 2]
 
 m[2, ]
-
 ```
 
 A `data.frame` is a two-dimensional data structures that are used to store
@@ -240,9 +239,9 @@ create a data frame.
 
 ```{r}
 df <- data.frame(
-  x = c(1, 2, 3),
-  y = c("red", "green", "blue"),
-  z = c(TRUE, FALSE, TRUE)
+    x = c(1, 2, 3),
+    y = c("red", "green", "blue"),
+    z = c(TRUE, FALSE, TRUE)
 )
 ```
 
@@ -281,9 +280,9 @@ data frame into a tibble using `as_tibble()`.
 
 ```{r}
 tibble(
-  x = c(1, 2, 3),
-  y = c("red", "green", "blue"),
-  z = c(TRUE, FALSE, TRUE)
+    x = c(1, 2, 3),
+    y = c("red", "green", "blue"),
+    z = c(TRUE, FALSE, TRUE)
 )
 
 as_tibble(iris)
@@ -341,15 +340,15 @@ frame or list but instead returns a data table by reference.
 
 ```{r}
 dt <- data.table(
-  x = c(1, 2, 3),
-  y = c("red", "green", "blue"),
-  z = c(TRUE, FALSE, TRUE)
+    x = c(1, 2, 3),
+    y = c("red", "green", "blue"),
+    z = c(TRUE, FALSE, TRUE)
 )
 
 class(
-  setDT(
-    data.frame(c(1, 2, 3))
-  )
+    setDT(
+        data.frame(c(1, 2, 3))
+    )
 )
 ```
 
@@ -419,16 +418,16 @@ involving one or more columns and a subset of rows using `i`.
 dt[, mean(Sepal.Length)]
 
 dt[, .(
-  Sepal.Length.Mean = mean(Sepal.Length),
-  Sepal.With.Mean = mean(Sepal.Width)
+    Sepal.Length.Mean = mean(Sepal.Length),
+    Sepal.With.Mean = mean(Sepal.Width)
 )]
 
 dt[
-  Species == "virginica" & Sepal.Length < 6,
-  .(
-    Sepal.Length.Mean = mean(Sepal.Length),
-    Sepal.With.Mean = mean(Sepal.Width)
-  )
+    Species == "virginica" & Sepal.Length < 6,
+    .(
+        Sepal.Length.Mean = mean(Sepal.Length),
+        Sepal.With.Mean = mean(Sepal.Width)
+    )
 ]
 ```
 
@@ -438,8 +437,8 @@ groups.
 ```{r}
 
 dt[, .(
-  Sepal.Length.Mean = mean(Sepal.Length),
-  Sepal.With.Mean = mean(Sepal.Width)
+    Sepal.Length.Mean = mean(Sepal.Length),
+    Sepal.With.Mean = mean(Sepal.Width)
 ),
 by = Species
 ]
@@ -460,7 +459,7 @@ number of instances (given by `.N`) grouped by their `Species` and whether
 
 ```{r}
 dt[, .(Sepal.Length.Mean = mean(Sepal.Length), .N),
-  by = .(Species, Sepal.Length < 6)
+    by = .(Species, Sepal.Length < 6)
 ]
 ```
 
@@ -494,7 +493,7 @@ dt[Species == "versicolor" | Species == "virginica", Sepal.Length := 0]
 head(dt)
 
 dt[, Sepal.Length.Mean := mean(Sepal.Length),
-  by = .(Species)
+    by = .(Species)
 ]
 head(dt)
 ```
