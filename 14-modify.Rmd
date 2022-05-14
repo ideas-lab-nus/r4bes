@@ -8,10 +8,10 @@ In this chapter, you will learn how modify the model inputs.
 
 ## Prerequisites
 
-In this chapter, we will use the **{eplusr}** package to query and modify
-various inputs in an EnergyPlus model. We will also combine what you have
-learned about data manipulation (with the **{tidyverse}** package) to make it
-easier to work with the simulation inputs.
+In this chapter, we will use the `{eplusr}` package to query and modify various
+inputs in an EnergyPlus model. We will also combine what you have learned about
+data manipulation (with the `{tidyverse}` package) to make it easier to work
+with the simulation inputs.
 
 ```{r, message=FALSE}
 library(eplusr)
@@ -36,7 +36,7 @@ epw <- read_epw(path_epw)
 Changing the values of the existing objects in the model is an important
 functionality in the application of data exploration and data science to
 EnergyPlus. There are many approaches to extract and modify an EnergyPlus model
-using {eplusr}. In this chapter we focus on
+using `{eplusr}`. In this chapter we focus on
 
 -   Directly extracting and modifying the field values of a single object using
     the `[[` or `$` operator.
@@ -134,7 +134,7 @@ model$to_table(which = c("Perimeter_bot_ZN_1_Lights"))
 ```
 
 Once the EnergyPlus objects are in a `data.frame` format, you can take advantage
-of the {tidyverse} library to easily manipulate and modify their values. For
+of the `{tidyverse}` library to easily manipulate and modify their values. For
 example, you can use the `filter()` function to subset the data frame to retain
 rows of interest and the `mutate()` function to modify values within columns.
 

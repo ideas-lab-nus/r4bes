@@ -11,9 +11,9 @@ that they are easier to work with. This will be the focus in this chapter.
 
 ## Prerequisites
 
-In this chapter we focus on the use of the **{dplyr}** package that forms a core
-part of the **{tidyverse}** package. **{dplyr}** provides function that
-alleviates the challenges of data manipulation.
+In this chapter we focus on the use of the `{dplyr}` package that forms a core
+part of the `{tidyverse}` package. `{dplyr}` provides function that alleviates
+the challenges of data manipulation.
 
 ```{r, message=FALSE}
 library(tidyverse)
@@ -107,7 +107,7 @@ select(bldg,
 )
 ```
 
-Additionally, {tidyverse} provides helper functions that lets you select columns
+Additionally, `{tidyverse}` provides helper functions that lets you select columns
 by matching patterns in their names. For the following selection helper
 functions, a character vector is provided for the match. If `length()` of the
 character vector is larger than 1, the logical union (OR `|` operator) is taken.
@@ -138,11 +138,11 @@ select(
 )
 ```
 
--   `matches()`: Select columns that matches a regular expression. `rename()` is
-    a {dplyr} function that allows you to change the names of individual columns
-    using `new_name` = `old_name`. Referring back to Chapter [regex], remember
-    that the `.` is used to match any character except newline `\n` while `?` is
-    a quantifier that can be used to match a pattern zero or one times.
+- `matches()`: Select columns that matches a regular expression. `rename()` is
+  a `{dplyr}` function that allows you to change the names of individual columns
+  using `new_name` = `old_name`. Referring back to Chapter [regex], remember
+  that the `.` is used to match any character except newline `\n` while `?` is a
+  quantifier that can be used to match a pattern zero or one times.
 
 ```{r}
 reg_ex <- "[dD]ate.?[tT]ime"

@@ -6,15 +6,15 @@ source("_common.R", local = knitr::knit_global())
 
 ## Prerequisites
 
-In this chapter, you will use the **{eplusr}** package to interface with
-EnergyPlus via R, the **{tidyverse}** package to manipulate the simulation
-results, and the **{here}** package to specify relative file paths.
+In this chapter, you will use the `{eplusr}` package to interface with
+EnergyPlus via R, the `{tidyverse}` package to manipulate the simulation
+results, and the `{here}` package to specify relative file paths.
 
-Additionally, we will introduce **{ggplot2}**, an input-tidy visualization
-package that is based on the the grammar of graphics [@wilkinson_grammar_2012].
-We will also introduce **{RColorBrewer}** and **{viridis}** package that
-contains predefined color palettes that make it easy to pick the right one when
-creating graphics in R.
+Additionally, we will introduce `{ggplot2}`, an input-tidy visualization package
+that is based on the the grammar of graphics [@wilkinson_grammar_2012]. We will
+also introduce `{RColorBrewer}` and `{viridis}` package that contains predefined
+color palettes that make it easy to pick the right one when creating graphics in
+R.
 
 ```{r, message = FALSE}
 library(ggplot2)
