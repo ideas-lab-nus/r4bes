@@ -1,4 +1,4 @@
-# (PART) R Basics {-}
+# (PART) R Basics {.unnumbered}
 
 ```{r, include=FALSE}
 source("_common.R", local = knitr::knit_global())
@@ -6,5 +6,11 @@ source("_common.R", local = knitr::knit_global())
 
 # Introduction {#r-basics}
 
-This part of the book is intended to provide a sufficient introduction to R to get you started on the subsequent parts of this book. For a more comprehensive treatment on the subject, I would recommend [R for Data Science](https://r4ds.had.co.nz/index.html) by Hadley Wickham & Garrett Grolemund [@wickham_r_2016]. The [R Graphics Cookbook](https://r-graphics.org) by Winston Chang [@chang_r_2018] is also a useful reference that provides recipes that allows you to quickly generate plots in R using the ggplot2 package. 
-
+This part of the book is intended to provide a sufficient introduction to R to
+get you started on the subsequent parts of this book. For a more comprehensive
+treatment on the subject, I would recommend [R for Data
+Science](https://r4ds.had.co.nz/index.html) by Hadley Wickham & Garrett
+Grolemund [@wickham_r_2016]. The [R Graphics Cookbook](https://r-graphics.org)
+by Winston Chang [@chang_r_2018] is also a useful reference that provides
+recipes that allows you to quickly generate plots in R using the `{ggplot2}`
+package.

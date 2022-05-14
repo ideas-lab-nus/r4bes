@@ -1,0 +1,173 @@
+# Model Exploration {#explore}
+
+```{r, include=FALSE}
+source("_common.R", local = knitr::knit_global())
+```
+
+## Prerequisites
+
+In this chapter we will explore the model to uncover energy characteristics and
+create an overview of general trends. We will use eplusr to run the EnergyPlus
+simulation and extract relevant model inputs/outputs, tidyverse for data
+transformation, and `{ggplot2}` to visualize the extracted and subsequently
+transformed data.
+
+```{r, message=FALSE}
+library(eplusr)
+library(tidyverse)
+library(lubridate)
+library(ggplot2)
+library(here)
+```
+
+We will be working with the IDF and EPW file that pertains to the U.S.
+Department of Energy (DOE) Commercial Reference Building and Chicago's TMY3
+respectively.
+
+```{r, message=FALSE}
+path_idf <- here("data", "idf", "RefBldgMediumOfficeNew2004_Chicago.idf")
+model <- read_idf(path_idf)
+
+path_epw <- here("data", "epw", "USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw")
+epw <- read_epw(path_epw)
+```
+
+## Extracting
+
+Before carrying out any model exploration, you need to first specify the outputs
+of interest. The code below preprocesses the model by adding the list of output
+meters and variables to the model (See Chapter \@ref(output) for details).
+
+```{r}
+preprocess_idf <- function(idf, meters, variables) {
+    # make sure weather file input is respected
+    idf$SimulationControl$Run_Simulation_for_Weather_File_Run_Periods <- "Yes"
+
+    # make sure simulation is not run for sizing periods
+    idf$SimulationControl$Run_Simulation_for_Sizing_Periods <- "No"
+
+    # make sure energy consumption is presented in kWh
+    if (is.null(idf$OutputControl_Table_Style)) {
+        idf$add(OutputControl_Table_Style = list("HTML", "JtoKWH"))
+    } else {
+        idf$OutputControl_Table_Style$Unit_Conversion <- "JtoKWH"
+    }
+
+    # remove all existing meter and variable outputs
+    if (!is.null(idf$`Output:Meter`)) {
+        idf$Output_Meter <- NULL
+    }
+
+    # remove all existing meter and variable outputs
+    if (!is.null(idf$`Output:Table:Monthly`)) {
+        idf$`Output:Table:Monthly` <- NULL
+    }
+
+    if (!is.null(idf$`Output:Variable`)) {
+        idf$Output_Variable <- NULL
+    }
+
+    # add meter outputs to get hourly time-series energy consumption
+    idf$add(Output_Meter := meters)
+
+    # add variable outputs to get hourly zone air temperature
+    idf$add(Output_Variable := variables)
+
+    # make sure the modified model is returned
+    return(idf)
+}
+
+meters <- list(
+    key_name = c(
+        "Cooling:Electricity",
+        "Heating:NaturalGas",
+        "Heating:Electricity",
+        "InteriorLights:Electricity",
+        "ExteriorLights:Electricity",
+        "InteriorEquipment:Electricity",
+        "Fans:Electricity",
+        "Pumps:Electricity",
+        "WaterSystems:NaturalGas"
+    ),
+    Reporting_Frequency = "Hourly"
+)
+
+variables <- list(
+    key_value = "*",
+    Variable_Name = c(
+        "Site Outdoor Air Drybulb Temperature",
+        "Site Outdoor Air Relative Humidity"
+    ),
+    Reporting_Frequency = "Hourly"
+)
+
+model <- preprocess_idf(model, meters, variables)
+```
+
+You can then run the simulation and it will be possible to extract the output of
+interest from the model.
+
+```{r, out.lines = 15}
+model$save(here("data", "idf", "model_preprocessed.idf"), overwrite = TRUE)
+job <- model$run(epw, dir = tempdir())
+```
+
+## Energy signature
+
+```{r}
+pt_of_interest <- c(
+    "Site Outdoor Air Drybulb Temperature",
+    "Cooling:Electricity",
+    "Heating:NaturalGas"
+)
+
+report <- job$report_data(environment_name = "annual") %>%
+    drop_na() %>%
+    select(datetime, name, value) %>%
+    filter(name %in% pt_of_interest) %>%
+    pivot_wider(names_from = name, values_from = value) %>%
+    pivot_longer(
+        cols = c("Cooling:Electricity", "Heating:NaturalGas"),
+        names_to = "type", values_to = "value"
+    ) %>%
+    mutate(
+        value = value * 1e-6, # convert J to MJ
+        month = month(datetime, label = TRUE), # create a new column containing the month
+        day = day(datetime), # create a new column containing the day of the month
+        wday = wday(datetime, label = TRUE), # create a new column containing day of the week
+        hour = hour(datetime)
+    ) # create a new column containing the hour of the day
+```
+
+```{r}
+ggplot(report, aes(
+    x = `Site Outdoor Air Drybulb Temperature`,
+    y = value,
+    color = type
+)) +
+    geom_point(shape = 1, alpha = 0.7) +
+    facet_grid(rows = vars(type)) +
+    scale_color_brewer(palette = "Set2") +
+    xlab(expression("Outdoor drybulb temperature" ~ (degree * C))) +
+    ylab("Energy consumption (MJ)") +
+    theme(legend.position = "none")
+```
+
+```{r}
+report_heating <- report %>%
+    filter(type == "Heating:NaturalGas")
+
+ggplot(report_heating, aes(
+    x = day, y = hour,
+    fill = value
+)) +
+    geom_tile() +
+    scale_fill_viridis_c(
+        name = "Heating\nEnergy (MJ)",
+        option = "plasma"
+    ) +
+    facet_grid(cols = vars(month)) +
+    ylab("Hour of the day") +
+    xlab("Day of the week") +
+    theme(legend.position = "bottom")
+```

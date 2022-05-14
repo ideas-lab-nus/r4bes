@@ -4,46 +4,70 @@
 source("_common.R", local = knitr::knit_global())
 ```
 
-Writing functions is a simple way to automate commonly used code in a more general way. Therefore, you should write a function when you realized that you are copying and pasting a code block more than once. Particularly, you will see the power of functions as we start writing functions to define building energy efficient measures that we wish to apply to the building energy simulation. 
+Writing functions is a simple way to automate commonly used code in a more
+general way. Therefore, you should write a function when you realized that you
+are copying and pasting a code block more than once. Particularly, you will see
+the power of functions as we start writing functions to define building energy
+efficient measures that we wish to apply to the building energy simulation.
 
-Additionally, using functions helps you to avoid making mistakes that happen all too often when copying and pasting code. Additionally, as your requirements change, you only need to update the code in one place (i.e., within the function) instead of searching and updating pieces of code, which is again error-prone. 
+Additionally, using functions helps you to avoid making mistakes that happen all
+too often when copying and pasting code. Additionally, as your requirements
+change, you only need to update the code in one place (i.e., within the
+function) instead of searching and updating pieces of code, which is again
+error-prone.
 
-## Prerequisites 
+## Prerequisites
 
-We will use base R code to illustrate creating user-defined functions. Therefore, no additional packages are required. 
-
+We will use base R code to illustrate creating user-defined functions.
+Therefore, no additional packages are required.
 
 ## User-defined function
 
-The code block below shows the syntax for creating an R user-defined function using the `function` keyword. In general, a function consists of:
+The code block below shows the syntax for creating an R user-defined function
+using the `function` keyword. In general, a function consists of:
 
-* Function name (`function_name`): This is the name of the function that you will be creating and the name that you will use to call the function. Following section \@ref(style), function names will use `snake_case` and be reflective of what it does. 
-* Function arguments (`arg1`, `arg2`, `...`): These are inputs to the function that will be used by the code that you place inside the function.
-* Function body: You place your code inside the body of a function that is enclosed by braces `{Function body}`
-* Return statement: Unlike other programming languages, it is not necessary to include the `return()` statement in R. R automatically returns the last line of the body of the function.  
+-   Function name (`function_name`): This is the name of the function that you
+    will be creating and the name that you will use to call the function.
+    Following section \@ref(style), function names will use `snake_case` and be
+    reflective of what it does.
+-   Function arguments (`arg1`, `arg2`, `...`): These are inputs to the function
+    that will be used by the code that you place inside the function.
+-   Function body: You place your code inside the body of a function that is
+    enclosed by braces `{Function body}`
+-   Return statement: Unlike other programming languages, it is not necessary to
+    include the `return()` statement in R. R automatically returns the last line
+    of the body of the function.
 
 ```{r, eval=FALSE}
-function_name <- function(arg1, arg2, ...){
-  Function body
+function_name <- function(arg1, arg2, ...) {
+    Function body
 }
 ```
 
-
 ## Examples
- 
-The Coefficient of Variation of the Root-Mean-Square Error (CVRMSE) (equation \@ref(eq:cvrmse)) and Normalized mean bias error (NMBE) (equation \@ref(eq:nmbe)) are two of the most widely used indices when evaluating how well an energy models describes the variability in measured data [@ashrae_ashrae_2014]. As an example, we demonstrate how these equations would translate to a user-defined function in R. 
 
+The Coefficient of Variation of the Root-Mean-Square Error (CVRMSE) (equation
+\@ref(eq:cvrmse)) and Normalized mean bias error (NMBE) (equation
+\@ref(eq:nmbe)) are two of the most widely used indices when evaluating how well
+an energy models describes the variability in measured data
+[@ashrae_ashrae_2014]. As an example, we demonstrate how these equations would
+translate to a user-defined function in R.
+
+```{=tex}
 \begin{equation} 
   \sqrt{\frac{\sum_{i=1}^{n} \left(y_i - \hat{y}_i\right)}{(n-p)}} \Big/ \bar{y}
   (\#eq:cvrmse)
 \end{equation}
-
+```
+```{=tex}
 \begin{equation} 
   \frac{\sum_{i=1}^{n} \left(y_i - \hat{y}_i\right)}{(n-p)\times\bar{y}}
   (\#eq:nmbe)
 \end{equation}
-
-where $n$ is the number of observations; $y_i$ is the $i$th observation; $\hat{y_i}$ is the $i$th prediction; $\bar{y}$ is the mean of the observed values. 
+```
+where $n$ is the number of observations; $y_i$ is the $i$th observation;
+$\hat{y_i}$ is the $i$th prediction; $\bar{y}$ is the mean of the observed
+values.
 
 You can use a function to compute CVRMSE as follows:
 
@@ -57,7 +81,6 @@ cvrmse <- function(meas, pred, p = 1) {
 cvrmse(c(1, 2, 3), c(2, 4, 6))
 ```
 
-
 You can use a function to compute NMBE as follows:
 
 ```{r}
@@ -68,4 +91,3 @@ nmbe <- function(meas, pred, p = 1) {
 }
 nmbe(c(1, 2, 3), c(2, 4, 6))
 ```
-
