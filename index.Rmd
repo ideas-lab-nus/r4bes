@@ -86,15 +86,15 @@ from <https://www.rstudio.com/products/rstudio/download>.
 Once you have downloaded and installed RStudio, you will see a similar window to
 that shown in image below that comprises of:
 
--   Console window: This is the window where you type in R code, press enter,
-    and the results are returned.
+- Console window: This is the window where you type in R code, press enter, and
+  the results are returned.
 
--   Workspace window: The *Environment* tab in this window is where all the
-    objects that you have created will show.
+- Workspace window: The *Environment* tab in this window is where all the
+  objects that you have created will show.
 
--   Results window: This window is typically used for visualizing graphs
-    (*Plots* tab) and for getting help by accessing the documentation pages for
-    R (*Help* tab).
+- Results window: This window is typically used for visualizing graphs (*Plots*
+  tab) and for getting help by accessing the documentation pages for R (*Help*
+  tab).
 
 ```{r rstudio-console, echo=FALSE, eval=TRUE, out.width = "100%", fig.align='center'}
 knitr::include_graphics("figures/rstudio_console.png")
@@ -105,7 +105,7 @@ knitr::include_graphics("figures/rstudio_console.png")
 R has thousands of packages hosted on the **C**omprehensive **R** **A**rchieve
 **N**etwork (CRAN). These packages contains functions developed and shared by
 the community. In this book we will be using several R packages. The main
-packages include the **tidyverse** and **eplusr** package. We will introduce the
+packages include the `{tidyverse}` and `{eplusr}` package. We will introduce the
 other packages used in this book as we go along.
 
 To install any R package, open R Studio and type
@@ -281,18 +281,20 @@ We recommend using the [Tidyverse Style
 Guide](https://style.tidyverse.org/index.html) by Hadley Wickham. To summarize
 we recommend the following
 
--   R File names should be meaningful and end in `.R`. Avoid using special
-    characters when naming files and use only `lowercase`, hyphens `-`, and
-    underscores `_`.
--   `snake_case` (only lowercase letters, numbers, and `_`) for all object and
-    function names. Function names should also reflect what it does.
--   Use two white spaces when indenting your code
+- R File names should be meaningful and end in `.R`. Avoid using special
+  characters when naming files and use only `lowercase`, hyphens `-`, and
+  underscores `_`.
+
+- `snake_case` (only lowercase letters, numbers, and `_`) for all object and
+  function names. Function names should also reflect what it does.
+
+- Use two white spaces when indenting your code
 
 ```{r indent-space, echo=FALSE, eval=TRUE, out.width = "70%", fig.align='center'}
 knitr::include_graphics("figures/indent_space.png")
 ```
 
--   Line length should not exceed 80 characters
+- Line length should not exceed 80 characters
 
 ```{r line-length, echo=FALSE, eval=TRUE, out.width = "70%", fig.align='center'}
 knitr::include_graphics("figures/line_length.png")

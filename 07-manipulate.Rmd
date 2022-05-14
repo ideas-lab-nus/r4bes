@@ -76,13 +76,13 @@ dplyr](https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pd
 provides a good summary of data transformation functions covered in this
 chapter.
 
--   `select()`: To select columns based on their names.
--   `filter()`: To subset rows based on their values.
--   `mutate()`: To add new variables whose values are a function of existing
-    variables.
--   `arrange()`: To sort the dataset based on the values of selected columns
--   `summarise()` and `group_by()`: To apply computations by groups
--   `*_join()`: generic functions that joins two tables together
+- `select()`: To select columns based on their names.
+- `filter()`: To subset rows based on their values.
+- `mutate()`: To add new variables whose values are a function of existing
+  variables.
+- `arrange()`: To sort the dataset based on the values of selected columns
+- `summarise()` and `group_by()`: To apply computations by groups
+- `*_join()`: generic functions that joins two tables together
 
 ### `select()` {#select}
 
@@ -112,19 +112,19 @@ by matching patterns in their names. For the following selection helper
 functions, a character vector is provided for the match. If `length()` of the
 character vector is larger than 1, the logical union (OR `|` operator) is taken.
 
--   `starts_with()`: Select columns that starts with a specific character vector
+- `starts_with()`: Select columns that starts with a specific character vector
 
 ```{r}
 select(bldg, starts_with(c("Heating", "Cooling")))
 ```
 
--   `ends_with()`: Select columns that ends with a specific character vector
+- `ends_with()`: Select columns that ends with a specific character vector
 
 ```{r}
 select(bldg, ends_with("Time"))
 ```
 
--   `contains()`: Select columns that contains a specific character vector
+- `contains()`: Select columns that contains a specific character vector
 
 ```{r}
 select(
@@ -157,12 +157,12 @@ bldg_rename_b <- rename(bldg, `datetime` = `Date_Time`)
 select(bldg_rename_b, matches(reg_ex, ignore.case = FALSE))
 ```
 
--   `all_of()` and `any_of()`: You can also select variables from a character
-    vector using the selection helper functions `all_of()` and `any_of()`. The
-    key difference is that `all_of()` is used for strict selection where an
-    error is thrown for variable names that do not exist. In contrast,
-    `any_of()` does not check for missing variable names, and thus is often used
-    to ensure a specific column is removed.
+- `all_of()` and `any_of()`: You can also select variables from a character
+  vector using the selection helper functions `all_of()` and `any_of()`. The key
+  difference is that `all_of()` is used for strict selection where an error is
+  thrown for variable names that do not exist. In contrast, `any_of()` does not
+  check for missing variable names, and thus is often used to ensure a specific
+  column is removed.
 
 ```{r}
 vars <- c("Heating_NaturalGas_J", "WaterSystems_NaturalGas_J")
@@ -171,9 +171,9 @@ select(bldg, all_of(vars))
 select(bldg, -any_of(vars))
 ```
 
--   `where()` is a very useful selection helper function when you want to apply
-    a function (that returns `TRUE` or `FALSE`) to all columns and select only
-    those columns where the function returns `TRUE`.
+- `where()` is a very useful selection helper function when you want to apply a
+  function (that returns `TRUE` or `FALSE`) to all columns and select only those
+  columns where the function returns `TRUE`.
 
 ```{r}
 select(bldg, where(is.numeric))
@@ -271,8 +271,8 @@ transmute(bldg,
 
 Useful mutate and transmute functions include
 
--   Arithmetic operators (`+`, `-`,
-    \*`,`/`, etc.) and logarithms (`log()`,`log2()\`, etc.)
+- Arithmetic operators (`+`, `-`, `*`,`/`, etc.) and logarithms
+  (`log()`,`log2()`, etc.)
 
 ```{r}
 heat <- transmute(bldg,
@@ -281,8 +281,8 @@ heat <- transmute(bldg,
 heat
 ```
 
--   `lead()` and `lag()`, allowing you to create lead and lag variables that are
-    useful especially when working with timeseries data.
+- `lead()` and `lag()`, allowing you to create lead and lag variables that are
+  useful especially when working with timeseries data.
 
 ```{r}
 mutate(
@@ -293,14 +293,14 @@ mutate(
 )
 ```
 
--   `if_else()` is function of the form `if_else(condition, true, false)` that
-    allows you to test a condition that you provide as a first argument to the
-    function. If the condition is `TRUE`, `if_else()` will return the second
-    argument. By contrast, if the condition is `FALSE`, it will return the third
-    argument. In the example below, we are using mutate to create a new
-    variable/column `New_Total_Heating_J`. This new column will contain the
-    characters `"low"` if the condition `Total_Heating_J < 200000000` is `TRUE`
-    and `"high"` if it is `FALSE`.
+- `if_else()` is function of the form `if_else(condition, true, false)` that
+  allows you to test a condition that you provide as a first argument to the
+  function. If the condition is `TRUE`, `if_else()` will return the second
+  argument. By contrast, if the condition is `FALSE`, it will return the third
+  argument. In the example below, we are using mutate to create a new
+  variable/column `New_Total_Heating_J`. This new column will contain the
+  characters `"low"` if the condition `Total_Heating_J < 200000000` is `TRUE`
+  and `"high"` if it is `FALSE`.
 
 ```{r}
 mutate(
@@ -309,11 +309,10 @@ mutate(
 )
 ```
 
--   `case_when()` is an extension of `if_else()` by allowing you to write
-    multiple `if_else()` statements. Below, we assign a `"low"` when
-    `Total_Heating_J < 200000000`, `"medium"` when
-    `200000000 <= Total_Heating_J <= 400000000`, and high when
-    `Total_Heating_J > 400000000`.
+- `case_when()` is an extension of `if_else()` by allowing you to write multiple
+  `if_else()` statements. Below, we assign a `"low"` when `Total_Heating_J <
+  200000000`, `"medium"` when `200000000 <= Total_Heating_J <= 400000000`, and
+  high when `Total_Heating_J > 400000000`.
 
 ```{r}
 mutate(

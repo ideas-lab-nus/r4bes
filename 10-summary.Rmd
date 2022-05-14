@@ -55,22 +55,21 @@ method, which extracts all the EnergyPlus summary reports into a R `data.table`.
 
 The data table consists of the following nine columns.
 
--   case: Name of the simulation case. The case variable is useful for filtering
-    the simulation results when running multiple parametric simulations.
-    However, since we are only running one simulation in this example there is
-    only one unique case.
--   index: Row index for the table
--   report_name: Names of the summary report that the observation belongs to
--   report_for: The context that the summary report is for.
--   table_name: The name of the table within the report that the observation
-    belongs to.
--   column_name: The name of the column within a table that the observation
-    belongs to.
--   row_name: The name of the row within a table that the observation belongs
-    to.
--   units: The unit of the observation.
--   value: The value of the observation. Note that by default, this is stored as
-    a character vector.
+- case: Name of the simulation case. The case variable is useful for filtering
+  the simulation results when running multiple parametric simulations. However,
+  since we are only running one simulation in this example there is only one
+  unique case.
+- index: Row index for the table
+- report_name: Names of the summary report that the observation belongs to
+- report_for: The context that the summary report is for.
+- table_name: The name of the table within the report that the observation
+  belongs to.
+- column_name: The name of the column within a table that the observation
+  belongs to.
+- row_name: The name of the row within a table that the observation belongs to.
+- units: The unit of the observation.
+- value: The value of the observation. Note that by default, this is stored as a
+  character vector.
 
 ```{r}
 report <- job$tabular_data()

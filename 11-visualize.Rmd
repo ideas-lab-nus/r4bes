@@ -146,18 +146,18 @@ ggplot(data = <DATA>, mapping = aes(<x, y, ...>))
 You can then specify the graph by adding one or more of the following components
 with `+`
 
--   A layer that comprises of geometric objects or *geom*, statistical
-    transformation or *stat*, and *position* adjustments. Typically, a layer
-    will be created using a `geom_<function>()`
--   *scale*s that map data values to visual properties such as color, fill,
-    shape, and size.
--   A *coord*inate system that specifies how the coordinates of the data maps to
-    the plot. Typically, Cartesian coordinates are used. However, other
-    coordinate systems includes polar coordinates and map projections.
--   *facet*s that divides the data into subsets based on one or more discrete
-    variables. These subsets of data are then displayed as subplots on the plot.
--   A *theme* that can be used to customize the non-data components of the plot
-    such as titles, labels, fonts, background, gridlines, and legends.
+- A layer that comprises of geometric objects or *geom*, statistical
+  transformation or *stat*, and *position* adjustments. Typically, a layer will
+  be created using a `geom_<function>()`
+- *scale*s that map data values to visual properties such as color, fill, shape,
+  and size.
+- A *coord*inate system that specifies how the coordinates of the data maps to
+  the plot. Typically, Cartesian coordinates are used. However, other coordinate
+  systems includes polar coordinates and map projections.
+- *facet*s that divides the data into subsets based on one or more discrete
+  variables. These subsets of data are then displayed as subplots on the plot.
+- A *theme* that can be used to customize the non-data components of the plot
+  such as titles, labels, fonts, background, gridlines, and legends.
 
 ```{r, eval=FALSE}
 ggplot(data = <DATA>, mapping = aes(<x, y, ...>)) +
@@ -279,10 +279,10 @@ etc. You can find out more about the possible arguments to each
 functions are used with `theme()` to specify the non-data components of the
 plot. There are four element functions and they are:
 
--   `element_blank()`: to assign a blank
--   `element_rect()`: for specifying borders and background
--   `element_line()`: for specifying lines
--   `element_text()`: for specifying text
+- `element_blank()`: to assign a blank
+- `element_rect()`: for specifying borders and background
+- `element_line()`: for specifying lines
+- `element_text()`: for specifying text
 
 ```{r}
 ggplot(data = report_end_use, aes(x = category, y = value, fill = fuel)) +
