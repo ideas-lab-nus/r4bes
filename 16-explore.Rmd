@@ -8,7 +8,7 @@ source("_common.R", local = knitr::knit_global())
 
 In this chapter we will explore the model to uncover energy characteristics and
 create an overview of general trends. We will use eplusr to run the EnergyPlus
-simulation and extract relevant model inputs/outputs, tidyverse for data
+simulation and extract relevant model inputs/outputs, `{tidyverse}` for data
 transformation, and `{ggplot2}` to visualize the extracted and subsequently
 transformed data.
 

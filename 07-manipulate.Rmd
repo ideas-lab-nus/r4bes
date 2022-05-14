@@ -21,10 +21,10 @@ library(lubridate)
 library(here)
 ```
 
-To explore the basic data manipulation capabilities of dplyr package, we will
-use the `building_meter` dataset. If the following code returns `FALSE`, you
-should refer to the section [Finding your file] in the [Preface] on where you
-can download the datasets.
+To explore the basic data manipulation capabilities of `{dplyr}` package, we
+will use the `building_meter` dataset. If the following code returns `FALSE`,
+you should refer to the section [Finding your file] in the [Preface] on where
+you can download the datasets.
 
 This dataset contains 8,760 time-series observations of typical building meter
 measurements that is simulated using the Department of Energy's (DOE) reference
@@ -193,13 +193,13 @@ select(
 
 ### `filter()`
 
-You can use `filter()` to subset rows based on their values. dplyr's `filter()`
-function retains rows that return `TRUE` for all the conditions specified. The
-first argument is the data frame and the subsequent arguments are the conditions
-that are used to subset the observations. In other words, multiple arguments to
-`filter()` are combined by the `&` (and) logical operator. To work with other
-logical operators such as `|` (or) and `!` (not), you would have to combine them
-within a single argument.
+You can use `filter()` to subset rows based on their values. `{dplyr}'`s
+`filter()` function retains rows that return `TRUE` for all the conditions
+specified. The first argument is the data frame and the subsequent arguments are
+the conditions that are used to subset the observations. In other words,
+multiple arguments to `filter()` are combined by the `&` (and) logical operator.
+To work with other logical operators such as `|` (or) and `!` (not), you would
+have to combine them within a single argument.
 
 ```{r}
 filter(bldg, Cooling_Electricity_J != 0)
@@ -387,7 +387,7 @@ summarise(
 ## Pipes
 
 The `%>%` is a forward pipe operator from the `magrittr` package that comes
-loaded with the `tidyverse` package. The pipe operator `%>%` is a very handy
+loaded with the `{tidyverse}` package. The pipe operator `%>%` is a very handy
 that allows operations to be performed sequentially. In general, you can think
 of it as sending the output of one function as an input to the next .
 

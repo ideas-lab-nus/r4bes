@@ -114,15 +114,15 @@ To install any R package, open R Studio and type
 install.packages("<package name>")
 ```
 
-For example, to install the tidyverse package
+For example, to install the `{tidyverse}` package
 
 ```{r, eval=FALSE}
 install.packages("tidyverse")
 ```
 
 Note that you will not be able to use the R package until you load it into your
-environment using the `library()` function. To load both the tidyverse package,
-type
+environment using the `library()` function. To load both the `{tidyverse}`
+package, type:
 
 ```{r, message=FALSE}
 library("tidyverse")
@@ -141,8 +141,8 @@ Different releases of EnergyPlus for different platforms (Windows, Linus, or
 Mac) can be downloaded from <https://energyplus.net/downloads>. In this book, we
 will be using EnergyPlus version 9.4.0.
 
-You can also install EnergyPlus via RStudio using the eplusr package. First,
-install eplusr
+You can also install EnergyPlus via RStudio using the `{eplusr}` package. First,
+install `{eplusr}`:
 
 ```{r, eval=FALSE}
 install.packages("eplusr")

@@ -59,10 +59,10 @@ creating graphics.
 
 Fortunately, R has many pre-defined color palettes where careful thought has
 been put into their perception and aesthetic qualities. Specifically, the
-RColorBrewer package contains color palettes that have been carefully designed
-for discrete data.
+`{RColorBrewer}` package contains color palettes that have been carefully
+designed for discrete data.
 
-The RColorBrewer package provide three types of color palettes: sequential,
+The `{RColorBrewer}` package provide three types of color palettes: sequential,
 diverging, and qualitative. You can view those palettes that are colorblind
 friendly.
 
@@ -115,10 +115,11 @@ brewer.pal(5, "Set2")
 Visualizing building related data such as electricity consumption often involves
 mapping continuous data onto the color or fill of the graphic you want to
 create. Although the brewer palettes can be extended to continuous data through
-interpololation, I have found the color scales in the viridis package to be more
-robust because they are designed to be perceptually uniform while maintaining a
-large range. The viridis package contains eight different color scales with the
-viridis scale forming the default or primary color map.
+interpololation, I have found the color scales in the `{viridis}` package to be
+more robust because they are designed to be perceptually uniform while
+maintaining a large range. The `{viridis}` package contains eight different
+color scales with the `{viridis}` scale forming the default or primary color
+map.
 
 ```{r viridis, echo=FALSE, eval=TRUE, out.height = "70%", fig.align='center'}
 knitr::include_graphics("figures/viridis.png")
@@ -128,15 +129,15 @@ knitr::include_graphics("figures/viridis.png")
 
 ### Functions and Components
 
-All plots created by ggplot2 begins with a `ggplot()` function that initializes
-a ggplot plot object that can be used to specify how variables in the data are
-mapped to the "aesthetics" of the visualization. The function has two key
-arguements. The first argument `data` is the data frame that will be used for
-the plot. The second argument `mapping` is used to specify how variables in the
-data are mapped to the "aesthetics" of the visualization. The function `aes()`
-is a quoting function (i.e., the inputs are evaluated in the context of the
-data). This means that you can name the variables of the data frame directly
-within the `aes()` function.
+All plots created by `{ggplot2}` begins with a `ggplot()` function that
+initializes a ggplot plot object that can be used to specify how variables in
+the data are mapped to the "aesthetics" of the visualization. The function has
+two key arguements. The first argument `data` is the data frame that will be
+used for the plot. The second argument `mapping` is used to specify how
+variables in the data are mapped to the "aesthetics" of the visualization. The
+function `aes()` is a quoting function (i.e., the inputs are evaluated in the
+context of the data). This means that you can name the variables of the data
+frame directly within the `aes()` function.
 
 ```{r, eval=FALSE}
 ggplot(data = <DATA>, mapping = aes(<x, y, ...>))
@@ -214,9 +215,9 @@ ggplot(data = report_end_use, aes(x = category, y = value, fill = fuel)) +
 
 You can use scale to change the fill and colors of the bar chart. The
 `scale_*_brewer()` and `scale_*_viridis()` functions provides an easy way to
-specify palettes from the RColorBrewer and the viridis package respectively.
-Particularly, `scale_fill_brewer()` and `scale_fill_viridis()` provides mapping
-to ggplot's fill aesthetics while `scale_color_brewer()` and
+specify palettes from the `{RColorBrewer}` and the `{viridis}` package
+respectively. Particularly, `scale_fill_brewer()` and `scale_fill_viridis()`
+provides mapping to ggplot's fill aesthetics while `scale_color_brewer()` and
 `scale_color_viridis()` provides mapping to ggplot's color aesthetics.
 
 ```{r}
