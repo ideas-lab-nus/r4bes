@@ -1,6 +1,7 @@
 bookdown::bs4_book:
-  repo: https://github.com/ideas-lab-nus/r4bes
-  branch: main
+  repo:
+    base: https://github.com/ideas-lab-nus/r4bes
+    branch: main
 
 bookdown::git_book:
   css: style.css
