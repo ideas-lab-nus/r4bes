@@ -26,17 +26,17 @@ Therefore, no additional packages are required.
 The code block below shows the syntax for creating an R user-defined function
 using the `function` keyword. In general, a function consists of:
 
--   Function name (`function_name`): This is the name of the function that you
-    will be creating and the name that you will use to call the function.
-    Following section \@ref(style), function names will use `snake_case` and be
-    reflective of what it does.
--   Function arguments (`arg1`, `arg2`, `...`): These are inputs to the function
-    that will be used by the code that you place inside the function.
--   Function body: You place your code inside the body of a function that is
-    enclosed by braces `{Function body}`
--   Return statement: Unlike other programming languages, it is not necessary to
-    include the `return()` statement in R. R automatically returns the last line
-    of the body of the function.
+- Function name (`function_name`): This is the name of the function that you
+  will be creating and the name that you will use to call the function.
+  Following section \@ref(style), function names will use `snake_case` and be
+  reflective of what it does.
+- Function arguments (`arg1`, `arg2`, `...`): These are inputs to the function
+  that will be used by the code that you place inside the function.
+- Function body: You place your code inside the body of a function that is
+  enclosed by braces `{Function body}`
+- Return statement: Unlike other programming languages, it is not necessary to
+  include the `return()` statement in R. R automatically returns the last line
+  of the body of the function.
 
 ```{r, eval=FALSE}
 function_name <- function(arg1, arg2, ...) {

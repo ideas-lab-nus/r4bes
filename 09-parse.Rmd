@@ -43,8 +43,8 @@ building to be simulated. The EPW contains the hourly or sub-hourly weather data
 ## Parsing the model
 
 Before starting, you need to first tell R where EnergyPlus is located. By
-default, the eplusr package will try to locate all EnergyPlus installed in your
-computer. Versions of found EnergyPlus can be retrieved by running the
+default, the `{eplusr}` package will try to locate all EnergyPlus installed in
+your computer. Versions of found EnergyPlus can be retrieved by running the
 `avail_eplus()` function.
 
 ```{r}
@@ -58,7 +58,7 @@ use_eplus("/Applications/EnergyPlus-9-4-0")
 ```
 
 To get started, you need to first be familiar with the three basic classes
-(`Idf`, `Epw`, and the `EplusJob`) of the eplusr package.
+(`Idf`, `Epw`, and the `EplusJob`) of the `{eplusr}` package.
 
 The `Idf` class is used to represent the EnergyPlus model. It contains methods
 that allows you to easily query and modify the model. You can use the

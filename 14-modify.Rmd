@@ -38,11 +38,11 @@ functionality in the application of data exploration and data science to
 EnergyPlus. There are many approaches to extract and modify an EnergyPlus model
 using `{eplusr}`. In this chapter we focus on
 
--   Directly extracting and modifying the field values of a single object using
-    the `[[` or `$` operator.
+- Directly extracting and modifying the field values of a single object using
+  the `[[` or `$` operator.
 
--   Extracting and modifying multiple objects using the methods in the `Idf`
-    class. Type `?Idf` in your console to see the `Idf` class methods.
+- Extracting and modifying multiple objects using the methods in the `Idf`
+  class. Type `?Idf` in your console to see the `Idf` class methods.
 
 ### Single object
 
@@ -91,13 +91,13 @@ method, the entire EnergyPlus model is converted to a data frame.
 
 The data frame consists of the following six columns.
 
--   id (integer): Integer identifiers of the EnergyPlus objects.
--   name (character): Names of the EnergyPlus objects.
--   class (character): The class that the EnergyPlus object belongs to.
--   index (integer): Row index for the field of a particular EnergyPlus object.
--   field (character): The name of the column within a table that the
-    observation belongs to.
--   value (character): The value of the field.
+- id (integer): Integer identifiers of the EnergyPlus objects.
+- name (character): Names of the EnergyPlus objects.
+- class (character): The class that the EnergyPlus object belongs to.
+- index (integer): Row index for the field of a particular EnergyPlus object.
+- field (character): The name of the column within a table that the
+  observation belongs to.
+- value (character): The value of the field.
 
 Take a minute now to open the EnergyPlus IDF file
 (`"RefBldgMediumOfficeNew2004_Chicago.idf"`). Compare the text file with the
@@ -110,7 +110,7 @@ have a `name` field, which explains why it is stored as `NA` in the data frame.
 model$to_table()
 ```
 
--   Subset by Class
+- Subset by Class
 
 Working with the entire model can be difficult due to the large number of rows.
 You can extract all the objects belonging to a class by supplying a character
@@ -174,7 +174,7 @@ model$update(lights_df)
 model$`Lights`
 ```
 
--   Subset by Objects
+- Subset by Objects
 
 You can also extract data from the EnergyPlus model based on the object names by
 supplying the object names to the argument `which` of the `$to_table()` method.
@@ -258,26 +258,26 @@ Suppose you want to add a new material to your model, which you can define using
 EnergyPlus's `Material` class. Figure \@ref(fig:idd-material) can be translated
 to tell us that the `Material` class consists of the following fields
 
--   `Name` is a required field of type `alpha` (i.e., a string)
--   `Roughness` is a required field of type `choice` and the possible choices
-    are `VeryRough`, `Rough`, `MediumRou.gh`, `MediumSmooth`, `Smooth`, and
-    `VerySmooth`.
--   `Thickness` is a required field with unit of measurement meters. It is a
-    `real` number and must be $>=0$
--   `Conductivity` is a required field with unit of measurement
-    $\mathrm{W}/\mathrm{m}\cdot\mathrm{K}$. It is a `real` number and must be
-    $>=0$
--   `Density` is a required field with unit of measurement
-    $\mathrm{kg}/\mathrm{m}^3$. It is a `real` number and must be $>=0$
--   `Specific Heat` is a required field with unit of measurement
-    $\mathrm{J}/\mathrm{kg}\cdot\mathrm{K}$. It is a `real` number and must be
-    $>=100$
--   `Thermal Absorptance` is *not* a required field. It is a `real` number, has
-    a default value of 0.9 if not specified, and must be between 0 and 0.99999.
--   `Solar Absorptance` is *not* a required field. It is a `real` number, has a
-    default value of 0.7 if not specified, and must be between 0 and 0.99999.
--   `Visible Absorptance` is *not* a required field. It is a `real` number, has
-    a default value of 0.7 if not specified, and must be between 0 and 0.99999.
+- `Name` is a required field of type `alpha` (i.e., a string)
+- `Roughness` is a required field of type `choice` and the possible choices are
+  `VeryRough`, `Rough`, `MediumRou.gh`, `MediumSmooth`, `Smooth`, and
+  `VerySmooth`.
+- `Thickness` is a required field with unit of measurement meters. It is a
+  `real` number and must be $>=0$
+- `Conductivity` is a required field with unit of measurement
+  $\mathrm{W}/\mathrm{m}\cdot\mathrm{K}$. It is a `real` number and must be
+  $>=0$
+- `Density` is a required field with unit of measurement
+  $\mathrm{kg}/\mathrm{m}^3$. It is a `real` number and must be $>=0$
+- `Specific Heat` is a required field with unit of measurement
+  $\mathrm{J}/\mathrm{kg}\cdot\mathrm{K}$. It is a `real` number and must be
+  $>=100$
+- `Thermal Absorptance` is *not* a required field. It is a `real` number, has
+  a default value of 0.9 if not specified, and must be between 0 and 0.99999.
+- `Solar Absorptance` is *not* a required field. It is a `real` number, has a
+  default value of 0.7 if not specified, and must be between 0 and 0.99999.
+- `Visible Absorptance` is *not* a required field. It is a `real` number, has
+  a default value of 0.7 if not specified, and must be between 0 and 0.99999.
 
 ```{r idd-material, echo=FALSE, eval=TRUE, fig.cap = "Definition of EnergyPlus Material class based on the IDD.", out.width = "70%", fig.align='center'}
 knitr::include_graphics("figures/idd_material.png")

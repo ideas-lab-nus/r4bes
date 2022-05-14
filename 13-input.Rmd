@@ -189,8 +189,8 @@ You can use the `definition` method that returns the fields needed as inputs to
 define a particular class.
 
 Now, compare the output from the code chunk below with Figure
-\@ref(fig:input-structure). The required fields are indicated by `eplusr` using
-an asterix `*`. Using the `Material:NoMass` class as an example (Figure
+\@ref(fig:input-structure). The required fields are indicated by `{eplusr}`
+using an asterix `*`. Using the `Material:NoMass` class as an example (Figure
 \@ref(fig:idd-nomass)), the same information can be obtained from the IDD file
 (`Energy+.idd`) where the required fields are indicated with the
 `\required-field` tag. The definitions of the different tags can be found at the
