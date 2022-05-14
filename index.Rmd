@@ -275,7 +275,7 @@ Your project folder should now look like this.
 knitr::include_graphics("figures/file_structure.png")
 ```
 
-### Style guide {.unnumbered}
+### Style guide {.unnumbered, #style}
 
 We recommend using the [Tidyverse Style
 Guide](https://style.tidyverse.org/index.html) by Hadley Wickham. To summarize
