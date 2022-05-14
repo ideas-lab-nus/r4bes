@@ -237,10 +237,11 @@ You will then be able to extract the output variables and meters that have just
 been specified.
 
 ```{r}
-report <- job$report_data(environment_name = "annual") %>%
-    drop_na() %>%
+report <- job$report_data(
+        name = c(variables$Variable_Name, meters$key_name),
+        environment_name = "annual"
+    ) %>%
     select(datetime, name, value) %>%
-    filter(name %in% variables$Variable_Name | name %in% meters$key_name) %>%
     pivot_wider(names_from = name, values_from = value)
 
 head(report)
