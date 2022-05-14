@@ -12,5 +12,5 @@ treatment on the subject, I would recommend [R for Data
 Science](https://r4ds.had.co.nz/index.html) by Hadley Wickham & Garrett
 Grolemund [@wickham_r_2016]. The [R Graphics Cookbook](https://r-graphics.org)
 by Winston Chang [@chang_r_2018] is also a useful reference that provides
-recipes that allows you to quickly generate plots in R using the ggplot2
+recipes that allows you to quickly generate plots in R using the `{ggplot2}`
 package.
