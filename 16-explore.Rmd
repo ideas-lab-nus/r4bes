@@ -121,22 +121,20 @@ pt_of_interest <- c(
     "Heating:NaturalGas"
 )
 
-report <- job$report_data(environment_name = "annual") %>%
-    drop_na() %>%
-    select(datetime, name, value) %>%
-    filter(name %in% pt_of_interest) %>%
-    pivot_wider(names_from = name, values_from = value) %>%
+report <- job$report_data(
+        name = pt_of_interest, environment_name = "annual",
+        all = TRUE, wide = TRUE
+    ) %>%
+    select(datetime, month, day, hour, day_type, contains(pt_of_interest)) %>%
+    rename_with(~pt_of_interest, .cols = contains(pt_of_interest)) %>%
     pivot_longer(
         cols = c("Cooling:Electricity", "Heating:NaturalGas"),
         names_to = "type", values_to = "value"
     ) %>%
     mutate(
         value = value * 1e-6, # convert J to MJ
-        month = month(datetime, label = TRUE), # create a new column containing the month
-        day = day(datetime), # create a new column containing the day of the month
-        wday = wday(datetime, label = TRUE), # create a new column containing day of the week
-        hour = hour(datetime)
-    ) # create a new column containing the hour of the day
+        month = ordered(month.abb[month], month.abb) # replace month index with month name
+    )
 ```
 
 ```{r}
