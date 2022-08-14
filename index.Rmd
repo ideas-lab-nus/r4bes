@@ -22,9 +22,7 @@ source("_common.R", local = knitr::knit_global())
 
 ## Introduction {.unnumbered}
 
-This is the book for the module **PF4213--Building Energy Analysis and
-Simulation** at the Department of the Built Environment, National University of
-Singapore. This book will introduce you to building energy simulation and how to
+This is the book I use to support my teaching of building energy simulation-related courses at the Department of the Built Environment, National University of Singapore. This book will introduce you to building energy simulation and how to
 perform data analytics with energy models using R. You will learn how to get
 your model into R, simulate it, transform the inputs and outputs, and visualize
 and explore them. This book is designed to be interactive and for you to **learn
