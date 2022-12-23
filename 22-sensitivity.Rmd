@@ -1,0 +1,47 @@
+# Sensitivity analysis
+
+```{r, include=FALSE}
+source("_common.R", local = knitr::knit_global())
+```
+
+## Prerequisites
+
+In this chapter, we will use the `{sensitivity}`, `{eplusr}`, and `{tidyverse}` package. The sensitivity package is  designed to also work with an external computational code such as EnergyPlus. This is achieved by decoupling the energy simulations from the estimation of the sensitivity measures. We leverage the management of parametric simulations in the eplusr package to parse/extract the parameters/responses need for the sensitivity analysis. Functions from the tidyverse package is used for data transformation and visualization.
+
+```{r, message=FALSE}
+library(sensitivity)
+library(eplusr)
+library(tidyverse)
+library(here)
+```
+
+We will be working with the IDF and EPW file that pertains to the U.S. Department of Energy (DOE) Commercial Reference Building and Chicago's TMY3 respectively.
+
+```{r, message=FALSE}
+path_idf <- here("data", "idf", "RefBldgMediumOfficeNew2004_Chicago.idf")
+model <- read_idf(path_idf)
+
+path_epw <- here("data", "epw", "USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw")
+epw <- read_epw(path_epw)
+```
+
+## Overview
+
+Sensitivity analysis (SA) investigates how variations in the output of a model can be allocated to variations in different model input factors. Put differently, SA allow energy modelers to learn how sensitive models outputs are to changes in input factors. Consequently, SA plays an important role in building energy simulation (BES) applications that involve identifying important parameters, uncertainty analysis, model calibration, and robust decision making. 
+
+In general, SA can be categorized as local or global. Local SA considers the output sensitivity against variations of a single input factor, while global SA considers variations with regard to the entire space of the input factors.  
+
+## Local versus global sensitivity analysis
+
+Local sensitivity analysis considers 
+Local sensitivity analysis, also known as differential sensitivity analysis belongs to a class of One-at-A-Time (OAT) methods where the input factors are perturbed 
+
+## Global sensitivity analysis
+### Screening methods
+
+Screening methods are popular in building energy simulation (BES) applications 
+due to their low computation cost compared to other global sensitivity analysis
+methods. Morris method 
+
+
+

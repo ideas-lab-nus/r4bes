@@ -1,6 +1,4 @@
-# (PART) Advanced {.unnumbered}
-
-# Introduction {#advanced}
+# Model calibration
 
 ```{r, include=FALSE}
 source("_common.R", local = knitr::knit_global())
