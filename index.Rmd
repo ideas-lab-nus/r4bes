@@ -206,7 +206,7 @@ knitr::include_graphics("figures/script.png")
 
 To ensure the reproducibility of the examples in this book, you will download
 the data folder from [this
-link](https://www.dropbox.com/s/az2xh92pedhrzmk/data.zip?dl=0) and place it in
+link](https://www.dropbox.com/scl/fi/q303s1lhq740rbtzbsnsr/data.zip?rlkey=wqoriugr2bsa4j2orl8nujuam&st=0925d0i2&dl=0) and place it in
 the project folder you have just created.
 
 Your project folder should now have the following file structure.
