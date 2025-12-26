@@ -1,7 +1,13 @@
 # (PART) Program {.unnumbered}
 
-# Introduction {#program}
-
 ```{r, include=FALSE}
 source("_common.R", local = knitr::knit_global())
 ```
+# Introduction {#program}
+
+In this part of the book, you will learn how to perform parametric simulation
+analyses. The main focuses are on showcasing the capabilities of (1) creating
+parametric models by applying measures (Chapter \@ref(measures)) and (2) easing
+the comparative analysis by reusing code snippets developed in data exploration
+process (Chapter \@ref(parametric)).
+

@@ -1,5 +1,59 @@
-# Energy Efficient Measures
+# Energy Efficient Measures {#measures}
 
 ```{r, include=FALSE}
 source("_common.R", local = knitr::knit_global())
 ```
+
+## What is a measure?
+
+Design alternatives are specified by applying a *measure* function to the seed
+model. The concept of *measure* is inspired by a similar concept in
+[OpenStudio](https://nrel.github.io/OpenStudio-user-documentation/getting_started/about_measures/)
+but tailored for flexibility and extensibility.
+
+A measure is simply an R function that takes an `Idf` object and any other
+parameters as input, and returns a set of modified `Idf` objects as output,
+making it possible to leverage other modules in the framework and apply
+statistical methods and libraries existing in R to generate design options.
+
+## Examples
+
+`set_lpd()` blow is a simple measure that modifies the LPD (Lighting Power
+Density), and `set_nightplug()` is a measure that modifies the off-work
+schedule values of plug loads by multiplying a specified reduction faction
+value.
+
+```{r}
+# create a measure for modifying LPD
+set_lpd <- function (idf, lpd = NA) {
+    # keep the original if applicable
+    if (is.na(lpd)) return(idf)
+
+    # set 'Watts per Zone Floor Area' in all 'Lights' objects as input LPD
+    idf$set(Lights := list(watts_per_zone_floor_area = lpd))
+
+    # return the modified model
+    idf
+}
+
+# create a measure for reducing plug loads during off-work time
+set_nightplug <- function (idf, frac = NA) {
+    # keep the original if applicable
+    if (is.na(frac)) return(idf)
+
+    # extract the plug load schedule into a tidy table
+    sch <- idf$to_table("bldg_equip_sch")
+
+    # modify certain schedule value specified using field names
+    sch <- sch %>%
+        mutate(value = case_when(
+            field %in% paste("Field", c(4,14,16,18)) ~ sprintf("%.2f", as.numeric(value) * frac),
+            TRUE ~ value
+        ))
+
+    # update schedule object using the tidy table
+    idf$update(sch)
+
+    # return the modified model
+    idf
+}

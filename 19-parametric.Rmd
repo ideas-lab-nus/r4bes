@@ -1,5 +1,132 @@
-# Parametric simulations
+# Parametric simulations {#parametric}
 
 ```{r, include=FALSE}
 source("_common.R", local = knitr::knit_global())
 ```
+
+## Create parametric models
+
+After a measure is defined, the method `$apply_measure()` takes it and other
+parameter values specified to create a set of models. Different measures can be
+chained together.
+
+```{r}
+# combine two measures into one
+ecm <- function (idf, lpd, nightplug_frac) {
+    idf <- set_lpd(idf, lpd)
+    idf <- set_nightplug(idf, nightplug_frac)
+    idf
+}
+
+# apply measures and create parametric models
+param$apply_measure(ecm,
+                  lpd = c(   NA,  7.0,   5.0,        NA,        NA,           5.0),
+       nightplug_frac = c(   NA,   NA,    NA,       0.6,       0.2,           0.2),
+               # name of each case
+               .names = c("Ori", "T5", "LED", "0.6Frac", "0.2Frac", "LED+0.2Frac")
+)
+```
+
+After parametric models have been created, you can retrive the summary of the
+parameter values and model names using `$cases()`.
+
+```{r}
+param$cases()
+```
+
+## Run parametric simulations in parallel
+
+The `$run()` method will run all parametric simulations in parallel and place
+each simulation outputs in a separate folder.
+All simulation meta data will keep updating during the whole time and can be
+retrieved using the `$status()` method for further investigations.
+
+```{r, out.lines = 30}
+param$run()
+
+param$status()
+```
+
+## Collect results in one go
+
+The `ParametricJob` class leverages the tidy data interface to retrieve
+parametric simulation results in a tidy format.
+For all resulting tidy tables, an extra column containing the simulation job
+identifiers is prepended in each table. It can be used as an index or key for
+further data transformations, analyses and visualization to compare results of
+different simulated design options.
+
+```{r, out.lines = 30}
+# read building energy consumption from Standard Reports
+param_end_use <- param$tabular_data(table_name = "End Uses", wide = TRUE)[[1L]]
+
+print(param_end_use)
+```
+
+## Data exploration
+
+After calling the `$run()` method to conduct parallel runs of simulations, the
+tidy data interface can be used to extract any simulation outputs of interest
+using `$report_data()`, `$tabular_data()`, etc.
+
+In this example, the building energy consumptions of all six
+models are extracted using one line of code.
+The resulting data format is the same as that of a single simulation and is
+equivalent to bind rows from six tables into one tidy table.
+A `case` column is prepended using the names specified in `$apply_measure()`.
+It works as an identifier to group the results by different parametric models
+using `group_by()` and `nest()` functions from the tidyverse package.
+
+This data structure makes it effortless to perform comparative analyses by
+taking the code snippets developed in data exploration for a single simulation
+and applying them to each of the parametric simulations.
+
+```{r, out.lines = 30}
+# read building area from Standard Reports
+area <- param$tabular_data(table_name = "Building Area", wide = TRUE)[[1L]]
+
+# calculate EUI breakdown
+param_eui <- param_end_use %>%
+    select(case, category = row_name, electricity = `Electricity [kWh]`) %>%
+    filter(electricity > 0.0) %>%
+    arrange(-electricity) %>%
+    mutate(eui = round(electricity / area$'Area [m2]'[1], digits = 2)) %>%
+    select(case, category, eui) %>%
+    # exclude categories that did not change
+    filter(category != "Pumps", category != "Exterior Lighting")
+print(param_eui)
+
+# extract the seed model, i.e. "Ori" case as the baseline
+ori_eui <- param_eui %>% filter(case == "Ori") %>% select(-case)
+
+# calculate energy savings based on the baseline EUI
+param_savings <- param_eui %>%
+    right_join(ori_eui, by = "category", suffix = c("", "_ori")) %>%
+    mutate(savings = (eui_ori - eui) / eui_ori * 100) %>%
+    filter(case != "Ori")
+print(param_savings)
+
+# plot a bar chart to show the energy savings
+library(ggplot2)
+param_savings %>%
+    mutate(case = factor(case, names(param$models()))) %>%
+    ggplot(aes(case, savings, fill = category)) +
+    geom_bar(position = "dodge", stat = "identity", width = 0.6, color = "black",
+        show.legend = FALSE) +
+    facet_wrap(vars(category), nrow = 2) +
+    labs(x = NULL, y = "Energy savings / %") +
+    coord_flip()
+```
+
+## Extensions based on `ParametricJob` class
+
+The `ParametricJob` class is designed to be simple yet flexible and extensible.
+One good example of its extensibility is the
+[epluspar](https://github.com/hongyuanjia/epluspar) R package, which provides
+new classes for conducting specific parametric analyses on EnergyPlus models,
+including sensitivity analysis, Bayesian calibration and optimization using
+Generic algorithm.
+
+All the new classes introduced are based on the `ParametricJob` class. The main
+difference mainly lies in the specific statistical method used for sampling
+parameter values when calling `$apply_measure()` method.
